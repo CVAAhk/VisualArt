@@ -8,15 +8,11 @@
 							tweaking this value. 
 		@param attractTime: The inactivity time(s) permitted before application enters attract mode
 	-->
-	<OmekaCollectionViewer tapDuration="50" attractTime="120"> 
+	<OmekaCollectionViewer tapDuration="200" attractTime="120"> 
 		
 		<!--endpoint options-->
 		<endpoint>http://omeka-everywhere.digitalmediauconn.org</endpoint>
-		<endpoint>http://clevelandhistorical.org</endpoint>
 		<endpoint>http://mallhistory.org</endpoint>			
-		<endpoint>http://bibnum.univ-rennes2.fr</endpoint>
-		<endpoint>http://www.huapala.net</endpoint>			
-		<endpoint>http://www.cppdigitallibrary.org</endpoint>
 		
 		<!--ui skin options-->
 		<theme>library/assets/BatterseaSkin.swf</theme>
