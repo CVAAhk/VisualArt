@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<cml>
+
+	<OmekaMediaViewer back="#info" visible="false" clusterBubbling="true" releaseInertia="true" timeout="30">
+		
+		<!-- FRONT: Media -->
+		<Media id="media" loop="true" autoplay="true" resetDimensions="true" maxWidth="3840" maxHeight="2160"/>
+
+		<!-- BACK: info panel -->
+		<InfoPanel id="info" visible="false" width="100%" height="100%">		
+			<Header width="100%" height="20%">
+				<Thumb width="20%" height="80%"/>
+				<Title width="80%" height="100%"/>				
+			</Header>
+			<Body width="100%" height="80%">
+				<TextScroller>
+					<!--include, remove, or reorder the metadata types-->
+					<MetaData>
+						<element>Subject</element>
+						<element>Description</element>
+						<element>Creator</element>
+						<element>Source</element>
+						<element>Publisher</element>
+						<element>Date</element>
+						<element>Contributor</element>
+						<element>Rights</element>
+						<element>Relation</element>
+						<element>Format</element>
+						<element>Language</element>
+						<element>Type</element>
+						<element>Identifier</element>
+						<element>Coverage</element>
+					</MetaData>			
+				</TextScroller>
+			</Body>										
+		</InfoPanel>
+		
+		<!-- MENU -->
+		<ControlsMenu alpha="0.75" autohide="true" visible="false"/>
+
+		<!-- GESTURES -->	
+		<Gesture ref="n-drag-inertia" />
+		<Gesture ref="n-scale" />
+		<Gesture ref="n-rotate" />
+		
+	</OmekaMediaViewer>
+
+</cml>
