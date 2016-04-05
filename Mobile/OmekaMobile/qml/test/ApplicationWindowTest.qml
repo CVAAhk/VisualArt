@@ -1,80 +1,45 @@
 import QtQuick 2.5
-import QtQuick.Controls 1.4
-import QtQuick.Controls.Styles 1.4
 import QtQuick.Layouts 1.1
+import QtQuick.Controls 1.4
+import "../js/UI.js" as UI
 
 ApplicationWindow {
     id:window
     visible:true
+    title: "Omeka Mobile"
 
     width:470;
     height:800;
 
-    ColumnLayout{
-        id:root
+    toolBar: ToolBar{
+        RowLayout{
+            anchors.fill: parent
+            Label{
+                text:UI.label
+            }
+        }
+    }
+
+    TabView{
+        id: tabView
+
         anchors.fill: parent
-        spacing: 0
+        anchors.margins: UI.margin
+        tabPosition: UI.tabPosition
 
-        Rectangle{
-            id:toolbar
-            Layout.fillWidth: true
-            Layout.preferredHeight: 50
-            color:"white"
+        Layout.minimumWidth: 360
+        Layout.minimumHeight: 360
+        Layout.preferredWidth: 470
+        Layout.preferredHeight: 800
 
-            RowLayout{
-                anchors.fill: parent
-                layoutDirection: Qt.RightToLeft
-                Button{
-                    Layout.margins: 5
-                    Layout.fillHeight: true
-                    Layout.preferredWidth: 45
-                }
-            }
-
-            Image{
-                anchors.centerIn: parent
-                source: "../../ui/logo.png"
-            }
-
+        Tab{
+            title: "Buttons"
         }
-
-        Rectangle{
-            id:content
-            Layout.minimumHeight: 400
-            Layout.fillHeight: true
-            Layout.fillWidth: true
-            color:"#e6e8e7"
+        Tab{
+            title: "Progress"
         }
-
-        Rectangle{
-            id:navigation
-            Layout.fillWidth: true
-            Layout.preferredHeight: 50
-
-            RowLayout{
-                anchors.fill: parent
-                spacing: 0
-                ExclusiveGroup { id: stackGroup }
-                Button{
-                    checkable: true
-                    checked: true
-                    exclusiveGroup: stackGroup
-                    Layout.fillWidth: true
-                    Layout.fillHeight: true
-                }
-                Button{
-                    checkable: true
-                    exclusiveGroup: stackGroup
-                    Layout.fillWidth: true
-                    Layout.fillHeight: true
-                }
-                Button{
-                    checkable: true
-                    exclusiveGroup: stackGroup
-                    Layout.fillWidth: true
-                    Layout.fillHeight: true
-                }
-            }
+        Tab{
+            title: "Input"
         }
     }
 
