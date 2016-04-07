@@ -1,10 +1,15 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-		<file>qml/test/ApplicationWindowTest.qml</file>
-		<file>qml/test/HomePage.qml</file>
-		<file>qml/test/SearchPage.qml</file>
-		<file>qml/test/LikesPage.qml</file>
+		
+		<file>qml/test/scalability/ApplicationWindowTest.qml</file>
+		<file>qml/test/scalability/HomePage.qml</file>
+		<file>qml/test/scalability/SearchPage.qml</file>
+		<file>qml/test/scalability/LikesPage.qml</file>
+		
+		<file>qml/test/mvc/PathViewTest.qml</file>		
+		<file>qml/test/mvc/GridViewTest.qml</file>
+		<file>qml/test/mvc/ContactModel.qml</file>
 		
 		<file>qml/js/UI.js</file>
 		<file>qml/js/+android/UI.js</file>

@@ -11,6 +11,6 @@ int main(int argc, char *argv[])
         fmt.setProfile(QSurfaceFormat::CoreProfile);
         QSurfaceFormat::setDefaultFormat(fmt);
     }
-    QQmlApplicationEngine engine(QUrl("qrc:/qml/test/ApplicationWindowTest.qml"));
+    QQmlApplicationEngine engine(QUrl("qrc:/qml/test/mvc/GridViewTest.qml"));
     return app.exec();
 }

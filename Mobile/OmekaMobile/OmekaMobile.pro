@@ -9,7 +9,7 @@ RESOURCES += qml.qrc
 
 OTHER_FILES += \
     main.qml \
-    qml/test/ApplicationWindowTest.qml \
+    qml/test/scalability/ApplicationWindowTest.qml \
     qml/js/UI.js \
     qml/js/+android/UI.js \
     qml/js/+ios/UI.js \
@@ -21,6 +21,10 @@ QML_IMPORT_PATH =
 include(deployment.pri)
 
 DISTFILES += \
-    qml/test/HomePage.qml \
-    qml/test/SearchPage.qml \
-    qml/test/LikesPage.qml
+    qml/test/scalability/HomePage.qml \
+    qml/test/scalability/SearchPage.qml \
+    qml/test/scalability/LikesPage.qml \
+    qml/test/scalability/PathViewTest.qml \
+    qml/test/mvc/PathViewTest.qml \
+    qml/test/mvc/ContactModel.qml \
+    qml/test/mvc/GridViewTest.qml
