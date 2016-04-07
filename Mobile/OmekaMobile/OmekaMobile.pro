@@ -19,3 +19,8 @@ QML_IMPORT_PATH =
 
 # Default rules for deployment.
 include(deployment.pri)
+
+DISTFILES += \
+    qml/test/HomePage.qml \
+    qml/test/SearchPage.qml \
+    qml/test/LikesPage.qml

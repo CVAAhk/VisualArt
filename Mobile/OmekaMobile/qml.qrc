@@ -2,6 +2,9 @@
     <qresource prefix="/">
         <file>main.qml</file>
 		<file>qml/test/ApplicationWindowTest.qml</file>
+		<file>qml/test/HomePage.qml</file>
+		<file>qml/test/SearchPage.qml</file>
+		<file>qml/test/LikesPage.qml</file>
 		
 		<file>qml/js/UI.js</file>
 		<file>qml/js/+android/UI.js</file>

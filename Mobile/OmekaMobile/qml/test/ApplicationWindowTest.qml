@@ -12,11 +12,11 @@ ApplicationWindow {
     height:800;
 
     toolBar: ToolBar{
-        RowLayout{
-            anchors.fill: parent
-            Label{
-                text:UI.label
-            }
+        Button{
+            anchors.right: parent.right
+            anchors.top: parent.top
+            anchors.bottom: parent.bottom
+            width: height
         }
     }
 
@@ -33,13 +33,23 @@ ApplicationWindow {
         Layout.preferredHeight: 800
 
         Tab{
-            title: "Buttons"
+            title: "Home"
+            HomePage{
+                enabled: true
+            }
         }
         Tab{
-            title: "Progress"
+            title: "Search"
+            SearchPage{
+                enabled:true
+            }
         }
         Tab{
-            title: "Input"
+            title: "Likes"
+            Rectangle{
+                anchors.fill: parent
+                color:"blue"
+            }
         }
     }
 
