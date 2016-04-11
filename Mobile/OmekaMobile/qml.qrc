@@ -9,7 +9,9 @@
 		
 		<file>qml/test/mvc/PathViewTest.qml</file>		
 		<file>qml/test/mvc/GridViewTest.qml</file>
-		<file>qml/test/mvc/ContactModel.qml</file>
+		<file>qml/test/mvc/ContactModel.qml</file>	
+		
+		<file>qml/test/providers/ImageProviderApp.qml</file>	
 		
 		<file>qml/js/UI.js</file>
 		<file>qml/js/+android/UI.js</file>

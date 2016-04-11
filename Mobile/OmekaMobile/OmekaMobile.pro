@@ -3,7 +3,8 @@ TEMPLATE = app
 QT += qml quick
 CONFIG += c++11
 
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    cpp\test\imageprovidertest.cpp
 
 RESOURCES += qml.qrc
 
@@ -27,4 +28,8 @@ DISTFILES += \
     qml/test/scalability/PathViewTest.qml \
     qml/test/mvc/PathViewTest.qml \
     qml/test/mvc/ContactModel.qml \
-    qml/test/mvc/GridViewTest.qml
+    qml/test/mvc/GridViewTest.qml \
+    qml/test/providers/ImageProviderApp.qml
+
+HEADERS += \
+    imageprovidertest.h

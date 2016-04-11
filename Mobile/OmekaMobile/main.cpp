@@ -1,6 +1,7 @@
 #include <QQmlApplicationEngine>
 #include <QSurfaceFormat>
 #include <QGuiApplication>
+#include "imageprovidertest.h"
 
 int main(int argc, char *argv[])
 {
@@ -10,7 +11,11 @@ int main(int argc, char *argv[])
         fmt.setVersion(4, 4);
         fmt.setProfile(QSurfaceFormat::CoreProfile);
         QSurfaceFormat::setDefaultFormat(fmt);
-    }
-    QQmlApplicationEngine engine(QUrl("qrc:/qml/test/mvc/GridViewTest.qml"));
+    }    
+
+    QQmlApplicationEngine engine;
+    ImageProviderTest *imageProvider = new ImageProviderTest(QQmlImageProviderBase::Image);
+    engine.addImageProvider(QLatin1String("testprovider"), imageProvider);
+    engine.load(QUrl("qrc:/qml/test/providers/ImageProviderApp.qml"));
     return app.exec();
 }
