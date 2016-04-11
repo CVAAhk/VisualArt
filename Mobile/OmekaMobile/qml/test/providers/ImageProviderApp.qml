@@ -8,7 +8,7 @@ ApplicationWindow {
     Image{
         id: img
         anchors.centerIn: parent
-        source: "image://testprovider/500/500/"
+        source: "image://testprovider/http://mallhistory.org//files//original//0ef6913467dd1ef22e66e2c0b2cb63ae.jpg"
         onStatusChanged: {
             if(status == Image.Ready)
                 indicator.running = false;
@@ -25,7 +25,7 @@ ApplicationWindow {
         anchors.fill: parent
         onClicked:{
             indicator.running = true;
-            img.source = "image://testprovider/500/500/?seed=" + Math.random(1000)
+            img.source = "image://testprovider/http://mallhistory.org//files//thumbnails//0ef6913467dd1ef22e66e2c0b2cb63ae.jpg"
         }
     }
 }

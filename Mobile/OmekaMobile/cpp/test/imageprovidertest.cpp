@@ -17,8 +17,7 @@ ImageProviderTest::~ImageProviderTest()
 
 QImage ImageProviderTest::requestImage(const QString &id, QSize *size, const QSize &requestedSize)
 {
-    qDebug(id.toLatin1());
-    QUrl url("http://mallhistory.org//files//original//0ef6913467dd1ef22e66e2c0b2cb63ae.jpg");
+    QUrl url(id);
     QNetworkReply* reply = manager->get(QNetworkRequest(url));
     QEventLoop eventLoop;
     QObject::connect(reply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
