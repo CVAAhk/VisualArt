@@ -13,6 +13,8 @@
 		
 		<file>qml/test/providers/ImageProviderApp.qml</file>	
 		
+		<file>qml/test/client/TestClient.qml</file>	
+		
 		<file>qml/js/UI.js</file>
 		<file>qml/js/+android/UI.js</file>
 		<file>qml/js/+ios/UI.js</file>

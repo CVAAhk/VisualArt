@@ -29,7 +29,8 @@ DISTFILES += \
     qml/test/mvc/PathViewTest.qml \
     qml/test/mvc/ContactModel.qml \
     qml/test/mvc/GridViewTest.qml \
-    qml/test/providers/ImageProviderApp.qml
+    qml/test/providers/ImageProviderApp.qml \
+    qml/test/client/TestClient.qml
 
 HEADERS += \
     imageprovidertest.h
