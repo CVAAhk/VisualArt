@@ -5,29 +5,34 @@ ApplicationWindow {
     visible: true
     width: 470; height:800
 
+    Component.onCompleted: getData()
+
     ListModel{
         id: model
+    }
+
+    Component{
+        id: delegate
+        Image{
+            id: item
+            source: thumb
+            MouseArea{
+                anchors.fill: parent
+                onClicked: { console.log(id); }
+            }
+        }
     }
 
     ListView{
         id: view
         anchors.fill: parent
         model: model
-        delegate: Text{
-            text: jsondata
-        }
-    }
-
-    Button{
-        anchors.bottom: parent.bottom
-        width: parent.width
-        text: "SUBMIT REQUEST"
-        onClicked: getData()
+        delegate: delegate
     }
 
     function getData(){
         var request = new XMLHttpRequest();
-        var url = "http://mallhistory.org/api/items";
+        var url = "http://mallhistory.org/api/files";
         request.onreadystatechange = function(){
             if(request.readyState === XMLHttpRequest.DONE){
                 var result = JSON.parse(request.responseText);
@@ -35,7 +40,7 @@ ApplicationWindow {
                     console.log("Request Error: "+result.errors[0].message);
                 }
                 else{
-                    updateView(result)
+                    updateView(result);
                 }
             }
         }
@@ -45,8 +50,7 @@ ApplicationWindow {
 
     function updateView(json){
         for(var i = 0; i<json.length; i++){
-            console.log(json[i].id);
-            view.model.append({jsondata: json[i].id});
+            view.model.append({id: json[i].id, thumb: json[i].file_urls.thumbnail});
         }
     }
 }
