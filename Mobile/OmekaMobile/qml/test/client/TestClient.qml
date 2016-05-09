@@ -20,6 +20,10 @@ ApplicationWindow {
                 anchors.fill: parent
                 onClicked: { console.log(id); }
             }
+            onStatusChanged: {
+                if(status == Image.Ready)
+                    indicator.running = false;
+            }
         }
     }
 
@@ -30,9 +34,15 @@ ApplicationWindow {
         delegate: delegate
     }
 
+    BusyIndicator{
+        id: indicator
+        anchors.centerIn: parent
+        running: false
+    }
+
     function getData(){
         var request = new XMLHttpRequest();
-        var url = "http://mallhistory.org/api/files";
+        var url = "http://mallhistory.org/api/files?page=10";
         request.onreadystatechange = function(){
             if(request.readyState === XMLHttpRequest.DONE){
                 var result = JSON.parse(request.responseText);
@@ -50,7 +60,9 @@ ApplicationWindow {
 
     function updateView(json){
         for(var i = 0; i<json.length; i++){
-            view.model.append({id: json[i].id, thumb: json[i].file_urls.thumbnail});
+            indicator.running = true;
+            var url = "image://testprovider/"+json[i].file_urls.thumbnail;
+            view.model.append({id: json[i].id, thumb: url});
         }
     }
 }
