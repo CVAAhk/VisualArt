@@ -17,6 +17,7 @@
 		
 		<file>qml/test/settings/LikesTest.qml</file>	
 		
+		<file>qml/js/storage.js</file>
 		<file>qml/js/UI.js</file>
 		<file>qml/js/+android/UI.js</file>
 		<file>qml/js/+ios/UI.js</file>

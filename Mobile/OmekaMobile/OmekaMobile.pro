@@ -31,7 +31,8 @@ DISTFILES += \
     qml/test/mvc/GridViewTest.qml \
     qml/test/providers/ImageProviderApp.qml \
     qml/test/client/TestClient.qml \
-    qml/test/settings/LikesTest.qml
+    qml/test/settings/LikesTest.qml \
+    qml/js/storage.js
 
 HEADERS += \
     imageprovidertest.h

@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.4
-import Qt.labs.settings 1.0
+import QtQuick.LocalStorage 2.0
+import "../../js/storage.js" as Settings
 
 ApplicationWindow {
     id: window
@@ -8,13 +9,11 @@ ApplicationWindow {
     width: 470; height: 800
 
     Component.onCompleted: {
-        console.log(settings.likes.length)
+       count.text = Settings.rows().length
     }
 
-    Settings{
-        id: settings
-        category: "Likes"
-        property var likes: []
+    Text{
+        id: count
     }
 
     Row{
@@ -22,17 +21,13 @@ ApplicationWindow {
         Button{
             text: "Add"
             onClicked: {
-                var t = settings.likes
-                t.push(1)
-                settings.likes = t
+                Settings.set(Settings.rows().length, 1)
             }
         }
         Button{
             text: "Remove"
-            onClicked: {
-                var t = settings.likes
-                t.pop()
-                settings.likes = t
+            onClicked: {                
+                Settings.clear()
             }
         }
     }
