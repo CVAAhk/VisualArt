@@ -7,9 +7,10 @@ ApplicationWindow {
     id: window
     visible: true
     width: 470; height: 800
+    property string table : "likes"
 
     Component.onCompleted: {
-       count.text = Settings.rows().length
+       count.text = Settings.rows(table).length
     }
 
     Text{
@@ -21,13 +22,13 @@ ApplicationWindow {
         Button{
             text: "Add"
             onClicked: {
-                Settings.set(Settings.rows().length, 1)
+                console.log(Settings.set(table, Settings.rows(table).length, 1))
             }
         }
         Button{
             text: "Remove"
-            onClicked: {                
-                Settings.clear()
+            onClicked: {
+                console.log(Settings.remove(table, (Settings.rows(table).length-1).toString()))
             }
         }
     }
