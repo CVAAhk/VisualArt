@@ -15,6 +15,8 @@
 		
 		<file>qml/test/client/TestClient.qml</file>	
 		
+		<file>qml/test/settings/LikesTest.qml</file>	
+		
 		<file>qml/js/UI.js</file>
 		<file>qml/js/+android/UI.js</file>
 		<file>qml/js/+ios/UI.js</file>

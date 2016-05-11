@@ -4,9 +4,7 @@ import QtQuick.Controls 1.4
 ApplicationWindow {
     visible: true
     width: 470; height:800
-    property int page: 1;
-
-    Component.onCompleted: getData(page)
+    property int page: 0;
 
     ListModel{
         id: model
@@ -21,6 +19,8 @@ ApplicationWindow {
                 Image{
                     id: image
                     source: thumb
+                    //TODO: figure out how to resolve thread parenting issue
+                    //asynchronous: true
                 }
                 Text { text: id }
             }
@@ -44,8 +44,7 @@ ApplicationWindow {
             if(view.atYEnd){
                 indicator.running = true
                 page++;
-                console.log("load page: "+page)
-                getData(page);
+                getData();
             }
         }
     }
@@ -57,7 +56,8 @@ ApplicationWindow {
         running: false;
     }
 
-    function getData(page){
+    function getData(){
+        console.log("load page: "+page)
         var request = new XMLHttpRequest();
         var url = "http://mallhistory.org/api/files?page="+page;
         request.onreadystatechange = function(){

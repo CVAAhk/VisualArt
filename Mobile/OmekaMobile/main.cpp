@@ -6,6 +6,10 @@
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
+    app.setOrganizationName("Ideum");
+    app.setOrganizationDomain("ideum.com");
+    app.setApplicationName("OmekaMobile");
+
     if (QCoreApplication::arguments().contains(QLatin1String("--coreprofile"))) {
         QSurfaceFormat fmt;
         fmt.setVersion(4, 4);
@@ -16,6 +20,6 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
     ImageProviderTest *imageProvider = new ImageProviderTest(QQmlImageProviderBase::Image);
     engine.addImageProvider(QLatin1String("testprovider"), imageProvider);
-    engine.load(QUrl("qrc:/qml/test/client/TestClient.qml"));
+    engine.load(QUrl("qrc:/qml/test/settings/LikesTest.qml"));
     return app.exec();
 }

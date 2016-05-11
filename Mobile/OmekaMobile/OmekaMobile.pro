@@ -30,7 +30,8 @@ DISTFILES += \
     qml/test/mvc/ContactModel.qml \
     qml/test/mvc/GridViewTest.qml \
     qml/test/providers/ImageProviderApp.qml \
-    qml/test/client/TestClient.qml
+    qml/test/client/TestClient.qml \
+    qml/test/settings/LikesTest.qml
 
 HEADERS += \
     imageprovidertest.h
