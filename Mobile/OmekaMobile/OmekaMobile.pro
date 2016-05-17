@@ -32,7 +32,9 @@ DISTFILES += \
     qml/test/providers/ImageProviderApp.qml \
     qml/test/client/TestClient.qml \
     qml/test/settings/LikesTest.qml \
-    qml/js/storage.js
+    qml/js/storage.js \
+    qml/test/navigation/Carousel.qml \
+    qml/test/navigation/Ellipse.qml
 
 HEADERS += \
     imageprovidertest.h

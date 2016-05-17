@@ -20,6 +20,6 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
     ImageProviderTest *imageProvider = new ImageProviderTest(QQmlImageProviderBase::Image);
     engine.addImageProvider(QLatin1String("testprovider"), imageProvider);
-    engine.load(QUrl("qrc:/qml/test/settings/LikesTest.qml"));
+    engine.load(QUrl("qrc:/qml/test/navigation/Carousel.qml"));
     return app.exec();
 }
