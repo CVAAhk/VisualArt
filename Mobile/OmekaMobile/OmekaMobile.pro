@@ -34,7 +34,8 @@ DISTFILES += \
     qml/test/settings/LikesTest.qml \
     qml/js/storage.js \
     qml/test/navigation/Carousel.qml \
-    qml/test/navigation/Ellipse.qml
+    qml/test/navigation/Ellipse.qml \
+    qml/test/mvc/ListViewTest.qml
 
 HEADERS += \
     imageprovidertest.h
