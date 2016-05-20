@@ -8,7 +8,7 @@ ApplicationWindow{
     property real yMiddle: height/2
     property real xLeft: -width
     property real xMiddle: width/2
-    property real xRight: width*2
+    property real xRight: width*2    
 
     ListModel{
         id: model
@@ -20,11 +20,21 @@ ApplicationWindow{
     Component{
         id: delegate
         Rectangle{
+            id: item
             width: parent.width
             height: parent.height
             color: bkg
             opacity: PathView.rectOpacity
             scale: PathView.rectScale
+
+            Text{ text:index }
+
+            Connections{
+                target: view
+                onCurrentIndexChanged:{
+                    print("Previous: "+view.previousIndex+" Next: "+view.nextIndex)
+                }
+            }
         }
     }
 
@@ -39,8 +49,11 @@ ApplicationWindow{
         preferredHighlightEnd: 0.5
         highlightRangeMode: PathView.StrictlyEnforceRange
         snapMode: PathView.SnapOneItem;
-        flickDeceleration: 100
+        flickDeceleration: 2000
         dragMargin: view.height
+
+        property real nextIndex: currentIndex === count -1 ? 0 : currentIndex + 1
+        property real previousIndex: currentIndex === 0 ? count-1 : currentIndex - 1
 
         path:Path{
             startX: xLeft; startY: yMiddle
