@@ -49,7 +49,7 @@ ApplicationWindow{
                        img.source = "image://testprovider/"+urls[loadIndex]
                     }
                     else if(!view.loadNext && view.previousIndex === index){
-                        img.source = "image://testprovider/"+urls[view.loadIndex]
+                        img.source = "image://testprovider/"+urls[loadIndex]
                     }
                 }
             }
