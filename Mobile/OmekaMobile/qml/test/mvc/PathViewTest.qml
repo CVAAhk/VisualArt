@@ -32,7 +32,12 @@ ApplicationWindow{
             Connections{
                 target: view
                 onCurrentIndexChanged:{
-                    print("Previous: "+view.previousIndex+" Next: "+view.nextIndex)
+                    if(view.loadNext && view.nextIndex === index){
+                        print("Next: "+index)
+                    }
+                    else if(!view.loadNext && view.previousIndex == index){
+                        print("Previous: "+index)
+                    }
                 }
             }
         }
@@ -54,6 +59,7 @@ ApplicationWindow{
 
         property real nextIndex: currentIndex === count -1 ? 0 : currentIndex + 1
         property real previousIndex: currentIndex === 0 ? count-1 : currentIndex - 1
+        property bool loadNext
 
         path:Path{
             startX: xLeft; startY: yMiddle
@@ -63,6 +69,10 @@ ApplicationWindow{
             PathAttribute { name: "rectOpacity"; value : 1}
             PathAttribute { name: "rectScale"; value : 1}
             PathLine { x: xRight; y: yMiddle }
+        }
+
+        onCurrentIndexChanged: {
+            loadNext = currentIndex === nextIndex
         }
     }
 
