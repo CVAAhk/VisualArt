@@ -22,6 +22,7 @@
 		<file>qml/test/navigation/Ellipse.qml</file>	
 		
 		<file>qml/test/viewers/ImageViewer.qml</file>	
+		<file>qml/test/viewers/VideoViewer.qml</file>	
 		
 		<file>qml/js/storage.js</file>
 		<file>qml/js/UI.js</file>
