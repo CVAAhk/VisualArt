@@ -35,7 +35,8 @@ DISTFILES += \
     qml/js/storage.js \
     qml/test/navigation/Carousel.qml \
     qml/test/navigation/Ellipse.qml \
-    qml/test/mvc/ListViewTest.qml
+    qml/test/mvc/ListViewTest.qml \
+    qml/test/viewers/ImageViewer.qml
 
 HEADERS += \
     imageprovidertest.h
