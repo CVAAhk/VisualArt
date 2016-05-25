@@ -13,6 +13,7 @@ ApplicationWindow {
         contentHeight: 500
 
         PinchArea{
+            id: zoom
             width: Math.max(flick.contentWidth, flick.width)
             height: Math.max(flick.contentHeight, flick.height)
 
@@ -50,6 +51,31 @@ ApplicationWindow {
                     }
                 }
             }
+        }
+    }
+
+    Button{
+        anchors.right: parent
+        id: button
+        state: "FULL"
+
+        states: [
+            State{
+                name: "FULL"
+                PropertyChanges { target: button; text: "FULL" }
+                PropertyChanges { target: zoom; enabled: false }
+                PropertyChanges { target: flick; contentWidth: 500; contentHeight: 500 }
+            },
+            State{
+                name: "MIN"
+                PropertyChanges { target: button; text: "MIN" }
+                PropertyChanges { target: zoom; enabled: true }
+                PropertyChanges { target: flick; contentWidth: 500; contentHeight: 500 }
+            }
+        ]
+
+        onClicked: {
+            state = state === "FULL" ? "MIN" : "FULL"
         }
     }
 
