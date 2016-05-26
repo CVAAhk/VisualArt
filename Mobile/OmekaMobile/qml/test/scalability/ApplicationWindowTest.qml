@@ -9,10 +9,20 @@ ApplicationWindow {
     title: "Omeka Mobile"
 
     width:470;
-    height:800;
+    height:800;    
 
     toolBar: ToolBar{
+
+        property HomePage home : homeTab.children[0]
+
+        state: home.scrollUp ? "hide" : home.scrollDown ? "show" : state
+        states: [
+            State{ name: "show"; PropertyChanges {target: toolBar; y:0} },
+            State{ name: "hide"; PropertyChanges {target: toolBar; y:-height} }
+        ]
+
         Button{
+            id: button
             anchors.right: parent.right
             anchors.top: parent.top
             anchors.bottom: parent.bottom
@@ -33,9 +43,11 @@ ApplicationWindow {
         Layout.preferredHeight: 800
 
         Tab{
+            id: homeTab
+            active: true
             title: "Home"
             HomePage{
-                enabled: true
+                enabled: true                
             }
         }
         Tab{
@@ -52,5 +64,4 @@ ApplicationWindow {
             }
         }
     }
-
 }

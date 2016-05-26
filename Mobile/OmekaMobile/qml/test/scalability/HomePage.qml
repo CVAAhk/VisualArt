@@ -3,18 +3,21 @@ import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.1
 
 ScrollView{
-    id: page
+    id: home
     implicitWidth: 640
     implicitHeight: 200
 
     property int size: 200
+    property bool scrollUp: flickableItem.verticalVelocity > 0
+    property bool scrollDown: flickableItem.verticalVelocity < 0
 
     horizontalScrollBarPolicy: Qt.ScrollBarAlwaysOff
+    verticalScrollBarPolicy: Qt.ScrollBarAlwaysOff
 
     Item{
         id:content
-        width: Math.max(page.viewport.width, grid.implicitWidth + 2 * grid.rowSpacing)
-        height: Math.max(page.viewport.height, grid.implicitHeight + 2 * grid.columnSpacing)
+        width: Math.max(home.viewport.width, grid.implicitWidth + 2 * grid.rowSpacing)
+        height: Math.max(home.viewport.height, grid.implicitHeight + 2 * grid.columnSpacing)
 
         GridLayout{
             id: grid
