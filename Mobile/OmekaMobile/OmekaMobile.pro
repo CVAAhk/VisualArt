@@ -37,7 +37,8 @@ DISTFILES += \
     qml/test/navigation/Ellipse.qml \
     qml/test/mvc/ListViewTest.qml \
     qml/test/viewers/ImageViewer.qml \
-    qml/test/viewers/VideoViewer.qml
+    qml/test/viewers/VideoViewer.qml \
+    qml/test/viewers/AudioViewer.qml
 
 HEADERS += \
     imageprovidertest.h
