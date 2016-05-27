@@ -9,17 +9,25 @@ ApplicationWindow {
     title: "Omeka Mobile"
 
     width:470;
-    height:800;    
+    height:800;
+
+    Binding{ target: window.contentItem.parent.anchors; property: "top"; value: toolBar.parent.bottom }
 
     toolBar: ToolBar{
 
-        property HomePage home : homeTab.children[0]
+        Component.onCompleted: {
+            print(window.__panel+" "+toolBar.parent.parent)
+        }
 
-        state: home.scrollUp ? "hide" : home.scrollDown ? "show" : state
+        state: "show"
         states: [
-            State{ name: "show"; PropertyChanges {target: toolBar; y:0} },
-            State{ name: "hide"; PropertyChanges {target: toolBar; y:-height} }
+            State{ name: "show"; AnchorChanges { target:toolBar.parent; anchors.top: parent.top; anchors.bottom: undefined } },
+            State{ name: "hide"; AnchorChanges { target:toolBar.parent; anchors.top: undefined; anchors.bottom: parent.top } }
         ]
+
+        transitions: Transition{
+            AnchorAnimation { duration: 250; easing.type: Easing.InOutQuad }
+        }
 
         Button{
             id: button
@@ -33,21 +41,27 @@ ApplicationWindow {
     TabView{
         id: tabView
 
+        Component.onCompleted: {
+            print(window.contentItem.parent.anchors.top)
+        }
+
         anchors.fill: parent
         anchors.margins: UI.margin
         tabPosition: UI.tabPosition
 
-        Layout.minimumWidth: 360
-        Layout.minimumHeight: 360
-        Layout.preferredWidth: 470
-        Layout.preferredHeight: 800
+        onCurrentIndexChanged: {
+            toolBar.state = "show"
+        }
 
         Tab{
-            id: homeTab
-            active: true
             title: "Home"
             HomePage{
-                enabled: true                
+                enabled: true
+                onStateChanged: {
+                    if(state !== "none"){
+                        toolBar.state = state === "down" ? "show" : "hide"
+                    }
+                }
             }
         }
         Tab{

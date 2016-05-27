@@ -4,15 +4,18 @@ import QtQuick.Layouts 1.1
 
 ScrollView{
     id: home
-    implicitWidth: 640
-    implicitHeight: 200
 
     property int size: 200
-    property bool scrollUp: flickableItem.verticalVelocity > 0
-    property bool scrollDown: flickableItem.verticalVelocity < 0
 
     horizontalScrollBarPolicy: Qt.ScrollBarAlwaysOff
     verticalScrollBarPolicy: Qt.ScrollBarAlwaysOff
+
+    state: scrollingUp() ? "up" : scrollingDown() ? "down" : "none"
+    states:[
+        State {name: "up" },
+        State {name: "down" },
+        State {name: "none" }
+    ]
 
     Item{
         id:content
@@ -37,5 +40,13 @@ ScrollView{
                 Rectangle{ color:"red"; radius: 10; width: size; height: size }
             }
         }
+    }
+
+    function scrollingUp(){
+        return flickableItem.dragging && flickableItem.verticalVelocity > 0
+    }
+
+    function scrollingDown(){
+        return flickableItem.dragging && flickableItem.verticalVelocity < 0
     }
 }
