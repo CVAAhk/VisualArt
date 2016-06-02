@@ -16,7 +16,8 @@ OTHER_FILES += \
     qml/js/+ios/UI.js \
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
-QML_IMPORT_PATH =
+QML_IMPORT_PATH += \
+    qml/test/styling/Style 1.0
 
 # Default rules for deployment.
 include(deployment.pri)
@@ -38,7 +39,11 @@ DISTFILES += \
     qml/test/mvc/ListViewTest.qml \
     qml/test/viewers/ImageViewer.qml \
     qml/test/viewers/VideoViewer.qml \
-    qml/test/viewers/AudioViewer.qml
+    qml/test/viewers/AudioViewer.qml \
+    qml/test/styling/StylingTest.qml \
+    qml/test/styling/Style.qml \
+    qml/test/styling/qmldir \
+    qml/test/styling/TitleText.qml
 
 HEADERS += \
     imageprovidertest.h

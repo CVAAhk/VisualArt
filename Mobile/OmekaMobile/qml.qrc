@@ -25,6 +25,11 @@
 		<file>qml/test/viewers/VideoViewer.qml</file>	
 		<file>qml/test/viewers/AudioViewer.qml</file>	
 		
+		<file>qml/test/styling/StylingTest.qml</file>	
+		<file>qml/test/styling/Style.qml</file>	
+		<file>qml/test/styling/TitleText.qml</file>	
+		<file>qml/test/styling/qmldir</file>	
+		
 		<file>qml/js/storage.js</file>
 		<file>qml/js/UI.js</file>
 		<file>qml/js/+android/UI.js</file>
