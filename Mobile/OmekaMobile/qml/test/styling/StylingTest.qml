@@ -34,4 +34,17 @@ ApplicationWindow {
         }
     }
 
+    RadioButton{
+        id:like
+        style:RadioButtonStyle{
+            indicator: BorderImage{
+                source: "../../../ui/like-indicator.png"
+                scale: scaleRatio
+                BorderImage{
+                    source: "../../../ui/like-fill.png"
+                    visible: like.checked
+                }
+            }
+        }
+    }
 }

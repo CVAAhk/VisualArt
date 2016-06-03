@@ -37,6 +37,8 @@
 		
 		<file>ui/settings.png</file>
 		<file>ui/logo.png</file>
+		<file>ui/like-indicator.png</file>
+		<file>ui/like-fill.png</file>
 				
     </qresource>
 </RCC>
