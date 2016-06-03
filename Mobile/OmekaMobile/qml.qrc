@@ -39,6 +39,12 @@
 		<file>ui/logo.png</file>
 		<file>ui/like-indicator.png</file>
 		<file>ui/like-fill.png</file>
+		<file>ui/home-off.png</file>
+		<file>ui/home-on.png</file>
+		<file>ui/search-off.png</file>
+		<file>ui/search-on.png</file>
+		<file>ui/likes-off.png</file>
+		<file>ui/likes-on.png</file>
 				
     </qresource>
 </RCC>

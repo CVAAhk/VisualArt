@@ -34,15 +34,45 @@ ApplicationWindow {
         }
     }
 
-    RadioButton{
-        id:like
-        style:RadioButtonStyle{
-            indicator: BorderImage{
-                source: "../../../ui/like-indicator.png"
-                scale: scaleRatio
-                BorderImage{
-                    source: "../../../ui/like-fill.png"
-                    visible: like.checked
+    TabView{
+        id: tabView
+        anchors.fill: parent
+        tabPosition: Qt.BottomEdge
+
+        Tab{
+            Rectangle{
+                color: Style.backgroundColor
+                Button{
+                    id:like
+                    scale: scaleRatio
+                    checkable: true
+                    style: ButtonStyle{
+                        background: Image{
+                            source: "../../../ui/like-indicator.png"
+                            Image{
+                                source: "../../../ui/like-fill.png"
+                                visible: like.checked
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        Tab{ }
+        Tab{ }
+
+        style: TabViewStyle{
+            frameOverlap: 0
+            tabsAlignment: Qt.AlignHCenter
+            tab: Rectangle{
+                color: styleData.selected ? Style.tabSelected : Style.tabDefault
+                implicitWidth: window.width/3
+                implicitHeight: toolBar.implicitHeight
+                Image{
+                    z: 1
+                    scale: scaleRatio
+                    source:"../../../ui/home-on.png"
                 }
             }
         }
