@@ -59,20 +59,32 @@ ApplicationWindow {
             }
         }
 
-        Tab{ }
-        Tab{ }
+        Tab{ Rectangle{ color:Style.backgroundColor} }
+        Tab{ Rectangle{ color:Style.backgroundColor} }
 
         style: TabViewStyle{
             frameOverlap: 0
             tabsAlignment: Qt.AlignHCenter
+            property var icons: ["home", "search", "likes"]
+
             tab: Rectangle{
                 color: styleData.selected ? Style.tabSelected : Style.tabDefault
                 implicitWidth: window.width/3
                 implicitHeight: toolBar.implicitHeight
-                Image{
-                    z: 1
-                    scale: scaleRatio
-                    source:"../../../ui/home-on.png"
+
+                Item{
+                    anchors.centerIn: parent
+                    width: childrenRect.width
+                    height: childrenRect.height
+                    scale: (parent.height*.56)/height
+                    Image{
+                        source: "../../../ui/"+icons[styleData.index]+"-off.png"
+                        visible: !styleData.selected
+                    }
+                    Image{
+                        source: "../../../ui/"+icons[styleData.index]+"-on.png"
+                        visible: styleData.selected
+                    }
                 }
             }
         }
