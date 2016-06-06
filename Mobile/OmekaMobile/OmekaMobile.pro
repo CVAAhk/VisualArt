@@ -21,7 +21,9 @@ OTHER_FILES += \
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH += \
-    qml/test/styling/Style 1.0
+    qml/test/styling/Style 1.0 \
+    qml/utils/Resolution 1.0 \
+    qml/utils/Style 1.0 \
 
 # Default rules for deployment.
 include(deployment.pri)
@@ -47,7 +49,10 @@ DISTFILES += \
     qml/test/styling/StylingTest.qml \
     qml/test/styling/Style.qml \
     qml/test/styling/qmldir \
-    qml/test/styling/TitleText.qml
+    qml/test/styling/TitleText.qml \
+    qml/utils/ResolutionManager.qml \
+    qml/app/AppToolBar.qml \
+    qml/app/AppNavigation.qml
 
 HEADERS += \
     imageprovidertest.h

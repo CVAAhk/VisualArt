@@ -5,30 +5,30 @@
 		<file>qml/test/scalability/ApplicationWindowTest.qml</file>
 		<file>qml/test/scalability/HomePage.qml</file>
 		<file>qml/test/scalability/SearchPage.qml</file>
-		<file>qml/test/scalability/LikesPage.qml</file>
-		
+		<file>qml/test/scalability/LikesPage.qml</file>		
 		<file>qml/test/mvc/PathViewTest.qml</file>	
 		<file>qml/test/mvc/ListViewTest.qml</file>		
 		<file>qml/test/mvc/GridViewTest.qml</file>
-		<file>qml/test/mvc/ContactModel.qml</file>	
-		
-		<file>qml/test/providers/ImageProviderApp.qml</file>	
-		
-		<file>qml/test/client/TestClient.qml</file>	
-		
-		<file>qml/test/settings/LikesTest.qml</file>	
-		
+		<file>qml/test/mvc/ContactModel.qml</file>			
+		<file>qml/test/providers/ImageProviderApp.qml</file>			
+		<file>qml/test/client/TestClient.qml</file>			
+		<file>qml/test/settings/LikesTest.qml</file>			
 		<file>qml/test/navigation/Carousel.qml</file>	
-		<file>qml/test/navigation/Ellipse.qml</file>	
-		
+		<file>qml/test/navigation/Ellipse.qml</file>			
 		<file>qml/test/viewers/ImageViewer.qml</file>	
 		<file>qml/test/viewers/VideoViewer.qml</file>	
-		<file>qml/test/viewers/AudioViewer.qml</file>	
-		
+		<file>qml/test/viewers/AudioViewer.qml</file>			
 		<file>qml/test/styling/StylingTest.qml</file>	
 		<file>qml/test/styling/Style.qml</file>	
 		<file>qml/test/styling/TitleText.qml</file>	
 		<file>qml/test/styling/qmldir</file>	
+		
+		<file>qml/utils/ResolutionManager.qml</file>			
+		<file>qml/utils/Style.qml</file>			
+		<file>qml/utils/qmldir</file>	
+		
+		<file>qml/app/AppToolBar.qml</file>			
+		<file>qml/app/AppNavigation.qml</file>			
 		
 		<file>qml/js/storage.js</file>
 		<file>qml/js/UI.js</file>
