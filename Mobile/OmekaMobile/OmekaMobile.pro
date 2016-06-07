@@ -51,8 +51,10 @@ DISTFILES += \
     qml/test/styling/qmldir \
     qml/test/styling/TitleText.qml \
     qml/utils/ResolutionManager.qml \
+    qml/utils/Style.qml \
     qml/app/AppToolBar.qml \
-    qml/app/AppNavigation.qml
+    qml/app/AppNavigation.qml \
+    qml/app/settings/SettingsButton.qml
 
 HEADERS += \
     imageprovidertest.h

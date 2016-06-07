@@ -31,6 +31,7 @@ ApplicationWindow {
             anchors.centerIn: parent
             text: "Styles Test"
             font.pixelSize: Style.titleFontSize * scaleRatio
+            color: Style.titleColor
         }
     }
 
