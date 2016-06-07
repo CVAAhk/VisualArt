@@ -2,16 +2,19 @@ import QtQuick 2.0
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import "../utils"
+import "home"
 
 TabView {
     property real targetHeight: 192
     anchors.fill: parent
     tabPosition: Qt.BottomEdge
 
-    Tab{}
+    //main pages
+    Tab{ Home{ enabled: true } }
     Tab{}
     Tab{}
 
+    //custom style
     style: TabViewStyle {
         frameOverlap: 0
         tabsAlignment: Qt.AlignHCenter

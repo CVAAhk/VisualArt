@@ -13,6 +13,5 @@ ApplicationWindow {
         Resolution.appWindow = root
     }
 
-    toolBar: AppToolBar { }
     AppNavigation {}
 }

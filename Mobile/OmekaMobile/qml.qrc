@@ -26,11 +26,11 @@
 		<file>qml/utils/ResolutionManager.qml</file>			
 		<file>qml/utils/Style.qml</file>			
 		<file>qml/utils/qmldir</file>	
-		
-		<file>qml/app/AppToolBar.qml</file>			
+			
 		<file>qml/app/AppNavigation.qml</file>	
-
-		<file>qml/app/settings/SettingsButton.qml</file>			
+		<file>qml/app/settings/SettingsButton.qml</file>					
+		<file>qml/app/home/Home.qml</file>					
+		<file>qml/app/home/HomeToolBar.qml</file>					
 		
 		<file>qml/js/storage.js</file>
 		<file>qml/js/UI.js</file>
