@@ -1,7 +1,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
-import "../../utils"
+import "../../../utils"
 
 Button {
     anchors.verticalCenter: parent.verticalCenter
@@ -13,7 +13,7 @@ Button {
         anchors.centerIn: parent
         width: parent.width * .65
         height: parent.height * .65
-        source: "../../../ui/settings.png"
+        source: "../../../../ui/settings.png"
     }
 
     style: ButtonStyle{

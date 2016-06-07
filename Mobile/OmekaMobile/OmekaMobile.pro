@@ -53,9 +53,12 @@ DISTFILES += \
     qml/utils/ResolutionManager.qml \
     qml/utils/Style.qml \
     qml/app/AppNavigation.qml \
-    qml/app/settings/SettingsButton.qml \
     qml/app/home/Home.qml \
-    qml/app/home/HomeToolBar.qml
+    qml/app/home/settings/SettingsButton.qml \
+    qml/app/home/settings/SettingsBar.qml \
+    qml/app/home/settings/Settings.qml \
+    qml/app/home/detail/Detail.qml \
+    qml/app/home/gallery/Gallery.qml
 
 HEADERS += \
     imageprovidertest.h

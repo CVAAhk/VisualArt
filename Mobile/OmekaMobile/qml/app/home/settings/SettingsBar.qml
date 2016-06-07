@@ -1,12 +1,14 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
-import "../../utils"
+import "../../../utils"
 import "../settings"
 
 ToolBar {
+    id: root
     property real targetHeight: 192
     implicitHeight: targetHeight * Resolution.scaleRatio
+    signal activated()
 
     //background style
     style: ToolBarStyle{
@@ -18,12 +20,12 @@ ToolBar {
     }
 
     //app settings
-    SettingsButton{ }
+    SettingsButton{ onClicked: root.activated()}
 
     //endpoint logo
     BorderImage{
         anchors.centerIn: parent
         scale: (parent.height * .8)/height
-        source: "../../../ui/logo.png"
+        source: "../../../../ui/logo.png"
     }
 }
