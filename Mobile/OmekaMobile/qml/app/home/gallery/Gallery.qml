@@ -2,14 +2,19 @@ import QtQuick 2.0
 import QtQuick.Layouts 1.1
 import "../settings"
 
+/*!Top level media viewer*/
 Item {
     Column{
         anchors.fill: parent
         spacing: 0
-        SettingsBar{
+
+        /*!Display logo and settings entry*/
+        BrandBar{
             id: bar
             onActivated: if(stack) stack.push(Qt.resolvedUrl("../settings/Settings.qml"))
         }
+
+        /*!Item browser*/
         Rectangle{
             color: "black"
             width: parent.width

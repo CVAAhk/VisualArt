@@ -54,11 +54,12 @@ DISTFILES += \
     qml/utils/Style.qml \
     qml/app/AppNavigation.qml \
     qml/app/home/Home.qml \
-    qml/app/home/settings/SettingsButton.qml \
-    qml/app/home/settings/SettingsBar.qml \
     qml/app/home/settings/Settings.qml \
     qml/app/home/detail/Detail.qml \
-    qml/app/home/gallery/Gallery.qml
+    qml/app/home/gallery/Gallery.qml \
+    qml/app/home/settings/BrandBar.qml \
+    qml/app/AppToolBar.qml \
+    qml/app/ToolBarButton.qml
 
 HEADERS += \
     imageprovidertest.h

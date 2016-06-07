@@ -28,9 +28,10 @@
 		<file>qml/utils/qmldir</file>	
 			
 		<file>qml/app/AppNavigation.qml</file>					
+		<file>qml/app/AppToolBar.qml</file>									
+		<file>qml/app/ToolBarButton.qml</file>									
 		<file>qml/app/home/Home.qml</file>										
-		<file>qml/app/home/settings/SettingsButton.qml</file>										
-		<file>qml/app/home/settings/SettingsBar.qml</file>										
+		<file>qml/app/home/settings/BrandBar.qml</file>																					
 		<file>qml/app/home/settings/Settings.qml</file>										
 		<file>qml/app/home/gallery/Gallery.qml</file>										
 		<file>qml/app/home/detail/Detail.qml</file>										
@@ -41,6 +42,7 @@
 		<file>qml/js/+ios/UI.js</file>
 		
 		<file>ui/settings.png</file>
+		<file>ui/back.png</file>
 		<file>ui/logo.png</file>
 		<file>ui/like-indicator.png</file>
 		<file>ui/like-fill.png</file>

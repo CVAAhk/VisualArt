@@ -25,7 +25,7 @@ TabView {
 
         //tab background
         tab:Rectangle{
-            color: styleData.selected ? Style.tabSelected : Style.tabDefault
+            color: styleData.selected ? Style.selectedColor : Style.releasedColor
             implicitWidth: Resolution.appWidth/3
             implicitHeight: targetHeight * Resolution.scaleRatio
 
