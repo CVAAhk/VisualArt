@@ -1,9 +1,22 @@
 import QtQuick 2.0
 import QtQuick.Layouts 1.1
 import "../settings"
+import "../../../utils"
 
 /*!Top level media viewer*/
 Item {
+
+    Connections {
+        target: Omeka
+        onResultComplete:{
+            print("results: "+result)
+        }
+    }
+
+    Component.onCompleted: {
+        Omeka.getPage(1)
+    }
+
     Column{
         anchors.fill: parent
         spacing: 0
