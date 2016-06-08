@@ -59,7 +59,9 @@ DISTFILES += \
     qml/app/home/gallery/Gallery.qml \
     qml/app/home/settings/BrandBar.qml \
     qml/app/AppToolBar.qml \
-    qml/app/ToolBarButton.qml
+    qml/app/ToolBarButton.qml \
+    qml/app/home/settings/SettingsModel.qml \
+    qml/app/home/settings/SettingsDelegate.qml
 
 HEADERS += \
     imageprovidertest.h
