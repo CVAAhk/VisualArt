@@ -9,7 +9,7 @@ Item {
     Connections {
         target: Omeka
         onResultComplete:{
-            print("results: "+result)
+            print("results: "+result.metadata)
         }
     }
 
