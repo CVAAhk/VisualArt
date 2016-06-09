@@ -15,10 +15,6 @@ ApplicationWindow {
 
     toolBar: ToolBar{
 
-        Component.onCompleted: {
-            print(window.__panel+" "+toolBar.parent.parent)
-        }
-
         state: "show"
         states: [
             State{ name: "show"; AnchorChanges { target:toolBar.parent; anchors.top: parent.top; anchors.bottom: undefined } },
@@ -40,10 +36,6 @@ ApplicationWindow {
 
     TabView{
         id: tabView
-
-        Component.onCompleted: {
-            print(window.contentItem.parent.anchors.top)
-        }
 
         anchors.fill: parent
         anchors.margins: UI.margin

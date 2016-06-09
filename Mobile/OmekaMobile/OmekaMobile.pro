@@ -1,6 +1,10 @@
 TEMPLATE = app
 
-QT += qml quick
+QT += qml quick\
+    xml svg
+
+QTPLUGIN += qsvg
+
 CONFIG += c++11
 
 SOURCES += main.cpp \
@@ -17,7 +21,10 @@ OTHER_FILES += \
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH += \
-    qml/test/styling/Style 1.0
+    qml/test/styling/Style 1.0 \
+    qml/utils/Resolution 1.0 \
+    qml/utils/Style 1.0 \
+    qml/utils/Omeka 1.0
 
 # Default rules for deployment.
 include(deployment.pri)
@@ -43,7 +50,20 @@ DISTFILES += \
     qml/test/styling/StylingTest.qml \
     qml/test/styling/Style.qml \
     qml/test/styling/qmldir \
-    qml/test/styling/TitleText.qml
+    qml/test/styling/TitleText.qml \
+    qml/utils/ResolutionManager.qml \
+    qml/utils/Style.qml \
+    qml/app/AppNavigation.qml \
+    qml/app/home/Home.qml \
+    qml/app/home/settings/Settings.qml \
+    qml/app/home/detail/Detail.qml \
+    qml/app/home/gallery/Gallery.qml \
+    qml/app/home/settings/BrandBar.qml \
+    qml/app/AppToolBar.qml \
+    qml/app/ToolBarButton.qml \
+    qml/app/home/settings/SettingsModel.qml \
+    qml/app/home/settings/SettingsDelegate.qml \
+    qml/utils/OmekaClient.qml
 
 HEADERS += \
     imageprovidertest.h

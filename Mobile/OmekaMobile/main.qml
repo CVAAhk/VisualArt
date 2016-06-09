@@ -1,18 +1,17 @@
 import QtQuick 2.4
-import QtQuick.Window 2.2
+import QtQuick.Controls 1.4
+import "qml/utils"
+import "qml/app"
 
-Window {
+ApplicationWindow {
+    id: root
     visible: true
+    width: 470; height: 804
+    title: "Omeka Mobile"
 
-    MouseArea {
-        anchors.fill: parent
-        onClicked: {
-            Qt.quit();
-        }
+    Component.onCompleted: {
+        Resolution.appWindow = root
     }
 
-    Text {
-        text: qsTr("Hello World")
-        anchors.centerIn: parent
-    }
+    AppNavigation {}
 }
