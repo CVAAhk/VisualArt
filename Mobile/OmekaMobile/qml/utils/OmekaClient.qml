@@ -4,21 +4,18 @@ import "../app/home/gallery"
 
 Item {
     /*! \qmlproperty
-        Target omeka endpoint url
-    */
+        Target omeka endpoint url*/
     property url endpoint: "http://mallhistory.org/api/"    
     /*! \qmlproperty
-        Current page number
-    */
+        Current page number*/
     property int currentPage: 0    
     /*! \qmlsignal
-        Invoked on query result
-    */
-    signal resultComplete(var result)    
-    /*! \internal
-        Data object used to pair file and item data
-    */
-    property var data: ({})
+        Invoked on query result*/
+    signal requestComplete(var result)
+
+    //data types
+    property int file: 0
+    property int metadata: 1
 
 
     /*! \internal */
@@ -45,40 +42,39 @@ Item {
     }
 
     /*! \internal
-        Collect corresponding item and file data. Send result when both data types
-        have been paired.
-    */
+        Generate and send data objects to registered handlers*/
     function processResult(result){
+        var count = result.length || 1;
         var res;
 
-        for(var i=0; i<result.length; i++){
-            res = result[i];           
-            if(!res.item){  //item data
-                data[res.id] = {id:res.id, metadata: res.element_texts};
-                submitRequest(res.files.url);
+        for(var i=0; i<count; i++){
+            res = result[i] || result;
+            if(res.item){
+                requestComplete({id: res.item.id, type: file, image: res.file_urls.original, thumb: res.file_urls.thumbnail});
             }
-            else{   //file data
-                data[res.item.id]["image"] = res.file_urls.original;
-                data[res.item.id]["thumb"] = res.file_urls.thumb;
-                resultComplete(data[res.item.id]);
-                delete data[res.item.id];
+            else {
+                requestComplete({id: res.id, type: metadata, metadata: res.element_texts});
             }
         }
     }
 
     /*! \qmlmethod
-        Query specified page
-    */
+        Query specified page*/
     function getPage(page){
-        submitRequest(endpoint+"items?page="+page);
+        submitRequest(endpoint+"files?page="+page);
         currentPage = page;
     }
 
     /*! \qmlmethod
-        Query next page
-    */
+        Query next page*/
     function getNextPage(){
         currentPage++
         getPage(currentPage)
+    }
+
+    /*! \qmlmethod
+        Query meta data of specified item*/
+    function getMetaData(id){
+        submitRequest(endpoint+"items/"+id);
     }
 }
