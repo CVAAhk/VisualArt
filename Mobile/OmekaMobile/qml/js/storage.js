@@ -98,8 +98,8 @@ function drop(table) {
     return res;
 }
 
-function addLike(id) {
-    set(LIKES, id, 1);
+function addLike(id, value) {
+    set(LIKES, id, value);
 }
 
 function removeLike(id) {
@@ -108,4 +108,8 @@ function removeLike(id) {
 
 function isLiked(id) {
     return get(LIKES, id) !== 0;
+}
+
+function getLikes() {
+    return rows(LIKES);
 }

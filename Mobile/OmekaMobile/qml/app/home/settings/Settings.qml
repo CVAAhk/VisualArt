@@ -4,17 +4,17 @@ import QtQuick.Controls.Styles 1.4
 import "../../../app"
 import "../../../utils"
 
-/*!Application level settings*/
-Item{
+/*!User settings*/
+Item {
 
-    Column{
+    Column {
         anchors.fill: parent
         spacing: 0
 
         /*!Settings header and back button*/
-        AppToolBar{
+        AppToolBar {
             id: bar
-            Text{
+            Text {
                 anchors.centerIn: parent
                 text: "SETTINGS"
                 font.bold: true
@@ -22,7 +22,7 @@ Item{
                 color: Style.titleColor
             }
 
-            ToolBarButton{
+            ToolBarButton {
                 anchors.right: undefined
                 icon: "../../../../ui/back.png"
                 iconScale: .55
@@ -31,12 +31,12 @@ Item{
             }
         }
 
-        ScrollView{
+        ScrollView {
             width: parent.width
             height: parent.height - bar.height
             verticalScrollBarPolicy: Qt.ScrollBarAlwaysOff
 
-            ListView{
+            ListView {
                 anchors.fill: parent
                 model: SettingsModel{}
                 delegate: SettingsDelegate{}
