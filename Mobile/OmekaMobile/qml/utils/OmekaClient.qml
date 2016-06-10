@@ -50,7 +50,7 @@ Item {
         for(var i=0; i<count; i++){
             res = result[i] || result;
             if(res.item){
-                requestComplete({id: res.item.id, type: file, image: res.file_urls.original, thumb: res.file_urls.thumbnail});
+                requestComplete({id: res.item.id, type: file, image: res.file_urls.original});
             }
             else {
                 requestComplete({id: res.id, type: metadata, metadata: res.element_texts});
