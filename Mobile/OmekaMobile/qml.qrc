@@ -25,7 +25,7 @@
 		
 		<file>qml/utils/ResolutionManager.qml</file>			
 		<file>qml/utils/Style.qml</file>			
-		<file>qml/utils/OmekaClient.qml</file>			
+		<file>qml/utils/OmekaClient.qml</file>					
 		<file>qml/utils/qmldir</file>	
 			
 		<file>qml/app/AppNavigation.qml</file>					
@@ -33,7 +33,7 @@
 		<file>qml/app/ToolBarButton.qml</file>									
 		<file>qml/app/home/Home.qml</file>										
 		<file>qml/app/home/settings/BrandBar.qml</file>																					
-		<file>qml/app/home/settings/SettingsPage.qml</file>										
+		<file>qml/app/home/settings/Settings.qml</file>										
 		<file>qml/app/home/settings/SettingsModel.qml</file>										
 		<file>qml/app/home/settings/SettingsDelegate.qml</file>										
 		<file>qml/app/home/gallery/Gallery.qml</file>																			
