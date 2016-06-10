@@ -1,3 +1,5 @@
+var LIKES = "likes"
+
 function getDatabase() {
      return LocalStorage.openDatabaseSync("omekamobile", "0.1", "settings", 1000000);
 }
@@ -42,11 +44,11 @@ function get(table, setting) {
          if (rs.rows.length > 0) {
               res = rs.rows.item(0).value;
          } else {
-             res = default_value;
+             res = 0;
          }
       })
    } catch (err) {
-       res = default_value;
+       res = 0;
    };
   return res
 }
@@ -94,4 +96,16 @@ function drop(table) {
         }
     });
     return res;
+}
+
+function addLike(id) {
+    set(LIKES, id, 1);
+}
+
+function removeLike(id) {
+    remove(LIKES, id);
+}
+
+function isLiked(id) {
+    return get(LIKES, id) !== 0;
 }

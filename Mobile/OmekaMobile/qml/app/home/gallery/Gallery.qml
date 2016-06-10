@@ -11,11 +11,11 @@ Item {
         target: Omeka
         onRequestComplete:{
             if(result.type === Omeka.file){
-                list.model.append(result)
-                Omeka.getMetaData(result.id)
+                grid.model.append(result)
+              //  Omeka.getMetaData(result.id)
             }
             else{
-                print(result.id)
+                //print(result.id)
             }
         }
     }
@@ -43,11 +43,16 @@ Item {
             height: parent.height - bar.height
             verticalScrollBarPolicy: Qt.ScrollBarAlwaysOff
 
-            ListView{
-                id: list
-                anchors.fill: parent
+            GridView{
+                id: grid
+                anchors.horizontalCenter: parent.horizontalCenter
+                maximumFlickVelocity: 8000 * Resolution.scaleRatio
+                flickDeceleration: 4500 * Resolution.scaleRatio
+                cellWidth: width/Math.floor(width/(Math.floor(478 * Resolution.scaleRatio)))
+                cellHeight: cellWidth
+                cacheBuffer: cellHeight * 10
                 model: ListModel{}
-                delegate: Text { text: thumb }
+                delegate: OmekaItem{}
             }
         }
     }

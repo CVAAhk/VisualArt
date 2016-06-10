@@ -24,7 +24,7 @@ QML_IMPORT_PATH += \
     qml/test/styling/Style 1.0 \
     qml/utils/Resolution 1.0 \
     qml/utils/Style 1.0 \
-    qml/utils/Omeka 1.0
+    qml/utils/Omeka 1.0 \
 
 # Default rules for deployment.
 include(deployment.pri)
@@ -55,7 +55,6 @@ DISTFILES += \
     qml/utils/Style.qml \
     qml/app/AppNavigation.qml \
     qml/app/home/Home.qml \
-    qml/app/home/settings/Settings.qml \
     qml/app/home/detail/Detail.qml \
     qml/app/home/gallery/Gallery.qml \
     qml/app/home/settings/BrandBar.qml \
@@ -63,7 +62,9 @@ DISTFILES += \
     qml/app/ToolBarButton.qml \
     qml/app/home/settings/SettingsModel.qml \
     qml/app/home/settings/SettingsDelegate.qml \
-    qml/utils/OmekaClient.qml
+    qml/utils/OmekaClient.qml \
+    qml/app/home/gallery/OmekaItem.qml \
+    qml/app/home/settings/Settings.qml
 
 HEADERS += \
     imageprovidertest.h
