@@ -37,8 +37,10 @@
 		<file>qml/app/home/settings/SettingsModel.qml</file>										
 		<file>qml/app/home/settings/SettingsDelegate.qml</file>										
 		<file>qml/app/home/gallery/Gallery.qml</file>																			
+		<file>qml/app/home/gallery/Browser.qml</file>																			
 		<file>qml/app/home/gallery/OmekaItem.qml</file>																			
 		<file>qml/app/home/detail/Detail.qml</file>										
+		<file>qml/app/likes/Likes.qml</file>										
 		
 		<file>qml/js/storage.js</file>
 		<file>qml/js/UI.js</file>

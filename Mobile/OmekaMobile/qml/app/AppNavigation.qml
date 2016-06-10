@@ -3,6 +3,7 @@ import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import "../utils"
 import "home"
+import "likes"
 
 TabView {
     property real targetHeight: 192
@@ -10,9 +11,9 @@ TabView {
     tabPosition: Qt.BottomEdge
 
     //main pages
-    Tab{ Home{ enabled: true } }
+    Tab{ Home { enabled: true } }
     Tab{}
-    Tab{}
+    Tab{ Likes { enabled: true } }
 
     //custom style
     style: TabViewStyle {

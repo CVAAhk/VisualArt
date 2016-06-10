@@ -45,7 +45,7 @@ Component {
             }
             onClicked: {
                 if(checked){
-                    Settings.addLike(item)
+                    Settings.addLike(item, img.source)
                 }
                 else{
                     Settings.removeLike(item)
