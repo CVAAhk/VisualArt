@@ -26,14 +26,15 @@ Component {
             onClicked: if(stack) stack.push(Qt.resolvedUrl("../detail/Detail.qml"))
         }
 
-        /* registers like and unlikes */
+        /*! registers like and unlikes */
         Button{
             id: like
             visible: img.progress === 1
             scale: Resolution.scaleRatio
             anchors.right: parent.right
             checkable: true
-            checked: Settings.isLiked(item)
+
+            //custom style
             style: ButtonStyle {
                 background: Image{
                     source: "../../../../ui/like-indicator.png"
@@ -43,6 +44,11 @@ Component {
                     }
                 }
             }
+
+            //bind initial checked state to likes entry
+            onVisibleChanged: checked = Settings.isLiked(item)
+
+            //add or remove data entry based on checked state
             onClicked: {
                 if(checked){
                     Settings.addLike(item, img.source)
