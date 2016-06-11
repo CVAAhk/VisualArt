@@ -6,23 +6,19 @@ import "../../../utils"
 /*!Media viewer*/
 Item {
 
+    /*!Load first page*/
+    Component.onCompleted: {
+        Omeka.getPage(1)
+    }
+
     /*!Dynamically load omeka query results into browser*/
     Connections {
         target: Omeka
         onRequestComplete:{
             if(result.type === Omeka.file){
                 browser.append(result)
-              //  Omeka.getMetaData(result.id)
-            }
-            else{
-                //print(result.id)
             }
         }
-    }
-
-    /*!Load first page*/
-    Component.onCompleted: {
-        Omeka.getPage(1)
     }
 
     /*!Gallery display*/
@@ -37,6 +33,12 @@ Item {
         }
 
         /*!Scroll through items*/
-        Browser { id: browser }
+        ItemBrowser {
+            id: browser
+            onCanPaginate: {
+                Omeka.getNextPage()
+            }
+        }
     }
+
 }

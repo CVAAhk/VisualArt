@@ -66,7 +66,8 @@ DISTFILES += \
     qml/app/home/gallery/OmekaItem.qml \
     qml/app/home/settings/Settings.qml \
     qml/app/likes/Likes.qml \
-    qml/app/home/gallery/Browser.qml
+    qml/app/home/gallery/Browser.qml \
+    qml/app/home/gallery/ItemBrowser.qml
 
 HEADERS += \
     imageprovidertest.h

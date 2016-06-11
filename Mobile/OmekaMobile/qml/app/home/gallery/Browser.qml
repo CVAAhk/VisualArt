@@ -3,13 +3,15 @@ import QtQuick.Controls 1.4
 import "../../../utils"
 
 /*! Item browser component */
-ScrollView{
+ScrollView {
     width: parent.width
     height: parent.height - bar.height
     verticalScrollBarPolicy: Qt.ScrollBarAlwaysOff
 
+    property GridView grid: grid
+
     /*! Grid layout */
-    GridView{
+    GridView {
         id: grid
         anchors.horizontalCenter: parent.horizontalCenter
         maximumFlickVelocity: 8000 * Resolution.scaleRatio
@@ -22,12 +24,12 @@ ScrollView{
     }
 
     /*! Add item from browser */
-    function append(item){
+    function append(item) {
         grid.model.append(item);
     }
 
     /*! Clear browser */
-    function clear(){
+    function clear() {
         grid.model.clear();
     }
 }
