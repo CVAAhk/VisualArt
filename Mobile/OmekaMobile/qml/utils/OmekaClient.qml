@@ -16,6 +16,7 @@ Item {
     //data types
     property int file: 0
     property int metadata: 1
+    property int tag: 2
 
 
     /*! \internal */
@@ -52,8 +53,11 @@ Item {
             if(res.item){
                 requestComplete({item: res.item.id, type: file, image: res.file_urls.original, full: res.file_urls.fullsize});
             }
-            else {
+            else if(res.element_texts){
                 requestComplete({item: res.id, type: metadata, metadata: res.element_texts});
+            }
+            else{
+                requestComplete({item: res.id, type: tag, tag: res.name});
             }
         }
     }
@@ -76,5 +80,9 @@ Item {
         Query meta data of specified item*/
     function getMetaData(id){
         submitRequest(endpoint+"items/"+id);
+    }
+
+    function getTags(){
+        submitRequest(endpoint+"tags")
     }
 }

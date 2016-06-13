@@ -67,7 +67,9 @@ DISTFILES += \
     qml/app/home/settings/Settings.qml \
     qml/app/likes/Likes.qml \
     qml/app/home/gallery/Browser.qml \
-    qml/app/home/gallery/ItemBrowser.qml
+    qml/app/home/gallery/ItemBrowser.qml \
+    qml/app/search/Search.qml \
+    qml/app/search/SearchDelegate.qml
 
 HEADERS += \
     imageprovidertest.h

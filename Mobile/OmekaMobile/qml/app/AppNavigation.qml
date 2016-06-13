@@ -3,6 +3,7 @@ import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import "../utils"
 import "home"
+import "search"
 import "likes"
 
 TabView {
@@ -12,7 +13,7 @@ TabView {
 
     //main pages
     Tab{ Home { enabled: true } }
-    Tab{}
+    Tab{ Search { enabled: true} }
     Tab{ Likes { enabled: true } }
 
     //custom style
