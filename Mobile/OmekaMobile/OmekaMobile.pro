@@ -25,6 +25,7 @@ QML_IMPORT_PATH += \
     qml/utils/Resolution 1.0 \
     qml/utils/Style 1.0 \
     qml/utils/Omeka 1.0 \
+    qml/utils/ItemManager 1.0 \
 
 # Default rules for deployment.
 include(deployment.pri)
@@ -69,7 +70,9 @@ DISTFILES += \
     qml/app/home/gallery/Browser.qml \
     qml/app/home/gallery/ItemBrowser.qml \
     qml/app/search/Search.qml \
-    qml/app/search/SearchDelegate.qml
+    qml/app/search/SearchDelegate.qml \
+    qml/app/home/BackButton.qml \
+    qml/utils/ItemManager.qml
 
 HEADERS += \
     imageprovidertest.h

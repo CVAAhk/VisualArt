@@ -6,7 +6,6 @@ import "../utils"
 /*!Toolbar button*/
 Button {
     anchors.verticalCenter: parent.verticalCenter
-    anchors.right: parent.right
     height: parent.height
     width: parent.height
 

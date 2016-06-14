@@ -6,6 +6,8 @@ import "../../../utils"
 /*!Media viewer*/
 Item {
 
+    property variant current
+
     /*!Load first page*/
     Component.onCompleted: {
         Omeka.getPage(1)

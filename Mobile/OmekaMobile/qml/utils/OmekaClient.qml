@@ -1,6 +1,5 @@
 pragma Singleton
 import QtQuick 2.0
-import "../app/home/gallery"
 
 Item {
     /*! \qmlproperty
@@ -8,7 +7,7 @@ Item {
     property url endpoint: "http://mallhistory.org/api/"    
     /*! \qmlproperty
         Current page number*/
-    property int currentPage: 0    
+    property int currentPage: 0
     /*! \qmlsignal
         Invoked on query result*/
     signal requestComplete(var result)

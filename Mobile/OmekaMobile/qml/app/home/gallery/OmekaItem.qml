@@ -2,6 +2,7 @@ import QtQuick 2.5
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import QtQuick.LocalStorage 2.0
+import "../gallery"
 import "../../../utils"
 import "../../../js/storage.js" as Settings
 
@@ -9,6 +10,26 @@ import "../../../js/storage.js" as Settings
 Component {
     Item{
         width: grid.cellWidth; height: grid.cellHeight
+        property variant itemData: ({})
+
+        /*! query metadata */
+        Component.onCompleted: {
+            itemData.id = item
+            itemData.full = full
+            itemData.image = image
+            Omeka.getMetaData(item)
+        }
+
+        /*! load metadata */
+        Connections {
+            target: Omeka
+            onRequestComplete: {
+               if(result.item === itemData.id && result.type === Omeka.metadata) {
+                   itemData.metadata = result.metadata
+                   target = null
+               }
+            }
+        }
 
         /*! media thumbnail */
         Image{
@@ -23,7 +44,12 @@ Component {
         /*! loads detailed view */
         MouseArea{
             anchors.fill: parent
-            onClicked: if(stack) stack.push(Qt.resolvedUrl("../detail/Detail.qml"))
+            onClicked: {
+                ItemManager.current = itemData
+                if(stack){
+                    stack.push(Qt.resolvedUrl("../detail/Detail.qml"))
+                }
+            }
         }
 
         /*! registers like and unlikes */

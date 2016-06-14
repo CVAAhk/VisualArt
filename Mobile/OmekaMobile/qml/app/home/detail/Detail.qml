@@ -1,18 +1,95 @@
-import QtQuick 2.0
+import QtQuick 2.5
+import QtQuick.Controls 1.4
+import QtQuick.Layouts 1.1
+import "../../home"
+import "../../../app"
+import "../../../utils"
 
-Rectangle {
+Item {
     width: parent.width
     height: parent.height
-    color: "blue"
 
-    Text{
-        anchors.centerIn: parent
-        color: "white"
-        text: "Image ID"
-    }
+    ScrollView {
+        width: parent.width
+        height: parent.height
+        verticalScrollBarPolicy: Qt.ScrollBarAlwaysOff
 
-    MouseArea{
-        anchors.fill: parent
-        onClicked: if(stack) stack.pop()
+        property variant item: ItemManager.current
+
+        Component.onCompleted: {
+            image.source = item.image
+
+            info.text = ""
+            if(item.metadata){
+                var element
+                var metadata = ""
+                for(var i=0; i<item.metadata.length; i++) {
+                    element = item.metadata[i];
+                    metadata += "<p><b>"+element.element.name+"</b><br/>"+element.text+"</p>"
+                }
+                info.text = metadata
+            }
+        }
+
+        Item {            
+            width: parent.parent.width
+            height: content.height + margins
+            property real margins: 10
+
+            Rectangle {
+                id: background
+                anchors.fill: content
+                radius: 10
+            }
+
+            Item {
+                id: content
+                width: parent.width - 2*parent.margins
+                height: childrenRect.height
+                y:  parent.margins
+                anchors.horizontalCenter: parent.horizontalCenter
+
+                AppToolBar {
+                    id: bar
+                    backgroundColor: "#00FFFFFF"
+                    BackButton{
+                        releasedColor: "white"
+                        anchors.left: parent.left
+                    }
+                    ToolBarButton {
+                        id: like
+                        releasedColor: "white"
+                        anchors.right: parent.right
+                        icon: "../../../../ui/back.png"
+                        iconScale: .55
+                    }
+                    ToolBarButton {
+                        anchors.right: like.left
+                        icon: "../../../../ui/back.png"
+                        iconScale: .55
+                        releasedColor: "white"
+                    }
+                }
+
+                Image {
+                    id: image
+                    width: parent.width
+                    anchors.top: bar.bottom
+                    fillMode: Image.PreserveAspectFit
+                    asynchronous: true
+                }
+
+                Text {
+                    id: info
+                    anchors.top: image.bottom
+                    width: parent.width
+                    height: contentHeight
+                    wrapMode: Text.Wrap
+                    font.pixelSize: 50 * Resolution.scaleRatio
+                    textFormat: Text.RichText
+
+                }
+            }
+        }
     }
 }

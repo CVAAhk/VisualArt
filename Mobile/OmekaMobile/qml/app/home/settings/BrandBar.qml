@@ -12,13 +12,14 @@ AppToolBar {
 
     //app settings
     ToolBarButton{
+        anchors.right: parent.right
         icon: "../../../../ui/settings.png"
         onClicked: root.activated();
     }
 
     //endpoint logo
     BorderImage{
-        anchors.centerIn: parent
+        anchors.centerIn: parent        
         scale: (parent.height * .8)/height
         source: "../../../../ui/logo.png"
     }
