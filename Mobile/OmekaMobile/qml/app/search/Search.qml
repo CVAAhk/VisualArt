@@ -2,7 +2,7 @@ import QtQuick 2.0
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import "../../utils"
-import "../../app"
+import "../base"
 
 Item {
 
@@ -29,7 +29,7 @@ Item {
         anchors.fill: parent;
         spacing: 0
 
-        AppToolBar {
+        OmekaToolBar {
             TextField {
                 anchors.fill: parent
                 anchors.margins: 15 * Resolution.scaleRatio

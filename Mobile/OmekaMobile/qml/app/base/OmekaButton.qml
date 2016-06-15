@@ -1,7 +1,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
-import "../utils"
+import "../../utils"
 
 /*!Toolbar button*/
 Button {
@@ -12,9 +12,9 @@ Button {
     /*!file path to icon image*/
     property string icon
     /*!scale relative to parent dimensions*/
-    property real iconScale: .65
+    property real iconScale: .88
     /*!default background color*/
-    property color releasedColor: Style.toolBarColor
+    property color releasedColor: "#00FFFFFF"
     /*!pressed background color*/
     property color pressedColor: Style.pressedColor
 

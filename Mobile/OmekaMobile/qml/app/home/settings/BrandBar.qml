@@ -3,17 +3,18 @@ import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import "../../../utils"
 import "../settings"
-import "../../../app"
+import "../../base"
 
-AppToolBar {
+OmekaToolBar {
     id: root
     signal activated()
     backgroundColor: Style.toolBarColor
 
     //app settings
-    ToolBarButton{
+    OmekaButton{
         anchors.right: parent.right
         icon: "../../../../ui/settings.png"
+        iconScale: .62
         onClicked: root.activated();
     }
 

@@ -2,7 +2,7 @@ import QtQuick 2.0
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import "../../home"
-import "../../../app"
+import "../../base"
 import "../../../utils"
 
 /*!User settings*/
@@ -13,7 +13,7 @@ Item {
         spacing: 0
 
         /*!Settings header and back button*/
-        AppToolBar {
+        OmekaToolBar {
             id: bar
             Text {
                 anchors.centerIn: parent
@@ -23,7 +23,11 @@ Item {
                 color: Style.titleColor
             }
 
-            BackButton { }
+            OmekaButton {
+                id: back
+                icon: "../../../../ui/back.png"
+                onClicked: if(stack) stack.pop()
+            }
         }
 
         ScrollView {

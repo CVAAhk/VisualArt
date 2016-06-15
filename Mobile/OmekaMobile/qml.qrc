@@ -29,11 +29,10 @@
 		<file>qml/utils/ItemManager.qml</file>									
 		<file>qml/utils/qmldir</file>	
 			
-		<file>qml/app/AppNavigation.qml</file>					
-		<file>qml/app/AppToolBar.qml</file>									
-		<file>qml/app/ToolBarButton.qml</file>									
-		<file>qml/app/home/Home.qml</file>										
-		<file>qml/app/home/BackButton.qml</file>										
+		<file>qml/app/AppView.qml</file>					
+		<file>qml/app/base/OmekaToolBar.qml</file>									
+		<file>qml/app/base/OmekaButton.qml</file>									
+		<file>qml/app/home/Home.qml</file>																				
 		<file>qml/app/home/settings/BrandBar.qml</file>																					
 		<file>qml/app/home/settings/Settings.qml</file>										
 		<file>qml/app/home/settings/SettingsModel.qml</file>										
@@ -55,6 +54,8 @@
 		<file>ui/settings.png</file>
 		<file>ui/back.png</file>
 		<file>ui/logo.png</file>
+		<file>ui/more.png</file>
+		<file>ui/like-indicator-2.png</file>
 		<file>ui/like-indicator.png</file>
 		<file>ui/like-fill.png</file>
 		<file>ui/home-off.png</file>

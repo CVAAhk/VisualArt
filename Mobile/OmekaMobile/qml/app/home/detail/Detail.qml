@@ -2,7 +2,7 @@ import QtQuick 2.5
 import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.1
 import "../../home"
-import "../../../app"
+import "../../base"
 import "../../../utils"
 
 Item {
@@ -49,25 +49,24 @@ Item {
                 y:  parent.margins
                 anchors.horizontalCenter: parent.horizontalCenter
 
-                AppToolBar {
+                OmekaToolBar {
                     id: bar
                     backgroundColor: "#00FFFFFF"
-                    BackButton{
-                        releasedColor: "white"
+                    OmekaButton{
+                        id: back
                         anchors.left: parent.left
-                    }
-                    ToolBarButton {
-                        id: like
-                        releasedColor: "white"
-                        anchors.right: parent.right
                         icon: "../../../../ui/back.png"
-                        iconScale: .55
+                        onClicked: if(stack) stack.pop()
                     }
-                    ToolBarButton {
+                    OmekaButton {
+                        id: more
                         anchors.right: like.left
-                        icon: "../../../../ui/back.png"
-                        iconScale: .55
-                        releasedColor: "white"
+                        icon: "../../../../ui/more.png"
+                    }
+                    OmekaButton {
+                        id: like
+                        anchors.right: parent.right
+                        icon: "../../../../ui/like-indicator-2.png"
                     }
                 }
 

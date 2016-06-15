@@ -1,7 +1,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.4
 import QtQuick.LocalStorage 2.0
-import "../../app"
+import "../base"
 import "../../utils"
 import "../home/gallery"
 import "../../js/storage.js" as Settings
@@ -18,7 +18,7 @@ Item {
         anchors.fill: parent
         spacing: 0
 
-        AppToolBar {
+        OmekaToolBar {
             id: bar
             Text {
                 anchors.centerIn: parent

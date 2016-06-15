@@ -54,13 +54,10 @@ DISTFILES += \
     qml/test/styling/TitleText.qml \
     qml/utils/ResolutionManager.qml \
     qml/utils/Style.qml \
-    qml/app/AppNavigation.qml \
     qml/app/home/Home.qml \
     qml/app/home/detail/Detail.qml \
     qml/app/home/gallery/Gallery.qml \
     qml/app/home/settings/BrandBar.qml \
-    qml/app/AppToolBar.qml \
-    qml/app/ToolBarButton.qml \
     qml/app/home/settings/SettingsModel.qml \
     qml/app/home/settings/SettingsDelegate.qml \
     qml/utils/OmekaClient.qml \
@@ -71,8 +68,10 @@ DISTFILES += \
     qml/app/home/gallery/ItemBrowser.qml \
     qml/app/search/Search.qml \
     qml/app/search/SearchDelegate.qml \
-    qml/app/home/BackButton.qml \
-    qml/utils/ItemManager.qml
+    qml/utils/ItemManager.qml \
+    qml/app/AppView.qml \
+    qml/app/base/OmekaToolBar.qml \
+    qml/app/base/OmekaButton.qml
 
 HEADERS += \
     imageprovidertest.h
