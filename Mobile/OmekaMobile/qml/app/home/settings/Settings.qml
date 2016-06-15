@@ -15,21 +15,21 @@ Item {
         /*!Settings header and back button*/
         OmekaToolBar {
             id: bar
-            Text {
+
+            OmekaText {
                 anchors.centerIn: parent
-                text: "SETTINGS"
-                font.bold: true
-                font.pointSize: Style.titleSize
-                color: Style.titleColor
+                text: "settings"
+                _font: Style.titleFont
             }
 
             OmekaButton {
                 id: back
-                icon: "../../../../ui/back.png"
+                icon: Style.back
                 onClicked: if(stack) stack.pop()
             }
         }
 
+        /*!Scrollable list of settings*/
         ScrollView {
             width: parent.width
             height: parent.height - bar.height

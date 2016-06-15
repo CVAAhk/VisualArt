@@ -23,11 +23,11 @@ TabView {
         property var icons: ["home", "search", "likes"]
 
         //content background
-        frame: Rectangle { color: Style.backgroundColor }
+        frame: Rectangle { color: Style.viewBackgroundColor }
 
         //tab background
         tab:Rectangle{
-            color: styleData.selected ? Style.selectedColor : Style.releasedColor
+            color: styleData.selected ? Style.checkedTabColor : Style.uncheckedTabColor
             implicitWidth: Resolution.appWidth/3
             implicitHeight: targetHeight * Resolution.scaleRatio
 

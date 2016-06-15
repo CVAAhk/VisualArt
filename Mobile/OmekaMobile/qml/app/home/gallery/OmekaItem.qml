@@ -63,9 +63,9 @@ Component {
             //custom style
             style: ButtonStyle {
                 background: Image{
-                    source: "../../../../ui/like-indicator.png"
+                    source: Style.likeIndicator
                     Image {
-                        source: "../../../../ui/like-fill.png"
+                        source: Style.likeFill
                         visible: like.checked
                     }
                 }

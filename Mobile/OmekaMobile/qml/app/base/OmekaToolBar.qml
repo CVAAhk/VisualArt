@@ -5,7 +5,7 @@ import "../../utils"
 
 ToolBar {
 
-    property color backgroundColor: Style.backgroundColor
+    property color backgroundColor: Style.toolBarColor
 
     //scaled height
     implicitHeight: 192 * Resolution.scaleRatio

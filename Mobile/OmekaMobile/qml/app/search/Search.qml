@@ -40,7 +40,7 @@ Item {
                 font.pixelSize: 80 * Resolution.scaleRatio
 
                 style: TextFieldStyle {
-                    textColor: Style.titleColor
+                    textColor: Style.titleFont.color
                     placeholderTextColor: textColor
                     background: Rectangle{
                         width: control.width
@@ -63,15 +63,7 @@ Item {
                 spacing: 2
                 model: ListModel {}
                 delegate: SearchDelegate {}
-                header: Text {
-                    width: parent.width
-                    height: 150 * Resolution.scaleRatio
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                    text: "TAGS"
-                    font.pointSize: 15
-                    color: Style.titleColor
-                }
+                header: SearchHeader {}
             }
         }
     }

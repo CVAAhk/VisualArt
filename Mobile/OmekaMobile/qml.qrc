@@ -32,6 +32,7 @@
 		<file>qml/app/AppView.qml</file>					
 		<file>qml/app/base/OmekaToolBar.qml</file>									
 		<file>qml/app/base/OmekaButton.qml</file>									
+		<file>qml/app/base/OmekaText.qml</file>									
 		<file>qml/app/home/Home.qml</file>																				
 		<file>qml/app/home/settings/BrandBar.qml</file>																					
 		<file>qml/app/home/settings/Settings.qml</file>										
@@ -45,6 +46,7 @@
 		<file>qml/app/likes/Likes.qml</file>										
 		<file>qml/app/search/Search.qml</file>										
 		<file>qml/app/search/SearchDelegate.qml</file>										
+		<file>qml/app/search/SearchHeader.qml</file>										
 		
 		<file>qml/js/storage.js</file>
 		<file>qml/js/UI.js</file>

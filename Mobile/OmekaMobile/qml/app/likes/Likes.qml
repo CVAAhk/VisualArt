@@ -20,12 +20,10 @@ Item {
 
         OmekaToolBar {
             id: bar
-            Text {
+            OmekaText {
                 anchors.centerIn: parent
                 text: "LIKES"
-                font.bold: true
-                font.pointSize: Style.titleSize
-                color: Style.titleColor
+                _font: Style.titleFont
             }
         }
 

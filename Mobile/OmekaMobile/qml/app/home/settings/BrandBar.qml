@@ -1,6 +1,5 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.4
-import QtQuick.Controls.Styles 1.4
 import "../../../utils"
 import "../settings"
 import "../../base"
@@ -8,12 +7,12 @@ import "../../base"
 OmekaToolBar {
     id: root
     signal activated()
-    backgroundColor: Style.toolBarColor
+    backgroundColor: "white"
 
     //app settings
     OmekaButton{
         anchors.right: parent.right
-        icon: "../../../../ui/settings.png"
+        icon: Style.settingsIcon
         iconScale: .62
         onClicked: root.activated();
     }
@@ -22,6 +21,6 @@ OmekaToolBar {
     BorderImage{
         anchors.centerIn: parent        
         scale: (parent.height * .8)/height
-        source: "../../../../ui/logo.png"
+        source: Style.omekaLogo
     }
 }

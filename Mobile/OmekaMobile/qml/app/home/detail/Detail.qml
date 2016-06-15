@@ -51,22 +51,21 @@ Item {
 
                 OmekaToolBar {
                     id: bar
-                    backgroundColor: "#00FFFFFF"
                     OmekaButton{
                         id: back
                         anchors.left: parent.left
-                        icon: "../../../../ui/back.png"
+                        icon: Style.back
                         onClicked: if(stack) stack.pop()
                     }
                     OmekaButton {
                         id: more
                         anchors.right: like.left
-                        icon: "../../../../ui/more.png"
+                        icon: Style.more
                     }
                     OmekaButton {
                         id: like
                         anchors.right: parent.right
-                        icon: "../../../../ui/like-indicator-2.png"
+                        icon: Style.likeIndicator2
                     }
                 }
 

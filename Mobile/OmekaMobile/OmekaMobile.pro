@@ -71,7 +71,9 @@ DISTFILES += \
     qml/utils/ItemManager.qml \
     qml/app/AppView.qml \
     qml/app/base/OmekaToolBar.qml \
-    qml/app/base/OmekaButton.qml
+    qml/app/base/OmekaButton.qml \
+    qml/app/base/OmekaText.qml \
+    qml/app/search/SearchHeader.qml
 
 HEADERS += \
     imageprovidertest.h
