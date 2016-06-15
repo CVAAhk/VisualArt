@@ -31,7 +31,7 @@ Button {
         background: Rectangle{
             implicitWidth: control.width
             implicitHeight: control.height
-            radius: 30 * Resolution.scaleRatio
+            radius: Resolution.applyScale(30)
             color: control.pressed ? pressedColor : releasedColor
         }
     }

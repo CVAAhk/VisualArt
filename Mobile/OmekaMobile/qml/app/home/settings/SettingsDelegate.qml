@@ -6,7 +6,7 @@ import "../../../utils"
 /*!Setting option*/
 Rectangle{
     width: parent.width
-    height: 150 * Resolution.scaleRatio
+    height: Resolution.applyScale(150)
 
     //text value
     OmekaText {

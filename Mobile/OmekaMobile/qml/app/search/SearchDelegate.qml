@@ -6,7 +6,7 @@ import "../../utils"
 Rectangle {
     color: Style.viewBackgroundColor
     width: parent.width
-    height: 150 * Resolution.scaleRatio
+    height: Resolution.applyScale(150)
 
     OmekaText {
         text: tag

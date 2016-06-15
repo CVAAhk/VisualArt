@@ -32,12 +32,12 @@ Item {
         OmekaToolBar {
             TextField {
                 anchors.fill: parent
-                anchors.margins: 15 * Resolution.scaleRatio
+                anchors.margins: Resolution.applyScale(15)
                 horizontalAlignment: TextInput.AlignHCenter
                 verticalAlignment: TextInput.AlignVCenter
                 placeholderText: "SEARCH"
                 font.bold: true
-                font.pixelSize: 80 * Resolution.scaleRatio
+                font.pixelSize: Resolution.applyScale(80)
 
                 style: TextFieldStyle {
                     textColor: Style.titleFont.color
@@ -46,7 +46,7 @@ Item {
                         width: control.width
                         height: control.height
                         border.width: 0
-                        radius: 30 * Resolution.scaleRatio
+                        radius: Resolution.applyScale(30)
                     }
                 }
             }

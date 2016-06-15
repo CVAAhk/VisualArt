@@ -83,7 +83,7 @@ Item {
                     width: parent.width
                     height: contentHeight
                     wrapMode: Text.Wrap
-                    font.pixelSize: 50 * Resolution.scaleRatio
+                    font.pixelSize: Resolution.applyScale(50)
                     textFormat: Text.RichText
 
                 }

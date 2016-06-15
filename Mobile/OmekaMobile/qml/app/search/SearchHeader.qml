@@ -4,7 +4,7 @@ import "../../utils"
 
 OmekaText {
     width: parent.width
-    height: 150 * Resolution.scaleRatio
+    height: Resolution.applyScale(150)
     horizontalAlignment: Text.AlignHCenter
     verticalAlignment: Text.AlignVCenter
     text: "tags"

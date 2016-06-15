@@ -18,4 +18,9 @@ Item {
     property real targetDiagonal: Math.sqrt(targetWidth*targetWidth + targetHeight*targetHeight)
     /*! Diagonal length of the current resolution */
     property real screenDiagnol: Math.sqrt(appWidth*appWidth + appHeight*appHeight)
+
+    /*! Apply scale ratio to provided value*/
+    function applyScale(value){
+        return value * scaleRatio
+    }
 }

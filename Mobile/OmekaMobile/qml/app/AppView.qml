@@ -7,7 +7,6 @@ import "search"
 import "likes"
 
 TabView {
-    property real targetHeight: 192
     anchors.fill: parent
     tabPosition: Qt.BottomEdge
 
@@ -29,7 +28,7 @@ TabView {
         tab:Rectangle{
             color: styleData.selected ? Style.checkedTabColor : Style.uncheckedTabColor
             implicitWidth: Resolution.appWidth/3
-            implicitHeight: targetHeight * Resolution.scaleRatio
+            implicitHeight: Resolution.applyScale(192)
 
             //icons
             Item{

@@ -8,7 +8,7 @@ ToolBar {
     property color backgroundColor: Style.toolBarColor
 
     //scaled height
-    implicitHeight: 192 * Resolution.scaleRatio
+    implicitHeight: Resolution.applyScale(192)
 
     /*!custom background*/
     style: ToolBarStyle{

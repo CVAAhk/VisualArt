@@ -40,8 +40,8 @@ Item {
 
     /*-------------Font-------------*/
 
-    property variant titleFont: ({ color:"#2B89D9", size:24, weight:Font.Bold, capitalization:Font.AllUppercase })
-    property variant headerFont: ({ color:"#2B89D9", size:18, weight:Font.Normal, capitalization:Font.AllUppercase })
-    property variant settingFont: ({ color:"#2B89D9", size:24, weight:Font.Light, capitalization:Font.Capitalize })
-    property variant tagFont: ({ color:"#2B89D9", size:24, weight:Font.ExtraBold, capitalization:Font.Capitalize })
+    property variant titleFont: ({ color:"#2B89D9", size:74, weight:Font.Bold, capitalization:Font.AllUppercase })
+    property variant headerFont: ({ color:"#2B89D9", size:55, weight:Font.Normal, capitalization:Font.AllUppercase })
+    property variant settingFont: ({ color:"#2B89D9", size:74, weight:Font.Normal, capitalization:Font.Capitalize })
+    property variant tagFont: ({ color:"#2B89D9", size:74, weight:Font.ExtraBold, capitalization:Font.Capitalize })
 }

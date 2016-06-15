@@ -39,7 +39,7 @@ Item {
                 anchors.fill: parent
                 model: SettingsModel{}
                 delegate: SettingsDelegate{}
-                spacing: 150 * Resolution.scaleRatio
+                spacing: Resolution.applyScale(150)
             }
         }
     }
