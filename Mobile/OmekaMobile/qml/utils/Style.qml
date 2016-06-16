@@ -17,6 +17,8 @@ Item {
     property color uncheckedTabColor: "#F0F0F0"
     /*! \qmlproperty default background color of checked tabs */
     property color checkedTabColor: "#2B89D9"
+    /*! \qmlproperty default background color of detail content rectangle */
+    property color detailContentBackground: "white"
 
 
     /*-------------UI Assets-------------*/

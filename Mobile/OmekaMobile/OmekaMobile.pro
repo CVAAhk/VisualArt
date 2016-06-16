@@ -73,7 +73,11 @@ DISTFILES += \
     qml/app/base/OmekaToolBar.qml \
     qml/app/base/OmekaButton.qml \
     qml/app/base/OmekaText.qml \
-    qml/app/search/SearchHeader.qml
+    qml/app/search/SearchHeader.qml \
+    qml/app/home/detail/DetailContent.qml \
+    qml/app/home/detail/DetailDisplay.qml \
+    qml/app/home/detail/DetailToolbar.qml \
+    qml/app/home/detail/viewers/ImageViewer.qml
 
 HEADERS += \
     imageprovidertest.h
