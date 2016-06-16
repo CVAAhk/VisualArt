@@ -1,6 +1,5 @@
 pragma Singleton
 import QtQuick 2.0
-import "../app/home/gallery"
 
 Item {
     /*! \qmlproperty
@@ -8,7 +7,7 @@ Item {
     property url endpoint: "http://mallhistory.org/api/"    
     /*! \qmlproperty
         Current page number*/
-    property int currentPage: 0    
+    property int currentPage: 0
     /*! \qmlsignal
         Invoked on query result*/
     signal requestComplete(var result)
@@ -16,6 +15,7 @@ Item {
     //data types
     property int file: 0
     property int metadata: 1
+    property int tag: 2
 
 
     /*! \internal */
@@ -52,8 +52,11 @@ Item {
             if(res.item){
                 requestComplete({item: res.item.id, type: file, image: res.file_urls.original, full: res.file_urls.fullsize});
             }
-            else {
+            else if(res.element_texts){
                 requestComplete({item: res.id, type: metadata, metadata: res.element_texts});
+            }
+            else{
+                requestComplete({item: res.id, type: tag, tag: res.name});
             }
         }
     }
@@ -76,5 +79,9 @@ Item {
         Query meta data of specified item*/
     function getMetaData(id){
         submitRequest(endpoint+"items/"+id);
+    }
+
+    function getTags(){
+        submitRequest(endpoint+"tags")
     }
 }

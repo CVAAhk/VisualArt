@@ -1,19 +1,19 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.4
+import "../../base"
 import "../../../utils"
 
 /*!Setting option*/
 Rectangle{
     width: parent.width
-    height: 150 * Resolution.scaleRatio
+    height: Resolution.applyScale(150)
 
     //text value
-    Text {
+    OmekaText {
         id: setting
         text: name
         anchors.centerIn: parent
-        font.pointSize: Style.titleSize
-        color: Style.titleColor
+        _font: Style.settingFont
     }
 
     //action

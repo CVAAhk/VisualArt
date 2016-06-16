@@ -14,9 +14,9 @@ ScrollView {
     GridView {
         id: grid
         anchors.horizontalCenter: parent.horizontalCenter
-        maximumFlickVelocity: 8000 * Resolution.scaleRatio
-        flickDeceleration: 4500 * Resolution.scaleRatio
-        cellWidth: width/Math.floor(width/(Math.floor(478 * Resolution.scaleRatio)))
+        maximumFlickVelocity: Resolution.applyScale(8000)
+        flickDeceleration: Resolution.applyScale(4500)
+        cellWidth: width/Math.floor(width/(Math.floor(Resolution.applyScale(478))))
         cellHeight: cellWidth
         cacheBuffer: cellHeight * 10
         model: ListModel{}

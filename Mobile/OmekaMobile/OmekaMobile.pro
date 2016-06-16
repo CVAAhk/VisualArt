@@ -25,6 +25,7 @@ QML_IMPORT_PATH += \
     qml/utils/Resolution 1.0 \
     qml/utils/Style 1.0 \
     qml/utils/Omeka 1.0 \
+    qml/utils/ItemManager 1.0 \
 
 # Default rules for deployment.
 include(deployment.pri)
@@ -53,13 +54,10 @@ DISTFILES += \
     qml/test/styling/TitleText.qml \
     qml/utils/ResolutionManager.qml \
     qml/utils/Style.qml \
-    qml/app/AppNavigation.qml \
     qml/app/home/Home.qml \
     qml/app/home/detail/Detail.qml \
     qml/app/home/gallery/Gallery.qml \
     qml/app/home/settings/BrandBar.qml \
-    qml/app/AppToolBar.qml \
-    qml/app/ToolBarButton.qml \
     qml/app/home/settings/SettingsModel.qml \
     qml/app/home/settings/SettingsDelegate.qml \
     qml/utils/OmekaClient.qml \
@@ -67,7 +65,19 @@ DISTFILES += \
     qml/app/home/settings/Settings.qml \
     qml/app/likes/Likes.qml \
     qml/app/home/gallery/Browser.qml \
-    qml/app/home/gallery/ItemBrowser.qml
+    qml/app/home/gallery/ItemBrowser.qml \
+    qml/app/search/Search.qml \
+    qml/app/search/SearchDelegate.qml \
+    qml/utils/ItemManager.qml \
+    qml/app/AppView.qml \
+    qml/app/base/OmekaToolBar.qml \
+    qml/app/base/OmekaButton.qml \
+    qml/app/base/OmekaText.qml \
+    qml/app/search/SearchHeader.qml \
+    qml/app/home/detail/DetailContent.qml \
+    qml/app/home/detail/DetailDisplay.qml \
+    qml/app/home/detail/DetailToolbar.qml \
+    qml/app/home/detail/viewers/ImageViewer.qml
 
 HEADERS += \
     imageprovidertest.h

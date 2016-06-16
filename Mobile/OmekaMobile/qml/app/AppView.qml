@@ -3,16 +3,16 @@ import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import "../utils"
 import "home"
+import "search"
 import "likes"
 
 TabView {
-    property real targetHeight: 192
     anchors.fill: parent
     tabPosition: Qt.BottomEdge
 
     //main pages
     Tab{ Home { enabled: true } }
-    Tab{}
+    Tab{ Search { enabled: true} }
     Tab{ Likes { enabled: true } }
 
     //custom style
@@ -22,13 +22,13 @@ TabView {
         property var icons: ["home", "search", "likes"]
 
         //content background
-        frame: Rectangle { color: Style.backgroundColor }
+        frame: Rectangle { color: Style.viewBackgroundColor }
 
         //tab background
         tab:Rectangle{
-            color: styleData.selected ? Style.selectedColor : Style.releasedColor
+            color: styleData.selected ? Style.checkedTabColor : Style.uncheckedTabColor
             implicitWidth: Resolution.appWidth/3
-            implicitHeight: targetHeight * Resolution.scaleRatio
+            implicitHeight: Resolution.applyScale(192)
 
             //icons
             Item{

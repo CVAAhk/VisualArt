@@ -1,7 +1,8 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
-import "../../../app"
+import "../../home"
+import "../../base"
 import "../../../utils"
 
 /*!User settings*/
@@ -12,25 +13,23 @@ Item {
         spacing: 0
 
         /*!Settings header and back button*/
-        AppToolBar {
+        OmekaToolBar {
             id: bar
-            Text {
+
+            OmekaText {
                 anchors.centerIn: parent
-                text: "SETTINGS"
-                font.bold: true
-                font.pointSize: Style.titleSize
-                color: Style.titleColor
+                text: "settings"
+                _font: Style.titleFont
             }
 
-            ToolBarButton {
-                anchors.right: undefined
-                icon: "../../../../ui/back.png"
-                iconScale: .55
-                releasedColor: Style.backgroundColor
+            OmekaButton {
+                id: back
+                icon: Style.back
                 onClicked: if(stack) stack.pop()
             }
         }
 
+        /*!Scrollable list of settings*/
         ScrollView {
             width: parent.width
             height: parent.height - bar.height
@@ -40,7 +39,7 @@ Item {
                 anchors.fill: parent
                 model: SettingsModel{}
                 delegate: SettingsDelegate{}
-                spacing: 150 * Resolution.scaleRatio
+                spacing: Resolution.applyScale(150)
             }
         }
     }

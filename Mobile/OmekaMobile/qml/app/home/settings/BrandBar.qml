@@ -1,25 +1,26 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.4
-import QtQuick.Controls.Styles 1.4
 import "../../../utils"
 import "../settings"
-import "../../../app"
+import "../../base"
 
-AppToolBar {
+OmekaToolBar {
     id: root
     signal activated()
-    backgroundColor: Style.toolBarColor
+    backgroundColor: "white"
 
     //app settings
-    ToolBarButton{
-        icon: "../../../../ui/settings.png"
+    OmekaButton{
+        anchors.right: parent.right
+        icon: Style.settingsIcon
+        iconScale: .62
         onClicked: root.activated();
     }
 
     //endpoint logo
     BorderImage{
-        anchors.centerIn: parent
+        anchors.centerIn: parent        
         scale: (parent.height * .8)/height
-        source: "../../../../ui/logo.png"
+        source: Style.omekaLogo
     }
 }

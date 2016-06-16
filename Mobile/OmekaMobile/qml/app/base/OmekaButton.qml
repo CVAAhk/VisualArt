@@ -1,23 +1,22 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
-import "../utils"
+import "../../utils"
 
 /*!Toolbar button*/
 Button {
     anchors.verticalCenter: parent.verticalCenter
-    anchors.right: parent.right
     height: parent.height
     width: parent.height
 
     /*!file path to icon image*/
     property string icon
     /*!scale relative to parent dimensions*/
-    property real iconScale: .65
+    property real iconScale: .88
     /*!default background color*/
-    property color releasedColor: Style.toolBarColor
+    property color releasedColor: Style.releasedButtonColor
     /*!pressed background color*/
-    property color pressedColor: Style.pressedColor
+    property color pressedColor: Style.pressedButtonColor
 
     /*!Button icon image*/
     BorderImage{
@@ -32,7 +31,7 @@ Button {
         background: Rectangle{
             implicitWidth: control.width
             implicitHeight: control.height
-            radius: 30 * Resolution.scaleRatio
+            radius: Resolution.applyScale(30)
             color: control.pressed ? pressedColor : releasedColor
         }
     }
