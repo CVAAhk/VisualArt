@@ -77,7 +77,8 @@ DISTFILES += \
     qml/app/home/detail/DetailContent.qml \
     qml/app/home/detail/DetailDisplay.qml \
     qml/app/home/detail/DetailToolbar.qml \
-    qml/app/home/detail/viewers/ImageViewer.qml
+    qml/app/home/detail/viewers/ImageViewer.qml \
+    qml/app/base/OmekaScrollView.qml
 
 HEADERS += \
     imageprovidertest.h

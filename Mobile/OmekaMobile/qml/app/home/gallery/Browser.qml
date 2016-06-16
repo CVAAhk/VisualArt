@@ -1,12 +1,12 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.4
 import "../../../utils"
+import "../../base"
 
 /*! Item browser component */
-ScrollView {
+OmekaScrollView {
     width: parent.width
-    height: parent.height - bar.height
-    verticalScrollBarPolicy: Qt.ScrollBarAlwaysOff
+    height: parent.height - bar.height    
 
     property GridView grid: grid
 
@@ -14,8 +14,6 @@ ScrollView {
     GridView {
         id: grid
         anchors.horizontalCenter: parent.horizontalCenter
-        maximumFlickVelocity: Resolution.applyScale(8000)
-        flickDeceleration: Resolution.applyScale(4500)
         cellWidth: width/Math.floor(width/(Math.floor(Resolution.applyScale(478))))
         cellHeight: cellWidth
         cacheBuffer: cellHeight * 10

@@ -33,6 +33,7 @@
 		<file>qml/app/base/OmekaToolBar.qml</file>									
 		<file>qml/app/base/OmekaButton.qml</file>									
 		<file>qml/app/base/OmekaText.qml</file>									
+		<file>qml/app/base/OmekaScrollView.qml</file>									
 		<file>qml/app/home/Home.qml</file>																				
 		<file>qml/app/home/settings/BrandBar.qml</file>																					
 		<file>qml/app/home/settings/Settings.qml</file>										
