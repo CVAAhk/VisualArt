@@ -1,5 +1,6 @@
 import QtQuick 2.5
 import "viewers"
+import "../../base"
 import "../../../utils"
 
 Item {
@@ -18,6 +19,7 @@ Item {
     //actions
     DetailToolbar { id: bar }
 
+    //media view
     ImageViewer {
         id: image
         y: bar.height + yOffset
@@ -26,16 +28,14 @@ Item {
         property real yOffset: scaleHeight/2 - height/2
     }
 
-    Text {
+    //metadata view
+    OmekaText {
         id: info
         width: parent.width
         height: contentHeight
         anchors.top: bar.bottom
         anchors.topMargin: image.scaleHeight
-        wrapMode: Text.Wrap
-        font.pixelSize: Resolution.applyScale(50)
-        textFormat: Text.RichText
-
+        _font: Style.metadataFont
     }
 
     /*! \qmlmethod Add formatted metadata to info panel*/
