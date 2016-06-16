@@ -3,8 +3,10 @@ import "../../utils"
 
 Text {
     property variant _font
-    color: _font ? _font.color: "black"
-    font.pixelSize: _font ? Resolution.applyScale(_font.size) : 11
-    font.weight: _font ? _font.weight : Font.Normal
-    font.capitalization: _font ? _font.capitalization : Font.MixedCase
+    color: _font.color
+    wrapMode: _font.wrapMode
+    textFormat: _font.textFormat
+    font.pixelSize: Resolution.applyScale(_font.size)
+    font.weight: _font.weight
+    font.capitalization: _font.capitalization
 }

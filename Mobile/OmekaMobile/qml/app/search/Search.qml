@@ -52,10 +52,9 @@ Item {
             }
         }
 
-        ScrollView {
+        OmekaScrollView {
             width: parent.width
             height: parent.height
-            verticalScrollBarPolicy: Qt.ScrollBarAlwaysOff
 
             ListView {
                 id: list

@@ -30,10 +30,9 @@ Item {
         }
 
         /*!Scrollable list of settings*/
-        ScrollView {
+        OmekaScrollView {
             width: parent.width
             height: parent.height - bar.height
-            verticalScrollBarPolicy: Qt.ScrollBarAlwaysOff
 
             ListView {
                 anchors.fill: parent

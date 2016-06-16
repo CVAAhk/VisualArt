@@ -33,6 +33,8 @@
 		<file>qml/app/base/OmekaToolBar.qml</file>									
 		<file>qml/app/base/OmekaButton.qml</file>									
 		<file>qml/app/base/OmekaText.qml</file>									
+		<file>qml/app/base/OmekaScrollView.qml</file>									
+		<file>qml/app/base/OmekaViewer.qml</file>									
 		<file>qml/app/home/Home.qml</file>																				
 		<file>qml/app/home/settings/BrandBar.qml</file>																					
 		<file>qml/app/home/settings/Settings.qml</file>										
@@ -44,9 +46,15 @@
 		<file>qml/app/home/gallery/OmekaItem.qml</file>																			
 		<file>qml/app/home/detail/Detail.qml</file>										
 		<file>qml/app/home/detail/DetailContent.qml</file>										
-		<file>qml/app/home/detail/DetailDisplay.qml</file>										
+		<file>qml/app/home/detail/DetailColumn.qml</file>										
 		<file>qml/app/home/detail/DetailToolbar.qml</file>										
+		<file>qml/app/home/detail/ScaleColumn.qml</file>										
+		<file>qml/app/home/detail/viewers/MediaViewer.qml</file>										
 		<file>qml/app/home/detail/viewers/ImageViewer.qml</file>										
+		<file>qml/app/home/detail/viewers/VideoViewer.qml</file>										
+		<file>qml/app/home/detail/viewers/AudioViewer.qml</file>										
+		<file>qml/app/home/detail/viewers/DocumentViewer.qml</file>										
+		<file>qml/app/home/detail/viewers/MediaState.qml</file>										
 		<file>qml/app/likes/Likes.qml</file>										
 		<file>qml/app/search/Search.qml</file>										
 		<file>qml/app/search/SearchDelegate.qml</file>										
