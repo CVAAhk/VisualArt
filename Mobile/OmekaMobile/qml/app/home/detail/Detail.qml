@@ -13,7 +13,6 @@ Item {
     /*! scroll container */
     OmekaScrollView {
         anchors.fill: parent
-
         //content
         DetailContent { }
     }

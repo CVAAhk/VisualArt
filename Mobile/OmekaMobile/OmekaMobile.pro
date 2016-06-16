@@ -75,10 +75,11 @@ DISTFILES += \
     qml/app/base/OmekaText.qml \
     qml/app/search/SearchHeader.qml \
     qml/app/home/detail/DetailContent.qml \
-    qml/app/home/detail/DetailDisplay.qml \
     qml/app/home/detail/DetailToolbar.qml \
-    qml/app/home/detail/viewers/ImageViewer.qml \
-    qml/app/base/OmekaScrollView.qml
+    qml/app/base/OmekaScrollView.qml \
+    qml/app/home/detail/viewers/MediaViewer.qml \
+    qml/app/home/detail/ScaleColumn.qml \
+    qml/app/home/detail/DetailColumn.qml
 
 HEADERS += \
     imageprovidertest.h
