@@ -3,9 +3,9 @@ import "viewers"
 import "../../base"
 
 /*!
-  \qmltype DetailColumn
+  \qmltype ScaleColumn
 
-  DetailColumn is a custom layout which accounts for possible scale transformations
+  ScaleColumn is a custom layout which accounts for possible scale transformations
   on the media viewer. This is a necessity for \c QtQuick 2.5 since anchors to not
   consider sibling transformations nor does the \c childrenRect property provide a
   transformed bounding box.
@@ -15,19 +15,19 @@ Item {
     id: column
 
     /*!
-      \qmlproperty DetailToolbar DetailColumn::toolbar
+      \qmlproperty DetailToolbar ScaleColumn::toolbar
       Displays page operations
     */
     property DetailToolbar toolbar
 
     /*!
-      \qmlproperty MediaViewer DetailColumn::viewer
+      \qmlproperty MediaViewer ScaleColumn::viewer
        Media content display
     */
     property MediaViewer viewer
 
     /*!
-      \qmlproperty OmekaText DetailColumn::info
+      \qmlproperty OmekaText ScaleColumn::info
        Info panel for content metadata
     */
     property OmekaText info
