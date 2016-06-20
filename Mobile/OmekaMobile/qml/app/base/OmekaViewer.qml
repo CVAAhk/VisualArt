@@ -7,6 +7,7 @@ import QtQuick 2.5
   */
 Item {
     visible: false
+    enabled: false
 
     /*!
         \qmlproperty url OmekaViewer::source

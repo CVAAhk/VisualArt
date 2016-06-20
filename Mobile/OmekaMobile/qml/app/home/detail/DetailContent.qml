@@ -1,6 +1,11 @@
 import QtQuick 2.5
 import "../../../utils"
 
+/*
+  \qmltype DetailContent
+
+  The content container of the detail scroll view
+*/
 Item {
     width: detail.width
     height: display.height + margins
