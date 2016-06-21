@@ -38,7 +38,7 @@ Item {
       \internal
       Regex of supported video formats
     */
-    property var videoExt: /\.(avi|mpe?g|mp4|qt|swf|wmv)$/i
+    property var videoExt: /\.(avi|mpe?g|mp4|qt|swf|wmv|mov)$/i
 
     //supported media viewers
     ImageViewer { id: image }

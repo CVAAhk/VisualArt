@@ -51,6 +51,8 @@
 		<file>qml/app/home/detail/ScaleColumn.qml</file>										
 		<file>qml/app/home/detail/viewers/MediaViewer.qml</file>										
 		<file>qml/app/home/detail/viewers/ImageViewer.qml</file>										
+		<file>qml/app/home/detail/viewers/PlaybackViewer.qml</file>										
+		<file>qml/app/home/detail/viewers/ProgressTimer.qml</file>										
 		<file>qml/app/home/detail/viewers/VideoViewer.qml</file>										
 		<file>qml/app/home/detail/viewers/AudioViewer.qml</file>										
 		<file>qml/app/home/detail/viewers/DocumentViewer.qml</file>										

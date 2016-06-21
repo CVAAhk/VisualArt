@@ -8,7 +8,6 @@ import "../../../base"
 */
 OmekaViewer {
     id: root
-    width: parent.width
     height: img.height
     sourceWidth: img.sourceSize.width
 

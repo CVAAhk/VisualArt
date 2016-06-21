@@ -10,7 +10,7 @@ Item {
 
     /*!Load first page*/
     Component.onCompleted: {
-        Omeka.getPage(1)
+        Omeka.getPage(6)
     }
 
     /*!Dynamically load omeka query results into browser*/
