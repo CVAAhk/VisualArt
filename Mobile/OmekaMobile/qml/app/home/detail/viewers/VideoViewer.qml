@@ -1,21 +1,25 @@
 import QtQuick 2.5
+import QtMultimedia 5.5
 import "../../../base"
 
-OmekaViewer {
-    id: root
-    width: parent.width
-    height: video.height
-    sourceWidth: width
+/*
+  \qmltype VideoViewer
 
-    Rectangle {
-        id: video
+  VideoViewer provides video view and playback controls.
+*/
+PlaybackViewer {
+    id: root
+    height: output.height
+    sourceWidth: output.contentRect.width
+
+    //video output
+    background: VideoOutput {        
+        id: output
         width: parent.width
-        height: 500
-        color: "black"
-        Text {
-            anchors.centerIn: parent
-            color: "white"
-            text: "Video: "+root.source
-        }
+        fillMode: VideoOutput.PreserveAspectFit
+        source: player
     }
+
+    //video player
+    player: MediaPlayer { }
 }

@@ -1,21 +1,18 @@
 import QtQuick 2.5
-import "../../../base"
+import QtQuick.Controls 1.4
+import QtMultimedia 5.5
 
-OmekaViewer {
-    id: root
-    width: parent.width
-    height: audio.height
-    sourceWidth: width
+/*
+  \qmltype AudioViewer
 
-    Rectangle {
-        id: audio
-        width: parent.width
-        height: 500
+  AudioViewer provides audio view and playback controls.
+*/
+PlaybackViewer {
+
+    background: Rectangle {
+        anchors.fill: parent
         color: "black"
-        Text {
-            anchors.centerIn: parent
-            color: "white"
-            text: "Audio: "+root.source
-        }
     }
+
+    player: MediaPlayer {}
 }
