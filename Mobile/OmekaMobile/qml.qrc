@@ -35,6 +35,7 @@
 		<file>qml/app/base/OmekaText.qml</file>									
 		<file>qml/app/base/OmekaScrollView.qml</file>									
 		<file>qml/app/base/OmekaViewer.qml</file>									
+		<file>qml/app/styles/ScrubberStyle.qml</file>									
 		<file>qml/app/home/Home.qml</file>																				
 		<file>qml/app/home/settings/BrandBar.qml</file>																					
 		<file>qml/app/home/settings/Settings.qml</file>										
@@ -53,6 +54,7 @@
 		<file>qml/app/home/detail/viewers/ImageViewer.qml</file>										
 		<file>qml/app/home/detail/viewers/PlaybackViewer.qml</file>										
 		<file>qml/app/home/detail/viewers/ProgressTimer.qml</file>										
+		<file>qml/app/home/detail/viewers/Scrubber.qml</file>										
 		<file>qml/app/home/detail/viewers/VideoViewer.qml</file>										
 		<file>qml/app/home/detail/viewers/AudioViewer.qml</file>										
 		<file>qml/app/home/detail/viewers/DocumentViewer.qml</file>										

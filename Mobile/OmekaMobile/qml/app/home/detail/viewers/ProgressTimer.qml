@@ -36,6 +36,18 @@ Item {
     property int totalTicks: Math.floor(duration / timer.interval)
 
     /*!
+      \internal
+      Playback position
+    */
+    property real position: 0
+
+    /*!
+      \internal
+      The interval between cycles, in milliseconds
+    */
+    property alias interval: timer.interval
+
+    /*!
        \qmlsignal ProgressTimer::progressComplete()
 
         This signal is emitted when media playback is complete.
@@ -92,11 +104,19 @@ Item {
         position = 0
     }
 
+    /*! \qmlmethod ProgressTimer::seek(tick)
+        Set tick value
+    */
+    function seek(tick) {
+        progress.tick = tick
+    }
+
     /*! \internal
         Evaluate ticks
     */
     function onTick() {
         tick++;
+        position = timer.interval * tick
         if(tick === totalTicks){
             progressComplete()
         }

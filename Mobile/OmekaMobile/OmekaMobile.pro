@@ -87,7 +87,9 @@ DISTFILES += \
     qml/app/home/detail/viewers/DocumentViewer.qml \
     qml/app/home/detail/viewers/MediaState.qml \
     qml/app/home/detail/viewers/PlaybackViewer.qml \
-    qml/app/home/detail/viewers/ProgressTimer.qml
+    qml/app/home/detail/viewers/ProgressTimer.qml \
+    qml/app/home/detail/viewers/Scrubber.qml \
+    qml/app/styles/ScrubberStyle.qml
 
 HEADERS += \
     imageprovidertest.h

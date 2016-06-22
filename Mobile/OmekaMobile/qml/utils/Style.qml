@@ -3,10 +3,16 @@ import QtQuick 2.5
 
 Item {
     /*-------------Color Scheme-------------*/
+    /*! \qmlproperty primary color scheme */
+    property color schemeColor1: "#2B89D9"
+    /*! \qmlproperty secondary color scheme */
+    property color schemeColor2: "white"
+    /*! \qmlproperty tertiary color scheme */
+    property color schemeColor3: "#E6E6E6"
     /*! \qmlproperty color with alpha values set to 0 */
     property color transparent: "#00FFFFFF"
     /*! \qmlproperty default background color of each page */
-    property color viewBackgroundColor: "#E6E6E6"
+    property color viewBackgroundColor: schemeColor3
     /*! \qmlproperty default background color of toolbars */
     property color toolBarColor: transparent
     /*! \qmlproperty default background color of released buttons */
@@ -16,9 +22,15 @@ Item {
     /*! \qmlproperty default background color of unchecked tabs */
     property color uncheckedTabColor: "#F0F0F0"
     /*! \qmlproperty default background color of checked tabs */
-    property color checkedTabColor: "#2B89D9"
+    property color checkedTabColor: schemeColor1
     /*! \qmlproperty default background color of detail content rectangle */
-    property color detailContentBackground: "white"
+    property color detailContentBackground: schemeColor2
+    /*! \qmlproperty color of playback scrubber handle*/
+    property color scrubberHandleColor: schemeColor1
+    /*! \qmlproperty color of playback scrubber background*/
+    property color scrubberGrooveColor: "#66676A"
+    /*! \qmlproperty secondary color of playback scrubber background*/
+    property color scrubberGroovePositionColor: "#CDCDCE"
 
 
     /*-------------UI Assets-------------*/
@@ -42,9 +54,9 @@ Item {
 
     /*-------------Font-------------*/
 
-    property variant titleFont: ({ color:"#2B89D9", size:74, weight:Font.Bold, capitalization:Font.AllUppercase, wrapMode: Text.NoWrap, textFormat: Text.AutoText })
-    property variant headerFont: ({ color:"#2B89D9", size:55, weight:Font.Normal, capitalization:Font.AllUppercase, wrapMode: Text.NoWrap, textFormat: Text.AutoText })
-    property variant settingFont: ({ color:"#2B89D9", size:74, weight:Font.Normal, capitalization:Font.Capitalize, wrapMode: Text.NoWrap, textFormat: Text.AutoText })
-    property variant tagFont: ({ color:"#2B89D9", size:74, weight:Font.ExtraBold, capitalization:Font.Capitalize, wrapMode: Text.NoWrap, textFormat: Text.AutoText })
+    property variant titleFont: ({ color:schemeColor1, size:74, weight:Font.Bold, capitalization:Font.AllUppercase, wrapMode: Text.NoWrap, textFormat: Text.AutoText })
+    property variant headerFont: ({ color:schemeColor1, size:55, weight:Font.Normal, capitalization:Font.AllUppercase, wrapMode: Text.NoWrap, textFormat: Text.AutoText })
+    property variant settingFont: ({ color:schemeColor1, size:74, weight:Font.Normal, capitalization:Font.Capitalize, wrapMode: Text.NoWrap, textFormat: Text.AutoText })
+    property variant tagFont: ({ color:schemeColor1, size:74, weight:Font.ExtraBold, capitalization:Font.Capitalize, wrapMode: Text.NoWrap, textFormat: Text.AutoText })
     property variant metadataFont: ({ color:"black", size:50, weight:Font.Normal, capitalization:Font.MixedCase, wrapMode: Text.Wrap, textFormat: Text.RichText })
 }

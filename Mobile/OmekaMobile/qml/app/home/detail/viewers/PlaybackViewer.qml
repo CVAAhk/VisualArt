@@ -2,6 +2,7 @@ import QtQuick 2.5
 import QtQuick.Controls 1.4
 import QtMultimedia 5.5
 import "../../../base"
+import "../../../../utils"
 
 /*!
   \qmltype PlaybackViewer
@@ -33,11 +34,11 @@ OmekaViewer {
     Binding { target: player; property: "seekable"; value: true }
     Binding { target: player; property: "source"; value: root.source }
 
-    //progress tracking
-    ProgressTimer {
-        id: timer
+    //playback scrubbing
+    Scrubber {
+        id: scrubber
         player: root.player
-        onProgressComplete: root.reset()
+        scale: 1/viewer.scale
     }
 
     //on touch, toggle between play and pause states
@@ -49,14 +50,5 @@ OmekaViewer {
             else
                 player.play()
         }
-    }
-
-    /*! \qmlmethod PlaybackViewer::reset()
-        Pause media and reset playhead
-    */
-    function reset() {
-        player.pause()
-        player.seek(0)
-        timer.reset()
     }
 }
