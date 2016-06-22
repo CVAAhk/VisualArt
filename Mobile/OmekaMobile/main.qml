@@ -13,5 +13,7 @@ ApplicationWindow {
         Resolution.appWindow = root
     }
 
-    AppView {}
+   // AppView {}
+
+    PageNavigation {}
 }
