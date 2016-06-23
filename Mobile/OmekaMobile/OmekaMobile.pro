@@ -69,7 +69,6 @@ DISTFILES += \
     qml/app/search/Search.qml \
     qml/app/search/SearchDelegate.qml \
     qml/utils/ItemManager.qml \
-    qml/app/AppView.qml \
     qml/app/base/OmekaToolBar.qml \
     qml/app/base/OmekaButton.qml \
     qml/app/base/OmekaText.qml \
@@ -92,7 +91,9 @@ DISTFILES += \
     qml/app/styles/ScrubberStyle.qml \
     qml/app/PageButton.qml \
     qml/app/styles/PageButtonStyle.qml \
-    qml/app/PageNavigation.qml
+    qml/app/PageNavigationBar.qml \
+    qml/app/PageNavigation.qml \
+    qml/app/PageState.qml
 
 HEADERS += \
     imageprovidertest.h

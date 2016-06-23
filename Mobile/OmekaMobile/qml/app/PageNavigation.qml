@@ -1,53 +1,64 @@
-import QtQuick 2.5
+import QtQuick 2.0
 import QtQuick.Controls 1.4
-import "../utils"
+import "home"
+import "search"
+import "likes"
 
 /*!
-  \qmltype PageLoader
+  \qmltype PageNavigation
 
-  PageLoader is the main navigation bar which queues the page corresponding to
-  the current state.
+  PageNavigation provides navigation controls to transition through a stack of pages
 */
-Row {
+StackView {
     id: navigator
     width: parent.width
-    height: Resolution.applyScale(192)
-    anchors.bottom: parent.bottom
-    state: "home"
+    height: parent.height
 
-    //home page
-    PageButton { id: home
-        onClicked: navigator.state = "home"
-        checkedIcon: "../../ui/home-on.png"
-        uncheckedIcon: "../../ui/home-off.png"
-    }
-    //search page
-    PageButton { id: search
-        onClicked: navigator.state = "search"
-        checkedIcon: "../../ui/search-on.png"
-        uncheckedIcon: "../../ui/search-off.png"
-    }
-    //likes page
-    PageButton { id: likes
-        onClicked: navigator.state = "likes"
-        checkedIcon: "../../ui/likes-on.png"
-        uncheckedIcon: "../../ui/likes-off.png"
+    /*!
+      \internal
+      Home page instance
+    */
+    property Home home: Home {}
+
+    /*!
+      \internal
+      Search page instance
+    */
+    property Search search: Search {}
+
+    /*!
+      \internal
+      Likes page instance
+    */
+    property Likes likes: Likes {}
+    property variant pages: [home, search, likes]
+
+    //navigation controls
+    PageNavigationBar {
+        id: bar
+        onStateChanged: navigator.navigate(pages[bar.index])
     }
 
-    //nav state
-    states: [
-        State {
-            name: "home"
-            PropertyChanges { target: home; explicit: true; checkable: true; checked: true }
-        },
-        State {
-            name: "search"
-            PropertyChanges { target: search; explicit: true; checkable: true; checked: true }
-        },
-        State {
-            name: "likes"
-            PropertyChanges { target: likes; explicit: true; checkable: true; checked: true }
+    /*! /qmlmethod
+        If page is on stack, pop all items down to this page. If the page is not on
+        the stack, push it to the stack.
+    */
+    function navigate(page) {
+        if(navigator.onStack(page)){
+            navigator.pop(page)
         }
-    ]
-}
+        else{
+            navigator.push(page)
+        }
+    }
 
+    /*! /qmlmethod
+        Returns true if page is on stack, returns false otherwise
+    */
+    function onStack(page) {
+        for(var i=0; i<3; i++) {
+            if(navigator.get(i, true) === page) return true
+        }
+        return false
+    }
+}

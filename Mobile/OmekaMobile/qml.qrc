@@ -28,10 +28,11 @@
 		<file>qml/utils/OmekaClient.qml</file>									
 		<file>qml/utils/ItemManager.qml</file>									
 		<file>qml/utils/qmldir</file>	
-			
-		<file>qml/app/AppView.qml</file>					
+							
 		<file>qml/app/PageNavigation.qml</file>					
-		<file>qml/app/PageButton.qml</file>					
+		<file>qml/app/PageNavigationBar.qml</file>					
+		<file>qml/app/PageButton.qml</file>								
+		<file>qml/app/PageState.qml</file>								
 		<file>qml/app/base/OmekaToolBar.qml</file>									
 		<file>qml/app/base/OmekaButton.qml</file>									
 		<file>qml/app/base/OmekaText.qml</file>									
