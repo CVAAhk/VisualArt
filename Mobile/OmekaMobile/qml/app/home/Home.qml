@@ -3,7 +3,8 @@ import QtQuick.Controls 1.4
 
 Item {
     id: home
-    anchors.fill: parent
+    width: parent.width
+    height: parent.height
 
     StackView{
         id: stack
