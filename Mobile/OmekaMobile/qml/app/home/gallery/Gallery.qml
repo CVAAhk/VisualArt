@@ -31,7 +31,7 @@ Item {
         /*!Display logo and settings entry*/
         BrandBar {
             id: bar
-            onActivated: if(stack) stack.push(Qt.resolvedUrl("../settings/Settings.qml"))
+            onActivated: if(homeStack) homeStack.push(Qt.resolvedUrl("../settings/Settings.qml"))
         }
 
         /*!Scroll through items*/

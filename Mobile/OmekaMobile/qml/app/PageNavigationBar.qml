@@ -15,31 +15,40 @@ Row {
     anchors.bottom: parent.bottom
     z: 1
 
+    //initial state
     state: "home"
+
+    /*! \qmlproperty
+       Flag indicating the bar is invisible
+    */
+    property bool hide: false
+
+    /*! \qmlproperty
+       Button state names
+    */
+    property var buttonStates: ["home", "search", "likes"]
 
     /*! \qmlproperty
        Selected index
     */
-    property int index: 0
+    property int index
+    Binding { target:bar; property:"index"; when: state !== "hide"; value: buttonStates.indexOf(state) }
 
-    //home page
+    //queue home page
     PageButton { id: home
-        index: 0
-        state: "home"
+        state: buttonStates[0]
         checkedIcon: "../../ui/home-on.png"
         uncheckedIcon: "../../ui/home-off.png"
     }
-    //search page
+    //queue search page
     PageButton { id: search
-        index: 1
-        state: "search"
+        state: buttonStates[1]
         checkedIcon: "../../ui/search-on.png"
         uncheckedIcon: "../../ui/search-off.png"
     }
-    //likes page
+    //queue likes page
     PageButton { id: likes
-        index: 2
-        state: "likes"
+        state: buttonStates[2]
         checkedIcon: "../../ui/likes-on.png"
         uncheckedIcon: "../../ui/likes-off.png"
     }
@@ -57,8 +66,20 @@ Row {
         PageState {
             name: "likes"
             target: likes
+        },
+        State {
+            name: "hide"
+            PropertyChanges { target:bar; explicit: true; enabled: false }
+            AnchorChanges { target: bar; anchors.bottom: undefined; anchors.top: parent.bottom }
         }
-
     ]
+
+    //update hide state
+    onHideChanged: state = hide ? "hide" : buttonStates[index]
+
+    //hide animations
+    transitions: Transition {
+        AnchorAnimation { duration: 250; easing.type: Easing.InOutQuad }
+    }
 }
 

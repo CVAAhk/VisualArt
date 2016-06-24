@@ -24,17 +24,8 @@ Button {
     */
     property url uncheckedIcon
 
-    /*!
-      \qmlproperty int PageButton::index
-      Chid index of the page
-    */
-    property int index
-
     //update state
-    onClicked: {
-        bar.index = index
-        bar.state = state
-    }
+    onClicked: bar.state = state
 
     style: PageButtonStyle {}
 }

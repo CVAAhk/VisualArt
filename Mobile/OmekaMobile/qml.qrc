@@ -40,6 +40,20 @@
 		<file>qml/app/base/OmekaViewer.qml</file>									
 		<file>qml/app/styles/ScrubberStyle.qml</file>									
 		<file>qml/app/styles/PageButtonStyle.qml</file>									
+		<file>qml/app/detail/Detail.qml</file>										
+		<file>qml/app/detail/DetailContent.qml</file>										
+		<file>qml/app/detail/DetailColumn.qml</file>										
+		<file>qml/app/detail/DetailToolbar.qml</file>										
+		<file>qml/app/detail/ScaleColumn.qml</file>										
+		<file>qml/app/detail/viewers/MediaViewer.qml</file>										
+		<file>qml/app/detail/viewers/ImageViewer.qml</file>										
+		<file>qml/app/detail/viewers/PlaybackViewer.qml</file>										
+		<file>qml/app/detail/viewers/ProgressTimer.qml</file>										
+		<file>qml/app/detail/viewers/Scrubber.qml</file>										
+		<file>qml/app/detail/viewers/VideoViewer.qml</file>										
+		<file>qml/app/detail/viewers/AudioViewer.qml</file>										
+		<file>qml/app/detail/viewers/DocumentViewer.qml</file>										
+		<file>qml/app/detail/viewers/MediaState.qml</file>			
 		<file>qml/app/home/Home.qml</file>																				
 		<file>qml/app/home/settings/BrandBar.qml</file>																					
 		<file>qml/app/home/settings/Settings.qml</file>										
@@ -48,21 +62,7 @@
 		<file>qml/app/home/gallery/Gallery.qml</file>																			
 		<file>qml/app/home/gallery/Browser.qml</file>																			
 		<file>qml/app/home/gallery/ItemBrowser.qml</file>																			
-		<file>qml/app/home/gallery/OmekaItem.qml</file>																			
-		<file>qml/app/home/detail/Detail.qml</file>										
-		<file>qml/app/home/detail/DetailContent.qml</file>										
-		<file>qml/app/home/detail/DetailColumn.qml</file>										
-		<file>qml/app/home/detail/DetailToolbar.qml</file>										
-		<file>qml/app/home/detail/ScaleColumn.qml</file>										
-		<file>qml/app/home/detail/viewers/MediaViewer.qml</file>										
-		<file>qml/app/home/detail/viewers/ImageViewer.qml</file>										
-		<file>qml/app/home/detail/viewers/PlaybackViewer.qml</file>										
-		<file>qml/app/home/detail/viewers/ProgressTimer.qml</file>										
-		<file>qml/app/home/detail/viewers/Scrubber.qml</file>										
-		<file>qml/app/home/detail/viewers/VideoViewer.qml</file>										
-		<file>qml/app/home/detail/viewers/AudioViewer.qml</file>										
-		<file>qml/app/home/detail/viewers/DocumentViewer.qml</file>										
-		<file>qml/app/home/detail/viewers/MediaState.qml</file>										
+		<file>qml/app/home/gallery/OmekaItem.qml</file>																												
 		<file>qml/app/likes/Likes.qml</file>										
 		<file>qml/app/search/Search.qml</file>										
 		<file>qml/app/search/SearchDelegate.qml</file>										

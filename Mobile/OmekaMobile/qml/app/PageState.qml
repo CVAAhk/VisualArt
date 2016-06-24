@@ -9,4 +9,5 @@ State {
     id: state
     property variant target
     PropertyChanges { target: state.target; explicit: true; checked: true }
+    AnchorChanges { target: bar; anchors.top: undefined; anchors.bottom: bar.parent.bottom }
 }

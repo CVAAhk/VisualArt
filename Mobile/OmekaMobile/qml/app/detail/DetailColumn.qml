@@ -1,7 +1,7 @@
 import QtQuick 2.5
 import "viewers"
-import "../../base"
-import "../../../utils"
+import "../base"
+import "../../utils"
 
 /*!
     \qmltype DetailColumn
@@ -19,16 +19,13 @@ ScaleColumn {
     */
     property variant item: ItemManager.current
 
-    // add formatted metadata to info panel
-    Binding { target: info; property: "text"; value: metadata() }
-
     //actions
     toolbar: DetailToolbar { id: bar }
 
     //media view
     viewer: MediaViewer {
         id: image
-        source: item.image
+        Binding on source { when: item; value: item.image }
     }
 
     //info panel
@@ -37,6 +34,7 @@ ScaleColumn {
         width: parent.width
         height: contentHeight
         _font: Style.metadataFont
+        Binding on text { when: item; value: metadata() }
     }
 
     //format metadata

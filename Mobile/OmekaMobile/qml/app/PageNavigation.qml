@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.4
+import "../utils"
 import "home"
 import "search"
 import "likes"
@@ -12,7 +13,8 @@ import "likes"
 StackView {
     id: navigator
     width: parent.width
-    height: parent.height
+    height: parent.height    
+    initialItem: home
 
     /*!
       \internal
@@ -31,12 +33,29 @@ StackView {
       Likes page instance
     */
     property Likes likes: Likes {}
+
+    /*!
+      \internal
+      Main navigation pages
+    */
     property variant pages: [home, search, likes]
+
+    /*!
+      \internal
+      Tracks currently selected item
+    */
+    property variant item: ItemManager.current
+
+    //load corresponding detail on item selection
+    onItemChanged: {
+        if(item.id) push(Qt.resolvedUrl("detail/Detail.qml"))
+    }
 
     //navigation controls
     PageNavigationBar {
         id: bar
-        onStateChanged: navigator.navigate(pages[bar.index])
+        hide: currentItem && currentItem.objectName === "detail"
+        onIndexChanged: if(bar.index >= 0) navigator.navigate(pages[bar.index])
     }
 
     /*! /qmlmethod
@@ -44,11 +63,11 @@ StackView {
         the stack, push it to the stack.
     */
     function navigate(page) {
-        if(navigator.onStack(page)){
-            navigator.pop(page)
+        if(onStack(page)){
+            pop(page)
         }
         else{
-            navigator.push(page)
+           push(page)
         }
     }
 
@@ -56,8 +75,8 @@ StackView {
         Returns true if page is on stack, returns false otherwise
     */
     function onStack(page) {
-        for(var i=0; i<3; i++) {
-            if(navigator.get(i, true) === page) return true
+        for(var i=0; i<depth; i++) {
+            if(get(i, true) === page) return true
         }
         return false
     }
