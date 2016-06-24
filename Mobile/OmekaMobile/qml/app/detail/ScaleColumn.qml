@@ -1,6 +1,6 @@
 import QtQuick 2.5
 import "viewers"
-import "../../base"
+import "../base"
 
 /*!
   \qmltype ScaleColumn

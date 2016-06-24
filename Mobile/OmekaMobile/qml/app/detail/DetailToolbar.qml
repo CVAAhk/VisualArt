@@ -1,6 +1,6 @@
 import QtQuick 2.5
-import "../../base"
-import "../../../utils"
+import "../base"
+import "../../utils"
 
 /*
   \qmltype DetailToolbar
@@ -14,7 +14,7 @@ OmekaToolBar {
         id: back
         anchors.left: parent.left
         icon: Style.back
-        onClicked: if(stack) stack.pop()
+        onClicked: navigator.pop()
     }
 
     //provides drop down menu of additional options

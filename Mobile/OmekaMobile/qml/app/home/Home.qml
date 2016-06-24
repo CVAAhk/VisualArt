@@ -7,7 +7,7 @@ Item {
     height: parent.height
 
     StackView{
-        id: stack
+        id: homeStack
         anchors.fill: parent
         initialItem: Qt.resolvedUrl("gallery/Gallery.qml")
     }

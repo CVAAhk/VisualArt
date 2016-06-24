@@ -1,6 +1,6 @@
 import QtQuick 2.5
 import QtMultimedia 5.5
-import "../../../base"
+import "../../base"
 
 /*
   \qmltype VideoViewer

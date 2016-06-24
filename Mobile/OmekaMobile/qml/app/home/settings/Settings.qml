@@ -25,7 +25,7 @@ Item {
             OmekaButton {
                 id: back
                 icon: Style.back
-                onClicked: if(stack) stack.pop()
+                onClicked: if(homeStack) homeStack.pop()
             }
         }
 

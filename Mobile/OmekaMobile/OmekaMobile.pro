@@ -55,7 +55,7 @@ DISTFILES += \
     qml/utils/ResolutionManager.qml \
     qml/utils/Style.qml \
     qml/app/home/Home.qml \
-    qml/app/home/detail/Detail.qml \
+    qml/app/detail/Detail.qml \
     qml/app/home/gallery/Gallery.qml \
     qml/app/home/settings/BrandBar.qml \
     qml/app/home/settings/SettingsModel.qml \
@@ -73,21 +73,21 @@ DISTFILES += \
     qml/app/base/OmekaButton.qml \
     qml/app/base/OmekaText.qml \
     qml/app/search/SearchHeader.qml \
-    qml/app/home/detail/DetailContent.qml \
-    qml/app/home/detail/DetailToolbar.qml \
+    qml/app/detail/DetailContent.qml \
+    qml/app/detail/DetailToolbar.qml \
     qml/app/base/OmekaScrollView.qml \
-    qml/app/home/detail/viewers/MediaViewer.qml \
-    qml/app/home/detail/ScaleColumn.qml \
-    qml/app/home/detail/DetailColumn.qml \
-    qml/app/home/detail/viewers/ImageViewer.qml \
+    qml/app/detail/viewers/MediaViewer.qml \
+    qml/app/detail/ScaleColumn.qml \
+    qml/app/detail/DetailColumn.qml \
+    qml/app/detail/viewers/ImageViewer.qml \
     qml/app/base/OmekaViewer.qml \
-    qml/app/home/detail/viewers/VideoViewer.qml \
-    qml/app/home/detail/viewers/AudioViewer.qml \
-    qml/app/home/detail/viewers/DocumentViewer.qml \
-    qml/app/home/detail/viewers/MediaState.qml \
-    qml/app/home/detail/viewers/PlaybackViewer.qml \
-    qml/app/home/detail/viewers/ProgressTimer.qml \
-    qml/app/home/detail/viewers/Scrubber.qml \
+    qml/app/detail/viewers/VideoViewer.qml \
+    qml/app/detail/viewers/AudioViewer.qml \
+    qml/app/detail/viewers/DocumentViewer.qml \
+    qml/app/detail/viewers/MediaState.qml \
+    qml/app/detail/viewers/PlaybackViewer.qml \
+    qml/app/detail/viewers/ProgressTimer.qml \
+    qml/app/detail/viewers/Scrubber.qml \
     qml/app/styles/ScrubberStyle.qml \
     qml/app/PageButton.qml \
     qml/app/styles/PageButtonStyle.qml \

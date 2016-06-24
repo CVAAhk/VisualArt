@@ -1,8 +1,8 @@
 import QtQuick 2.5
 import QtQuick.Controls 1.4
 import QtMultimedia 5.5
-import "../../../base"
-import "../../../../utils"
+import "../../base"
+import "../../../utils"
 
 /*!
   \qmltype PlaybackViewer

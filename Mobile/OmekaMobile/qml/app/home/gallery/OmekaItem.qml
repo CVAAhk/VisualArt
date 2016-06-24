@@ -46,9 +46,6 @@ Component {
             anchors.fill: parent
             onClicked: {
                 ItemManager.current = itemData
-                if(stack){
-                    stack.push(Qt.resolvedUrl("../detail/Detail.qml"))
-                }
             }
         }
 
