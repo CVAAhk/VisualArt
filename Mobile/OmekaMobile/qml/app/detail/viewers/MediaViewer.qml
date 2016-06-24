@@ -19,26 +19,18 @@ Item {
       The url of the media file
     */
     property url source
+
+    /*!
+      \qmlproperty OmekaViewer MediaViewer::type
+      The file type
+    */
+    property string type
+
     /*!
       \qmlproperty OmekaViewer MediaViewer::current
       The current child viewer
     */
     property OmekaViewer current
-    /*!
-      \internal
-      Regex of supported image formats
-    */
-    property var imageExt: /\.(jpe?g|png|gif|tif?f)$/i
-    /*!
-      \internal
-      Regex of supported audio formats
-    */
-    property var audioExt: /\.(mp3)$/i
-    /*!
-      \internal
-      Regex of supported video formats
-    */
-    property var videoExt: /\.(avi|mpe?g|mp4|qt|swf|wmv|mov)$/i
 
     //supported media viewers
     ImageViewer { id: image }
@@ -47,7 +39,7 @@ Item {
     DocumentViewer { id: document }
 
     //updates state according to file type
-    Binding { target: viewer; property: "state"; value: type() }
+    Binding { target: viewer; property: "state"; value: type }
 
     //set current viewer
     states: [
@@ -72,14 +64,4 @@ Item {
             media: document
         }
     ]
-
-    /*! /internal Returns media type of source file*/
-    function type() {
-        if(imageExt.test(source))
-            return "image";
-        if(audioExt.test(source))
-            return "audio"
-        if(videoExt.test(source))
-            return "video"
-    }
 }

@@ -86,6 +86,10 @@
 		<file>ui/search-on.png</file>
 		<file>ui/likes-off.png</file>
 		<file>ui/likes-on.png</file>
+		<file>ui/image.png</file>
+		<file>ui/audio.png</file>
+		<file>ui/video.png</file>
+		<file>ui/document.png</file>
 				
     </qresource>
 </RCC>

@@ -17,6 +17,7 @@ Component {
             itemData.id = item
             itemData.full = full
             itemData.image = image
+            itemData.media = media
             Omeka.getMetaData(item)
         }
 
@@ -37,7 +38,7 @@ Component {
             anchors.fill: parent
             anchors.centerIn: parent           
             asynchronous: true
-            source: full
+            source: full ? full : Style.thumbs[media]
             fillMode: Image.PreserveAspectCrop
         }
 

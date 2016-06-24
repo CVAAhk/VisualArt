@@ -24,8 +24,9 @@ ScaleColumn {
 
     //media view
     viewer: MediaViewer {
-        id: image
+        id: media
         Binding on source { when: item; value: item.image }
+        Binding on type { when: item; value: item.media }
     }
 
     //info panel
