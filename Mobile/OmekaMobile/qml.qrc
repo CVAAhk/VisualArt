@@ -57,6 +57,7 @@
 		<file>qml/app/home/Home.qml</file>																				
 		<file>qml/app/home/settings/BrandBar.qml</file>																					
 		<file>qml/app/home/settings/Settings.qml</file>										
+		<file>qml/app/home/settings/Setting.qml</file>										
 		<file>qml/app/home/settings/SettingsModel.qml</file>										
 		<file>qml/app/home/settings/SettingsDelegate.qml</file>										
 		<file>qml/app/home/gallery/Gallery.qml</file>																			
@@ -90,6 +91,7 @@
 		<file>ui/audio.png</file>
 		<file>ui/video.png</file>
 		<file>ui/document.png</file>
+		<file>ui/expand.png</file>
 				
     </qresource>
 </RCC>

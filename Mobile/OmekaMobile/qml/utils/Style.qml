@@ -57,7 +57,9 @@ Item {
     /*! \qmlproperty thumbnail placeholder for video media */
     property url videoIcon: rootPath+"video.png"
     /*! \qmlproperty thumbnail placeholder for document media */
-    property url documentIcon: rootPath+"document.png"
+    property url documentIcon: rootPath+"document.png"    
+    /*! \qmlproperty arrow graphic indicating the checked state of a settings option */
+    property url expand: rootPath+"expand.png"
 
     property variant thumbs: ({"image": imageIcon, "audio": audioIcon, "video": videoIcon, "document": documentIcon})
     /*-------------Font-------------*/

@@ -93,7 +93,8 @@ DISTFILES += \
     qml/app/styles/PageButtonStyle.qml \
     qml/app/PageNavigationBar.qml \
     qml/app/PageNavigation.qml \
-    qml/app/PageState.qml
+    qml/app/PageState.qml \
+    qml/app/home/settings/Setting.qml
 
 HEADERS += \
     imageprovidertest.h

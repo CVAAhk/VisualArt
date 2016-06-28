@@ -29,17 +29,45 @@ Item {
             }
         }
 
-        /*!Scrollable list of settings*/
-        OmekaScrollView {
-            width: parent.width
-            height: parent.height - bar.height
+        /*!List of settings*/
+            OmekaScrollView {
+                width: parent.width
+                height: parent.height - bar.height * 2
+                Column {
+                    Binding on width {when: parent; value: parent.width }
+                    height: childrenRect.height
+                    spacing: Resolution.applyScale(150)
 
-            ListView {
-                anchors.fill: parent
-                model: SettingsModel{}
-                delegate: SettingsDelegate{}
-                spacing: Resolution.applyScale(150)
+                    Setting {
+                        text: "Layout"
+                        content: Rectangle {
+                            color: "red"
+                            height: 200
+                        }
+                    }
+                    Setting {
+                        text: "Clear All Likes"
+                        content: Rectangle {
+                            color: "blue"
+                            height: 200
+                        }
+                    }
+                    Setting {
+                        text: "About The Collections"
+                        content: Rectangle {
+                            color: "green"
+                            height: 200
+                        }
+                    }
+                    Setting {
+                        text: "About Omeka and Open Exhibits"
+                        content: Rectangle {
+                            color: "black"
+                            height: 200
+                        }
+                    }
+                }
             }
-        }
+
     }
 }
