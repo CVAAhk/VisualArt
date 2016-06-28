@@ -16,6 +16,8 @@ Item {
         OmekaToolBar {
             id: bar
 
+            backgroundColor: Style.viewBackgroundColor
+
             OmekaText {
                 anchors.centerIn: parent
                 text: "settings"
@@ -38,12 +40,8 @@ Item {
                     height: childrenRect.height
                     spacing: Resolution.applyScale(150)
 
-                    Setting {
+                    LayoutSetting {
                         text: "Layout"
-                        content: Rectangle {
-                            color: "red"
-                            height: 200
-                        }
                     }
                     Setting {
                         text: "Clear All Likes"

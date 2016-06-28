@@ -2,3 +2,4 @@ singleton Resolution 1.0 ResolutionManager.qml
 singleton Style 1.0 Style.qml
 singleton Omeka 1.0 OmekaClient.qml
 singleton ItemManager 1.0 ItemManager.qml
+singleton User 1.0 UserSettings.qml

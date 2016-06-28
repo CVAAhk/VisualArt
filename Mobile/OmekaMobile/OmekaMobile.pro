@@ -26,6 +26,7 @@ QML_IMPORT_PATH += \
     qml/utils/Style 1.0 \
     qml/utils/Omeka 1.0 \
     qml/utils/ItemManager 1.0 \
+    qml/utils/User 1.0 \
 
 # Default rules for deployment.
 include(deployment.pri)
@@ -58,8 +59,6 @@ DISTFILES += \
     qml/app/detail/Detail.qml \
     qml/app/home/gallery/Gallery.qml \
     qml/app/home/settings/BrandBar.qml \
-    qml/app/home/settings/SettingsModel.qml \
-    qml/app/home/settings/SettingsDelegate.qml \
     qml/utils/OmekaClient.qml \
     qml/app/home/gallery/OmekaItem.qml \
     qml/app/home/settings/Settings.qml \
@@ -94,7 +93,9 @@ DISTFILES += \
     qml/app/PageNavigationBar.qml \
     qml/app/PageNavigation.qml \
     qml/app/PageState.qml \
-    qml/app/home/settings/Setting.qml
+    qml/app/home/settings/Setting.qml \
+    qml/utils/UserSettings.qml \
+    qml/app/home/settings/LayoutSetting.qml
 
 HEADERS += \
     imageprovidertest.h
