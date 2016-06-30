@@ -13,7 +13,7 @@ Setting {
     /*! \internal
       Padding around text
     */
-    property real margins: 20
+    property real margins: Resolution.applyScale(60)
 
     /*! \qml property string AboutSetting::text
       Textual content

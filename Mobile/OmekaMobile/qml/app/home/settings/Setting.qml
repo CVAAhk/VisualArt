@@ -53,10 +53,12 @@ Item {
         //expanded indicator
         Image {
             id: arrow
-            source: Style.expand
+            height: parent.height * .35
+            fillMode: Image.PreserveAspectFit
             anchors.verticalCenter: parent.verticalCenter
             anchors.right: parent.right
-            anchors.rightMargin: 10
+            anchors.rightMargin: Resolution.applyScale(30)
+            source: Style.expand
         }
     }
 
