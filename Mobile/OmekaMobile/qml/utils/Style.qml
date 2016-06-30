@@ -50,8 +50,18 @@ Item {
     property url more: rootPath+"more.png"
     /*! \qmlproperty surrounding indicator of like button on detail view */
     property url likeIndicator2: rootPath+"like-indicator-2.png"
+    /*! \qmlproperty thumbnail placeholder for image media */
+    property url imageIcon: rootPath+"image.png"
+    /*! \qmlproperty thumbnail placeholder for audio media */
+    property url audioIcon: rootPath+"audio.png"
+    /*! \qmlproperty thumbnail placeholder for video media */
+    property url videoIcon: rootPath+"video.png"
+    /*! \qmlproperty thumbnail placeholder for document media */
+    property url documentIcon: rootPath+"document.png"    
+    /*! \qmlproperty arrow graphic indicating the checked state of a settings option */
+    property url expand: rootPath+"expand.png"
 
-
+    property variant thumbs: ({"image": imageIcon, "audio": audioIcon, "video": videoIcon, "document": documentIcon})
     /*-------------Font-------------*/
 
     property variant titleFont: ({ color:schemeColor1, size:74, weight:Font.Bold, capitalization:Font.AllUppercase, wrapMode: Text.NoWrap, textFormat: Text.AutoText })
@@ -59,4 +69,5 @@ Item {
     property variant settingFont: ({ color:schemeColor1, size:74, weight:Font.Normal, capitalization:Font.Capitalize, wrapMode: Text.NoWrap, textFormat: Text.AutoText })
     property variant tagFont: ({ color:schemeColor1, size:74, weight:Font.ExtraBold, capitalization:Font.Capitalize, wrapMode: Text.NoWrap, textFormat: Text.AutoText })
     property variant metadataFont: ({ color:"black", size:50, weight:Font.Normal, capitalization:Font.MixedCase, wrapMode: Text.Wrap, textFormat: Text.RichText })
+
 }

@@ -1,4 +1,5 @@
 var LIKES = "likes"
+var USER = "user"
 
 function getDatabase() {
      return LocalStorage.openDatabaseSync("omekamobile", "0.1", "settings", 1000000);
@@ -98,6 +99,8 @@ function drop(table) {
     return res;
 }
 
+/*--------LIKES table operations--------*/
+
 function addLike(id, value) {
     set(LIKES, id, value);
 }
@@ -112,4 +115,18 @@ function isLiked(id) {
 
 function getLikes() {
     return rows(LIKES);
+}
+
+function clearAllLikes() {
+    return clear(LIKES);
+}
+
+
+/*--------USER table operations--------*/
+function setLayout(layout) {
+    set(USER, "layout", layout);
+}
+
+function getLayout() {
+    return get(USER, "layout");
 }

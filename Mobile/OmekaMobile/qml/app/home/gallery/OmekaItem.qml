@@ -1,10 +1,8 @@
 import QtQuick 2.5
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
-import QtQuick.LocalStorage 2.0
 import "../gallery"
 import "../../../utils"
-import "../../../js/storage.js" as Settings
 
 /*! Omeka media item preview */
 Component {
@@ -14,17 +12,20 @@ Component {
 
         /*! query metadata */
         Component.onCompleted: {
-            itemData.id = item
+            itemData.id = String(item)
             itemData.full = full
             itemData.image = image
-            Omeka.getMetaData(item)
+            itemData.media = media
+            update()
         }
+
+        onVisibleChanged: update()
 
         /*! load metadata */
         Connections {
             target: Omeka
             onRequestComplete: {
-               if(result.item === itemData.id && result.type === Omeka.metadata) {
+               if(String(result.item) === itemData.id && result.type === Omeka.metadata) {
                    itemData.metadata = result.metadata
                    target = null
                }
@@ -37,7 +38,7 @@ Component {
             anchors.fill: parent
             anchors.centerIn: parent           
             asynchronous: true
-            source: full
+            source: full ? full : Style.thumbs[media]
             fillMode: Image.PreserveAspectCrop
         }
 
@@ -68,18 +69,21 @@ Component {
                 }
             }
 
-            //bind initial checked state to likes entry
-            onVisibleChanged: checked = Settings.isLiked(item)
-
             //add or remove data entry based on checked state
             onClicked: {
-                if(checked){
-                    Settings.addLike(item, img.source)
+                if(checked){                    
+                    ItemManager.registerLike(itemData)
                 }
                 else{
-                    Settings.removeLike(item)
+                    ItemManager.unregisterLike(itemData)
                 }
             }
+        }
+
+        //update metadata and liked state
+        function update() {
+            Omeka.getMetaData(itemData.id)
+            like.checked = ItemManager.isLiked(itemData)
         }
     }
 }

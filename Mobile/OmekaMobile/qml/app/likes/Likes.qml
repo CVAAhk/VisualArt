@@ -1,10 +1,8 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.4
-import QtQuick.LocalStorage 2.0
 import "../base"
 import "../../utils"
 import "../home/gallery"
-import "../../js/storage.js" as Settings
 
 /*! Display items liked by user */
 Item {
@@ -34,9 +32,9 @@ Item {
     /*! Update registered likes on visible state change*/
     function update(){
         if(visible){
-            var likes = Settings.getLikes();
-            for(var i=0; i<likes.length; i++){
-                browser.append( { item: likes[i].setting, type: Omeka.file, full: likes[i].value } )
+            var likes = ItemManager.getLikes();
+            for(var i=0; i<likes.length; i++) {
+                browser.append(likes[i])
             }
         }
         else{

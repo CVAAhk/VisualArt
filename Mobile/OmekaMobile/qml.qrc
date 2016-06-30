@@ -27,6 +27,7 @@
 		<file>qml/utils/Style.qml</file>			
 		<file>qml/utils/OmekaClient.qml</file>									
 		<file>qml/utils/ItemManager.qml</file>									
+		<file>qml/utils/UserSettings.qml</file>									
 		<file>qml/utils/qmldir</file>	
 							
 		<file>qml/app/PageNavigation.qml</file>					
@@ -57,8 +58,10 @@
 		<file>qml/app/home/Home.qml</file>																				
 		<file>qml/app/home/settings/BrandBar.qml</file>																					
 		<file>qml/app/home/settings/Settings.qml</file>										
-		<file>qml/app/home/settings/SettingsModel.qml</file>										
-		<file>qml/app/home/settings/SettingsDelegate.qml</file>										
+		<file>qml/app/home/settings/Setting.qml</file>										
+		<file>qml/app/home/settings/LayoutSetting.qml</file>																			
+		<file>qml/app/home/settings/ClearLikesSetting.qml</file>																			
+		<file>qml/app/home/settings/AboutSetting.qml</file>																			
 		<file>qml/app/home/gallery/Gallery.qml</file>																			
 		<file>qml/app/home/gallery/Browser.qml</file>																			
 		<file>qml/app/home/gallery/ItemBrowser.qml</file>																			
@@ -86,6 +89,11 @@
 		<file>ui/search-on.png</file>
 		<file>ui/likes-off.png</file>
 		<file>ui/likes-on.png</file>
+		<file>ui/image.png</file>
+		<file>ui/audio.png</file>
+		<file>ui/video.png</file>
+		<file>ui/document.png</file>
+		<file>ui/expand.png</file>
 				
     </qresource>
 </RCC>

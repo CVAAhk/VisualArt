@@ -16,6 +16,8 @@ Item {
         OmekaToolBar {
             id: bar
 
+            backgroundColor: Style.viewBackgroundColor
+
             OmekaText {
                 anchors.centerIn: parent
                 text: "settings"
@@ -29,17 +31,28 @@ Item {
             }
         }
 
-        /*!Scrollable list of settings*/
-        OmekaScrollView {
-            width: parent.width
-            height: parent.height - bar.height
+        /*!List of settings*/
+            OmekaScrollView {
+                width: parent.width
+                height: parent.height - bar.height * 2
+                Column {
+                    Binding on width {when: parent; value: parent.width }
+                    height: childrenRect.height
+                    spacing: Resolution.applyScale(150)
 
-            ListView {
-                anchors.fill: parent
-                model: SettingsModel{}
-                delegate: SettingsDelegate{}
-                spacing: Resolution.applyScale(150)
+                    //settings
+                    LayoutSetting { title: "Layout" }
+                    ClearLikesSetting { title: "Clear All Likes" }
+                    AboutSetting {
+                        title: "About The Collections"
+                        text: User.aboutCollection
+                    }
+                    AboutSetting {
+                        title: "About Omeka and Open Exhibits"
+                        text: User.aboutOOE
+                    }
+                }
             }
-        }
+
     }
 }
