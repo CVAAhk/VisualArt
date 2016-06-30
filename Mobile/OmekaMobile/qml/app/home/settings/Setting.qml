@@ -16,10 +16,10 @@ Item {
     height: childrenRect.height
     clip: true
 
-    /*! \qml property string Setting::text
+    /*! \qml property string Setting::title
       Setting name
     */
-    property alias text: category.text
+    property alias title: category.text
 
     /*! \qml property Item Setting::content
       Setting name

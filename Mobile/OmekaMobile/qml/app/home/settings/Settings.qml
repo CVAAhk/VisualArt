@@ -40,21 +40,16 @@ Item {
                     height: childrenRect.height
                     spacing: Resolution.applyScale(150)
 
-                    LayoutSetting { text: "Layout" }
-                    ClearLikesSetting { text: "Clear All Likes" }
-                    Setting {
-                        text: "About The Collections"
-                        content: Rectangle {
-                            color: "green"
-                            height: 200
-                        }
+                    //settings
+                    LayoutSetting { title: "Layout" }
+                    ClearLikesSetting { title: "Clear All Likes" }
+                    AboutSetting {
+                        title: "About The Collections"
+                        text: User.aboutCollection
                     }
-                    Setting {
-                        text: "About Omeka and Open Exhibits"
-                        content: Rectangle {
-                            color: "black"
-                            height: 200
-                        }
+                    AboutSetting {
+                        title: "About Omeka and Open Exhibits"
+                        text: User.aboutOOE
                     }
                 }
             }
