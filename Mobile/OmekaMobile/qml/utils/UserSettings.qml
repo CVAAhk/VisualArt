@@ -7,6 +7,7 @@ Item {
 
     property string aboutCollection: "asldkjfsalkdjflksjdfa"
     property string aboutOOE: "aowieurjowieroiwuerieroeiuoieur"
+    property string clearLikesConfirm: "<p><b>Warning:</b><br/>This action will delete all registered likes.</p>"
 
     function setLayout(layout) {
         Settings.setLayout(layout)
@@ -18,5 +19,9 @@ Item {
 
     function clearAllLikes() {
         Settings.clearAllLikes()
+    }
+
+    function likesExist() {
+        return Settings.getLikes().length > 0;
     }
 }

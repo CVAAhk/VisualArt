@@ -95,7 +95,8 @@ DISTFILES += \
     qml/app/PageState.qml \
     qml/app/home/settings/Setting.qml \
     qml/utils/UserSettings.qml \
-    qml/app/home/settings/LayoutSetting.qml
+    qml/app/home/settings/LayoutSetting.qml \
+    qml/app/home/settings/ClearLikesSetting.qml
 
 HEADERS += \
     imageprovidertest.h

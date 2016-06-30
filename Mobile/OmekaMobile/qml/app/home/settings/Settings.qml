@@ -40,16 +40,8 @@ Item {
                     height: childrenRect.height
                     spacing: Resolution.applyScale(150)
 
-                    LayoutSetting {
-                        text: "Layout"
-                    }
-                    Setting {
-                        text: "Clear All Likes"
-                        content: Rectangle {
-                            color: "blue"
-                            height: 200
-                        }
-                    }
+                    LayoutSetting { text: "Layout" }
+                    ClearLikesSetting { text: "Clear All Likes" }
                     Setting {
                         text: "About The Collections"
                         content: Rectangle {
