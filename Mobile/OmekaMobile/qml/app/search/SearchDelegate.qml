@@ -29,7 +29,10 @@ Rectangle {
     //execute query
     MouseArea{
         anchors.fill: parent
-        onClicked: Omeka.getItemsByTag(tag, context)
+        onClicked: {
+            Omeka.getItemsByTag(tag, context)
+            searchStack.push(Qt.resolvedUrl("SearchResults.qml"))
+        }
     }
 
     //query items with this tag
@@ -37,7 +40,7 @@ Rectangle {
         target: Omeka
         onRequestComplete: {
             if(result.context === context){
-                print(result.context)
+               // print(result.context)
             }
         }
     }
