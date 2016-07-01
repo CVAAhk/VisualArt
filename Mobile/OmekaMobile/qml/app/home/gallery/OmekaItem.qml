@@ -7,6 +7,7 @@ import "../../../utils"
 /*! Omeka media item preview */
 Component {
     Item{
+        id: object
         width: grid.cellWidth; height: grid.cellHeight
         property variant itemData: ({})
 
@@ -25,7 +26,7 @@ Component {
         Connections {
             target: Omeka
             onRequestComplete: {
-               if(String(result.item) === itemData.id && result.type === Omeka.metadata) {
+               if(String(result.item) === itemData.id && result.context === object) {
                    itemData.metadata = result.metadata
                    target = null
                }
@@ -82,7 +83,7 @@ Component {
 
         //update metadata and liked state
         function update() {
-            Omeka.getMetaData(itemData.id)
+            Omeka.getMetaData(itemData.id, object)
             like.checked = ItemManager.isLiked(itemData)
         }
     }

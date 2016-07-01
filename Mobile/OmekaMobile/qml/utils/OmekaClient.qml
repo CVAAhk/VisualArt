@@ -35,15 +35,11 @@ Item {
         Invoked on query result*/
     signal requestComplete(var result)
 
-    //data types
-    property int file: 0
-    property int metadata: 1
-    property int tag: 2
-
 
     /*! \internal */
-    function submitRequest(url){
+    function submitRequest(url, context){
         var request = new XMLHttpRequest();
+        request.context = context;
         request.onreadystatechange = onResponse(request);
         request.open("GET", url, true);
         request.send();
@@ -58,6 +54,7 @@ Item {
                     print("Request Error: "+result.errors[0].message);
                 }
                 else{
+                    result.context = request.context;
                     processResult(result);
                 }
             }
@@ -73,41 +70,41 @@ Item {
         for(var i=0; i<count; i++){
             res = result[i] || result;
             if(res.item){
-                requestComplete({item: res.item.id, type: file, image: res.file_urls.original, full: res.file_urls.fullsize, media: mediaType(res.file_urls.original)});
+                requestComplete({item: res.item.id, context: result.context, image: res.file_urls.original, full: res.file_urls.fullsize, media: mediaType(res.file_urls.original)});
             }
             else if(res.element_texts){
-                requestComplete({item: res.id, type: metadata, metadata: res.element_texts});
+                requestComplete({item: res.id, context: result.context, metadata: res.element_texts});
             }
             else{
-                requestComplete({item: res.id, type: tag, tag: res.name});
+                requestComplete({item: res.id, context: result.context, tag: res.name});
             }
         }
     }
 
     /*! \qmlmethod
         Query specified page*/
-    function getPage(page){
-        submitRequest(endpoint+"files?page="+page);
+    function getPage(page, context){
+        submitRequest(endpoint+"files?page="+page, context);
         currentPage = page;
     }
 
     /*! \qmlmethod
         Query next page*/
-    function getNextPage(){
+    function getNextPage(context){
         currentPage++
-        getPage(currentPage)
+        getPage(currentPage, context)
     }
 
     /*! \qmlmethod
         Query meta data of specified item*/
-    function getMetaData(id){
-        submitRequest(endpoint+"items/"+id);
+    function getMetaData(id, context){
+        submitRequest(endpoint+"items/"+id, context);
     }
 
     /*! \qmlmethod
         Query repository tags*/
-    function getTags(){
-        submitRequest(endpoint+"tags")
+    function getTags(context){
+        submitRequest(endpoint+"tags", context)
     }
 
     /*! \qmlmethod

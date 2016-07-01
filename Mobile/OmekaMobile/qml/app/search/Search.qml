@@ -11,6 +11,7 @@ import "../base"
   Search provides item filtering by generic keyword or item tags
 */
 Item {
+    id: search
 
     //refresh tags
     Component.onCompleted: refresh()
@@ -19,7 +20,7 @@ Item {
     Connections {
         target: Omeka
         onRequestComplete: {
-            if(result.type === Omeka.tag) {
+            if(result.context === search) {
                 list.model.append(result)
             }
         }
@@ -77,6 +78,6 @@ Item {
     */
     function refresh() {
         textField.placeholderText = "SEARCH"
-        Omeka.getTags()
+        Omeka.getTags(search)
     }
 }
