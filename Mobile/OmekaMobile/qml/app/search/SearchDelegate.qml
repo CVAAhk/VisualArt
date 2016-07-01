@@ -3,14 +3,45 @@ import QtQuick.Controls 1.4
 import "../base"
 import "../../utils"
 
-Rectangle {
-    color: Style.viewBackgroundColor
-    width: parent.width
-    height: Resolution.applyScale(150)
+/*!
+  \qmltype SearchDelegate
 
+  SearchDelegate is search item representing a collection tag. When selected the repository
+  is queried for all items with this tag and the browser is populated with the results.
+*/
+Rectangle {
+    id: context
+    color: Style.viewBackgroundColor
+    height: Resolution.applyScale(150)
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.margins: Resolution.applyScale(30)
+    border.width: 1
+    border.color: "#b1b1b1"
+
+    //text display
     OmekaText {
         text: tag
         anchors.centerIn: parent
         _font: Style.tagFont
+    }
+
+    //execute query
+    MouseArea{
+        anchors.fill: parent
+        onClicked: {
+            Omeka.getItemsByTag(tag, context)
+            searchStack.push(Qt.resolvedUrl("SearchResults.qml"))
+        }
+    }
+
+    //query items with this tag
+    Connections {
+        target: Omeka
+        onRequestComplete: {
+            if(result.context === context){
+               // print(result.context)
+            }
+        }
     }
 }

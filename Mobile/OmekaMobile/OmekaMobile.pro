@@ -97,7 +97,10 @@ DISTFILES += \
     qml/utils/UserSettings.qml \
     qml/app/home/settings/LayoutSetting.qml \
     qml/app/home/settings/ClearLikesSetting.qml \
-    qml/app/home/settings/AboutSetting.qml
+    qml/app/home/settings/AboutSetting.qml \
+    qml/app/styles/SearchBarStyle.qml \
+    qml/app/search/SearchView.qml \
+    qml/app/search/SearchResults.qml
 
 HEADERS += \
     imageprovidertest.h

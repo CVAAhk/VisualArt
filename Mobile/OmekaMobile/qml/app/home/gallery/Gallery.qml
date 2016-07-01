@@ -5,19 +5,20 @@ import "../../../utils"
 
 /*!Media viewer*/
 Item {
+    id: gallery
 
     property variant current
 
     /*!Load first page*/
     Component.onCompleted: {
-        Omeka.getPage(1)
+        Omeka.getPage(1, gallery)
     }
 
     /*!Dynamically load omeka query results into browser*/
     Connections {
         target: Omeka
         onRequestComplete:{
-            if(result.type === Omeka.file){
+            if(result.context === gallery){
                 browser.append(result)
             }
         }
@@ -38,7 +39,7 @@ Item {
         ItemBrowser {
             id: browser
             onCanPaginate: {
-                Omeka.getNextPage()
+                Omeka.getNextPage(gallery)
             }
         }
     }

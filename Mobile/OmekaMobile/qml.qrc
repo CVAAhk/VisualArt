@@ -41,6 +41,7 @@
 		<file>qml/app/base/OmekaViewer.qml</file>									
 		<file>qml/app/styles/ScrubberStyle.qml</file>									
 		<file>qml/app/styles/PageButtonStyle.qml</file>									
+		<file>qml/app/styles/SearchBarStyle.qml</file>									
 		<file>qml/app/detail/Detail.qml</file>										
 		<file>qml/app/detail/DetailContent.qml</file>										
 		<file>qml/app/detail/DetailColumn.qml</file>										
@@ -68,8 +69,10 @@
 		<file>qml/app/home/gallery/OmekaItem.qml</file>																												
 		<file>qml/app/likes/Likes.qml</file>										
 		<file>qml/app/search/Search.qml</file>										
+		<file>qml/app/search/SearchView.qml</file>										
 		<file>qml/app/search/SearchDelegate.qml</file>										
 		<file>qml/app/search/SearchHeader.qml</file>										
+		<file>qml/app/search/SearchResults.qml</file>										
 		
 		<file>qml/js/storage.js</file>
 		<file>qml/js/UI.js</file>
