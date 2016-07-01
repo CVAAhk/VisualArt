@@ -1,15 +1,21 @@
-import QtQuick 2.0
+import QtQuick 2.5
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import "../../utils"
+import "../styles"
 import "../base"
 
+/*!
+  \qmltype Search
+
+  Search provides item filtering by generic keyword or item tags
+*/
 Item {
 
-    Component.onCompleted: {
-        Omeka.getTags()
-    }
+    //refresh tags
+    Component.onCompleted: refresh()
 
+    //update list on completion of tag query
     Connections {
         target: Omeka
         onRequestComplete: {
@@ -19,51 +25,58 @@ Item {
         }
     }
 
+    //background
     Rectangle {
         width: parent.width
         height: list.height
-        color: "#b1b1b1"
+        color: Style.viewBackgroundColor
     }
 
+    //foreground
     Column {
         anchors.fill: parent;
         spacing: 0
 
+        //toolbar
         OmekaToolBar {
+            id: bar
+
+            //search field
             TextField {
+                id: textField
                 anchors.fill: parent
                 anchors.margins: Resolution.applyScale(15)
                 horizontalAlignment: TextInput.AlignHCenter
                 verticalAlignment: TextInput.AlignVCenter
-                placeholderText: "SEARCH"
                 font.bold: true
                 font.pixelSize: Resolution.applyScale(80)
-
-                style: TextFieldStyle {
-                    textColor: Style.titleFont.color
-                    placeholderTextColor: textColor
-                    background: Rectangle{
-                        width: control.width
-                        height: control.height
-                        border.width: 0
-                        radius: Resolution.applyScale(30)
-                    }
-                }
+                style: SearchBarStyle {}
             }
         }
 
+        //tag scroll view
         OmekaScrollView {
+            id: scroll
             width: parent.width
-            height: parent.height
+            height: parent.height - bar.height * 2
 
+            //tag list
             ListView {
                 id: list
                 anchors.fill: parent
-                spacing: 2
                 model: ListModel {}
                 delegate: SearchDelegate {}
                 header: SearchHeader {}
+                onHeightChanged: contentY = -headerItem.height
             }
         }
+    }
+
+    /*! \internal
+      Restore search text and query repository for tags
+    */
+    function refresh() {
+        textField.placeholderText = "SEARCH"
+        Omeka.getTags()
     }
 }

@@ -41,6 +41,7 @@
 		<file>qml/app/base/OmekaViewer.qml</file>									
 		<file>qml/app/styles/ScrubberStyle.qml</file>									
 		<file>qml/app/styles/PageButtonStyle.qml</file>									
+		<file>qml/app/styles/SearchBarStyle.qml</file>									
 		<file>qml/app/detail/Detail.qml</file>										
 		<file>qml/app/detail/DetailContent.qml</file>										
 		<file>qml/app/detail/DetailColumn.qml</file>										
