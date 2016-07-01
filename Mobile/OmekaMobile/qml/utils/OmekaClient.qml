@@ -5,7 +5,8 @@ Item {
     /*! \qmlproperty
         Target omeka endpoint url
     */
-    property url endpoint: "http://mallhistory.org/api/"    
+    //property url endpoint: "http://mallhistory.org/api/"
+    property url endpoint: "http://dev.omeka.org/mallcopy/api/"
 
     /*! \qmlproperty
         Current page number
