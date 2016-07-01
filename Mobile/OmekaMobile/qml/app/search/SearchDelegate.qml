@@ -10,6 +10,7 @@ import "../../utils"
   is queried for all items with this tag and the browser is populated with the results.
 */
 Rectangle {
+    id: context
     color: Style.viewBackgroundColor
     height: Resolution.applyScale(150)
     anchors.left: parent.left
@@ -28,6 +29,16 @@ Rectangle {
     //execute query
     MouseArea{
         anchors.fill: parent
-        onClicked: print(tag)
+        onClicked: Omeka.getItemsByTag(tag, context)
+    }
+
+    //query items with this tag
+    Connections {
+        target: Omeka
+        onRequestComplete: {
+            if(result.context === context){
+                print(result.context)
+            }
+        }
     }
 }

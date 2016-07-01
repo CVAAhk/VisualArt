@@ -108,6 +108,12 @@ Item {
     }
 
     /*! \qmlmethod
+        Query items by tag*/
+    function getItemsByTag(tag, context) {
+        submitRequest(endpoint+"items?tags="+tag, context)
+    }
+
+    /*! \qmlmethod
         Return media type of original file*/
     function mediaType(source) {
         if(imageExt.test(source))
