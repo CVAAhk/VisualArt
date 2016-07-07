@@ -69,13 +69,13 @@ Item {
 
         for(var i=0; i<count; i++){
             res = result[i] || result;
-            if(res.item){
-                requestComplete({item: res.item.id, context: result.context, image: res.file_urls.original, full: res.file_urls.fullsize, media: mediaType(res.file_urls.original)});
+            if(res.item){  //file
+                requestComplete({item: res.item.id, context: result.context, media: res.file_urls.original, thumb: res.file_urls.fullsize, media_type: mediaType(res.file_urls.original)});
             }
-            else if(res.element_texts){
-                requestComplete({item: res.id, context: result.context, metadata: res.element_texts});
+            else if(res.element_texts){ //item
+                requestComplete({item: res.id, context: result.context, metadata: res.element_texts, file_count: res.files.count});
             }
-            else{
+            else{ //tag
                 requestComplete({item: res.id, context: result.context, tag: res.name});
             }
         }
@@ -84,7 +84,7 @@ Item {
     /*! \qmlmethod
         Query specified page*/
     function getPage(page, context){
-        submitRequest(endpoint+"files?page="+page, context);
+        submitRequest(endpoint+"items?page="+page, context);
         currentPage = page;
     }
 
@@ -96,9 +96,9 @@ Item {
     }
 
     /*! \qmlmethod
-        Query meta data of specified item*/
-    function getMetaData(id, context){
-        submitRequest(endpoint+"items/"+id, context);
+        Query files of specified item*/
+    function getFiles(id, context){
+        submitRequest(endpoint+"files?item="+id, context);
     }
 
     /*! \qmlmethod
@@ -111,6 +111,12 @@ Item {
         Query items by tag*/
     function getItemsByTag(tag, context) {
         submitRequest(endpoint+"items?tags="+tag, context)
+    }
+
+    /*! \qmlmethod
+        Query items by id*/
+    function getItemById(id, context) {
+        submitRequest(endpoint+"items/"+id, context)
     }
 
     /*! \qmlmethod

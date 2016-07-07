@@ -9,26 +9,34 @@ Component {
     Item{
         id: object
         width: grid.cellWidth; height: grid.cellHeight
-        property variant itemData: ({})
 
-        /*! query metadata */
+        property var itemData: ({})
+
+        /*! store result and query files */
         Component.onCompleted: {
-            itemData.id = String(item)
-            itemData.full = full
-            itemData.image = image
-            itemData.media = media
+            itemData.id = item
+            itemData.metadata = metadata
+            itemData.media = []
+            itemData.mediaTypes = []
             update()
+            Omeka.getFiles(item, object)
         }
-
         onVisibleChanged: update()
 
-        /*! load metadata */
+        /*! load media data*/
         Connections {
             target: Omeka
             onRequestComplete: {
-               if(String(result.item) === itemData.id && result.context === object) {
-                   itemData.metadata = result.metadata
-                   target = null
+               if(result.context === object) {
+
+                   itemData.thumb = result.thumb || Style.thumbs[result.media_type]
+                   itemData.media.push(result.media)
+                   itemData.mediaTypes.push(result.media_type)
+
+                   if(itemData.media.length === file_count){
+                      img.source = itemData.thumb
+                      target = null
+                   }
                }
             }
         }
@@ -39,7 +47,6 @@ Component {
             anchors.fill: parent
             anchors.centerIn: parent           
             asynchronous: true
-            source: full ? full : Style.thumbs[media]
             fillMode: Image.PreserveAspectCrop
         }
 
@@ -81,9 +88,8 @@ Component {
             }
         }
 
-        //update metadata and liked state
+        //update liked state
         function update() {
-            Omeka.getMetaData(itemData.id, object)
             like.checked = ItemManager.isLiked(itemData)
         }
     }
