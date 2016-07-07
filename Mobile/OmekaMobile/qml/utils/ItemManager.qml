@@ -32,7 +32,7 @@ Item {
       Format data object to semi-colon delimited entry
     */
     function itemToEntry(item) {
-        return item.full+";"+item.image+";"+item.media
+        return item.metadata+";"+item.fileCount
     }
 
     /*!
@@ -42,9 +42,8 @@ Item {
     function entryToItem(setting, value) {
         var item = {item: setting}
         var values = value.split(";")
-        item.full = values[0]
-        item.image = values[1]
-        item.media = values[2]
+        item.metadata = values[0]
+        item.file_count = values[1]
         return item
     }
 

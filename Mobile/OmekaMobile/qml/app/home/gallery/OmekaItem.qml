@@ -12,28 +12,32 @@ Component {
 
         property var itemData: ({})
 
-        /*! store result and query files */
+        //store result and query files
         Component.onCompleted: {
-            itemData.id = item
+
+            itemData.id = String(item)
+            itemData.fileCount = parseInt(file_count)
             itemData.metadata = metadata
             itemData.media = []
             itemData.mediaTypes = []
-            Omeka.getFiles(item, object)
+
+            Omeka.getFiles(itemData.id, object)
             like.refresh(itemData)
         }
+
+        //refresh liked state
         onVisibleChanged: like.refresh(itemData)
 
-        /*! load media data*/
+        //load media data
         Connections {
             target: Omeka
             onRequestComplete: {
                if(result.context === object) {
-
                    itemData.thumb = result.thumb || Style.thumbs[result.media_type]
                    itemData.media.push(result.media)
                    itemData.mediaTypes.push(result.media_type)
 
-                   if(itemData.media.length === file_count){
+                   if(itemData.media.length === itemData.fileCount){
                       img.source = itemData.thumb
                       target = null
                    }
@@ -41,7 +45,7 @@ Component {
             }
         }
 
-        /*! media thumbnail */
+        //media thumbnail
         Image{
             id: img
             anchors.fill: parent
@@ -50,7 +54,7 @@ Component {
             fillMode: Image.PreserveAspectCrop
         }
 
-        /*! loads detailed view */
+        //loads detailed view
         MouseArea{
             anchors.fill: parent
             onClicked: {
@@ -58,7 +62,7 @@ Component {
             }
         }
 
-        /*! registers like and unlikes */
+        //registers like and unlikes
         LikeButton{ id: like }
     }
 }
