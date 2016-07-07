@@ -67,6 +67,7 @@
 		<file>qml/app/home/gallery/Browser.qml</file>																			
 		<file>qml/app/home/gallery/ItemBrowser.qml</file>																			
 		<file>qml/app/home/gallery/OmekaItem.qml</file>																												
+		<file>qml/app/home/gallery/LikeButton.qml</file>																												
 		<file>qml/app/likes/Likes.qml</file>										
 		<file>qml/app/search/Search.qml</file>										
 		<file>qml/app/search/SearchView.qml</file>										

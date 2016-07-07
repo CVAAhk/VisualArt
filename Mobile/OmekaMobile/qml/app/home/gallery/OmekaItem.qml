@@ -18,10 +18,10 @@ Component {
             itemData.metadata = metadata
             itemData.media = []
             itemData.mediaTypes = []
-            update()
             Omeka.getFiles(item, object)
+            like.refresh(itemData)
         }
-        onVisibleChanged: update()
+        onVisibleChanged: like.refresh(itemData)
 
         /*! load media data*/
         Connections {
@@ -59,38 +59,6 @@ Component {
         }
 
         /*! registers like and unlikes */
-        Button{
-            id: like
-            visible: img.progress === 1
-            scale: Resolution.scaleRatio
-            anchors.right: parent.right
-            checkable: true
-
-            //custom style
-            style: ButtonStyle {
-                background: Image{
-                    source: Style.likeIndicator
-                    Image {
-                        source: Style.likeFill
-                        visible: like.checked
-                    }
-                }
-            }
-
-            //add or remove data entry based on checked state
-            onClicked: {
-                if(checked){                    
-                    ItemManager.registerLike(itemData)
-                }
-                else{
-                    ItemManager.unregisterLike(itemData)
-                }
-            }
-        }
-
-        //update liked state
-        function update() {
-            like.checked = ItemManager.isLiked(itemData)
-        }
+        LikeButton{ id: like }
     }
 }

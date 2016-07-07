@@ -100,7 +100,8 @@ DISTFILES += \
     qml/app/home/settings/AboutSetting.qml \
     qml/app/styles/SearchBarStyle.qml \
     qml/app/search/SearchView.qml \
-    qml/app/search/SearchResults.qml
+    qml/app/search/SearchResults.qml \
+    qml/app/home/gallery/LikeButton.qml
 
 HEADERS += \
     imageprovidertest.h
