@@ -9,41 +9,52 @@ Component {
     Item{
         id: object
         width: grid.cellWidth; height: grid.cellHeight
-        property variant itemData: ({})
 
-        /*! query metadata */
+        property var itemData: ({})
+
+        //store result and query files
         Component.onCompleted: {
+
             itemData.id = String(item)
-            itemData.full = full
-            itemData.image = image
-            itemData.media = media
-            update()
+            itemData.fileCount = parseInt(file_count)
+            itemData.metadata = metadata
+            itemData.media = []
+            itemData.mediaTypes = []
+
+            Omeka.getFiles(itemData.id, object)
+            like.refresh(itemData)
         }
 
-        onVisibleChanged: update()
+        //refresh liked state
+        onVisibleChanged: like.refresh(itemData)
 
-        /*! load metadata */
+        //load media data
         Connections {
             target: Omeka
             onRequestComplete: {
-               if(String(result.item) === itemData.id && result.context === object) {
-                   itemData.metadata = result.metadata
-                   target = null
+               if(result.context === object) {
+                   itemData.thumb = result.thumb || Style.thumbs[result.media_type]
+                   itemData.media.push(result.media)
+                   itemData.mediaTypes.push(result.media_type)
+
+                   if(itemData.media.length === itemData.fileCount){
+                      img.source = itemData.thumb
+                      target = null
+                   }
                }
             }
         }
 
-        /*! media thumbnail */
+        //media thumbnail
         Image{
             id: img
             anchors.fill: parent
             anchors.centerIn: parent           
             asynchronous: true
-            source: full ? full : Style.thumbs[media]
             fillMode: Image.PreserveAspectCrop
         }
 
-        /*! loads detailed view */
+        //loads detailed view
         MouseArea{
             anchors.fill: parent
             onClicked: {
@@ -51,40 +62,7 @@ Component {
             }
         }
 
-        /*! registers like and unlikes */
-        Button{
-            id: like
-            visible: img.progress === 1
-            scale: Resolution.scaleRatio
-            anchors.right: parent.right
-            checkable: true
-
-            //custom style
-            style: ButtonStyle {
-                background: Image{
-                    source: Style.likeIndicator
-                    Image {
-                        source: Style.likeFill
-                        visible: like.checked
-                    }
-                }
-            }
-
-            //add or remove data entry based on checked state
-            onClicked: {
-                if(checked){                    
-                    ItemManager.registerLike(itemData)
-                }
-                else{
-                    ItemManager.unregisterLike(itemData)
-                }
-            }
-        }
-
-        //update metadata and liked state
-        function update() {
-            Omeka.getMetaData(itemData.id, object)
-            like.checked = ItemManager.isLiked(itemData)
-        }
+        //registers like and unlikes
+        LikeButton{ id: like }
     }
 }

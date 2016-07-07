@@ -25,8 +25,8 @@ ScaleColumn {
     //media view
     viewer: MediaViewer {
         id: media
-        Binding on source { when: item; value: item.image }
-        Binding on type { when: item; value: item.media }
+        Binding on source { when: item; value: item.media[0] }
+        Binding on type { when: item; value: item.mediaTypes[0] }
     }
 
     //info panel
@@ -43,8 +43,8 @@ ScaleColumn {
         var metadata = ""
         if(item.metadata){
             var element
-            for(var i=0; i<item.metadata.length; i++) {
-                element = item.metadata[i];
+            for(var i=0; i<item.metadata.count; i++) {
+                element = item.metadata.get(i);
                 metadata += "<p><b>"+element.element.name+"</b><br/>"+element.text+"</p>"
             }
         }
