@@ -11,7 +11,7 @@ import "../base"
   Search provides item filtering by generic keyword or item tags
 */
 Item {
-
+    id: search
 
     //background
     Rectangle {
@@ -29,6 +29,25 @@ Item {
     //search control
     OmekaSearchField {
         id: field
+        text: ItemManager.searchTerm
+        onTextChanged: search.state = text.length ? "results" : "search"
     }
+
+    //switch to results on search field entry
+    states: [
+        State {
+            name: "results"
+            StateChangeScript {
+                script: searchStack.push(Qt.resolvedUrl("SearchResults.qml"))
+            }
+        },
+        State {
+            name: "search"
+            StateChangeScript {
+                script: searchStack.pop()
+            }
+        }
+
+    ]
 
 }

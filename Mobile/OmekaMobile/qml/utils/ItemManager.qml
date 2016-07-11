@@ -5,11 +5,19 @@ import "../js/storage.js" as Settings
 
 Item {
 
+    /*-------------DETAIL-------------*/
     /*!
       \qmlproperty
       Data object of the currently selected item
     */
-    property variant current: ({})
+    property var current: ({})
+
+
+    /*-------------SEARCH-------------*/
+
+    property string searchTerm
+
+    /*-------------LIKES-------------*/
 
     /*!
       \qmlmethod

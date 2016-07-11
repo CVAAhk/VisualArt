@@ -10,7 +10,7 @@ Item {
     height: parent.height
 
     //refresh tags
-    Component.onCompleted: refresh()
+    Component.onCompleted: Omeka.getTags(tags)
 
     //update list on completion of tag query
     Connections {
@@ -38,13 +38,5 @@ Item {
             header: TagHeader {}
             onHeightChanged: contentY = -headerItem.height
         }
-    }
-
-    /*! \internal
-      Restore search text and query repository for tags
-    */
-    function refresh() {
-        field.placeholderText = "SEARCH"
-        Omeka.getTags(tags)
     }
 }

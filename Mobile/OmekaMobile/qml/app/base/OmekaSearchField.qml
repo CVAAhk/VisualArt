@@ -6,6 +6,7 @@ import "../../utils"
 
 OmekaToolBar {
 
+    property alias text: textField.text
     property alias placeholderText: textField.placeholderText
 
     //search field
@@ -17,6 +18,7 @@ OmekaToolBar {
         verticalAlignment: TextInput.AlignVCenter
         font.bold: true
         font.pixelSize: Resolution.applyScale(80)
+        placeholderText: "SEARCH"
         style: SearchBarStyle {}
-    }
+    }    
 }

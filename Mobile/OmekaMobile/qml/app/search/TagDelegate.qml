@@ -19,6 +19,7 @@ Rectangle {
     border.width: 1
     border.color: "#b1b1b1"
 
+    /*! /internal */
     property int count
 
     //query items with tag
@@ -30,11 +31,7 @@ Rectangle {
     //upate tag count
     Connections {
         target: Omeka
-        onRequestComplete: {
-            if(result.context === context){
-               count++;
-            }
-        }
+        onRequestComplete: if(result.context === context){ count++; }
     }
 
     //text display
@@ -44,12 +41,11 @@ Rectangle {
         _font: Style.tagFont
     }
 
-    //execute query
+    //update search
     MouseArea{
         anchors.fill: parent
         onClicked: {
-            Omeka.getItemsByTag(tag, context)
-            searchStack.push(Qt.resolvedUrl("SearchResults.qml"))
+            ItemManager.searchTerm = tag
         }
     }
 }
