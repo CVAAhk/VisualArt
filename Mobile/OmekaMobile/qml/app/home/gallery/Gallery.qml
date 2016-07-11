@@ -38,6 +38,7 @@ Item {
         /*!Scroll through items*/
         ItemBrowser {
             id: browser
+            height: parent.height - bar.height
             onCanPaginate: {
                 Omeka.getNextPage(gallery)
             }

@@ -25,7 +25,10 @@ Item {
             }
         }
 
-        Browser { id: browser }
+        Browser {
+            id: browser
+            height: parent.height - bar.height
+        }
 
     }
 

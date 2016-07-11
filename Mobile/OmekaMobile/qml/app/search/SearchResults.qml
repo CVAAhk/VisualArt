@@ -1,15 +1,25 @@
 import QtQuick 2.5
+import "../../utils"
+import "../home/gallery"
 
 Item {
+    id: results
 
-    Rectangle{
-        anchors.fill: parent
-        color: "red"
+    property string tag: ItemManager.tagSearch
+    property string keyword: ItemManager.searchTerm
+
+   // onKeywordChanged: { }     unsupported by rest api
+
+    onTagChanged: Omeka.getItemsByTag(tag, results)
+
+    Connections {
+        target: Omeka
+        onRequestComplete: {
+            if(result.context === results) {
+                browser.append(result)
+            }
+        }
     }
 
-    MouseArea {
-        anchors.fill: parent
-        onClicked: searchStack.pop()
-    }
-
+    Browser { id: browser }
 }

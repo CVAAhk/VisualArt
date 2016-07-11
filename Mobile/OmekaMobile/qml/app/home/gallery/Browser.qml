@@ -6,7 +6,7 @@ import "../../base"
 /*! Item browser component */
 OmekaScrollView {
     width: parent.width
-    height: parent.height - bar.height    
+    height: parent.height
 
     property GridView grid: grid
 
