@@ -29,8 +29,9 @@ Item {
     //search control
     OmekaSearchField {
         id: field
-        text: ItemManager.searchTerm
+        text: ItemManager.tagSearch
         onTextChanged: search.state = text.length ? "results" : "search"
+        Keys.onReleased: ItemManager.searchTerm = text
     }
 
     //switch to results on search field entry

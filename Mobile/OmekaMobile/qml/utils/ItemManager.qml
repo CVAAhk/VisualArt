@@ -15,6 +15,16 @@ Item {
 
     /*-------------SEARCH-------------*/
 
+    /*!
+      \qmlproperty
+      Triggers items by tag query
+    */
+    property string tagSearch
+
+    /*!
+      \qmlproperty
+      Triggers items by keyword query
+    */
     property string searchTerm
 
     /*-------------LIKES-------------*/

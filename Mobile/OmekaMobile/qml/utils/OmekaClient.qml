@@ -36,17 +36,23 @@ Item {
     signal requestComplete(var result)
 
 
-    /*! \internal */
-    function submitRequest(url, context){
+    /*! \internal
+      Sends http request and links response handler
+      \a url - omeka rest api call
+      \a context - calling object instance
+      \a count - flags the query as a simple count request
+    */
+    function submitRequest(url, context, count){
         var request = new XMLHttpRequest();
         request.context = context;
+        request.count = count
         request.onreadystatechange = onResponse(request);
         request.open("GET", url, true);
         request.send();
     }
 
     /*! \internal */
-    function onResponse(request){
+    function onResponse(request) {
         return function(){
             if(request.readyState === XMLHttpRequest.DONE){
                 var result = JSON.parse(request.responseText);
@@ -55,6 +61,7 @@ Item {
                 }
                 else{
                     result.context = request.context;
+                    result.count = request.count;
                     processResult(result);
                 }
             }
@@ -67,6 +74,13 @@ Item {
         var count = result.length || 1;
         var res;
 
+        //result count request
+        if(result.count) {
+            requestComplete({context: result.context, count: count})
+            return;
+        }
+
+        //data request
         for(var i=0; i<count; i++){
             res = result[i] || result;
             if(res.item){  //file
@@ -79,7 +93,7 @@ Item {
                 requestComplete({item: res.id, context: result.context, tag: res.name});
             }
         }
-    }
+    }        
 
     /*! \qmlmethod
         Query specified page*/
@@ -111,12 +125,16 @@ Item {
         Query items by tag*/
     function getItemsByTag(tag, context) {
         submitRequest(endpoint+"items?tags="+tag, context)
-    }
+    }   
 
     /*! \qmlmethod
         Query items by id*/
     function getItemById(id, context) {
         submitRequest(endpoint+"items/"+id, context)
+    }
+
+    function getTaggedItemCount(tag, context) {
+        submitRequest(endpoint+"items?tags="+tag, context, true)
     }
 
     /*! \qmlmethod

@@ -24,14 +24,13 @@ Rectangle {
 
     //query items with tag
     Component.onCompleted: {
-        count = 0
-        Omeka.getItemsByTag(tag, context);
+        Omeka.getTaggedItemCount(tag, context)
     }
 
     //upate tag count
     Connections {
         target: Omeka
-        onRequestComplete: if(result.context === context){ count++; }
+        onRequestComplete: if(result.context === context){ count = result.count }
     }
 
     //text display
@@ -41,11 +40,9 @@ Rectangle {
         _font: Style.tagFont
     }
 
-    //update search
+    //tag search
     MouseArea{
         anchors.fill: parent
-        onClicked: {
-            ItemManager.searchTerm = tag
-        }
+        onClicked: ItemManager.tagSearch = tag
     }
 }
