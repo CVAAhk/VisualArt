@@ -12,10 +12,23 @@ import "../base"
 */
 Item {
 
+
+    //background
+    Rectangle {
+        anchors.fill: parent
+        color: Style.viewBackgroundColor
+    }
+
+    //view
     StackView {
         id: searchStack
         anchors.fill: parent
-        initialItem: Qt.resolvedUrl("SearchView.qml")
+        initialItem: Qt.resolvedUrl("TagSearch.qml")
+    }
+
+    //search control
+    OmekaSearchField {
+        id: field
     }
 
 }

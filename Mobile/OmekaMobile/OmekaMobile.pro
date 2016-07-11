@@ -66,12 +66,10 @@ DISTFILES += \
     qml/app/home/gallery/Browser.qml \
     qml/app/home/gallery/ItemBrowser.qml \
     qml/app/search/Search.qml \
-    qml/app/search/SearchDelegate.qml \
     qml/utils/ItemManager.qml \
     qml/app/base/OmekaToolBar.qml \
     qml/app/base/OmekaButton.qml \
     qml/app/base/OmekaText.qml \
-    qml/app/search/SearchHeader.qml \
     qml/app/detail/DetailContent.qml \
     qml/app/detail/DetailToolbar.qml \
     qml/app/base/OmekaScrollView.qml \
@@ -99,9 +97,12 @@ DISTFILES += \
     qml/app/home/settings/ClearLikesSetting.qml \
     qml/app/home/settings/AboutSetting.qml \
     qml/app/styles/SearchBarStyle.qml \
-    qml/app/search/SearchView.qml \
     qml/app/search/SearchResults.qml \
-    qml/app/home/gallery/LikeButton.qml
+    qml/app/home/gallery/LikeButton.qml \
+    qml/app/base/OmekaSearchField.qml \
+    qml/app/search/TagSearch.qml \
+    qml/app/search/TagDelegate.qml \
+    qml/app/search/TagHeader.qml
 
 HEADERS += \
     imageprovidertest.h
