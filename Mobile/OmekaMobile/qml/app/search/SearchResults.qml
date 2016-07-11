@@ -10,7 +10,7 @@ Item {
 
    // onKeywordChanged: { }     unsupported by rest api
 
-    onTagChanged: Omeka.getItemsByTag(tag, results)
+    onTagChanged: if(tag) { Omeka.getItemsByTag(tag, results) }
 
     Connections {
         target: Omeka

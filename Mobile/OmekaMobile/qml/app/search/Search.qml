@@ -30,6 +30,7 @@ Item {
     OmekaSearchField {
         id: field
         text: ItemManager.tagSearch
+        state: search.state
         onTextChanged: search.state = text.length ? "results" : "search"
         Keys.onReleased: ItemManager.searchTerm = text
     }
@@ -38,17 +39,12 @@ Item {
     states: [
         State {
             name: "results"
-            StateChangeScript {
-                script: searchStack.push(Qt.resolvedUrl("SearchResults.qml"))
-            }
+            StateChangeScript { script: searchStack.push(Qt.resolvedUrl("SearchResults.qml")) }
         },
         State {
             name: "search"
-            StateChangeScript {
-                script: searchStack.pop()
-            }
+            StateChangeScript { script: searchStack.pop() }
         }
-
     ]
 
 }
