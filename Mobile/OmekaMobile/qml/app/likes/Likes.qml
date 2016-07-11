@@ -6,10 +6,23 @@ import "../home/gallery"
 
 /*! Display items liked by user */
 Item {
+    id: likes
 
-    //register updates
-    Component.onCompleted: update()
-    onVisibleChanged: update()
+    /*! \internal */
+    property bool current: navigator.currentItem === likes
+
+    //refresh liked items current change
+    onCurrentChanged: {
+        if(current) {
+            var likes = ItemManager.getLikes();
+            for(var i=0; i<likes.length; i++) {
+                browser.append(likes[i])
+            }
+        }
+        else {
+            browser.clear()
+        }
+    }
 
     /*! Title and navigation components */
     Column {
@@ -31,18 +44,4 @@ Item {
         }
 
     }
-
-    /*! Update registered likes on visible state change*/
-    function update(){
-        if(visible){
-            var likes = ItemManager.getLikes();
-            for(var i=0; i<likes.length; i++) {
-                browser.append(likes[i])
-            }
-        }
-        else{
-            browser.clear();
-        }
-    }
-
 }
