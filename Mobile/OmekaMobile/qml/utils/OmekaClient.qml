@@ -133,6 +133,8 @@ Item {
         submitRequest(endpoint+"items/"+id, context)
     }
 
+    /*! \qmlmethod
+        Get number of items with provided tag*/
     function getTaggedItemCount(tag, context) {
         submitRequest(endpoint+"items?tags="+tag, context, true)
     }
