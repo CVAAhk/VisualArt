@@ -9,6 +9,8 @@ import "../../utils"
 */
 OmekaToolBar {
 
+    property alias liked: like.checked
+
     //return to previous page
     OmekaButton{
         id: back
@@ -29,5 +31,7 @@ OmekaToolBar {
         id: like
         anchors.right: parent.right
         icon: Style.likeIndicator2
+        checkable: true
+        opacity: checked ? 1 : .2
     }
 }

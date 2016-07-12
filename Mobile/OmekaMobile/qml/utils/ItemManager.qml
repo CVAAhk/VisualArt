@@ -34,7 +34,9 @@ Item {
       Add like to local database
     */
     function registerLike(item) {
-        Settings.addLike(item.id, itemToEntry(item))
+        if(!isLiked(item)) {
+            Settings.addLike(item.id, itemToEntry(item))
+        }
     }
 
     /*!
