@@ -8,7 +8,12 @@ QTPLUGIN += qsvg
 CONFIG += c++11
 
 SOURCES += main.cpp \
-    cpp\test\imageprovidertest.cpp
+    cpp\test\imageprovidertest.cpp \
+    shareutils.cpp
+
+HEADERS += \
+    imageprovidertest.h \
+    shareutils.h
 
 RESOURCES += qml.qrc
 
@@ -27,6 +32,23 @@ QML_IMPORT_PATH += \
     qml/utils/Omeka 1.0 \
     qml/utils/ItemManager 1.0 \
     qml/utils/User 1.0 \
+
+ios {
+    OBJECTIVE_SOURCES += ios/iosshareutils.mm
+    HEADERS += ios/iosshareutils.h
+
+    Q_ENABLE_BITCODE.name = ENABLE_BITCODE
+    Q_ENABLE_BITCODE.value = NO
+    QMAKE_MAC_XCODE_SETTINGS += Q_ENABLE_BITCODE
+}
+
+android {
+    QT += androidextras
+    OTHER_FILES += android_data/src/com/lasconic/QShareUtils.java
+    ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android_data
+    SOURCES += android/androidshareutils.cpp
+    HEADERS += android/androidshareutils.h
+}
 
 # Default rules for deployment.
 include(deployment.pri)
@@ -102,7 +124,5 @@ DISTFILES += \
     qml/app/base/OmekaSearchField.qml \
     qml/app/search/TagSearch.qml \
     qml/app/search/TagDelegate.qml \
-    qml/app/search/TagHeader.qml
-
-HEADERS += \
-    imageprovidertest.h
+    qml/app/search/TagHeader.qml \
+    qml/test/sharing/ShareTest.qml
