@@ -22,6 +22,7 @@
 		<file>qml/test/styling/Style.qml</file>	
 		<file>qml/test/styling/TitleText.qml</file>	
 		<file>qml/test/styling/qmldir</file>	
+		<file>qml/test/sharing/ShareTest.qml</file>			
 		
 		<file>qml/utils/ResolutionManager.qml</file>			
 		<file>qml/utils/Style.qml</file>			
@@ -39,6 +40,7 @@
 		<file>qml/app/base/OmekaText.qml</file>									
 		<file>qml/app/base/OmekaScrollView.qml</file>									
 		<file>qml/app/base/OmekaViewer.qml</file>									
+		<file>qml/app/base/OmekaSearchField.qml</file>									
 		<file>qml/app/styles/ScrubberStyle.qml</file>									
 		<file>qml/app/styles/PageButtonStyle.qml</file>									
 		<file>qml/app/styles/SearchBarStyle.qml</file>									
@@ -70,9 +72,9 @@
 		<file>qml/app/home/gallery/LikeButton.qml</file>																												
 		<file>qml/app/likes/Likes.qml</file>										
 		<file>qml/app/search/Search.qml</file>										
-		<file>qml/app/search/SearchView.qml</file>										
-		<file>qml/app/search/SearchDelegate.qml</file>										
-		<file>qml/app/search/SearchHeader.qml</file>										
+		<file>qml/app/search/TagSearch.qml</file>										
+		<file>qml/app/search/TagDelegate.qml</file>										
+		<file>qml/app/search/TagHeader.qml</file>										
 		<file>qml/app/search/SearchResults.qml</file>										
 		
 		<file>qml/js/storage.js</file>

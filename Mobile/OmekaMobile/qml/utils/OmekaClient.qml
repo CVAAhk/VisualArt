@@ -5,8 +5,17 @@ Item {
     /*! \qmlproperty
         Target omeka endpoint url
     */
-    //property url endpoint: "http://mallhistory.org/api/"
-    property url endpoint: "http://dev.omeka.org/mallcopy/api/"
+    property url endpoint: "http://dev.omeka.org/mallcopy/"
+
+    /*! \qmlproperty
+        Target omeka rest api
+    */
+    property url rest: endpoint+"api/"
+
+    /*! \qmlproperty
+        Url root path for sharing items
+    */
+    property url link: endpoint+"items/show/"
 
     /*! \qmlproperty
         Current page number
@@ -36,17 +45,23 @@ Item {
     signal requestComplete(var result)
 
 
-    /*! \internal */
-    function submitRequest(url, context){
+    /*! \internal
+      Sends http request and links response handler
+      \a url - omeka rest api call
+      \a context - calling object instance
+      \a count - flags the query as a simple count request
+    */
+    function submitRequest(url, context, count){
         var request = new XMLHttpRequest();
         request.context = context;
+        request.count = count
         request.onreadystatechange = onResponse(request);
         request.open("GET", url, true);
         request.send();
     }
 
     /*! \internal */
-    function onResponse(request){
+    function onResponse(request) {
         return function(){
             if(request.readyState === XMLHttpRequest.DONE){
                 var result = JSON.parse(request.responseText);
@@ -55,6 +70,7 @@ Item {
                 }
                 else{
                     result.context = request.context;
+                    result.count = request.count;
                     processResult(result);
                 }
             }
@@ -67,6 +83,13 @@ Item {
         var count = result.length || 1;
         var res;
 
+        //result count request
+        if(result.count) {
+            requestComplete({context: result.context, count: count})
+            return;
+        }
+
+        //data request
         for(var i=0; i<count; i++){
             res = result[i] || result;
             if(res.item){  //file
@@ -79,12 +102,12 @@ Item {
                 requestComplete({item: res.id, context: result.context, tag: res.name});
             }
         }
-    }
+    }        
 
     /*! \qmlmethod
         Query specified page*/
     function getPage(page, context){
-        submitRequest(endpoint+"items?page="+page, context);
+        submitRequest(rest+"items?page="+page, context);
         currentPage = page;
     }
 
@@ -98,25 +121,31 @@ Item {
     /*! \qmlmethod
         Query files of specified item*/
     function getFiles(id, context){
-        submitRequest(endpoint+"files?item="+id, context);
+        submitRequest(rest+"files?item="+id, context);
     }
 
     /*! \qmlmethod
         Query repository tags*/
     function getTags(context){
-        submitRequest(endpoint+"tags", context)
+        submitRequest(rest+"tags", context)
     }
 
     /*! \qmlmethod
         Query items by tag*/
     function getItemsByTag(tag, context) {
-        submitRequest(endpoint+"items?tags="+tag, context)
-    }
+        submitRequest(rest+"items?tags="+tag, context)
+    }   
 
     /*! \qmlmethod
         Query items by id*/
     function getItemById(id, context) {
-        submitRequest(endpoint+"items/"+id, context)
+        submitRequest(rest+"items/"+id, context)
+    }
+
+    /*! \qmlmethod
+        Get number of items with provided tag*/
+    function getTaggedItemCount(tag, context) {
+        submitRequest(rest+"items?tags="+tag, context, true)
     }
 
     /*! \qmlmethod

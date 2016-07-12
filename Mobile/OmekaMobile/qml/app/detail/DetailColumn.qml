@@ -19,8 +19,20 @@ ScaleColumn {
     */
     property variant item: ItemManager.current
 
-    //actions
-    toolbar: DetailToolbar { id: bar }
+    //controls
+    toolbar: DetailToolbar {
+        id: bar
+        Binding on liked { when: item; value: ItemManager.isLiked(item) }
+        Binding on itemId { when: item; value: item.id }
+        onLikedChanged: {
+            if(liked) {
+                ItemManager.registerLike(item)
+            }
+            else {
+                ItemManager.unregisterLike(item)
+            }
+        }
+    }
 
     //media view
     viewer: MediaViewer {

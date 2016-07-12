@@ -19,4 +19,9 @@ OmekaViewer {
         asynchronous: true
         source: root.source
     }
+
+    //toggle fullscreen mode
+    onFullscreenChanged: {
+        print(fullscreen)
+    }
 }

@@ -5,18 +5,38 @@ import "../js/storage.js" as Settings
 
 Item {
 
+    /*-------------DETAIL-------------*/
     /*!
       \qmlproperty
       Data object of the currently selected item
     */
-    property variant current: ({})
+    property var current: ({})
+
+
+    /*-------------SEARCH-------------*/
+
+    /*!
+      \qmlproperty
+      Triggers items by tag query
+    */
+    property string tagSearch
+
+    /*!
+      \qmlproperty
+      Triggers items by keyword query
+    */
+    property string searchTerm
+
+    /*-------------LIKES-------------*/
 
     /*!
       \qmlmethod
       Add like to local database
     */
     function registerLike(item) {
-        Settings.addLike(item.id, itemToEntry(item))
+        if(!isLiked(item)) {
+            Settings.addLike(item.id, itemToEntry(item))
+        }
     }
 
     /*!

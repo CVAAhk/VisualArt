@@ -19,29 +19,30 @@ Rectangle {
     border.width: 1
     border.color: "#b1b1b1"
 
+    /*! /internal */
+    property int count
+
+    //query items with tag
+    Component.onCompleted: {
+        Omeka.getTaggedItemCount(tag, context)
+    }
+
+    //upate tag count
+    Connections {
+        target: Omeka
+        onRequestComplete: if(result.context === context){ count = result.count }
+    }
+
     //text display
     OmekaText {
-        text: tag
+        text: tag+" ("+count+")"
         anchors.centerIn: parent
         _font: Style.tagFont
     }
 
-    //execute query
+    //tag search
     MouseArea{
         anchors.fill: parent
-        onClicked: {
-            Omeka.getItemsByTag(tag, context)
-            searchStack.push(Qt.resolvedUrl("SearchResults.qml"))
-        }
-    }
-
-    //query items with this tag
-    Connections {
-        target: Omeka
-        onRequestComplete: {
-            if(result.context === context){
-               // print(result.context)
-            }
-        }
+        onClicked: ItemManager.tagSearch = tag
     }
 }
