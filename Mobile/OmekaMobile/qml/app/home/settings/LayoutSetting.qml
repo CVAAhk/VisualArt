@@ -16,7 +16,7 @@ Setting {
     /*! \internal
       Layout names
     */
-    property var model: ["List", "Grid", "Cascade"]
+    property var model: ["List View", "Grid View", "Cascade View"]
 
     //ensures single layout selection and update database
     ExclusiveGroup {
