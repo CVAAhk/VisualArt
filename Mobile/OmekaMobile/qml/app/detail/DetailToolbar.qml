@@ -11,6 +11,7 @@ import "../../utils"
 OmekaToolBar {
 
     property alias liked: like.checked
+    property int itemId
 
     ShareUtils { id: shareUtils }
 
@@ -27,7 +28,7 @@ OmekaToolBar {
         id: share
         anchors.right: like.left
         icon: Style.more
-        onClicked: shareUtils.share("Ignore Test", "http://dev.omeka.org/mallcopy/items/show/1")
+        onClicked: shareUtils.share("Ignore Test", Omeka.link+itemId)
     }
 
     //locally stores item in database

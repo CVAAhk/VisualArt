@@ -5,8 +5,17 @@ Item {
     /*! \qmlproperty
         Target omeka endpoint url
     */
-    //property url endpoint: "http://mallhistory.org/api/"
-    property url endpoint: "http://dev.omeka.org/mallcopy/api/"
+    property url endpoint: "http://dev.omeka.org/mallcopy/"
+
+    /*! \qmlproperty
+        Target omeka rest api
+    */
+    property url rest: endpoint+"api/"
+
+    /*! \qmlproperty
+        Url root path for sharing items
+    */
+    property url link: endpoint+"items/show/"
 
     /*! \qmlproperty
         Current page number
@@ -98,7 +107,7 @@ Item {
     /*! \qmlmethod
         Query specified page*/
     function getPage(page, context){
-        submitRequest(endpoint+"items?page="+page, context);
+        submitRequest(rest+"items?page="+page, context);
         currentPage = page;
     }
 
@@ -112,31 +121,31 @@ Item {
     /*! \qmlmethod
         Query files of specified item*/
     function getFiles(id, context){
-        submitRequest(endpoint+"files?item="+id, context);
+        submitRequest(rest+"files?item="+id, context);
     }
 
     /*! \qmlmethod
         Query repository tags*/
     function getTags(context){
-        submitRequest(endpoint+"tags", context)
+        submitRequest(rest+"tags", context)
     }
 
     /*! \qmlmethod
         Query items by tag*/
     function getItemsByTag(tag, context) {
-        submitRequest(endpoint+"items?tags="+tag, context)
+        submitRequest(rest+"items?tags="+tag, context)
     }   
 
     /*! \qmlmethod
         Query items by id*/
     function getItemById(id, context) {
-        submitRequest(endpoint+"items/"+id, context)
+        submitRequest(rest+"items/"+id, context)
     }
 
     /*! \qmlmethod
         Get number of items with provided tag*/
     function getTaggedItemCount(tag, context) {
-        submitRequest(endpoint+"items?tags="+tag, context, true)
+        submitRequest(rest+"items?tags="+tag, context, true)
     }
 
     /*! \qmlmethod
