@@ -1,4 +1,5 @@
 import QtQuick 2.5
+import com.lasconic 1.0
 import "../base"
 import "../../utils"
 
@@ -11,6 +12,8 @@ OmekaToolBar {
 
     property alias liked: like.checked
 
+    ShareUtils { id: shareUtils }
+
     //return to previous page
     OmekaButton{
         id: back
@@ -19,11 +22,12 @@ OmekaToolBar {
         onClicked: navigator.pop()
     }
 
-    //provides drop down menu of additional options
+    //provides content sharing options
     OmekaButton {
-        id: more
+        id: share
         anchors.right: like.left
         icon: Style.more
+        onClicked: shareUtils.share("Ignore Test", "http://dev.omeka.org/mallcopy/items/show/1")
     }
 
     //locally stores item in database
