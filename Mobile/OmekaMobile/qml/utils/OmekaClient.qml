@@ -133,7 +133,7 @@ Item {
     /*! \qmlmethod
         Query items by tag*/
     function getItemsByTag(tag, context) {
-        submitRequest(rest+"items?tags="+tag, context)
+        submitRequest(rest+"items?tags="+encodeURIComponent(tag), context)
     }   
 
     /*! \qmlmethod
@@ -145,7 +145,7 @@ Item {
     /*! \qmlmethod
         Get number of items with provided tag*/
     function getTaggedItemCount(tag, context) {
-        submitRequest(rest+"items?tags="+tag, context, true)
+        submitRequest(rest+"items?tags="+encodeURIComponent(tag), context, true)
     }
 
     /*! \qmlmethod
