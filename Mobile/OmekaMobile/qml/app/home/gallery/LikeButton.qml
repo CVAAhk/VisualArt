@@ -1,25 +1,14 @@
 import QtQuick 2.5
-import QtQuick.Controls 1.4
-import QtQuick.Controls.Styles 1.4
+import "../../base"
 import "../../../utils"
 
-Button{
+OmekaToggle{
     id: like
     visible: img.progress === 1
     scale: Resolution.scaleRatio
     anchors.right: parent.right
-    checkable: true
-
-    //custom style
-    style: ButtonStyle {
-        background: Image{
-            source: Style.likeIndicator
-            Image {
-                source: Style.likeFill
-                visible: like.checked
-            }
-        }
-    }
+    defaultSource: Style.likeIndicator
+    checkedSource: Style.likeFill
 
     //add or remove data entry based on checked state
     onClicked: {
