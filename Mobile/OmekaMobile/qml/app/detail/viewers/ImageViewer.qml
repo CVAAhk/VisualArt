@@ -21,7 +21,7 @@ OmekaViewer {
     }
 
     //toggle fullscreen mode
-    onFullscreenChanged: {
-        print(fullscreen)
-    }
+    onFullScreenChanged: {
+        print(fullScreen)
+    }    
 }

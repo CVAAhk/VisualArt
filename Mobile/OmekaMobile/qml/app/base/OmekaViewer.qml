@@ -1,5 +1,6 @@
 import QtQuick 2.5
 import QtQuick.Controls 1.4
+import "../base"
 import "../../utils"
 
 /*!
@@ -25,24 +26,22 @@ Item {
     */
     property real sourceWidth: width
 
-    property alias fullscreen: button.checked
+    /*!
+        \qmlproperty real OmekaViewer::fullScreen
+        Enables full screen state of media object
+    */
+    property alias fullScreen: button.checked
 
-    Button {
+    //full screen mode toggle
+    OmekaToggle {
         id: button
-        scale: 1/viewer.scale
-        width: childrenRect.width
-        height: childrenRect.height
         anchors.top: parent.top
         anchors.right: parent.right
         anchors.margins: 10
+        defaultSource: Style.settingsIcon
+        checkedSource: Style.more
+        scale: 1/viewer.scale
+        iconScale: .15
         z: 1
-        checkable: true
-
-        Image {
-            fillMode: Image.PreserveAspectFit
-            source: Style.settingsIcon
-            width: 50
-        }
     }
-
 }
