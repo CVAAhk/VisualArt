@@ -101,6 +101,8 @@
 		<file>ui/video.png</file>
 		<file>ui/document.png</file>
 		<file>ui/expand.png</file>
+		<file>ui/maximize.png</file>
+		<file>ui/minimize.png</file>
 				
     </qresource>
 </RCC>

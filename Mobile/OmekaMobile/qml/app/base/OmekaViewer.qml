@@ -38,10 +38,10 @@ Item {
         anchors.top: parent.top
         anchors.right: parent.right
         anchors.margins: 10
-        defaultSource: Style.settingsIcon
-        checkedSource: Style.more
+        defaultSource: Style.maximize
+        checkedSource: Style.minimize
         scale: 1/viewer.scale
-        iconScale: .15
+        iconScale: .5
         z: 1
     }
 }

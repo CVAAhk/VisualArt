@@ -60,6 +60,11 @@ Item {
     property url documentIcon: rootPath+"document.png"    
     /*! \qmlproperty arrow graphic indicating the checked state of a settings option */
     property url expand: rootPath+"expand.png"
+    /*! \qmlproperty indicates setting media object to full screen display */
+    property url maximize: rootPath+"maximize.png"
+    /*! \qmlproperty indicates restoring media object back to standard display */
+    property url minimize: rootPath+"minimize.png"
+
 
     property variant thumbs: ({"image": imageIcon, "audio": audioIcon, "video": videoIcon, "document": documentIcon})
     /*-------------Font-------------*/
