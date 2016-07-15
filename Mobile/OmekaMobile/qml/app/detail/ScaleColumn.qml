@@ -1,6 +1,7 @@
 import QtQuick 2.5
 import "viewers"
 import "../base"
+import "../../utils"
 
 /*!
   \qmltype ScaleColumn
@@ -35,7 +36,7 @@ Item {
     /*! \internal
         Scaled viewer height
     */
-    property real viewerHeight: viewer.height * viewer.scale
+    property real viewerHeight: Resolution.portrait ? viewer.height * viewer.scale : viewer.height
 
     /*! \internal
         Vertical offset caused by scale transforms

@@ -27,6 +27,12 @@ Item {
     property real sourceWidth: width
 
     /*!
+        \qmlproperty real OmekaViewer::sourceHeight
+        Actual height of source file
+    */
+    property real sourceHeight: height
+
+    /*!
         \qmlproperty real OmekaViewer::fullScreen
         Enables full screen state of media object
     */
