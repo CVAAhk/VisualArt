@@ -8,10 +8,18 @@ Item {
     property string tag: ItemManager.tagSearch
     property string keyword: ItemManager.searchTerm
 
-   // onKeywordChanged: { }     unsupported by rest api
+    //submit keyword search
+    onKeywordChanged: {
+        if(keyword) {
+            browser.clear()
+            Omeka.getItemsByTerm(keyword, results)
+        }
+    }
 
+    //submit tag search
     onTagChanged: if(tag) { Omeka.getItemsByTag(tag, results) }
 
+    //populate browser with results
     Connections {
         target: Omeka
         onRequestComplete: {
@@ -21,5 +29,6 @@ Item {
         }
     }
 
+    //result browser
     Browser { id: browser }
 }

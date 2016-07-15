@@ -37,6 +37,7 @@
 		<file>qml/app/PageState.qml</file>								
 		<file>qml/app/base/OmekaToolBar.qml</file>									
 		<file>qml/app/base/OmekaButton.qml</file>									
+		<file>qml/app/base/OmekaToggle.qml</file>									
 		<file>qml/app/base/OmekaText.qml</file>									
 		<file>qml/app/base/OmekaScrollView.qml</file>									
 		<file>qml/app/base/OmekaViewer.qml</file>									
@@ -100,6 +101,8 @@
 		<file>ui/video.png</file>
 		<file>ui/document.png</file>
 		<file>ui/expand.png</file>
+		<file>ui/maximize.png</file>
+		<file>ui/minimize.png</file>
 				
     </qresource>
 </RCC>

@@ -7,7 +7,9 @@ Item {
     /*! Total with of app window */
     property int appWidth: appWindow ? appWindow.width : 0
     /*! Total height of app window */
-    property int appHeight: appWindow ? appWindow.height: 0
+    property int appHeight: appWindow ? appWindow.height : 0
+    /*! True when window has a portrait orientation and false when landscape */
+    property bool portrait: appWidth < appHeight
     /*! Width of target widow */
     property int targetWidth: 1440
     /*! Height of target window */

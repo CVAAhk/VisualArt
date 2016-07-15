@@ -8,6 +8,7 @@ OmekaToolBar {
 
     property alias text: textField.text
     property alias placeholderText: textField.placeholderText
+    property alias textField: textField
     state: "search"
 
     //search field
@@ -31,7 +32,11 @@ OmekaToolBar {
         anchors.right: textField.right
         icon: Style.settingsIcon
         iconScale: .62
-        onClicked: ItemManager.tagSearch = ""
+        onClicked: {
+            textField.text = ""
+            ItemManager.tagSearch = ""
+            ItemManager.searchTerm = ""
+        }
     }
 
     //button modes
