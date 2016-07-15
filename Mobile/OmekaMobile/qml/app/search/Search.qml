@@ -13,6 +13,14 @@ import "../base"
 Item {
     id: search
 
+    /*! \qmlproperty
+        Name of search tag
+    */
+    property string tag: ItemManager.tagSearch
+
+    //initiate tag search
+    onTagChanged: { field.text = tag }
+
     //background
     Rectangle {
         anchors.fill: parent
@@ -29,10 +37,9 @@ Item {
     //search control
     OmekaSearchField {
         id: field
-        text: ItemManager.tagSearch
         state: search.state
         onTextChanged: search.state = text.length ? "results" : "search"
-        Keys.onReleased: ItemManager.searchTerm = text
+        textField.onEditingFinished: ItemManager.searchTerm = text
     }
 
     //switch to results on search field entry
