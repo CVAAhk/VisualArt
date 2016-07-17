@@ -12,7 +12,6 @@ Item {
     visible: false
     enabled: false
     width: parent.width
-    height: Resolution.applyScale(Resolution.targetHeight*.3)
 
     /*!
         \qmlproperty url OmekaViewer::source
