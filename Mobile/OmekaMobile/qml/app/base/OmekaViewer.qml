@@ -9,8 +9,10 @@ import "../../utils"
    OmekaViewer is the base class for the various omeka media types.
   */
 Item {
+    id: root
     visible: false
     enabled: false
+    anchors.horizontalCenter: parent.horizontalCenter
     width: parent.width
 
     /*!
@@ -37,6 +39,25 @@ Item {
     */
     property alias fullScreen: button.checked
 
+    /*!
+      \qmlproperty Item OmekaViewer::background
+      The display item of the viwer
+    */
+    property Item background
+
+    /*!
+      \qmlproperty Item OmekaViewer::portrait
+      Indicates portrait orientation when true and landscape otherwise
+    */
+    property bool portrait: Resolution.portrait
+
+    //update orientation
+    onSourceChanged: setOrientation()
+    onPortraitChanged: setOrientation()
+
+    //parenting
+    Binding { target: background; property: "parent"; value: root }
+
     //full screen mode toggle
     OmekaToggle {
         id: button
@@ -48,5 +69,26 @@ Item {
         scale: 1/viewer.scale
         iconScale: .5
         z: 1
+    }
+
+    //orientation states
+    states: [
+        State {
+            name: "portrait"
+            when: background
+            PropertyChanges { target: background; width: parent.width; height: undefined }
+            PropertyChanges { target: root; width: parent.width; height: background.height }
+        },
+        State {
+            name: "landscape"
+            when: background
+            PropertyChanges { target: background; width: undefined; height: parent.height }
+            PropertyChanges { target: root; width: background.width; height: Resolution.appHeight *.8}
+        }
+    ]
+
+    //update device orientation
+    function setOrientation() {
+        state = portrait ? "portrait" : "landscape"
     }
 }

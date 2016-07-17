@@ -10,14 +10,7 @@ import "../../../utils"
   PlaybackViewer provides the display and playback controls of audio and video content.
 */
 OmekaViewer {
-
     id: root
-
-    /*!
-      \qmlproperty Item PlaybackViewer::background
-      The display item of the viwer
-    */
-    property Item background
 
     /*!
       \qmlproperty MediaPlayer PlaybackViewer::player
@@ -26,7 +19,6 @@ OmekaViewer {
     property MediaPlayer player
 
     //parenting
-    Binding { target: background; property: "parent"; value: root }
     Binding { target: player; property: "parent"; value: root }
 
     //player settings
