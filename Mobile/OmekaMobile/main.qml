@@ -14,5 +14,22 @@ ApplicationWindow {
         Resolution.appWindow = root
     }
 
-    PageNavigation {}
+    PageNavigation { }
+
+    //orientation testing
+    Item {
+        focus: true
+        Keys.onUpPressed: {
+            root.width = 804
+            root.height = 470
+            Resolution.targetWidth = 2464
+            Resolution.targetHeight = 1440
+        }
+        Keys.onDownPressed: {
+            root.width = 470
+            root.height = 804
+            Resolution.targetWidth = 1440
+            Resolution.targetHeight = 2464
+        }
+    }
 }
