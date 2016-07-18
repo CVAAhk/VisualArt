@@ -14,7 +14,7 @@ PlaybackViewer {
     sourceHeight: output.contentRect.height
 
     //video output
-    background: VideoOutput {        
+    display: VideoOutput {        
         id: output
         fillMode: VideoOutput.PreserveAspectFit
         source: player

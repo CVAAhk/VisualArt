@@ -14,6 +14,7 @@ Item {
     enabled: false
     anchors.horizontalCenter: parent.horizontalCenter
     width: parent.width
+    height: background.height
 
     /*!
         \qmlproperty url OmekaViewer::source
@@ -40,10 +41,10 @@ Item {
     property alias fullScreen: button.checked
 
     /*!
-      \qmlproperty Item OmekaViewer::background
+      \qmlproperty Item OmekaViewer::display
       The display item of the viwer
     */
-    property Item background
+    property Item display
 
     /*!
       \qmlproperty Item OmekaViewer::portrait
@@ -55,10 +56,21 @@ Item {
     onSourceChanged: setOrientation()
     onPortraitChanged: setOrientation()
 
-    //parenting
-    Binding { target: background; property: "parent"; value: root }
+    //bindings
+    Binding { target: display; property: "parent"; value: root }
+    Binding { target: background; property: "visible"; when: display; value: !portrait }
 
-    //full screen mode toggle
+    //background
+    Rectangle {
+        id: background
+        color: "black"
+        anchors.centerIn: parent
+        width: viewer.width
+        height: portrait ? Resolution.appHeight * .3 : Resolution.appHeight * .8
+        scale: 1/viewer.scale
+    }
+
+    //full screen mode toggle control
     OmekaToggle {
         id: button
         anchors.top: parent.top
@@ -75,20 +87,19 @@ Item {
     states: [
         State {
             name: "portrait"
-            when: background
-            PropertyChanges { target: background; width: parent.width; height: undefined }
-            PropertyChanges { target: root; width: parent.width; height: background.height }
+            PropertyChanges { target: display; width: parent.width; height: undefined }
+            PropertyChanges { target: root; width: parent.width; height: display.height }
         },
         State {
             name: "landscape"
-            when: background
-            PropertyChanges { target: background; width: undefined; height: parent.height }
-            PropertyChanges { target: root; width: background.width; height: Resolution.appHeight *.8}
+            PropertyChanges { target: display; width: undefined; height: parent.height }
+            PropertyChanges { target: root; width: display.width; height: Resolution.appHeight *.8}
         }
     ]
 
     //update device orientation
     function setOrientation() {
+        if(!display) return
         state = portrait ? "portrait" : "landscape"
     }
 }

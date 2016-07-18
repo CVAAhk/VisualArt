@@ -13,7 +13,7 @@ OmekaViewer {
     sourceHeight: img.sourceSize.height
 
     //image element
-    background: Image{
+    display: Image{
         id: img
         fillMode: Image.PreserveAspectFit
         asynchronous: true
