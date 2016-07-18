@@ -3,7 +3,7 @@ TEMPLATE = app
 QT += qml quick\
     xml svg
 
-QTPLUGIN += qsvg
+QTPLUGIN += qsqlite
 
 CONFIG += c++11
 
