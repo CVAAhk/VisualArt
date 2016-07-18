@@ -9,6 +9,7 @@ import "../../utils"
     DetailColumn is the vertical layout container for detail items.
 */
 ScaleColumn {
+    id: column
     y: parent.margins
     width: parent.width - 2 * parent.margins
     height: childrenRect.height
@@ -22,6 +23,7 @@ ScaleColumn {
     //controls
     toolbar: DetailToolbar {
         id: bar
+        visible: opacity > 0
         Binding on liked { when: item; value: ItemManager.isLiked(item) }
         Binding on itemId { when: item; value: item.id }
         onLikedChanged: {
@@ -44,6 +46,7 @@ ScaleColumn {
     //info panel
     info: OmekaText {
         id: info
+        visible: opacity > 0
         width: parent.width
         height: contentHeight
         _font: Style.metadataFont
@@ -61,5 +64,26 @@ ScaleColumn {
             }
         }
         return metadata
+    }
+
+    //media size states
+    states: [
+        State {
+            name: "maximize"
+            PropertyChanges { target: bar; explicit: true; opacity: 0 }
+            PropertyChanges { target: info; explicit: true; opacity: 0 }
+            PropertyChanges { target: background; explicit: true; opacity: 0 }
+            PropertyChanges { target: media.current.background; explicit: true; opacity: 0 }
+            PropertyChanges { target: scroll.flickableItem; explicit: true; contentY: 0; interactive: false }
+
+        },
+        State {
+            name: "minimize"
+        }
+    ]
+
+    //state transitions
+    transitions: Transition {
+        PropertyAnimation { duration: 250; properties: "opacity, contentY"; easing.type: Easing.OutQuad }
     }
 }

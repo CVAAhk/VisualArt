@@ -7,6 +7,7 @@ import "../../utils"
   The content container of the detail scroll view
 */
 Item {
+    id: content
     width: detail.width
     height: display.height + margins
 
@@ -18,6 +19,7 @@ Item {
     //background rectangle
     Rectangle {
         id: background
+        visible: opacity > 0
         anchors.fill: display
         color: Style.detailContentBackground
         radius: Resolution.applyScale(35)

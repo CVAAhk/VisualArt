@@ -22,6 +22,6 @@ OmekaViewer {
 
     //toggle fullscreen mode
     onFullScreenChanged: {
-        print(fullScreen)
+        column.state = fullScreen ? "maximize" : "minimize"
     }
 }

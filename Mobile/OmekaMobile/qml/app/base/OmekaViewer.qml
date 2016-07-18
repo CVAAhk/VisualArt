@@ -52,6 +52,12 @@ Item {
     */
     property bool portrait: Resolution.portrait
 
+    /*!
+      \qmlproperty Item OmekaViewer::background
+      Reference to background graphic
+    */
+    property alias background: background
+
     //update orientation
     onSourceChanged: setOrientation()
     onPortraitChanged: setOrientation()
