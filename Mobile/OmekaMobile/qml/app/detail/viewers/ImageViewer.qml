@@ -19,9 +19,4 @@ OmekaViewer {
         asynchronous: true
         source: root.source
     }
-
-    //toggle fullscreen mode
-    onFullScreenChanged: {
-        column.state = fullScreen ? "maximize" : "minimize"
-    }
 }

@@ -1,5 +1,6 @@
 import QtQuick 2.5
 import "viewers"
+import "viewers/controls"
 import "../base"
 import "../../utils"
 
@@ -18,9 +19,14 @@ ScaleColumn {
     /*! \qmlproperty
         Currently selected item
     */
-    property variant item: ItemManager.current
+    property var item: ItemManager.current
 
-    //controls
+    /*! \qmlproperty
+        Full screen state of selected item
+    */
+    property bool fullScreen: ItemManager.fullScreen
+
+    //primary controls
     toolbar: DetailToolbar {
         id: bar
         visible: opacity > 0
@@ -41,6 +47,11 @@ ScaleColumn {
         id: media
         Binding on source { when: item; value: item.media[0] }
         Binding on type { when: item; value: item.mediaTypes[0] }
+    }
+
+    //media specific controls
+    controls: MediaControls {
+        player: media.current.player
     }
 
     //info panel
@@ -65,6 +76,9 @@ ScaleColumn {
         }
         return metadata
     }
+
+    //update screen state
+    onFullScreenChanged: state = fullScreen ? "maximize" : "minimize"
 
     //media size states
     states: [

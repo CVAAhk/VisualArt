@@ -1,8 +1,8 @@
 import QtQuick 2.5
 import QtQuick.Controls 1.4
 import QtMultimedia 5.5
-import "../../styles"
-import "../../../utils"
+import "../../../styles"
+import "../../../../utils"
 
 /*!
   \qmltype Scrubber
@@ -13,14 +13,13 @@ import "../../../utils"
 Slider {
 
     id: scrubber
+    visible: player
 
     //position and sizing
     anchors.horizontalCenter: parent.horizontalCenter
     anchors.bottom: parent.bottom
+    anchors.margins: 10
     width: parent.width - Resolution.applyScale(300)
-
-    //draw on top of media
-    z: 1
 
     //set max value to the number timer ticks
     maximumValue: timer.totalTicks
@@ -33,6 +32,7 @@ Slider {
 
     //sync scrubber position with playhead
     Binding { target: scrubber; property: "value"; when: !scrubber.pressed; value: timer.tick }
+    Binding { target: timer; when: player; property: "player"; value: scrubber.player }
 
     //sync media with scrubber position
     onValueChanged: scrubber.scrub()
@@ -40,7 +40,6 @@ Slider {
     //progress timer instance
     ProgressTimer {
         id: timer
-        player: scrubber.player
         onProgressComplete: reset()
     }
 
