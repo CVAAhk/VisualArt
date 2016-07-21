@@ -13,7 +13,7 @@ import "../../../../utils"
 Slider {
 
     id: scrubber
-    visible: player
+    visible: player !== undefined
 
     //position and sizing
     anchors.horizontalCenter: parent.horizontalCenter
@@ -25,14 +25,13 @@ Slider {
     maximumValue: timer.totalTicks
 
     /*!
-      \qmlproperty MediaPlayer Scrubber::player
+      \qmlproperty Scrubber::player
       The media player to track
     */
-    property MediaPlayer player
+    property var player
 
     //sync scrubber position with playhead
     Binding { target: scrubber; property: "value"; when: !scrubber.pressed; value: timer.tick }
-    Binding { target: timer; when: player; property: "player"; value: scrubber.player }
 
     //sync media with scrubber position
     onValueChanged: scrubber.scrub()
@@ -46,6 +45,16 @@ Slider {
     //custom style
     style: ScrubberStyle {}
 
+    //stop/start progress based on visiblity
+    onVisibleChanged: {
+        if(visible) {
+            timer.player = scrubber.player
+        }
+        else {
+            reset()
+        }
+    }
+
     /*! \qmlmethod Scrubber::reset()
         Pause media and reset playhead
     */
@@ -58,8 +67,8 @@ Slider {
         Seek timer and player to specified tick
     */
     function seek(tick) {
-        timer.seek(tick)
-        scrubber.player.seek(tick*timer.interval)
+        timer.seek(tick)        
+        if(scrubber.player) scrubber.player.seek(tick*timer.interval)
     }
 
     /*! \internal

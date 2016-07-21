@@ -21,7 +21,7 @@ Item {
       \internal
       Media duration
     */
-    property int duration: player.duration
+    property int duration: player ? player.duration : -1
 
     /*!
       \internal
