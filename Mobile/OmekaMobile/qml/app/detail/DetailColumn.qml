@@ -60,8 +60,9 @@ ScaleColumn {
         visible: opacity > 0
         width: parent.width
         height: contentHeight
-        _font: Style.metadataFont
+        _font: Style.metadataFont        
         Binding on text { when: item; value: metadata() }
+        onLinkActivated: Qt.openUrlExternally(link)
     }
 
     //format metadata
