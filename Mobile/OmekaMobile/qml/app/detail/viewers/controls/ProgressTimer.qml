@@ -63,6 +63,14 @@ Item {
         onTriggered: progress.onTick()
     }
 
+    //initial play state
+    onPlayerChanged:{
+        if(!player)
+            reset()
+        else if(player.playbackState === MediaPlayer.PlayingState)
+            run()
+    }
+
     //synch timer with player
     Connections {
         target: player

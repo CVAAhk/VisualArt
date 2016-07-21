@@ -105,8 +105,8 @@ DISTFILES += \
     qml/app/detail/viewers/DocumentViewer.qml \
     qml/app/detail/viewers/MediaState.qml \
     qml/app/detail/viewers/PlaybackViewer.qml \
-    qml/app/detail/viewers/ProgressTimer.qml \
-    qml/app/detail/viewers/Scrubber.qml \
+    qml/app/detail/viewers/controls/ProgressTimer.qml \
+    qml/app/detail/viewers/controls/Scrubber.qml \
     qml/app/styles/ScrubberStyle.qml \
     qml/app/PageButton.qml \
     qml/app/styles/PageButtonStyle.qml \
