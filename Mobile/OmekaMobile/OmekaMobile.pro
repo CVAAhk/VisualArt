@@ -126,4 +126,5 @@ DISTFILES += \
     qml/app/search/TagDelegate.qml \
     qml/app/search/TagHeader.qml \
     qml/test/sharing/ShareTest.qml \
-    qml/app/base/OmekaToggle.qml
+    qml/app/base/OmekaToggle.qml \
+    qml/app/detail/viewers/controls/MediaControls.qml

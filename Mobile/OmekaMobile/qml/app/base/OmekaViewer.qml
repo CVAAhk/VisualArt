@@ -35,12 +35,6 @@ Item {
     property real sourceHeight: height
 
     /*!
-        \qmlproperty real OmekaViewer::fullScreen
-        Enables full screen state of media object
-    */
-    property alias fullScreen: button.checked
-
-    /*!
       \qmlproperty Item OmekaViewer::display
       The display item of the viwer
     */
@@ -74,19 +68,6 @@ Item {
         width: viewer.width
         height: portrait ? Resolution.appHeight * .3 : Resolution.appHeight * .8
         scale: 1/viewer.scale
-    }
-
-    //full screen mode toggle control
-    OmekaToggle {
-        id: button
-        anchors.top: parent.top
-        anchors.right: parent.right
-        anchors.margins: 10
-        defaultSource: Style.maximize
-        checkedSource: Style.minimize
-        scale: 1/viewer.scale
-        iconScale: .5
-        z: 1
     }
 
     //orientation states
