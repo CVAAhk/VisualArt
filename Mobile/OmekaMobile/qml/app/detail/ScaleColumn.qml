@@ -58,7 +58,7 @@ Item {
     Binding { target: info; property: "parent"; value: column }
 
     //vertical positioning
-    Binding { target: viewer; property: "y"; value: toolbar.height + viewerYOffset }
+    Binding { target: viewer; property: "y"; value: ItemManager.fullScreen ? 0 : toolbar.height + viewerYOffset }
     Binding { target: controls; property: "y"; value: toolbar.height }
     Binding { target: controls; property: "width"; value: viewer.width }
     Binding { target: controls; property: "height"; value: viewerHeight }

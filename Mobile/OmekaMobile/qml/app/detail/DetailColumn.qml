@@ -90,8 +90,6 @@ ScaleColumn {
             PropertyChanges { target: info; explicit: true; opacity: 0 }
             PropertyChanges { target: background; explicit: true; opacity: 0 }
             PropertyChanges { target: scroll.flickableItem; explicit: true; contentY: 0; interactive: false }
-            PropertyChanges { target: viewer; explicit: true; y: 0}
-
         },
         State {
             name: "minimize"

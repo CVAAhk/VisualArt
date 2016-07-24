@@ -93,7 +93,6 @@ Item {
         anchors.horizontalCenter: parent.horizontalCenter
         width: viewer.width
         scale: 1/viewer.scale
-        y: fullScreen ? 0 : viewer.height/2 - height/2
     }
 
     //orientation states
@@ -111,6 +110,7 @@ Item {
             extend: "portrait"
             PropertyChanges { target: display; width: parent.width; height: undefined }
             PropertyChanges { target: root; width: parent.width; height: display.height }
+            PropertyChanges { target: background; height: root.height }
         },
         State {
             name: "landscape_display"
@@ -120,31 +120,34 @@ Item {
         },
         State {
             name: "portrait_fullscreen"
-            extend: "portrait_display"
+            extend: display ? "portrait_display" : "portrait"
             PropertyChanges { target: background; height: Resolution.appHeight }
+            PropertyChanges { target: root; explicit: true; fillScale: 1 }
         },
         State {
             name: "landscape_fullscreen"
-            extend: "landscape_display"
+            extend: display ? "landscape_display" : "landscape"
             PropertyChanges { target: background; height: Resolution.appHeight }
             PropertyChanges { target: root; explicit: true; fillScale: 1 }
         },
         State {
             name: "portrait_playback"
-            extend: "portrait_fullscreen"
             PropertyChanges { target: root; explicit: true; angle: 90 }
         },
         State {
             name: "landscape_playback"
-            extend: "landscape_fullscreen"
         }
     ]
+
+    onStateChanged: print(state)
 
     onSourceChanged: orientationStates()
     onPortraitChanged: orientationStates()
     function orientationStates() {
-        if(fullScreen) return
-        if(display) {
+        if(fullScreen) {
+            screenStates()
+        }
+        else if(display) {
             state = portrait ? "portrait_display" : "landscape_display"
         } else {
             state = portrait ? "portrait" : "landscape"
@@ -154,11 +157,7 @@ Item {
     onFullScreenChanged: screenStates()
     function screenStates() {
         if(fullScreen) {
-            if(objectName === "playbackViewer") {
-                state = portrait ? "portrait_playback" : "landscape_playback"
-            } else {
                 state = portrait ? "portrait_fullscreen" : "landscape_fullscreen"
-            }
         } else {
             orientationStates()
         }
