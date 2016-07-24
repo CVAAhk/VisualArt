@@ -14,7 +14,7 @@ Item {
     /*! \qmlproperty
         Space between content and page borders
     */
-    property real margins: Resolution.applyScale(30)
+    property real margins: ItemManager.fullScreen ? 0 : Resolution.applyScale(30)
 
     //background rectangle
     Rectangle {

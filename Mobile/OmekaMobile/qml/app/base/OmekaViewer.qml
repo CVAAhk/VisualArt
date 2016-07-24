@@ -10,9 +10,10 @@ import "../../utils"
   */
 Item {
     id: root
+    objectName: "defaultViewer"
     visible: false
     enabled: false
-    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.centerIn: parent
     width: parent.width
     height: background.height
 
@@ -47,46 +48,119 @@ Item {
     property bool portrait: Resolution.portrait
 
     /*!
+      \qmlproperty Item OmekaViewer::fullScreen
+      Indicates item is in maximized state
+    */
+    property bool fullScreen: ItemManager.fullScreen
+
+    /*!
+      \qmlproperty Item OmekaViewer::angle
+      The intended angle of rotation
+    */
+    property real angle: 0
+
+    /*!
       \qmlproperty Item OmekaViewer::background
       Reference to background graphic
     */
     property alias background: background
 
-    //update orientation
-    onSourceChanged: setOrientation()
-    onPortraitChanged: setOrientation()
+    /*!
+      \internal
+      The scale required to fill width of parent in portrait orientation
+    */
+    property real wScale: viewer.width > sourceWidth ? viewer.width / sourceWidth : 1
+
+    /*!
+      \internal
+      The scale required to fill height of parent in landscape orientation
+    */
+    property real hScale: viewer.height > sourceHeight ? viewer.height / sourceHeight : 1
+
+    /*!
+      \qmlproperty Item OmekaViewer::fillScale
+      The scale required to fill parent while preserving aspect ratio
+    */
+    property real fillScale: portrait ? wScale : hScale
 
     //bindings
     Binding { target: display; property: "parent"; value: root }
-    Binding { target: background; property: "visible"; when: display; value: !portrait }
 
     //background
     Rectangle {
         id: background
         color: "black"
-        anchors.centerIn: parent
+        anchors.horizontalCenter: parent.horizontalCenter
         width: viewer.width
-        height: portrait ? Resolution.appHeight * .3 : Resolution.appHeight * .8
         scale: 1/viewer.scale
+        y: fullScreen ? 0 : viewer.height/2 - height/2
     }
 
     //orientation states
     states: [
         State {
             name: "portrait"
+            PropertyChanges { target: background; height: Resolution.appHeight * .3 }
+        },
+        State {
+            name: "landscape"
+            PropertyChanges { target: background; height: Resolution.appHeight * .8 }
+        },
+        State {
+            name: "portrait_display"
+            extend: "portrait"
             PropertyChanges { target: display; width: parent.width; height: undefined }
             PropertyChanges { target: root; width: parent.width; height: display.height }
         },
         State {
-            name: "landscape"
+            name: "landscape_display"
+            extend: "landscape"
             PropertyChanges { target: display; width: undefined; height: parent.height }
             PropertyChanges { target: root; width: display.width; height: Resolution.appHeight *.8}
+        },
+        State {
+            name: "portrait_fullscreen"
+            extend: "portrait_display"
+            PropertyChanges { target: background; height: Resolution.appHeight }
+        },
+        State {
+            name: "landscape_fullscreen"
+            extend: "landscape_display"
+            PropertyChanges { target: background; height: Resolution.appHeight }
+            PropertyChanges { target: root; explicit: true; fillScale: 1 }
+        },
+        State {
+            name: "portrait_playback"
+            extend: "portrait_fullscreen"
+            PropertyChanges { target: root; explicit: true; angle: 90 }
+        },
+        State {
+            name: "landscape_playback"
+            extend: "landscape_fullscreen"
         }
     ]
 
-    //update device orientation
-    function setOrientation() {
-        if(!display) return
-        state = portrait ? "portrait" : "landscape"
+    onSourceChanged: orientationStates()
+    onPortraitChanged: orientationStates()
+    function orientationStates() {
+        if(fullScreen) return
+        if(display) {
+            state = portrait ? "portrait_display" : "landscape_display"
+        } else {
+            state = portrait ? "portrait" : "landscape"
+        }
+    }
+
+    onFullScreenChanged: screenStates()
+    function screenStates() {
+        if(fullScreen) {
+            if(objectName === "playbackViewer") {
+                state = portrait ? "portrait_playback" : "landscape_playback"
+            } else {
+                state = portrait ? "portrait_fullscreen" : "landscape_fullscreen"
+            }
+        } else {
+            orientationStates()
+        }
     }
 }

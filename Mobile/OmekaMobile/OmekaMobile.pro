@@ -102,7 +102,6 @@ DISTFILES += \
     qml/app/base/OmekaViewer.qml \
     qml/app/detail/viewers/VideoViewer.qml \
     qml/app/detail/viewers/AudioViewer.qml \
-    qml/app/detail/viewers/DocumentViewer.qml \
     qml/app/detail/viewers/MediaState.qml \
     qml/app/detail/viewers/PlaybackViewer.qml \
     qml/app/detail/viewers/controls/ProgressTimer.qml \

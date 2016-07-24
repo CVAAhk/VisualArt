@@ -2,14 +2,16 @@ import QtQuick 2.5
 import QtQuick.Controls 1.4
 import QtMultimedia 5.5
 import "../../base"
+import "../../../utils"
 
 /*!
   \qmltype PlaybackViewer
 
-  PlaybackViewer provides the display and playback controls of audio and video content.
+  PlaybackViewer provides the display and media player of audio and video content.
 */
 OmekaViewer {
-    id: root
+    id: root     
+    objectName: "playbackViewer"
 
     /*!
       \qmlproperty MediaPlayer PlaybackViewer::player
@@ -17,12 +19,8 @@ OmekaViewer {
     */
     property MediaPlayer player
 
-    //parenting
-    Binding { target: player; property: "parent"; value: root }
-
     //player settings
     Binding { target: player; property: "autoPlay"; value: true }
     Binding { target: player; property: "seekable"; value: true }
     Binding { target: player; property: "source"; value: root.source }
-
 }

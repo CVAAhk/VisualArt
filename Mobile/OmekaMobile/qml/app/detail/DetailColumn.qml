@@ -52,6 +52,7 @@ ScaleColumn {
     //media specific controls
     controls: MediaControls {
         player: media.current.player
+        rotation: media.rotation
     }
 
     //info panel
@@ -88,8 +89,8 @@ ScaleColumn {
             PropertyChanges { target: bar; explicit: true; opacity: 0 }
             PropertyChanges { target: info; explicit: true; opacity: 0 }
             PropertyChanges { target: background; explicit: true; opacity: 0 }
-            PropertyChanges { target: media.current.background; explicit: true; opacity: 0 }
             PropertyChanges { target: scroll.flickableItem; explicit: true; contentY: 0; interactive: false }
+            PropertyChanges { target: viewer; explicit: true; y: 0}
 
         },
         State {

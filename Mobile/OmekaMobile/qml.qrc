@@ -56,8 +56,7 @@
 		<file>qml/app/detail/viewers/controls/ProgressTimer.qml</file>										
 		<file>qml/app/detail/viewers/controls/Scrubber.qml</file>										
 		<file>qml/app/detail/viewers/VideoViewer.qml</file>										
-		<file>qml/app/detail/viewers/AudioViewer.qml</file>										
-		<file>qml/app/detail/viewers/DocumentViewer.qml</file>										
+		<file>qml/app/detail/viewers/AudioViewer.qml</file>																			
 		<file>qml/app/detail/viewers/MediaState.qml</file>			
 		<file>qml/app/detail/viewers/controls/MediaControls.qml</file>			
 		<file>qml/app/home/Home.qml</file>																				

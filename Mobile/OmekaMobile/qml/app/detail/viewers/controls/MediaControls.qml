@@ -11,7 +11,8 @@ Item {
     property alias player: scrubber.player
 
     //on touch, toggle between play and pause states
-   MouseArea {
+    MouseArea {
+        enabled: scrubber.visible
         anchors.fill: parent
         onClicked: {
             if(player.playbackState === MediaPlayer.PlayingState)
@@ -19,10 +20,10 @@ Item {
             else
                 player.play()
         }
-    }
+     }
 
-   //full screen mode toggle control
-   OmekaToggle {
+    //full screen mode toggle control
+    OmekaToggle {
        id: toggle
        anchors.top: parent.top
        anchors.right: parent.right
@@ -31,11 +32,10 @@ Item {
        checkedSource: Style.minimize
        iconScale: .5
        onCheckedChanged: ItemManager.fullScreen = checked
-   }
+    }
 
-   //playback scrubbing
-   Scrubber {
+    //playback scrubbing
+    Scrubber {
        id: scrubber
-   }
-
+    }
 }
