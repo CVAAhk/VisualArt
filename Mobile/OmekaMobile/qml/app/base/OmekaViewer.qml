@@ -81,7 +81,7 @@ Item {
       \qmlproperty Item OmekaViewer::fillScale
       The scale required to fill parent while preserving aspect ratio
     */
-    property real fillScale: portrait ? wScale : hScale
+    property real fillScale: portrait ? wScale : sourceWidth * hScale > viewer.width ? wScale : hScale
 
     //bindings
     Binding { target: display; property: "parent"; value: root }
@@ -95,7 +95,7 @@ Item {
         scale: 1/viewer.scale
     }
 
-    //orientation states
+    //viewer specific layout states for orientation and screen size
     states: [
         State {
             name: "portrait"
@@ -132,18 +132,32 @@ Item {
         },
         State {
             name: "portrait_playback"
+            extend: "portrait_fullscreen"
             PropertyChanges { target: root; explicit: true; angle: 90 }
+            PropertyChanges { target: display; scale: wScale }
         },
         State {
             name: "landscape_playback"
+            extend: "landscape_fullscreen"
+            PropertyChanges { target: display; scale: hScale }
+        },
+        State {
+            name: "portrait_image"
+            extend: "portrait_fullscreen"
+            PropertyChanges { target: display; scale: wScale; y: background.height/2 - (height*scale)/2 }
+        },
+        State {
+            name: "landscape_image"
+            extend: "landscape_fullscreen"
+            PropertyChanges { target: display; scale: background.height/height; y: background.height/2 - height/2 }
         }
     ]
 
-    onStateChanged: print(state)
-
+    //orientation state change
     onSourceChanged: orientationStates()
     onPortraitChanged: orientationStates()
     function orientationStates() {
+        if(!enabled) return;
         if(fullScreen) {
             screenStates()
         }
@@ -154,10 +168,18 @@ Item {
         }
     }
 
+    //full screen state change
     onFullScreenChanged: screenStates()
     function screenStates() {
+        if(!enabled) return;
         if(fullScreen) {
+            if(objectName === "playbackViewer") {
+                state = portrait ? "portrait_playback" : "landscape_playback"
+            } else if(objectName === "imageViewer") {
+                state = portrait ? "portrait_image" : "landscape_image"
+            }else {
                 state = portrait ? "portrait_fullscreen" : "landscape_fullscreen"
+            }
         } else {
             orientationStates()
         }

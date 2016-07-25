@@ -9,6 +9,7 @@ import "../../../utils"
 */
 OmekaViewer {
     id: root
+    objectName: "imageViewer"
     sourceWidth: img.sourceSize.width
     sourceHeight: img.sourceSize.height
 
