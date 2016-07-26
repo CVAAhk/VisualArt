@@ -6,5 +6,5 @@ State {
     property variant media
 
     PropertyChanges { target: media; explicit: true; visible: true; enabled: true; source: viewer.source }
-    PropertyChanges { target: viewer; current: media; scale: media.fillScale; rotation: media.angle}
+    PropertyChanges { target: viewer; current: media; scale: media.fillScale}
 }

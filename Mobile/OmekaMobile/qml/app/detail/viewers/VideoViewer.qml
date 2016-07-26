@@ -16,7 +16,6 @@ PlaybackViewer {
     //video output
     display: VideoOutput {        
         id: output
-        anchors.centerIn: parent
         fillMode: VideoOutput.PreserveAspectFit
         source: player
     }

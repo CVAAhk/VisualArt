@@ -55,9 +55,9 @@ Item {
 
     /*!
       \qmlproperty Item OmekaViewer::angle
-      The intended angle of rotation
+      The display rotation
     */
-    property real angle: 0
+    property real orientation: 0
 
     /*!
       \qmlproperty Item OmekaViewer::background
@@ -85,6 +85,7 @@ Item {
 
     //bindings
     Binding { target: display; property: "parent"; value: root }
+    Binding { target: display; property: "rotation"; value: orientation }
 
     //background
     Rectangle {
@@ -133,13 +134,13 @@ Item {
         State {
             name: "portrait_playback"
             extend: "portrait_fullscreen"
-            PropertyChanges { target: root; explicit: true; angle: 90 }
-            PropertyChanges { target: display; scale: wScale }
+            PropertyChanges { target: root; explicit: true; orientation: 90 }
+            PropertyChanges { target: display; scale: background.width/sourceHeight; y: background.height/2 - height/2 }
         },
         State {
             name: "landscape_playback"
             extend: "landscape_fullscreen"
-            PropertyChanges { target: display; scale: hScale }
+            PropertyChanges { target: display; scale: background.height/sourceHeight; y: background.height/2 - height/2 }
         },
         State {
             name: "portrait_image"
