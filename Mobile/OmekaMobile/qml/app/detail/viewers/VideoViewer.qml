@@ -10,6 +10,7 @@ import "../../../utils"
 */
 PlaybackViewer {
     id: root
+    objectName: "visualPlaybackViewer"
     sourceWidth: output.contentRect.width
     sourceHeight: output.contentRect.height
 

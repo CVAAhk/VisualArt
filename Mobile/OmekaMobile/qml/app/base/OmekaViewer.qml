@@ -98,14 +98,17 @@ Item {
 
     //viewer specific layout states for orientation and screen size
     states: [
+        //default background in portrait orientation
         State {
             name: "portrait"
             PropertyChanges { target: background; height: Resolution.appHeight * .3 }
         },
+        //default background in landscape orientation
         State {
             name: "landscape"
             PropertyChanges { target: background; height: Resolution.appHeight * .8 }
         },
+        //sizing of visual elements in portrait/minimized view
         State {
             name: "portrait_display"
             extend: "portrait"
@@ -113,44 +116,61 @@ Item {
             PropertyChanges { target: root; width: parent.width; height: display.height }
             PropertyChanges { target: background; height: root.height }
         },
+        //sizing of visual elements in landscape/minimized view
         State {
             name: "landscape_display"
             extend: "landscape"
             PropertyChanges { target: display; width: undefined; height: parent.height }
             PropertyChanges { target: root; width: display.width; height: Resolution.appHeight *.8}
         },
+        //sizing of visual elements in portrait/maximized view
         State {
             name: "portrait_fullscreen"
             extend: display ? "portrait_display" : "portrait"
             PropertyChanges { target: background; height: Resolution.appHeight }
             PropertyChanges { target: root; explicit: true; fillScale: 1 }
         },
+        //sizing of visual elements in landscape/maximized view
         State {
             name: "landscape_fullscreen"
             extend: display ? "landscape_display" : "landscape"
             PropertyChanges { target: background; height: Resolution.appHeight }
             PropertyChanges { target: root; explicit: true; fillScale: 1 }
         },
-        State {
-            name: "portrait_playback"
-            extend: "portrait_fullscreen"
-            PropertyChanges { target: root; explicit: true; orientation: 90 }
-            PropertyChanges { target: display; scale: background.width/sourceHeight; y: background.height/2 - height/2 }
-        },
-        State {
-            name: "landscape_playback"
-            extend: "landscape_fullscreen"
-            PropertyChanges { target: display; scale: background.height/sourceHeight; y: background.height/2 - height/2 }
-        },
+        //image transformations in portrait/maximized view
         State {
             name: "portrait_image"
             extend: "portrait_fullscreen"
             PropertyChanges { target: display; scale: wScale; y: background.height/2 - (height*scale)/2 }
         },
+        //image transformations in landscape/maximized view
         State {
             name: "landscape_image"
             extend: "landscape_fullscreen"
             PropertyChanges { target: display; scale: background.height/height; y: background.height/2 - height/2 }
+        },
+        //orientation of playback controls in portrait/maximized view
+        State {
+            name: "portrait_playback"
+            extend: "portrait_fullscreen"
+            PropertyChanges { target: root; explicit: true; orientation: 90 }
+        },
+        //orientation of playback controls in landscape/maximized view
+        State {
+            name: "landscape_playback"
+            extend: "landscape_fullscreen"
+        },
+        //playback display trasformations in portrait/maximized view
+        State {
+            name: "portrait_visual_playback"
+            extend: "portrait_playback"
+            PropertyChanges { target: display; scale: background.width/sourceHeight; y: background.height/2 - height/2 }
+        },
+        //playback display trasformations in landscape/maximized view
+        State {
+            name: "landscape_visual_playback"
+            extend: "landscape_playback"
+            PropertyChanges { target: display; scale: background.height/sourceHeight; y: background.height/2 - height/2 }
         }
     ]
 
@@ -174,12 +194,19 @@ Item {
     function screenStates() {
         if(!enabled) return;
         if(fullScreen) {
-            if(objectName === "playbackViewer") {
-                state = portrait ? "portrait_playback" : "landscape_playback"
-            } else if(objectName === "imageViewer") {
-                state = portrait ? "portrait_image" : "landscape_image"
-            }else {
-                state = portrait ? "portrait_fullscreen" : "landscape_fullscreen"
+            switch(objectName) {
+                case "imageViewer":
+                    state = portrait ? "portrait_image" : "landscape_image"
+                    break;
+                case "playbackViewer":
+                    state = portrait ? "portrait_playback" : "landscape_playback"
+                    break;
+                case "visualPlaybackViewer":
+                    state = portrait ? "portrait_visual_playback" : "landscape_visual_playback"
+                    break;
+                default:
+                    state = portrait ? "portrait_fullscreen" : "landscape_fullscreen"
+                    break;
             }
         } else {
             orientationStates()
