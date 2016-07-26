@@ -50,10 +50,7 @@ ScaleColumn {
     }
 
     //media specific controls
-    controls: MediaControls {
-        player: media.current.player
-        rotation: media.rotation
-    }
+    controls: MediaControls { media: media }
 
     //info panel
     info: OmekaText {

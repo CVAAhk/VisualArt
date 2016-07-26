@@ -54,14 +54,11 @@ Item {
     Binding { target: toolbar; property: "parent"; value: column }
     Binding { target: viewer; property: "parent"; value: column }
     Binding { target: controls; property: "parent"; value: column }
-    Binding { target: controls; when: viewerHeight; property: "visible"; value: true }
     Binding { target: info; property: "parent"; value: column }
 
     //vertical positioning
     Binding { target: viewer; property: "y"; value: ItemManager.fullScreen ? 0 : toolbar.height + viewerYOffset }
-    Binding { target: controls; property: "y"; value: toolbar.height }
-    Binding { target: controls; property: "width"; value: viewer.width }
-    Binding { target: controls; property: "height"; value: viewerHeight }
+    Binding { target: controls; property: "y"; value: ItemManager.fullScreen ? 0 : toolbar.height }
     Binding { target: info.anchors; property: "top"; value: controls.bottom }
 
 }

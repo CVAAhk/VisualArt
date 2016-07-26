@@ -5,10 +5,21 @@ import "../../../../utils"
 
 Item {
     id: root
-    visible: false
+    visible: height
     z: 1
 
     property alias player: scrubber.player
+    property var media
+    property real scalar
+    property Rectangle size
+
+    //media bindings
+    Binding on player { when: media; value: media.current.player }
+    Binding on rotation { when: media; value: media.current.orientation }
+    Binding on size { when: media; value: media.current.background }
+    Binding on scalar { when: media; value: Resolution.portrait ? media.scale : 1 }
+    Binding on width { when: size; value: size.width  }
+    Binding on height { when: size; value: size.height * scalar }
 
     //on touch, toggle between play and pause states
     MouseArea {
