@@ -1,5 +1,6 @@
 import QtQuick 2.5
 import "viewers"
+import "viewers/controls"
 import "../base"
 import "../../utils"
 
@@ -28,6 +29,12 @@ Item {
     property MediaViewer viewer
 
     /*!
+      \qmlproperty MediaViewer ScaleColumn::controls
+       Overlay containing controls for media operations
+    */
+    property MediaControls controls
+
+    /*!
       \qmlproperty OmekaText ScaleColumn::info
        Info panel for content metadata
     */
@@ -46,11 +53,12 @@ Item {
     //parenting
     Binding { target: toolbar; property: "parent"; value: column }
     Binding { target: viewer; property: "parent"; value: column }
+    Binding { target: controls; property: "parent"; value: column }
     Binding { target: info; property: "parent"; value: column }
 
     //vertical positioning
-    Binding { target: viewer; property: "y"; value: toolbar.height + viewerYOffset }
-    Binding { target: info.anchors; property: "top"; value: toolbar.bottom }
-    Binding { target: info.anchors; property: "topMargin"; value: viewerHeight }
+    Binding { target: viewer; property: "y"; value: ItemManager.fullScreen ? 0 : toolbar.height + viewerYOffset }
+    Binding { target: controls; property: "y"; value: ItemManager.fullScreen ? 0 : toolbar.height }
+    Binding { target: info.anchors; property: "top"; value: controls.bottom }
 
 }

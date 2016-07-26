@@ -21,7 +21,7 @@ Item {
       \internal
       Media duration
     */
-    property int duration: player.duration
+    property int duration: player ? player.duration : -1
 
     /*!
       \internal
@@ -61,6 +61,14 @@ Item {
         interval: 100
         repeat: true
         onTriggered: progress.onTick()
+    }
+
+    //initial play state
+    onPlayerChanged:{
+        if(!player)
+            reset()
+        else if(player.playbackState === MediaPlayer.PlayingState)
+            run()
     }
 
     //synch timer with player

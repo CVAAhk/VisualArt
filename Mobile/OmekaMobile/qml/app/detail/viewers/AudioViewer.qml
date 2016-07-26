@@ -1,6 +1,7 @@
 import QtQuick 2.5
 import QtQuick.Controls 1.4
 import QtMultimedia 5.5
+import "../../../utils"
 
 /*
   \qmltype AudioViewer
@@ -8,11 +9,6 @@ import QtMultimedia 5.5
   AudioViewer provides audio view and playback controls.
 */
 PlaybackViewer {
-
-    background: Rectangle {
-        anchors.fill: parent
-        color: "black"
-    }
-
+    id: root    
     player: MediaPlayer {}
 }

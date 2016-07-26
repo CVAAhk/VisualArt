@@ -12,6 +12,12 @@ Item {
     */
     property var current: ({})
 
+    /*!
+      \qmlproperty
+      Flag indicating current item is in full screen mode
+    */
+    property bool fullScreen: false
+
 
     /*-------------SEARCH-------------*/
 

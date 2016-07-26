@@ -1,6 +1,7 @@
 import QtQuick 2.5
 import QtMultimedia 5.5
 import "../../base"
+import "../../../utils"
 
 /*
   \qmltype VideoViewer
@@ -9,13 +10,13 @@ import "../../base"
 */
 PlaybackViewer {
     id: root
-    height: output.height
+    objectName: "visualPlaybackViewer"
     sourceWidth: output.contentRect.width
+    sourceHeight: output.contentRect.height
 
     //video output
-    background: VideoOutput {        
+    display: VideoOutput {        
         id: output
-        width: parent.width
         fillMode: VideoOutput.PreserveAspectFit
         source: player
     }

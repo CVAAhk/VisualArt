@@ -36,7 +36,6 @@ Item {
     ImageViewer { id: image }
     VideoViewer { id: video }
     AudioViewer { id: audio }
-    DocumentViewer { id: document }
 
     //updates state according to file type
     Binding { target: viewer; property: "state"; value: type }
@@ -57,11 +56,6 @@ Item {
             name: "audio"
             viewer: viewer
             media: audio
-        },
-        MediaState {
-            name: "document"
-            viewer: viewer
-            media: document
         }
     ]
 }

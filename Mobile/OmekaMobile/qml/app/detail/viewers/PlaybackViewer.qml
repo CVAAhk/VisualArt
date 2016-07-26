@@ -7,17 +7,11 @@ import "../../../utils"
 /*!
   \qmltype PlaybackViewer
 
-  PlaybackViewer provides the display and playback controls of audio and video content.
+  PlaybackViewer provides the display and media player of audio and video content.
 */
 OmekaViewer {
-
-    id: root
-
-    /*!
-      \qmlproperty Item PlaybackViewer::background
-      The display item of the viwer
-    */
-    property Item background
+    id: root     
+    objectName: "playbackViewer"
 
     /*!
       \qmlproperty MediaPlayer PlaybackViewer::player
@@ -25,30 +19,8 @@ OmekaViewer {
     */
     property MediaPlayer player
 
-    //parenting
-    Binding { target: background; property: "parent"; value: root }
-    Binding { target: player; property: "parent"; value: root }
-
     //player settings
     Binding { target: player; property: "autoPlay"; value: true }
     Binding { target: player; property: "seekable"; value: true }
     Binding { target: player; property: "source"; value: root.source }
-
-    //playback scrubbing
-    Scrubber {
-        id: scrubber
-        player: root.player
-        scale: 1/viewer.scale
-    }
-
-    //on touch, toggle between play and pause states
-    MouseArea {
-        anchors.fill: parent
-        onClicked: {
-            if(player.playbackState === MediaPlayer.PlayingState)
-                player.pause()
-            else
-                player.play()
-        }
-    }
 }
