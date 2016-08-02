@@ -1,4 +1,5 @@
 import QtQuick 2.5
+import QtQuick.Controls 1.4
 import QtMultimedia 5.5
 import "../../../base"
 import "../../../../utils"
@@ -7,6 +8,8 @@ Item {
     id: root
     visible: height
     z: 1
+    y: ItemManager.fullScreen ? size.height/2 - height/2 : toolbar.height
+    anchors.horizontalCenter: parent.horizontalCenter
 
     property alias player: scrubber.player
     property var media
@@ -18,8 +21,8 @@ Item {
     Binding on rotation { when: media; value: media.current.orientation }
     Binding on size { when: media; value: media.current.background }
     Binding on scalar { when: media; value: Resolution.portrait ? media.scale : 1 }
-    Binding on width { when: size; value: size.width  }
-    Binding on height { when: size; value: size.height * scalar }
+    Binding on width { when: size; value: rotation > 0 ? size.height : size.width }
+    Binding on height { when: size; value: rotation > 0 ? size.width : size.height * scalar }
 
     //on touch, toggle between play and pause states
     MouseArea {
