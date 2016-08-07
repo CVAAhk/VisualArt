@@ -93,7 +93,7 @@ Item {
         for(var i=0; i<count; i++){
             res = result[i] || result;
             if(res.item){  //file
-                requestComplete({item: res.item.id, context: result.context, media: res.file_urls.original, thumb: res.file_urls.fullsize, media_type: mediaType(res.file_urls.original)});
+                requestComplete({item: res.item.id, context: result.context, media: res.file_urls.original, thumb: res.file_urls.thumbnail, media_type: mediaType(res.file_urls.original)});
             }
             else if(res.element_texts){ //item
                 requestComplete({item: res.id, context: result.context, metadata: res.element_texts, file_count: res.files.count});
