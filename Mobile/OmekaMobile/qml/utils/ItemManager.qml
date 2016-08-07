@@ -58,7 +58,13 @@ Item {
       Format data object to semi-colon delimited entry
     */
     function itemToEntry(item) {
-        return item.metadata+";"+item.fileCount
+        var entry = item.fileCount;
+        var element;
+        for(var i=0; i<item.metadata.count; i++) {
+            element = item.metadata.get(i);
+            entry += "^"+element.element.name+"|"+element.text;
+        }
+        return entry;
     }
 
     /*!
@@ -67,9 +73,17 @@ Item {
     */
     function entryToItem(setting, value) {
         var item = {item: setting}
-        var values = value.split(";")
-        item.metadata = values[0]
-        item.file_count = values[1]
+        var values = value.split("^")
+        item.file_count = values[0]
+
+        item.metadata = []
+        var mdmap
+
+        for(var i=1; i<values.length; i++) {
+            mdmap = values[i].split("|")
+            item.metadata.push({ element: {name: mdmap[0]} ,text:mdmap[1]})
+        }
+
         return item
     }
 
