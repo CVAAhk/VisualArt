@@ -10,7 +10,6 @@ import "../../utils"
   */
 Item {
     id: root
-    objectName: "defaultViewer"
     visible: false
     enabled: false
     anchors.centerIn: parent
@@ -54,12 +53,6 @@ Item {
     property bool fullScreen: ItemManager.fullScreen
 
     /*!
-      \qmlproperty Item OmekaViewer::angle
-      The display rotation
-    */
-    property real orientation: 0
-
-    /*!
       \qmlproperty Item OmekaViewer::background
       Reference to background graphic
     */
@@ -85,7 +78,6 @@ Item {
 
     //bindings
     Binding { target: display; property: "parent"; value: root }
-    Binding { target: display; property: "rotation"; value: orientation }
 
     //background
     Rectangle {
@@ -137,40 +129,15 @@ Item {
             PropertyChanges { target: background; height: Resolution.appHeight }
             PropertyChanges { target: root; explicit: true; fillScale: 1 }
         },
-        //image transformations in portrait/maximized view
         State {
-            name: "portrait_image"
+            name: "portrait_fullscreen_display"
             extend: "portrait_fullscreen"
             PropertyChanges { target: display; scale: wScale; y: background.height/2 - (height*scale)/2 }
         },
-        //image transformations in landscape/maximized view
         State {
-            name: "landscape_image"
+            name: "landscape_fullscreen_display"
             extend: "landscape_fullscreen"
             PropertyChanges { target: display; scale: background.height/height; y: background.height/2 - height/2 }
-        },
-        //orientation of playback controls in portrait/maximized view
-        State {
-            name: "portrait_playback"
-            extend: "portrait_fullscreen"
-            PropertyChanges { target: root; explicit: true; orientation: 90 }
-        },
-        //orientation of playback controls in landscape/maximized view
-        State {
-            name: "landscape_playback"
-            extend: "landscape_fullscreen"
-        },
-        //playback display trasformations in portrait/maximized view
-        State {
-            name: "portrait_visual_playback"
-            extend: "portrait_playback"
-            PropertyChanges { target: display; scale: background.width/sourceHeight; y: background.height/2 - height/2 }
-        },
-        //playback display trasformations in landscape/maximized view
-        State {
-            name: "landscape_visual_playback"
-            extend: "landscape_playback"
-            PropertyChanges { target: display; scale: background.height/sourceHeight; y: background.height/2 - height/2 }
         }
     ]
 
@@ -194,19 +161,10 @@ Item {
     function screenStates() {
         if(!enabled) return;
         if(fullScreen) {
-            switch(objectName) {
-                case "imageViewer":
-                    state = portrait ? "portrait_image" : "landscape_image"
-                    break;
-                case "playbackViewer":
-                    state = portrait ? "portrait_playback" : "landscape_playback"
-                    break;
-                case "visualPlaybackViewer":
-                    state = portrait ? "portrait_visual_playback" : "landscape_visual_playback"
-                    break;
-                default:
-                    state = portrait ? "portrait_fullscreen" : "landscape_fullscreen"
-                    break;
+            if(display) {
+                state = portrait ? "portrait_fullscreen_display" : "landscape_fullscreen_display"
+            } else {
+                state = portrait ? "portrait_fullscreen" : "landscape_fullscreen"
             }
         } else {
             orientationStates()
