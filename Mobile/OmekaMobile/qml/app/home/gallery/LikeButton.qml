@@ -5,8 +5,6 @@ import "../../../utils"
 OmekaToggle{
     id: like
     visible: img.progress === 1
-    anchors.right: parent.right
-    anchors.top: parent.top
     defaultSource: Style.likeIndicator
     checkedSource: Style.likeFill
     iconScale: Resolution.applyScale(.55)

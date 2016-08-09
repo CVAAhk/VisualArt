@@ -9,8 +9,8 @@ import QtQuick.Controls.Styles 1.4
   */
 Button {
 
-    width: childrenRect.width
-    height: childrenRect.height
+    width: dImage.width
+    height: dImage.height
     checkable: true
 
     /*!
@@ -33,6 +33,7 @@ Button {
 
     //default state
     Image {
+        id: dImage
         source: defaultSource
         visible: !parent.checked
         fillMode: Image.PreserveAspectFit
