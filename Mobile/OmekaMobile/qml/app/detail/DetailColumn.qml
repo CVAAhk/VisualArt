@@ -55,10 +55,11 @@ ScaleColumn {
     //info panel
     info: OmekaText {
         id: info
+        anchors.horizontalCenter: parent.horizontalCenter
         visible: opacity > 0
-        width: parent.width
+        width: parent.width - Resolution.applyScale(60)
         height: contentHeight
-        _font: Style.metadataFont        
+        _font: Style.metadataFont
         Binding on text { when: item; value: metadata() }
         onLinkActivated: Qt.openUrlExternally(link)
     }
