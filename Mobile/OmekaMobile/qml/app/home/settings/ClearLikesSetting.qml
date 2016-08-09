@@ -19,7 +19,7 @@ Setting {
             width: parent.width
             height: childrenRect.height
             anchors.centerIn: parent
-            spacing: 10
+            spacing: Resolution.applyScale(50)
 
             //warning text
             OmekaText {
