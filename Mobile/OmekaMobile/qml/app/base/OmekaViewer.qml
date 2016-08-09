@@ -132,12 +132,12 @@ Item {
         State {
             name: "portrait_fullscreen_display"
             extend: "portrait_fullscreen"
-            PropertyChanges { target: display; scale: wScale; y: background.height/2 - (height*scale)/2 }
+            PropertyChanges { target: display; scale: wScale; y: background.height/2 - height/2 }
         },
         State {
             name: "landscape_fullscreen_display"
             extend: "landscape_fullscreen"
-            PropertyChanges { target: display; scale: background.height/height; y: background.height/2 - height/2 }
+            PropertyChanges { target: display; scale: background.height/sourceHeight; y: background.height/2 - height/2 }
         }
     ]
 

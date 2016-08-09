@@ -43,7 +43,7 @@ Item {
        anchors.margins: 10
        defaultSource: Style.maximize
        checkedSource: Style.minimize
-       iconScale: .5
+       iconScale: Resolution.scaleRatio
        onCheckedChanged: ItemManager.fullScreen = checked
     }
 
