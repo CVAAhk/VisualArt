@@ -5,10 +5,11 @@ import "../../../utils"
 OmekaToggle{
     id: like
     visible: img.progress === 1
-    scale: Resolution.scaleRatio
     anchors.right: parent.right
+    anchors.top: parent.top
     defaultSource: Style.likeIndicator
     checkedSource: Style.likeFill
+    iconScale: Resolution.applyScale(.55)
 
     //add or remove data entry based on checked state
     onClicked: {

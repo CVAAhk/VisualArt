@@ -9,7 +9,9 @@ import "../../utils"
 Item {
     id: content
     width: detail.width
-    height: display.height + margins
+    height: display.height + (margins*4)
+    anchors.top: parent.top
+    anchors.topMargin: margins
 
     /*! \qmlproperty
         Space between content and page borders

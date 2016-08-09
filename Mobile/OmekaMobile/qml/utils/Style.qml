@@ -48,8 +48,6 @@ Item {
     property url back: rootPath+"back.png"
     /*! \qmlproperty graphic for menu options */
     property url more: rootPath+"more.png"
-    /*! \qmlproperty surrounding indicator of like button on detail view */
-    property url likeIndicator2: rootPath+"like-indicator-2.png"
     /*! \qmlproperty thumbnail placeholder for image media */
     property url imageIcon: rootPath+"image.png"
     /*! \qmlproperty thumbnail placeholder for audio media */

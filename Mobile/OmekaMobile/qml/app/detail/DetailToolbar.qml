@@ -33,11 +33,14 @@ OmekaToolBar {
     }
 
     //locally stores item in database
-    OmekaButton {
+    OmekaToggle {
         id: like
+        anchors.top: parent.top
         anchors.right: parent.right
-        icon: Style.likeIndicator2
-        checkable: true
-        opacity: checked ? 1 : .2
+        anchors.topMargin: Resolution.applyScale(-23)
+        anchors.rightMargin: Resolution.applyScale(5)
+        defaultSource: Style.likeIndicator
+        checkedSource: Style.likeFill
+        iconScale: Resolution.applyScale(.85)
     }
 }
