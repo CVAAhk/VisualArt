@@ -64,6 +64,8 @@ Item {
     property url maximize: rootPath+"maximize.png"
     /*! \qmlproperty indicates restoring media object back to standard display */
     property url minimize: rootPath+"minimize.png"
+    /*! \qmlproperty display of control that clears search field */
+    property url clear: rootPath+"clear.png"
 
 
     property variant thumbs: ({"image": imageIcon, "audio": audioIcon, "video": videoIcon, "document": documentIcon})

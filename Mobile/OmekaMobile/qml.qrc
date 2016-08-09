@@ -105,6 +105,7 @@
 		<file>ui/expand.png</file>
 		<file>ui/maximize.png</file>
 		<file>ui/minimize.png</file>
+		<file>ui/clear.png</file>
 				
     </qresource>
 </RCC>

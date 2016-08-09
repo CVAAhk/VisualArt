@@ -30,7 +30,7 @@ OmekaToolBar {
         enabled: false
         visible: false
         anchors.right: textField.right
-        icon: Style.settingsIcon
+        icon: Style.clear
         iconScale: .62
         onClicked: {
             textField.text = ""
