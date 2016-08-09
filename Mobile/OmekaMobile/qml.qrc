@@ -18,6 +18,7 @@
 		<file>qml/test/viewers/ImageViewer.qml</file>	
 		<file>qml/test/viewers/VideoViewer.qml</file>	
 		<file>qml/test/viewers/AudioViewer.qml</file>			
+		<file>qml/test/styling/OpacityMaskTest.qml</file>	
 		<file>qml/test/styling/StylingTest.qml</file>	
 		<file>qml/test/styling/Style.qml</file>	
 		<file>qml/test/styling/TitleText.qml</file>	
@@ -86,6 +87,7 @@
 		<file>ui/settings.png</file>
 		<file>ui/back.png</file>
 		<file>ui/logo.png</file>
+		<file>ui/logo-test.png</file>
 		<file>ui/more.png</file>
 		<file>ui/like-indicator-2.png</file>
 		<file>ui/like-indicator.png</file>

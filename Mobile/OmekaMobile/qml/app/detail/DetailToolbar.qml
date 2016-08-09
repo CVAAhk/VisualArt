@@ -20,6 +20,7 @@ OmekaToolBar {
         id: back
         anchors.left: parent.left
         icon: Style.back
+        iconScale: .7
         onClicked: navigator.pop()
     }
 

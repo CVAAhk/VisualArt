@@ -58,7 +58,7 @@ Item {
 
     //vertical positioning
     Binding { target: viewer; property: "y"; value: ItemManager.fullScreen ? 0 : toolbar.height + viewerYOffset }
-    Binding { target: controls; property: "y"; value: ItemManager.fullScreen ? 0 : toolbar.height }
     Binding { target: info.anchors; property: "top"; value: controls.bottom }
+    Binding { target: info.anchors; property: "topMargin"; value: Resolution.applyScale(60) }
 
 }

@@ -20,7 +20,9 @@ Item {
     Rectangle {
         id: background
         visible: opacity > 0
-        anchors.fill: display
+        anchors.horizontalCenter: parent.horizontalCenter
+        width: display.width
+        height: display.height + Resolution.applyScale(60)
         color: Style.detailContentBackground
         radius: Resolution.applyScale(35)
     }

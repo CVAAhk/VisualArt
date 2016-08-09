@@ -16,7 +16,7 @@ OmekaScrollView {
         anchors.horizontalCenter: parent.horizontalCenter
         cellWidth: width/Math.floor(width/(Math.floor(Resolution.applyScale(478))))
         cellHeight: cellWidth
-        cacheBuffer: cellHeight * 10
+        cacheBuffer: cellHeight * 200
         model: ListModel{}
         delegate: OmekaItem{}
     }
