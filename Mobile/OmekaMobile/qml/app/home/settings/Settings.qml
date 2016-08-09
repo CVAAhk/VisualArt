@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.5
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import "../../home"
@@ -37,6 +37,7 @@ Item {
                 width: parent.width
                 height: parent.height - bar.height * 2
                 Column {
+                    ExclusiveGroup { id: settingsGroup }
                     Binding on width {when: parent; value: parent.width }
                     height: childrenRect.height
                     spacing: Resolution.applyScale(150)
