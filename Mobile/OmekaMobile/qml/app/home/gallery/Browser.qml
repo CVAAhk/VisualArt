@@ -13,6 +13,8 @@ OmekaScrollView {
     /*! Grid layout */
     GridView {
         id: grid
+        property real spacing: Resolution.applyScale(30)
+
         anchors.horizontalCenter: parent.horizontalCenter
         cellWidth: width/Math.floor(width/(Math.floor(Resolution.applyScale(478))))
         cellHeight: cellWidth

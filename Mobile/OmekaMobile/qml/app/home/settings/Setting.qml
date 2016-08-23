@@ -24,7 +24,7 @@ Item {
     /*! \qml property Item Setting::content
       Setting name
     */
-    property Item content        
+    property Item content
 
     //content bindings
     Binding { target: content; property: "parent"; value: setting }
@@ -39,6 +39,7 @@ Item {
         height: Resolution.applyScale(150)
         z: 1
         checkable: true
+        exclusiveGroup: settingsGroup
 
         //cutom style
         style: ButtonStyle {

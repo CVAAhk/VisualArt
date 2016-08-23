@@ -1,6 +1,7 @@
 import QtQuick 2.5
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
+import QtGraphicalEffects 1.0
 import "../gallery"
 import "../../../utils"
 
@@ -48,10 +49,20 @@ Component {
         //media thumbnail
         Image{
             id: img
-            anchors.fill: parent
-            anchors.centerIn: parent           
+            width: parent.width - grid.spacing; height: parent.height - grid.spacing
+            anchors.centerIn: parent
             asynchronous: true
             fillMode: Image.PreserveAspectCrop
+
+            layer.enabled: true
+            layer.effect: OpacityMask {
+                maskSource: Rectangle {
+                    radius: Resolution.applyScale(30)
+                    width: img.width
+                    height: img.height
+                    anchors.centerIn: parent
+                }
+            }
         }
 
         //loads detailed view
@@ -63,6 +74,12 @@ Component {
         }
 
         //registers like and unlikes
-        LikeButton{ id: like }
+        LikeButton{
+            id: like
+            anchors.top: parent.top
+            anchors.right: parent.right
+            anchors.topMargin: grid.spacing/2
+            anchors.rightMargin: grid.spacing/2
+        }
     }
 }
