@@ -54,7 +54,7 @@ Component {
             asynchronous: true
             fillMode: Image.PreserveAspectCrop
 
-            layer.enabled: false
+            layer.enabled: true
             layer.effect: OpacityMask {
                 maskSource: Rectangle {
                     radius: Resolution.applyScale(30)
