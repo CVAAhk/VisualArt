@@ -9,7 +9,7 @@ import "../../../utils"
 Component {
     Item{
         id: object
-        width: view.thumbWidth; height: width
+        state: User.layoutID
 
         property var itemData: ({})
 
@@ -81,5 +81,16 @@ Component {
             anchors.topMargin: view.spacing/2
             anchors.rightMargin: view.spacing/2
         }
+
+        states: [
+            State {
+                name: "grid"
+                PropertyChanges { target: object; width: object.height; height: view.rowHeight }
+            },
+            State {
+                name: "list"
+                PropertyChanges { target: object; width: object.height * 1.3; height: view.rowHeight }
+            }
+        ]
     }
 }

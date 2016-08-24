@@ -8,27 +8,39 @@ OmekaScrollView {
     id: view
     width: parent.width
     height: parent.height
+    state: User.layoutID
 
-    property alias layout: grid
+    property var layout
 
     property var model: ListModel{}
 
     property var delegate: OmekaItem{}
 
-    property real thumbWidth: width/Math.floor(width/(Math.floor(Resolution.applyScale(478))))
+    property real divisor: 478
+
+    property real rowHeight: width/Math.floor(width/(Math.floor(Resolution.applyScale(divisor))))
 
     property real spacing: Resolution.applyScale(30)
+
+    property real cacheBuffer: rowHeight > 0 ? rowHeight * 200 : 0
 
     /*! Grid layout */
     GridView {
         id: grid
-        property real spacing: view.spacing
-
+        anchors.fill: parent
         anchors.horizontalCenter: parent.horizontalCenter
-        cellWidth: view.thumbWidth
-        cellHeight: cellWidth
-        cacheBuffer: cellHeight * 200
-        model: view.model
+        cellWidth: cellHeight
+        cellHeight: view.rowHeight
+        cacheBuffer: view.cacheBuffer
+        delegate: view.delegate
+    }
+
+    /*! List layout */
+    ListView {
+        id: list
+        anchors.fill: parent
+        anchors.horizontalCenter: parent.horizontalCenter
+        cacheBuffer: view.cacheBuffer
         delegate: view.delegate
     }
 
@@ -41,4 +53,17 @@ OmekaScrollView {
     function clear() {
         layout.model.clear();
     }
+
+    states: [
+        State{
+            name: "grid"
+            PropertyChanges { target:view; explicit: true; layout: grid }
+            PropertyChanges { target: grid; explicit: true; model: view.model; z: 1 }
+        },
+        State{
+            name: "list"
+            PropertyChanges { target: view; explicit: true; layout: list; divisor: 300 }
+            PropertyChanges { target: list; explicit: true; model: view.model; z: 1 }
+        }
+    ]
 }
