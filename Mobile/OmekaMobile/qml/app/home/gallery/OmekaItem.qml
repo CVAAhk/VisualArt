@@ -9,7 +9,7 @@ import "../../../utils"
 Component {
     Item{
         id: object
-        width: grid.cellWidth; height: grid.cellHeight
+        width: layout.cellWidth; height: layout.cellHeight
 
         property var itemData: ({})
 
@@ -49,7 +49,7 @@ Component {
         //media thumbnail
         Image{
             id: img
-            width: parent.width - grid.spacing; height: parent.height - grid.spacing
+            width: parent.width - layout.spacing; height: parent.height - layout.spacing
             anchors.centerIn: parent
             asynchronous: true
             fillMode: Image.PreserveAspectCrop
@@ -78,8 +78,8 @@ Component {
             id: like
             anchors.top: parent.top
             anchors.right: parent.right
-            anchors.topMargin: grid.spacing/2
-            anchors.rightMargin: grid.spacing/2
+            anchors.topMargin: layout.spacing/2
+            anchors.rightMargin: layout.spacing/2
         }
     }
 }

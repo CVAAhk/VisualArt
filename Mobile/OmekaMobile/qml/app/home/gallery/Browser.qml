@@ -8,11 +8,11 @@ OmekaScrollView {
     width: parent.width
     height: parent.height
 
-    property GridView grid: grid
+    property alias layout: layout
 
     /*! Grid layout */
     GridView {
-        id: grid
+        id: layout
         property real spacing: Resolution.applyScale(30)
 
         anchors.horizontalCenter: parent.horizontalCenter
@@ -25,11 +25,11 @@ OmekaScrollView {
 
     /*! Add item from browser */
     function append(item) {
-        grid.model.append(item);
+        layout.model.append(item);
     }
 
     /*! Clear browser */
     function clear() {
-        grid.model.clear();
+        layout.model.clear();
     }
 }
