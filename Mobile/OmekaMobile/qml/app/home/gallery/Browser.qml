@@ -5,22 +5,31 @@ import "../../base"
 
 /*! Item browser component */
 OmekaScrollView {
+    id: view
     width: parent.width
     height: parent.height
 
-    property alias layout: layout
+    property alias layout: grid
+
+    property var model: ListModel{}
+
+    property var delegate: OmekaItem{}
+
+    property real thumbWidth: width/Math.floor(width/(Math.floor(Resolution.applyScale(478))))
+
+    property real spacing: Resolution.applyScale(30)
 
     /*! Grid layout */
     GridView {
-        id: layout
-        property real spacing: Resolution.applyScale(30)
+        id: grid
+        property real spacing: view.spacing
 
         anchors.horizontalCenter: parent.horizontalCenter
-        cellWidth: width/Math.floor(width/(Math.floor(Resolution.applyScale(478))))
+        cellWidth: view.thumbWidth
         cellHeight: cellWidth
         cacheBuffer: cellHeight * 200
-        model: ListModel{}
-        delegate: OmekaItem{}
+        model: view.model
+        delegate: view.delegate
     }
 
     /*! Add item from browser */
