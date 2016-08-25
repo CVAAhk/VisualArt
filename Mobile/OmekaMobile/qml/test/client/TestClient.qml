@@ -91,11 +91,21 @@ ApplicationWindow {
         }
     }
 
-    BusyIndicator{
-        id:indicator
+    Rectangle {
         anchors.centerIn: parent
-        anchors.bottom: parent.bottom
-        running: false;
+        visible: indicator.running
+        id: box
+        width: 50
+        height: 50
+        color: "powderblue"
+        RotationAnimation on rotation {
+            id: indicator
+            loops: Animation.Infinite
+            from: 0
+            to: 360
+            duration: 1000
+            running: false
+        }
     }
 
     function getData(){
