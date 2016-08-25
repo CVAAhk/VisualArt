@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.5
 import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.1
 
@@ -98,13 +98,12 @@ ApplicationWindow {
         width: 50
         height: 50
         color: "powderblue"
-        RotationAnimation on rotation {
+        RotationAnimator on rotation {
             id: indicator
-            loops: Animation.Infinite
             from: 0
             to: 360
             duration: 1000
-            running: false
+            loops: Animation.Infinite
         }
     }
 
@@ -128,7 +127,7 @@ ApplicationWindow {
     }
 
     function updateView(json){
-        indicator.running = false;
+       // indicator.running = false;
         for(var i = 0; i<json.length; i++){
             var url = "image://testprovider/"+json[i].file_urls.thumbnail;
             view.model.append({id: json[i].id, thumb: url});
