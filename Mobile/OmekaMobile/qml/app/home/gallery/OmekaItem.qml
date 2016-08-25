@@ -13,6 +13,8 @@ Component {
         state: User.layoutID
 
         property var itemData: ({})
+        property var title
+        property var source
 
         //store result and query files
         Component.onCompleted: {
@@ -23,8 +25,22 @@ Component {
             itemData.media = []
             itemData.mediaTypes = []
 
+            setInfo();
+
             Omeka.getFiles(itemData.id, object)
             like.refresh(itemData)
+        }
+
+        function setInfo() {
+            var name
+            for(var i=0; i<metadata.count; i++) {
+                name = metadata.get(i).element.name.toLowerCase();
+                if(name === "title") {
+                    title = metadata.get(i).text
+                } else if(name === "source") {
+                    source = metadata.get(i).text.split("View")[0]
+                }
+            }
         }
 
         //refresh liked state
@@ -48,27 +64,10 @@ Component {
         }
 
         //info panel
-        Rectangle {
-            id: info
-            anchors.left: parent.left
-            anchors.leftMargin: 10
-            visible: object.state === "list"
-            width: parent.width - anchors.leftMargin*2
-            height: img.height
-            color: "white"
-            radius: Resolution.applyScale(30)
-
-            OmekaText {
-                id: title
-                _font: Style.infoTitleFont
-                text: metadata.get(0).text
-                elide: Text.ElideRight
-                anchors.top: parent.top
-                anchors.left: parent.left
-                anchors.topMargin: Resolution.applyScale(30)
-                anchors.leftMargin: img.width + anchors.topMargin
-                width: parent.width - img.width - (anchors.topMargin*2)
-            }
+        InfoPanel {
+            id: panel
+            title: object.title
+            source: object.source ? "- "+object.source : ""
         }
 
         //media thumbnail
@@ -114,7 +113,7 @@ Component {
                 name: "list"
                 PropertyChanges { target: object; width: parent.width; height: view.rowHeight }
                 PropertyChanges { target: img; width: object.height * 1.4; height: object.height }
-                AnchorChanges { target: img; anchors.horizontalCenter: undefined; anchors.left: info.left }
+                AnchorChanges { target: img; anchors.horizontalCenter: undefined; anchors.left: panel.left }
             }
         ]
     }

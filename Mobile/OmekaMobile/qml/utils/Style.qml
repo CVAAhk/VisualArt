@@ -74,6 +74,7 @@ Item {
     property var settingFont: ({ color:schemeColor1, size:74, weight:Font.Normal, capitalization:Font.Capitalize, wrapMode: Text.NoWrap, textFormat: Text.AutoText })
     property var tagFont: ({ color:schemeColor1, size:74, weight:Font.ExtraBold, capitalization:Font.Capitalize, wrapMode: Text.NoWrap, textFormat: Text.AutoText })
     property var metadataFont: ({ color:"black", size:50, weight:Font.Normal, capitalization:Font.MixedCase, wrapMode: Text.Wrap, textFormat: Text.RichText })
-    property var infoTitleFont: ({ color:"black", size:36, weight:Font.Normal, capitalization:Font.AllUppercase, wrapMode: Text.NoWrap, textFormat: Text.AutoText })
+    property var infoTitleFont: ({ color:"black", size:46, weight:Font.Bold, capitalization:Font.AllUppercase, wrapMode: Text.NoWrap, textFormat: Text.AutoText })
+    property var infoSourceFont: ({ color:"black", size:40, weight:Font.Normal, capitalization:Font.MixedCase, wrapMode: Text.NoWrap, textFormat: Text.AutoText })
 
 }

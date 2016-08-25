@@ -40,6 +40,7 @@ Item {
         state: search.state
         onTextChanged: search.state = text.length ? "results" : "search"
         textField.onEditingFinished: ItemManager.searchTerm = text
+        opacity: .9
     }
 
     //switch to results on search field entry

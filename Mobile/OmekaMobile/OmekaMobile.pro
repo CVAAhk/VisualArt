@@ -127,4 +127,5 @@ DISTFILES += \
     qml/test/sharing/ShareTest.qml \
     qml/app/base/OmekaToggle.qml \
     qml/app/detail/viewers/controls/MediaControls.qml \
-    qml/test/styling/OpacityMaskTest.qml
+    qml/test/styling/OpacityMaskTest.qml \
+    qml/app/home/gallery/InfoPanel.qml
