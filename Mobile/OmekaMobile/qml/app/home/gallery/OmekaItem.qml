@@ -4,6 +4,7 @@ import QtQuick.Controls.Styles 1.4
 import QtGraphicalEffects 1.0
 import "../gallery"
 import "../../../utils"
+import "../../base"
 
 /*! Omeka media item preview */
 Component {
@@ -46,14 +47,36 @@ Component {
             }
         }
 
+        //info panel
+        Rectangle {
+            id: info
+            anchors.left: parent.left
+            anchors.leftMargin: 10
+            visible: object.state === "list"
+            width: parent.width - anchors.leftMargin*2
+            height: img.height
+            color: "white"
+            radius: Resolution.applyScale(30)
+
+            OmekaText {
+                id: title
+                _font: Style.infoTitleFont
+                text: metadata.get(0).text
+                elide: Text.ElideRight
+                anchors.top: parent.top
+                anchors.left: parent.left
+                anchors.topMargin: Resolution.applyScale(30)
+                anchors.leftMargin: img.width + anchors.topMargin
+                width: parent.width - img.width - (anchors.topMargin*2)
+            }
+        }
+
         //media thumbnail
         Image{
             id: img
-            width: parent.width - view.spacing; height: parent.height - view.spacing
-            anchors.centerIn: parent
+            anchors.verticalCenter: parent.verticalCenter
             asynchronous: true
             fillMode: Image.PreserveAspectCrop
-
             layer.enabled: true
             layer.effect: OpacityMask {
                 maskSource: Rectangle {
@@ -76,20 +99,22 @@ Component {
         //registers like and unlikes
         LikeButton{
             id: like
-            anchors.top: parent.top
-            anchors.right: parent.right
-            anchors.topMargin: view.spacing/2
-            anchors.rightMargin: view.spacing/2
+            anchors.top: img.top
+            anchors.right: img.right
         }
 
         states: [
             State {
                 name: "grid"
                 PropertyChanges { target: object; width: object.height; height: view.rowHeight }
+                PropertyChanges { target: img; width: img.height; height: object.height - view.spacing }
+                AnchorChanges { target: img; anchors.horizontalCenter: object.horizontalCenter; anchors.left: undefined }
             },
             State {
                 name: "list"
-                PropertyChanges { target: object; width: object.height * 1.3; height: view.rowHeight }
+                PropertyChanges { target: object; width: parent.width; height: view.rowHeight }
+                PropertyChanges { target: img; width: object.height * 1.4; height: object.height }
+                AnchorChanges { target: img; anchors.horizontalCenter: undefined; anchors.left: info.left }
             }
         ]
     }

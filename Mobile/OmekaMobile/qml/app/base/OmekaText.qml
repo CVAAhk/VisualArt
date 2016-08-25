@@ -2,7 +2,7 @@ import QtQuick 2.5
 import "../../utils"
 
 Text {
-    property variant _font
+    property var _font
     property bool center: false
     color: _font.color
     wrapMode: _font.wrapMode

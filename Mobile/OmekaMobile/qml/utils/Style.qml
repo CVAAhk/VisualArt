@@ -66,13 +66,14 @@ Item {
     property url clear: rootPath+"clear.png"
 
 
-    property variant thumbs: ({"image": imageIcon, "audio": audioIcon, "video": videoIcon, "document": documentIcon})
+    property var thumbs: ({"image": imageIcon, "audio": audioIcon, "video": videoIcon, "document": documentIcon})
     /*-------------Font-------------*/
 
-    property variant titleFont: ({ color:schemeColor1, size:74, weight:Font.Bold, capitalization:Font.AllUppercase, wrapMode: Text.NoWrap, textFormat: Text.AutoText })
-    property variant headerFont: ({ color:schemeColor1, size:55, weight:Font.Normal, capitalization:Font.AllUppercase, wrapMode: Text.NoWrap, textFormat: Text.AutoText })
-    property variant settingFont: ({ color:schemeColor1, size:74, weight:Font.Normal, capitalization:Font.Capitalize, wrapMode: Text.NoWrap, textFormat: Text.AutoText })
-    property variant tagFont: ({ color:schemeColor1, size:74, weight:Font.ExtraBold, capitalization:Font.Capitalize, wrapMode: Text.NoWrap, textFormat: Text.AutoText })
-    property variant metadataFont: ({ color:"black", size:50, weight:Font.Normal, capitalization:Font.MixedCase, wrapMode: Text.Wrap, textFormat: Text.RichText })
+    property var titleFont: ({ color:schemeColor1, size:74, weight:Font.Bold, capitalization:Font.AllUppercase, wrapMode: Text.NoWrap, textFormat: Text.AutoText })
+    property var headerFont: ({ color:schemeColor1, size:55, weight:Font.Normal, capitalization:Font.AllUppercase, wrapMode: Text.NoWrap, textFormat: Text.AutoText })
+    property var settingFont: ({ color:schemeColor1, size:74, weight:Font.Normal, capitalization:Font.Capitalize, wrapMode: Text.NoWrap, textFormat: Text.AutoText })
+    property var tagFont: ({ color:schemeColor1, size:74, weight:Font.ExtraBold, capitalization:Font.Capitalize, wrapMode: Text.NoWrap, textFormat: Text.AutoText })
+    property var metadataFont: ({ color:"black", size:50, weight:Font.Normal, capitalization:Font.MixedCase, wrapMode: Text.Wrap, textFormat: Text.RichText })
+    property var infoTitleFont: ({ color:"black", size:36, weight:Font.Normal, capitalization:Font.AllUppercase, wrapMode: Text.NoWrap, textFormat: Text.AutoText })
 
 }

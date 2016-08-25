@@ -37,9 +37,10 @@ OmekaScrollView {
 
     /*! List layout */
     ListView {
-        id: list
+        id: list        
         anchors.fill: parent
         anchors.horizontalCenter: parent.horizontalCenter
+        spacing: view.spacing
         cacheBuffer: view.cacheBuffer
         delegate: view.delegate
     }
@@ -62,7 +63,7 @@ OmekaScrollView {
         },
         State{
             name: "list"
-            PropertyChanges { target: view; explicit: true; layout: list; divisor: 300 }
+            PropertyChanges { target: view; explicit: true; layout: list; divisor: 290 }
             PropertyChanges { target: list; explicit: true; model: view.model; z: 1 }
         }
     ]
