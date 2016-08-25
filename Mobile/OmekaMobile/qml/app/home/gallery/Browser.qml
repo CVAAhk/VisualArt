@@ -33,6 +33,8 @@ OmekaScrollView {
         cellHeight: view.rowHeight
         cacheBuffer: view.cacheBuffer
         delegate: view.delegate
+        maximumFlickVelocity: 8000
+        flickDeceleration: 3000
     }
 
     /*! List layout */
@@ -43,6 +45,8 @@ OmekaScrollView {
         spacing: view.spacing
         cacheBuffer: view.cacheBuffer
         delegate: view.delegate
+        maximumFlickVelocity: 8000
+        flickDeceleration: 3000
     }
 
     /*! Add item from browser */

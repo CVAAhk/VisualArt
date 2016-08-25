@@ -66,6 +66,7 @@ Component {
         //info panel
         InfoPanel {
             id: panel
+            visible: object.state === "list" || img.progress < 1
             title: object.title
             source: object.source ? "- "+object.source : ""
         }
@@ -85,6 +86,12 @@ Component {
                     anchors.centerIn: parent
                 }
             }
+        }
+
+        //load indicator
+        OmekaIndicator {
+            scale: Resolution.scaleRatio
+            running: img.progress < 1
         }
 
         //loads detailed view
@@ -107,7 +114,7 @@ Component {
                 name: "grid"
                 PropertyChanges { target: object; width: object.height; height: view.rowHeight }
                 PropertyChanges { target: img; width: img.height; height: object.height - view.spacing }
-                AnchorChanges { target: img; anchors.horizontalCenter: object.horizontalCenter; anchors.left: undefined }
+                AnchorChanges { target: img; anchors.horizontalCenter: object.horizontalCenter; anchors.left: undefined }                
             },
             State {
                 name: "list"

@@ -43,6 +43,7 @@
 		<file>qml/app/base/OmekaScrollView.qml</file>									
 		<file>qml/app/base/OmekaViewer.qml</file>									
 		<file>qml/app/base/OmekaSearchField.qml</file>									
+		<file>qml/app/base/OmekaIndicator.qml</file>									
 		<file>qml/app/styles/ScrubberStyle.qml</file>									
 		<file>qml/app/styles/PageButtonStyle.qml</file>									
 		<file>qml/app/styles/SearchBarStyle.qml</file>									
@@ -106,6 +107,7 @@
 		<file>ui/maximize.png</file>
 		<file>ui/minimize.png</file>
 		<file>ui/clear.png</file>
+		<file>ui/indicator.png</file>
 				
     </qresource>
 </RCC>

@@ -64,6 +64,8 @@ Item {
     property url minimize: rootPath+"minimize.png"
     /*! \qmlproperty display of control that clears search field */
     property url clear: rootPath+"clear.png"
+    /*! \qmlproperty display of busy indicators */
+    property url indicator: rootPath+"indicator.png"
 
 
     property var thumbs: ({"image": imageIcon, "audio": audioIcon, "video": videoIcon, "document": documentIcon})

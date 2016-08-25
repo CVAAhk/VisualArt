@@ -5,7 +5,7 @@ import "../../../utils"
 Rectangle {
     anchors.left: parent.left
     anchors.leftMargin: 10
-    visible: object.state === "list"
+    anchors.top: img.top
     width: parent.width - anchors.leftMargin*2
     height: img.height
     color: "white"
