@@ -9,6 +9,7 @@ import QtQuick.Controls.Styles 1.4
   */
 Button {
 
+    id: toggle
     width: dImage.width
     height: dImage.height
     checkable: true
@@ -31,6 +32,10 @@ Button {
     */
     property real iconScale: 1
 
+    property real iconOffsetX: 0
+
+    property real iconOffsetY: 0
+
     //default state
     Image {
         id: dImage
@@ -38,6 +43,8 @@ Button {
         visible: !parent.checked
         fillMode: Image.PreserveAspectFit
         width: sourceSize.width * iconScale
+        x: toggle.iconOffsetX
+        y: toggle.iconOffsetY
     }
 
     //checked state
@@ -46,6 +53,8 @@ Button {
         visible: parent.checked
         fillMode: Image.PreserveAspectFit
         width: sourceSize.width * iconScale
+        x: toggle.iconOffsetX
+        y: toggle.iconOffsetY
     }
 
     //custom background

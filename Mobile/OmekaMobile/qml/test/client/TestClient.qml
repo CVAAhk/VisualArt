@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.5
 import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.1
 
@@ -91,11 +91,20 @@ ApplicationWindow {
         }
     }
 
-    BusyIndicator{
-        id:indicator
+    Rectangle {
         anchors.centerIn: parent
-        anchors.bottom: parent.bottom
-        running: false;
+        visible: indicator.running
+        id: box
+        width: 50
+        height: 50
+        color: "powderblue"
+        RotationAnimator on rotation {
+            id: indicator
+            from: 0
+            to: 360
+            duration: 1000
+            loops: Animation.Infinite
+        }
     }
 
     function getData(){
@@ -118,7 +127,7 @@ ApplicationWindow {
     }
 
     function updateView(json){
-        indicator.running = false;
+       // indicator.running = false;
         for(var i = 0; i<json.length; i++){
             var url = "image://testprovider/"+json[i].file_urls.thumbnail;
             view.model.append({id: json[i].id, thumb: url});

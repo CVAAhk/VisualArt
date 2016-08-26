@@ -51,6 +51,11 @@ StackView {
         if(item.id) push(Qt.resolvedUrl("detail/Detail.qml"))
     }
 
+    //initialization
+    Component.onCompleted: {
+        User.init()
+    }
+
     //navigation controls
     PageNavigationBar {
         id: bar

@@ -21,7 +21,7 @@ Setting {
     //ensures single layout selection and update database
     ExclusiveGroup {
         id: layout
-        Component.onCompleted: current = list.contentItem.children[User.getLayout()]
+        Component.onCompleted: current = list.contentItem.children[User.layout]
         onCurrentChanged: User.setLayout(model.indexOf(current.text))
     }
 

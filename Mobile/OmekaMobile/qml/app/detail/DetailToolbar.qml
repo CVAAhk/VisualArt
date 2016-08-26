@@ -37,10 +37,10 @@ OmekaToolBar {
         id: like
         anchors.top: parent.top
         anchors.right: parent.right
-        anchors.topMargin: Resolution.applyScale(-23)
-        anchors.rightMargin: Resolution.applyScale(5)
         defaultSource: Style.likeIndicator
         checkedSource: Style.likeFill
+        iconOffsetX: 7
+        iconOffsetY: Resolution.applyScale(-40)
         iconScale: Resolution.applyScale(.85)
     }
 }
