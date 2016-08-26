@@ -129,4 +129,5 @@ DISTFILES += \
     qml/app/detail/viewers/controls/MediaControls.qml \
     qml/test/styling/OpacityMaskTest.qml \
     qml/app/home/gallery/InfoPanel.qml \
-    qml/app/base/OmekaIndicator.qml
+    qml/app/base/OmekaIndicator.qml \
+    qml/app/detail/viewers/ImageZoom.qml

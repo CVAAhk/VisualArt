@@ -54,6 +54,7 @@
 		<file>qml/app/detail/ScaleColumn.qml</file>										
 		<file>qml/app/detail/viewers/MediaViewer.qml</file>										
 		<file>qml/app/detail/viewers/ImageViewer.qml</file>										
+		<file>qml/app/detail/viewers/ImageZoom.qml</file>										
 		<file>qml/app/detail/viewers/PlaybackViewer.qml</file>										
 		<file>qml/app/detail/viewers/controls/ProgressTimer.qml</file>										
 		<file>qml/app/detail/viewers/controls/Scrubber.qml</file>										
