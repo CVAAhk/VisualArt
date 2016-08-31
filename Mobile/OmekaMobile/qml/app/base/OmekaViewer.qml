@@ -38,7 +38,7 @@ Item {
       \qmlproperty Item OmekaViewer::display
       The display item of the viwer
     */
-    property Item display
+    property var display
 
     /*!
       \qmlproperty Item OmekaViewer::portrait
@@ -104,7 +104,7 @@ Item {
         State {
             name: "portrait_display"
             extend: "portrait"
-            PropertyChanges { target: display; width: parent.width; height: undefined }
+            PropertyChanges { target: display; displayWidth: parent.width; displayHeight: undefined }
             PropertyChanges { target: root; width: parent.width; height: display.height }
             PropertyChanges { target: background; height: root.height }
         },
@@ -112,7 +112,7 @@ Item {
         State {
             name: "landscape_display"
             extend: "landscape"
-            PropertyChanges { target: display; width: undefined; height: parent.height }
+            PropertyChanges { target: display; displayWidth: undefined; displayHeight: parent.height }
             PropertyChanges { target: root; width: display.width; height: Resolution.appHeight *.8}
         },
         //sizing of visual elements in portrait/maximized view
