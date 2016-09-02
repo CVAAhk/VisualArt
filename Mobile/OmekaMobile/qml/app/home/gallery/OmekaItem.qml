@@ -90,7 +90,7 @@ Component {
 
         //load indicator
         OmekaIndicator {
-            scale: Resolution.scaleRatio
+            scale: Resolution.applyScale(2.25)
             running: img.progress < 1
         }
 
