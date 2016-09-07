@@ -37,6 +37,7 @@ OmekaScrollView {
         maximumFlickVelocity: 8000
         flickDeceleration: 3000
         boundsBehavior: Flickable.StopAtBounds
+        bottomMargin: Resolution.applyScale(195)
         header: Rectangle{
             color: "white"
             width: view.width
@@ -56,6 +57,7 @@ OmekaScrollView {
         maximumFlickVelocity: 8000
         flickDeceleration: 3000
         boundsBehavior: Flickable.StopAtBounds
+        bottomMargin: Resolution.applyScale(220)
         header: Rectangle {
             color: "white"
             width: view.width
