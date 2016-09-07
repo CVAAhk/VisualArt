@@ -130,4 +130,5 @@ DISTFILES += \
     qml/test/styling/OpacityMaskTest.qml \
     qml/app/home/gallery/InfoPanel.qml \
     qml/app/base/OmekaIndicator.qml \
-    qml/app/detail/viewers/ImageZoom.qml
+    qml/app/detail/viewers/ImageZoom.qml \
+    qml/app/home/gallery/Logo.qml
