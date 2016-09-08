@@ -133,4 +133,5 @@ DISTFILES += \
     qml/app/base/OmekaIndicator.qml \
     qml/app/detail/viewers/ImageZoom.qml \
     qml/app/home/gallery/Logo.qml \
-    qml/utils/NumberUtils.qml
+    qml/utils/NumberUtils.qml \
+    qml/app/detail/viewers/controls/PlaybackText.qml

@@ -20,7 +20,20 @@ Item {
 
     property alias player: scrubber.player
 
-    property alias pressed: area.pressed
+    property alias pressed: area.pressed   
+
+
+    PlaybackText {
+        id: elapsed
+        anchors.right: scrubber.left
+        time: timer.position
+    }
+
+    PlaybackText {
+        id: duration
+        anchors.left: scrubber.right
+        time: timer.duration
+    }
 
     Slider {
 
