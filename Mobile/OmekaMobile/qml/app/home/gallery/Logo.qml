@@ -21,9 +21,9 @@ Rectangle {
 
     color: Style.transparent
 
-    width: map(contentY, minY, maxY, minWidth, maxWidth)
-    height: map(contentY, minY, maxY, minHeight, maxHeight)
-    y: map(contentY, minY, maxY, maxHeight, 0)
+    width: NumberUtils.map(contentY, minY, maxY, minWidth, maxWidth)
+    height: NumberUtils.map(contentY, minY, maxY, minHeight, maxHeight)
+    y: NumberUtils.map(contentY, minY, maxY, maxHeight, 0)
 
     anchors.horizontalCenter: parent.horizontalCenter
 
@@ -33,12 +33,5 @@ Rectangle {
         anchors.fill: parent
         anchors.margins: Resolution.applyScale(30)
         fillMode: Image.PreserveAspectFit
-    }
-
-    function map(num, min1, max1, min2, max2) {
-        if(num < min1) return min2;
-        if(num > max1) return max2;
-        var num1 = (num - min1) / (max1 - min1)
-        return (num1 * (max2 - min2)) + min2
     }
 }

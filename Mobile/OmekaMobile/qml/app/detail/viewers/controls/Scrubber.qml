@@ -10,73 +10,104 @@ import "../../../../utils"
   Scrubber is a control that displays playback progress and also enables media seeking
   by dragging the slider handle.
 */
-Slider {
+Item {
 
-    id: scrubber
     visible: player !== undefined
-
-    //position and sizing
+    width: parent.width
     anchors.horizontalCenter: parent.horizontalCenter
     anchors.bottom: parent.bottom
-    anchors.margins: 10
-    width: parent.width - Resolution.applyScale(300)
+    anchors.margins: Resolution.applyScale(36)
 
-    //set max value to the number timer ticks
-    maximumValue: timer.totalTicks
+    property alias player: scrubber.player
 
-    /*!
-      \qmlproperty Scrubber::player
-      The media player to track
-    */
-    property var player
+    property alias pressed: area.pressed
 
-    //sync scrubber position with playhead
-    Binding { target: scrubber; property: "value"; when: !scrubber.pressed; value: timer.tick }
+    Slider {
 
-    //sync media with scrubber position
-    onValueChanged: scrubber.scrub()
+        id: scrubber
 
-    //progress timer instance
-    ProgressTimer {
-        id: timer
-        onProgressComplete: reset()
-    }
+        //position and sizing
+        anchors.centerIn: parent
+        width: parent.width - Resolution.applyScale(300)
 
-    //custom style
-    style: ScrubberStyle {}
+        //set max value to the number timer ticks
+        maximumValue: timer.totalTicks
 
-    //stop/start progress based on visiblity
-    onVisibleChanged: {
-        if(visible) {
-            timer.player = scrubber.player
+        /*!
+          \qmlproperty Scrubber::player
+          The media player to track
+        */
+        property var player
+
+        /*!
+          \qmlproperty Scrubber::player
+          Playback is paused by scrubbing
+        */
+        property bool scrubPause: false
+
+        //sync scrubber position with playhead
+        Binding { target: scrubber; property: "value"; when: !area.pressed; value: timer.tick }
+
+        //progress timer instance
+        ProgressTimer {
+            id: timer
+            onProgressComplete: reset()
         }
-        else {
-            reset()
+
+        //custom style
+        style: ScrubberStyle {}
+
+        //stop/start progress based on visiblity
+        onVisibleChanged: {
+            if(visible) {
+                timer.player = scrubber.player
+            }
+            else {
+                reset()
+            }
         }
-    }
 
-    /*! \qmlmethod Scrubber::reset()
-        Pause media and reset playhead
-    */
-    function reset() {
-        timer.reset()
-        scrubber.seek(0)
-    }
+        //interactive area
+        MouseArea{
+            id: area
+            anchors.centerIn: parent
+            width: parent.width
+            height: parent.height*2
+            onPressed: {
+                scrubber.scrubPause = player.playbackState !== MediaPlayer.PausedState
+                scrubber.scrub(mouseX)
+            }
+            onReleased: {
+                if(scrubber.scrubPause){
+                    player.play()
+                }
+            }
+            onPositionChanged: scrubber.scrub(mouseX)
+        }
 
-    /*! \qmlmethod Scrubber::seek(tick)
-        Seek timer and player to specified tick
-    */
-    function seek(tick) {
-        timer.seek(tick)        
-        if(scrubber.player) scrubber.player.seek(tick*timer.interval)
-    }
+        /*! \qmlmethod Scrubber::reset()
+            Pause media and reset playhead
+        */
+        function reset() {
+            timer.reset()
+            scrubber.seek(0)
+        }
 
-    /*! \internal
-        Sync player with scrubber position
-    */
-    function scrub() {
-        if(scrubber.pressed){
-            seek(scrubber.value)
+        /*! \qmlmethod Scrubber::seek(tick)
+            Seek timer and player to specified tick
+        */
+        function seek(tick) {
+            timer.seek(tick)
+            if(scrubber.player) scrubber.player.seek(tick*timer.interval)
+        }
+
+        /*! \internal
+            Sync player with scrubber position
+        */
+        function scrub(mouseX) {
+            player.pause()
+            value = NumberUtils.map(mouseX, 0, width, 0, maximumValue)
+            seek(value)
         }
     }
 }
