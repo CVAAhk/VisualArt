@@ -1,5 +1,6 @@
 import QtQuick 2.5
 import QtQuick.Controls 1.4
+import "../../../utils"
 
 Flickable {
     id: flick
@@ -21,8 +22,9 @@ Flickable {
     Binding on minHeight {when: source; value: source.height * minScale}
     Binding on maxHeight {when: source; value: source.height * maxScale}
 
+
     PinchArea {
-        id: pinchArea
+        id: pinchArea        
         enabled: fullScreen
         width: flick.contentWidth
         height: flick.contentHeight
@@ -35,7 +37,7 @@ Flickable {
         onPinchUpdated: {
             flick.contentX += pinch.previousCenter.x - pinch.center.x
             flick.contentY += pinch.previousCenter.y - pinch.center.y
-            flick.resizeContent(clampWidth(initWidth*pinch.scale), clampHeight(initHeight*pinch.scale), pinch.center)
+            flick.resizeContent(initWidth*pinch.scale, initHeight*pinch.scale, pinch.center)
         }
 
         onPinchFinished: {
@@ -43,24 +45,14 @@ Flickable {
         }
 
         Rectangle {
-            width: flick.contentWidth
-            height: flick.contentHeight
+            anchors.fill: parent
+            MouseArea { anchors.fill: parent }
+
             Image {
                 source: flick.source.source
                 anchors.fill: parent
                 asynchronous: true
-                MouseArea {
-                    anchors.fill: parent
-                }
             }
         }
-    }
-
-    function clampWidth(value) {
-        return value < minWidth ? minWidth : value > maxWidth ? maxWidth : value;
-    }
-
-    function clampHeight(value) {
-        return value < minHeight ? minHeight : value > maxHeight ? maxHeight : value;
     }
 }

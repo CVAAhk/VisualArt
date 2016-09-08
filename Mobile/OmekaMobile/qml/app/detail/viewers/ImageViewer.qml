@@ -10,26 +10,50 @@ import "../../../utils"
 OmekaViewer {
     id: root
     sourceWidth: img.sourceSize.width
-    sourceHeight: img.sourceSize.height
-
+    sourceHeight: img.sourceSize.height        
 
     //image element
-    display: Image{
-        id: img
-        fillMode: Image.PreserveAspectFit
-        asynchronous: true
-        source: root.source
-        visible: !fullScreen
+    display: Item{
+
+       id: item
+       width: img.width
+       height: img.height
+
+       property alias displayWidth: img.width
+       property alias displayHeight: img.height
+       property real contentWidth: portrait ? zoom.width : width
+       property real contentHeight: portrait ? height: zoom.height
+
+       Image{
+            id: img
+            fillMode: Image.PreserveAspectFit
+            asynchronous: true
+            visible: !fullScreen                        
+            Binding on source { when: root.visible; value: viewer.sources[0] }
+        }
+
+       ImageZoom {
+           id: zoom
+           anchors.centerIn: parent
+           visible: root.visible && fullScreen
+           width: Resolution.appWidth/parent.scale
+           height: Resolution.appHeight/parent.scale
+           source: img
+           contentWidth: item.contentWidth
+           contentHeight: item.contentHeight
+           onVisibleChanged: root.updateContent()
+       }       
     }
 
-    ImageZoom {
-        z: 1
-        visible: fullScreen
-        width: background.width
-        height: background.height
-        contentWidth: img.width
-        contentHeight: img.height
-        source: img
-    }
+    onPortraitChanged: updateContent()
 
+    function updateContent() {
+        if(portrait) {
+            zoom.contentWidth = zoom.width
+            zoom.contentHeight = item.height
+        } else {
+            zoom.contentWidth = item.width
+            zoom.contentHeight = zoom.height
+        }
+    }
 }

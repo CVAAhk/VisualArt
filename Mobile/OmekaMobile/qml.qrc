@@ -30,6 +30,7 @@
 		<file>qml/utils/OmekaClient.qml</file>									
 		<file>qml/utils/ItemManager.qml</file>									
 		<file>qml/utils/UserSettings.qml</file>									
+		<file>qml/utils/NumberUtils.qml</file>									
 		<file>qml/utils/qmldir</file>	
 							
 		<file>qml/app/PageNavigation.qml</file>					
@@ -57,11 +58,12 @@
 		<file>qml/app/detail/viewers/ImageZoom.qml</file>										
 		<file>qml/app/detail/viewers/PlaybackViewer.qml</file>										
 		<file>qml/app/detail/viewers/controls/ProgressTimer.qml</file>										
-		<file>qml/app/detail/viewers/controls/Scrubber.qml</file>										
+		<file>qml/app/detail/viewers/controls/Scrubber.qml</file>	
+		<file>qml/app/detail/viewers/controls/MediaControls.qml</file>	
+		<file>qml/app/detail/viewers/controls/PlaybackText.qml</file>	
 		<file>qml/app/detail/viewers/VideoViewer.qml</file>										
 		<file>qml/app/detail/viewers/AudioViewer.qml</file>																			
-		<file>qml/app/detail/viewers/MediaState.qml</file>			
-		<file>qml/app/detail/viewers/controls/MediaControls.qml</file>			
+		<file>qml/app/detail/viewers/MediaState.qml</file>					
 		<file>qml/app/home/Home.qml</file>																				
 		<file>qml/app/home/settings/BrandBar.qml</file>																					
 		<file>qml/app/home/settings/Settings.qml</file>										
@@ -75,6 +77,7 @@
 		<file>qml/app/home/gallery/OmekaItem.qml</file>																								
 		<file>qml/app/home/gallery/InfoPanel.qml</file>																								
 		<file>qml/app/home/gallery/LikeButton.qml</file>																							
+		<file>qml/app/home/gallery/Logo.qml</file>																							
 		<file>qml/app/likes/Likes.qml</file>										
 		<file>qml/app/search/Search.qml</file>										
 		<file>qml/app/search/TagSearch.qml</file>										

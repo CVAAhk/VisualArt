@@ -16,11 +16,4 @@ OmekaToolBar {
         iconScale: .62
         onClicked: root.activated();
     }
-
-    //endpoint logo
-    BorderImage{
-        anchors.centerIn: parent        
-        scale: (parent.height * .8)/height
-        source: Style.omekaLogo
-    }
 }

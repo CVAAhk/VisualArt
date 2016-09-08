@@ -78,5 +78,6 @@ Item {
     property var metadataFont: ({ color:"black", size:50, weight:Font.Normal, capitalization:Font.MixedCase, wrapMode: Text.Wrap, textFormat: Text.RichText })
     property var infoTitleFont: ({ color:"black", size:46, weight:Font.Bold, capitalization:Font.AllUppercase, wrapMode: Text.NoWrap, textFormat: Text.AutoText })
     property var infoSourceFont: ({ color:"black", size:40, weight:Font.Normal, capitalization:Font.MixedCase, wrapMode: Text.NoWrap, textFormat: Text.AutoText })
+    property var playbackTimeFont: ({ color:"white", size:40, weight:Font.Normal, capitalization:Font.MixedCase, wrapMode: Text.NoWrap, textFormat: Text.AutoText })
 
 }

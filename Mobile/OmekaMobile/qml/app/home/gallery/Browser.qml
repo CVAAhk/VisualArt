@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.5
 import QtQuick.Controls 1.4
 import "../../../utils"
 import "../../base"
@@ -10,7 +10,7 @@ OmekaScrollView {
     height: parent.height
     state: User.layoutID
 
-    property var layout
+    property Flickable layout
 
     property var model: ListModel{}
 
@@ -27,6 +27,7 @@ OmekaScrollView {
     /*! Grid layout */
     GridView {
         id: grid
+        visible: layout === grid
         anchors.fill: parent
         anchors.horizontalCenter: parent.horizontalCenter
         cellWidth: cellHeight
@@ -35,11 +36,19 @@ OmekaScrollView {
         delegate: view.delegate
         maximumFlickVelocity: 8000
         flickDeceleration: 3000
+        boundsBehavior: Flickable.StopAtBounds
+        bottomMargin: Resolution.applyScale(195)
+        header: Rectangle{
+            color: "white"
+            width: view.width
+            height: view.height/2
+        }
     }
 
     /*! List layout */
     ListView {
-        id: list        
+        id: list
+        visible: layout === list
         anchors.fill: parent
         anchors.horizontalCenter: parent.horizontalCenter
         spacing: view.spacing
@@ -47,6 +56,13 @@ OmekaScrollView {
         delegate: view.delegate
         maximumFlickVelocity: 8000
         flickDeceleration: 3000
+        boundsBehavior: Flickable.StopAtBounds
+        bottomMargin: Resolution.applyScale(220)
+        header: Rectangle {
+            color: "white"
+            width: view.width
+            height: view.height/2
+        }
     }
 
     /*! Add item from browser */

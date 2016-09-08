@@ -32,6 +32,7 @@ QML_IMPORT_PATH += \
     qml/utils/Omeka 1.0 \
     qml/utils/ItemManager 1.0 \
     qml/utils/User 1.0 \
+    qml/utils/NumberUtils 1.0 \
 
 ios {
     OBJECTIVE_SOURCES += ios/iosshareutils.mm
@@ -130,4 +131,7 @@ DISTFILES += \
     qml/test/styling/OpacityMaskTest.qml \
     qml/app/home/gallery/InfoPanel.qml \
     qml/app/base/OmekaIndicator.qml \
-    qml/app/detail/viewers/ImageZoom.qml
+    qml/app/detail/viewers/ImageZoom.qml \
+    qml/app/home/gallery/Logo.qml \
+    qml/utils/NumberUtils.qml \
+    qml/app/detail/viewers/controls/PlaybackText.qml

@@ -13,11 +13,20 @@ PlaybackViewer {
     sourceWidth: output.contentRect.width
     sourceHeight: output.contentRect.height
 
-    //video output
-    display: VideoOutput {        
-        id: output
-        fillMode: VideoOutput.PreserveAspectFit
-        source: player
+    //video output    
+    display: Item {
+
+        width: output.width
+        height: output.height
+
+        property alias displayWidth: output.width
+        property alias displayHeight: output.height
+
+        VideoOutput {
+            id: output
+            fillMode: VideoOutput.PreserveAspectFit
+            source: player
+        }
     }
 
     //video player

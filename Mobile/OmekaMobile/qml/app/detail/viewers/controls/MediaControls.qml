@@ -25,7 +25,7 @@ Item {
 
     //on touch, toggle between play and pause states
     MouseArea {
-        enabled: scrubber.visible
+        enabled: scrubber.visible && !scrubber.pressed
         anchors.fill: parent
         onClicked: {
             if(player.playbackState === MediaPlayer.PlayingState)
