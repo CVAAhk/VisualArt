@@ -20,7 +20,7 @@ Item {
         \qmlproperty url OmekaViewer::source
         File url of media item
     */
-    property url source
+    property var source
 
     /*!
         \qmlproperty real OmekaViewer::sourceWidth
@@ -76,8 +76,12 @@ Item {
     */
     property real fillScale: portrait ? wScale : sourceWidth * hScale > viewer.width ? wScale : hScale
 
-    //bindings
-    Binding { target: display; property: "parent"; value: root }
+    //parenting
+    onDisplayChanged: {
+        if(display){
+            display.parent = root
+        }
+    }
 
     //background
     Rectangle {

@@ -15,10 +15,10 @@ Item {
     state: "image"
 
     /*!
-      \qmlproperty url MediaViewer::source
-      The url of the media file
+      \qmlproperty var MediaViewer::sources
+      The urls of the media files
     */
-    property url source
+    property var sources
 
     /*!
       \qmlproperty OmekaViewer MediaViewer::type

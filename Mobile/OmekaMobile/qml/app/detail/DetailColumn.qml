@@ -45,7 +45,7 @@ ScaleColumn {
     //media view
     viewer: MediaViewer {
         id: media
-        Binding on source { when: item; value: item.media[0] }
+        Binding on sources { when: item; value: item.media }
         Binding on type { when: item; value: item.mediaTypes[0] }
     }
 
