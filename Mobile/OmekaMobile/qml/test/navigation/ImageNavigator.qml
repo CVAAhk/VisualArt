@@ -1,5 +1,6 @@
 import QtQuick 2.5
 import QtQuick.Controls 1.4
+import QtQuick.Controls.Styles 1.4
 import "../../utils"
 
 ApplicationWindow {
@@ -59,6 +60,40 @@ ApplicationWindow {
                 highlightRangeMode: ListView.StrictlyEnforceRange
                 preferredHighlightBegin: currentItem ? width/2 - currentItem.width/2 : 0
                 preferredHighlightEnd: currentItem ? width/2 + currentItem.width/2: 0
+
+                Item{
+                    anchors.bottom: parent.bottom
+                    width: parent.width
+                    height: parent.height*parent.scale*.1
+
+                    Row{
+                        spacing: 0
+                        anchors.centerIn: parent
+                        ExclusiveGroup { id: indices }
+                        Repeater {
+                            model: list.model.count
+                            RadioButton {
+                                enabled: false
+                                exclusiveGroup: indices
+                                checked: index === list.currentIndex
+
+                                style: RadioButtonStyle {
+                                    indicator: Image {
+                                        fillMode: Image.PreserveAspectFit
+                                        source: Style.index
+                                        width: 10
+
+                                        Image{
+                                            anchors.fill: parent
+                                            source: Style.indexFill
+                                            visible: control.checked
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }

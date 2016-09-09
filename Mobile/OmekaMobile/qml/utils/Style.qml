@@ -66,6 +66,10 @@ Item {
     property url clear: rootPath+"clear.png"
     /*! \qmlproperty display of busy indicators */
     property url indicator: rootPath+"indicator.png"
+    /*! \qmlproperty index graphic for image viewer */
+    property url index: rootPath+"index.png"
+    /*! \qmlproperty index fill for image viewer */
+    property url indexFill: rootPath+"index-fill.png"
 
 
     property var thumbs: ({"image": imageIcon, "audio": audioIcon, "video": videoIcon, "document": documentIcon})

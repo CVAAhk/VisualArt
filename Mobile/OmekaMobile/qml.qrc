@@ -113,6 +113,8 @@
 		<file>ui/minimize.png</file>
 		<file>ui/clear.png</file>
 		<file>ui/indicator.png</file>
+		<file>ui/index.png</file>
+		<file>ui/index-fill.png</file>
 				
     </qresource>
 </RCC>
