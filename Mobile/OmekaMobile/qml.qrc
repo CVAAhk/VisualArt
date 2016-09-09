@@ -15,6 +15,7 @@
 		<file>qml/test/settings/LikesTest.qml</file>			
 		<file>qml/test/navigation/Carousel.qml</file>	
 		<file>qml/test/navigation/Ellipse.qml</file>			
+		<file>qml/test/navigation/ImageNavigator.qml</file>			
 		<file>qml/test/viewers/ImageViewer.qml</file>	
 		<file>qml/test/viewers/VideoViewer.qml</file>	
 		<file>qml/test/viewers/AudioViewer.qml</file>			
