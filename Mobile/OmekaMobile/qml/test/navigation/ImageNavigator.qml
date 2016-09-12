@@ -60,8 +60,10 @@ ApplicationWindow {
                 highlightRangeMode: ListView.StrictlyEnforceRange
                 preferredHighlightBegin: currentItem ? width/2 - currentItem.width/2 : 0
                 preferredHighlightEnd: currentItem ? width/2 + currentItem.width/2: 0
+                interactive: model.count > 1
 
                 Item{
+                    visible: list.interactive
                     anchors.bottom: parent.bottom
                     width: parent.width
                     height: parent.height*parent.scale*.1
