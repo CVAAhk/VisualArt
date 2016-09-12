@@ -8,6 +8,8 @@ ApplicationWindow {
     visible: true
     width: 470; height: 800
 
+    property bool portrait: true
+
     Component.onCompleted: {
         Omeka.getFiles(472, root);
     }
@@ -29,6 +31,7 @@ ApplicationWindow {
            anchors.verticalCenter: parent.verticalCenter
            asynchronous: true
            source: src
+           fillMode: Image.PreserveAspectFit
            onStatusChanged: {
                if(status === Image.Ready) {
                   list.width = Math.max(width, list.width)
@@ -41,11 +44,15 @@ ApplicationWindow {
     Item {
         id: main
         anchors.fill: parent
+
         Rectangle {
+            anchors.centerIn: parent
+            property real wScale: width < root.width ? root.width/width: 1
+            property real hScale: height < root.height ? root.height/height: 1
             width: list.width
             height: list.height
+            scale: portrait ? wScale : hScale
             color: "red"
-            scale: width < root.width ? root.width/width: 1
             x: (width*scale - width)/2
             y: (height*scale - height)/2
 
@@ -61,6 +68,7 @@ ApplicationWindow {
                 preferredHighlightBegin: currentItem ? width/2 - currentItem.width/2 : 0
                 preferredHighlightEnd: currentItem ? width/2 + currentItem.width/2: 0
                 interactive: model.count > 1
+                clip: true
 
                 Item{
                     visible: list.interactive
@@ -97,6 +105,20 @@ ApplicationWindow {
                     }
                 }
             }
+        }
+    }
+
+    Item {
+        focus: true
+        Keys.onUpPressed: {
+            root.portrait = false
+            root.width = 804
+            root.height = 470
+        }
+        Keys.onDownPressed: {
+            root.portrait = true
+            root.width = 470
+            root.height = 804
         }
     }
 }
