@@ -135,4 +135,5 @@ DISTFILES += \
     qml/app/home/gallery/Logo.qml \
     qml/utils/NumberUtils.qml \
     qml/app/detail/viewers/controls/PlaybackText.qml \
-    qml/test/navigation/ImageNavigator.qml
+    qml/test/navigation/ImageNavigator.qml \
+    qml/app/detail/viewers/ImageNav.qml
