@@ -4,11 +4,12 @@ import "../../../utils"
 import "../../base"
 
 /*! Item browser component */
-OmekaScrollView {
+Item {
     id: view
     width: parent.width
     height: parent.height
     state: User.layoutID
+    z: -1
 
     property Flickable layout
 
