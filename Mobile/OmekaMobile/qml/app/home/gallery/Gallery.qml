@@ -11,7 +11,7 @@ Item {
 
     /*!Load first page*/
     Component.onCompleted: {
-        Omeka.getPage(5, gallery)
+        Omeka.getPage(1, gallery)
     }
 
     /*!Dynamically load omeka query results into browser*/
@@ -35,6 +35,7 @@ Item {
         id: browser
         anchors.top: bar.bottom
         height: parent.height - bar.height
+        headerHeight: height/3
         onCanPaginate: {
             Omeka.getNextPage(gallery)
         }
@@ -44,7 +45,7 @@ Item {
     Logo {
         contentY: browser.contentY
         minY: 0
-        maxY: browser.layout.headerItem.height
+        maxY: browser.headerHeight
         minWidth: parent.width
         maxWidth: Resolution.applyScale(450)
         minHeight: maxY

@@ -6,22 +6,17 @@ Flickable {
     id: flick
     interactive: visible
 
-    property Image source
+    property alias source: img.source
+    property real imgWidth
+    property real imgHeight
     property real initWidth
     property real initHeight
+    property real initScale: 1
     property real minScale: 1
     property real maxScale: 10
 
-    property real minWidth
-    property real maxWidth
-    property real minHeight
-    property real maxHeight
-
-    Binding on minWidth {when: source; value: source.width * minScale}
-    Binding on maxWidth {when: source; value: source.width * maxScale}
-    Binding on minHeight {when: source; value: source.height * minScale}
-    Binding on maxHeight {when: source; value: source.height * maxScale}
-
+    Binding on contentWidth { when: imgWidth; value: imgWidth }
+    Binding on contentHeight { when: imgHeight; value: imgHeight }
 
     PinchArea {
         id: pinchArea        
@@ -32,24 +27,28 @@ Flickable {
         onPinchStarted: {
             initWidth = flick.contentWidth
             initHeight = flick.contentHeight
+            initScale = initWidth/imgWidth
         }
 
         onPinchUpdated: {
             flick.contentX += pinch.previousCenter.x - pinch.center.x
             flick.contentY += pinch.previousCenter.y - pinch.center.y
-            flick.resizeContent(initWidth*pinch.scale, initHeight*pinch.scale, pinch.center)
+            initScale = (initWidth*pinch.scale)/imgWidth
+            if(initScale > minScale && initScale < maxScale) {
+                flick.resizeContent(initWidth*pinch.scale, initHeight*pinch.scale, pinch.center)
+            }
         }
 
         onPinchFinished: {
            flick.returnToBounds()
-        }
+        }        
 
         Rectangle {
             anchors.fill: parent
             MouseArea { anchors.fill: parent }
 
             Image {
-                source: flick.source.source
+                id: img
                 anchors.fill: parent
                 asynchronous: true
             }

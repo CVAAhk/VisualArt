@@ -17,7 +17,7 @@ Browser {
     /*! /qmlproperty The vertical center of the layout*/
     property real layoutCenter: layoutHeight/2;
     /*! /qmlproperty The center of the content relative to the viewport*/
-    property real contentY: layout.contentY + viewport.height/2;
+    property real contentY: layout.contentY + headerHeight;
 
     /*! /qmlsignal Invoked when content meets pagination threshold*/
     signal canPaginate()

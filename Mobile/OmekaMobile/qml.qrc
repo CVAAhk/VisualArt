@@ -15,6 +15,7 @@
 		<file>qml/test/settings/LikesTest.qml</file>			
 		<file>qml/test/navigation/Carousel.qml</file>	
 		<file>qml/test/navigation/Ellipse.qml</file>			
+		<file>qml/test/navigation/ImageNavigator.qml</file>			
 		<file>qml/test/viewers/ImageViewer.qml</file>	
 		<file>qml/test/viewers/VideoViewer.qml</file>	
 		<file>qml/test/viewers/AudioViewer.qml</file>			
@@ -48,6 +49,7 @@
 		<file>qml/app/styles/ScrubberStyle.qml</file>									
 		<file>qml/app/styles/PageButtonStyle.qml</file>									
 		<file>qml/app/styles/SearchBarStyle.qml</file>									
+		<file>qml/app/styles/IndexStyle.qml</file>									
 		<file>qml/app/detail/Detail.qml</file>										
 		<file>qml/app/detail/DetailContent.qml</file>										
 		<file>qml/app/detail/DetailColumn.qml</file>										
@@ -56,6 +58,7 @@
 		<file>qml/app/detail/viewers/MediaViewer.qml</file>										
 		<file>qml/app/detail/viewers/ImageViewer.qml</file>										
 		<file>qml/app/detail/viewers/ImageZoom.qml</file>										
+		<file>qml/app/detail/viewers/ImageNav.qml</file>										
 		<file>qml/app/detail/viewers/PlaybackViewer.qml</file>										
 		<file>qml/app/detail/viewers/controls/ProgressTimer.qml</file>										
 		<file>qml/app/detail/viewers/controls/Scrubber.qml</file>	
@@ -64,6 +67,7 @@
 		<file>qml/app/detail/viewers/VideoViewer.qml</file>										
 		<file>qml/app/detail/viewers/AudioViewer.qml</file>																			
 		<file>qml/app/detail/viewers/MediaState.qml</file>					
+		<file>qml/app/detail/viewers/IndexIndicator.qml</file>					
 		<file>qml/app/home/Home.qml</file>																				
 		<file>qml/app/home/settings/BrandBar.qml</file>																					
 		<file>qml/app/home/settings/Settings.qml</file>										
@@ -97,6 +101,8 @@
 		<file>ui/more.png</file>
 		<file>ui/like-indicator.png</file>
 		<file>ui/like-fill.png</file>
+		<file>ui/detail-like-indicator.png</file>
+		<file>ui/detail-like-fill.png</file>
 		<file>ui/home-off.png</file>
 		<file>ui/home-on.png</file>
 		<file>ui/search-off.png</file>
@@ -112,6 +118,8 @@
 		<file>ui/minimize.png</file>
 		<file>ui/clear.png</file>
 		<file>ui/indicator.png</file>
+		<file>ui/index.png</file>
+		<file>ui/index-fill.png</file>
 				
     </qresource>
 </RCC>

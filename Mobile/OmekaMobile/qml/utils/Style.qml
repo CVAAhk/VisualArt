@@ -44,6 +44,10 @@ Item {
     property url likeIndicator: rootPath+"like-indicator.png"
     /*! \qmlproperty center fill enabled when like button is checked */
     property url likeFill: rootPath+"like-fill.png"
+    /*! \qmlproperty like indicator on detailed views */
+    property url detailLikeIndicator: rootPath+"detail-like-indicator.png"
+    /*! \qmlproperty center fill enabled when detail like is checked */
+    property url detailLikeFill: rootPath+"detail-like-fill.png"
     /*! \qmlproperty graphic indicating return to previous page */
     property url back: rootPath+"back.png"
     /*! \qmlproperty graphic for menu options */
@@ -66,6 +70,10 @@ Item {
     property url clear: rootPath+"clear.png"
     /*! \qmlproperty display of busy indicators */
     property url indicator: rootPath+"indicator.png"
+    /*! \qmlproperty index graphic for image viewer */
+    property url index: rootPath+"index.png"
+    /*! \qmlproperty index fill for image viewer */
+    property url indexFill: rootPath+"index-fill.png"
 
 
     property var thumbs: ({"image": imageIcon, "audio": audioIcon, "video": videoIcon, "document": documentIcon})

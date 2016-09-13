@@ -16,7 +16,7 @@ Item {
         if(current) {
             var likes = ItemManager.getLikes();
             for(var i=0; i<likes.length; i++) {
-                browser.append(likes[i])
+                browser.insert(0, likes[i])
             }
         }
         else {

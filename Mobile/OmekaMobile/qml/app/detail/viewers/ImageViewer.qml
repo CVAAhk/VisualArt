@@ -8,28 +8,26 @@ import "../../../utils"
   ImageViewer provides image view and manipulation controls.
 */
 OmekaViewer {
-    id: root
-    sourceWidth: img.sourceSize.width
-    sourceHeight: img.sourceSize.height        
+    id: root    
+    sourceWidth: nav.sourceWidth
+    sourceHeight: nav.sourceHeight
 
     //image element
     display: Item{
 
        id: item
-       width: img.width
-       height: img.height
+       width: nav.width
+       height: nav.height
 
-       property alias displayWidth: img.width
-       property alias displayHeight: img.height
+       property alias displayWidth: nav.imageWidth
+       property alias displayHeight: nav.imageHeight
        property real contentWidth: portrait ? zoom.width : width
        property real contentHeight: portrait ? height: zoom.height
 
-       Image{
-            id: img
-            fillMode: Image.PreserveAspectFit
-            asynchronous: true
-            visible: !fullScreen                        
-            Binding on source { when: root.visible; value: viewer.sources[0] }
+       ImageNav{
+            id: nav
+            visible: !fullScreen
+            urls: root.visible ? viewer.images : null
         }
 
        ImageZoom {
@@ -38,11 +36,11 @@ OmekaViewer {
            visible: root.visible && fullScreen
            width: Resolution.appWidth/parent.scale
            height: Resolution.appHeight/parent.scale
-           source: img
-           contentWidth: item.contentWidth
-           contentHeight: item.contentHeight
+           source: nav.currentItem ? nav.currentItem.source : ""
+           imgWidth: item.contentWidth
+           imgHeight: item.contentHeight
            onVisibleChanged: root.updateContent()
-       }       
+       }
     }
 
     onPortraitChanged: updateContent()

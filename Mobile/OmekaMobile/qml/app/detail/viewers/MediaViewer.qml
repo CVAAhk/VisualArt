@@ -1,5 +1,6 @@
 import QtQuick 2.5
 import "../../base"
+import "../../../utils"
 
 /*!
   \qmltype MediaViewer
@@ -20,6 +21,8 @@ Item {
     */
     property var sources
 
+    property var images: []
+
     /*!
       \qmlproperty OmekaViewer MediaViewer::type
       The file type
@@ -30,7 +33,16 @@ Item {
       \qmlproperty OmekaViewer MediaViewer::current
       The current child viewer
     */
-    property OmekaViewer current
+    property OmekaViewer current    
+
+    onSourcesChanged: {
+        images.length = 0
+        for(var i=0; i<sources.length; i++){
+            if(Omeka.mediaType(sources[i]) === "image"){
+                images.push(sources[i])
+            }
+        }
+    }
 
     //supported media viewers
     ImageViewer { id: image }

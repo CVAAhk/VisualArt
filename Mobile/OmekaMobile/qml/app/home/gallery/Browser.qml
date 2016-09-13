@@ -4,11 +4,12 @@ import "../../../utils"
 import "../../base"
 
 /*! Item browser component */
-OmekaScrollView {
+Item {
     id: view
     width: parent.width
     height: parent.height
     state: User.layoutID
+    z: -1
 
     property Flickable layout
 
@@ -24,6 +25,23 @@ OmekaScrollView {
 
     property real cacheBuffer: rowHeight > 0 ? rowHeight * 200 : 0
 
+    property real headerHeight: 0
+
+    property color headerColor: "white"
+
+    Component {
+        id: header
+        Item {
+            width: view.width
+            height: view.headerHeight
+            Rectangle {
+                color: view.headerColor
+                width: parent.width
+                height: parent.height - view.spacing
+            }
+        }
+    }
+
     /*! Grid layout */
     GridView {
         id: grid
@@ -38,11 +56,7 @@ OmekaScrollView {
         flickDeceleration: 3000
         boundsBehavior: Flickable.StopAtBounds
         bottomMargin: Resolution.applyScale(195)
-        header: Rectangle{
-            color: "white"
-            width: view.width
-            height: view.height/2
-        }
+        header: header
     }
 
     /*! List layout */
@@ -58,16 +72,17 @@ OmekaScrollView {
         flickDeceleration: 3000
         boundsBehavior: Flickable.StopAtBounds
         bottomMargin: Resolution.applyScale(220)
-        header: Rectangle {
-            color: "white"
-            width: view.width
-            height: view.height/2
-        }
+        header: header
     }
 
     /*! Add item from browser */
     function append(item) {
         layout.model.append(item);
+    }
+
+    /*! Insert item from browser */
+    function insert(index, item) {
+        layout.model.insert(index, item)
     }
 
     /*! Clear browser */

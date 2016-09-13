@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 3.6.0, 2016-09-13T14:02:21. -->
+<!-- Written by QtCreator 3.6.0, 2016-09-12T17:20:37. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -421,7 +421,7 @@
       <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.AndroidPackageInstallationStep</value>
      </valuemap>
      <valuemap type="QVariantMap" key="ProjectExplorer.BuildStepList.Step.3">
-      <value type="QString" key="BuildTargetSdk">android-23</value>
+      <value type="QString" key="BuildTargetSdk">android-24</value>
       <value type="QString" key="KeystoreLocation"></value>
       <value type="bool" key="ProjectExplorer.BuildStep.Enabled">true</value>
       <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Build Android APK</value>
