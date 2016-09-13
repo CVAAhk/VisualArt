@@ -73,6 +73,11 @@ Item {
         layout.model.append(item);
     }
 
+    /*! Insert item from browser */
+    function insert(index, item) {
+        layout.model.insert(index, item)
+    }
+
     /*! Clear browser */
     function clear() {
         layout.model.clear();
