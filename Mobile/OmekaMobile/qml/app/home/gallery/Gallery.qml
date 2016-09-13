@@ -11,7 +11,7 @@ Item {
 
     /*!Load first page*/
     Component.onCompleted: {
-        Omeka.getPage(1, gallery)
+        Omeka.getPage(9, gallery)
     }
 
     /*!Dynamically load omeka query results into browser*/

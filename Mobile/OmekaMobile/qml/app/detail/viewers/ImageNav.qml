@@ -40,8 +40,9 @@ ListView{
     }
 
     onUrlsChanged: {
-        images.length = 0
+        images = []
         list.model.clear();
+        if(!urls) return;
         for(var i=0; i<urls.length; i++) {
             list.model.append({src:urls[i]})
         }
@@ -64,5 +65,6 @@ ListView{
         anchors.bottom: parent.bottom
         width: parent.width
         height: Resolution.applyScale(150)
+        scale: 1/viewer.scale
     }
 }
