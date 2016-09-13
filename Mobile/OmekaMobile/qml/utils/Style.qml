@@ -44,6 +44,10 @@ Item {
     property url likeIndicator: rootPath+"like-indicator.png"
     /*! \qmlproperty center fill enabled when like button is checked */
     property url likeFill: rootPath+"like-fill.png"
+    /*! \qmlproperty like indicator on detailed views */
+    property url detailLikeIndicator: rootPath+"detail-like-indicator.png"
+    /*! \qmlproperty center fill enabled when detail like is checked */
+    property url detailLikeFill: rootPath+"detail-like-fill.png"
     /*! \qmlproperty graphic indicating return to previous page */
     property url back: rootPath+"back.png"
     /*! \qmlproperty graphic for menu options */

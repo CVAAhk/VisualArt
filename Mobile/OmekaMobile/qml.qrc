@@ -101,6 +101,8 @@
 		<file>ui/more.png</file>
 		<file>ui/like-indicator.png</file>
 		<file>ui/like-fill.png</file>
+		<file>ui/detail-like-indicator.png</file>
+		<file>ui/detail-like-fill.png</file>
 		<file>ui/home-off.png</file>
 		<file>ui/home-on.png</file>
 		<file>ui/search-off.png</file>
