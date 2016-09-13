@@ -6,22 +6,11 @@ Flickable {
     id: flick
     interactive: visible
 
-    property Image source
+    property alias source: img.source
     property real initWidth
     property real initHeight
     property real minScale: 1
     property real maxScale: 10
-
-    property real minWidth
-    property real maxWidth
-    property real minHeight
-    property real maxHeight
-
-    Binding on minWidth {when: source; value: source.width * minScale}
-    Binding on maxWidth {when: source; value: source.width * maxScale}
-    Binding on minHeight {when: source; value: source.height * minScale}
-    Binding on maxHeight {when: source; value: source.height * maxScale}
-
 
     PinchArea {
         id: pinchArea        
@@ -49,7 +38,7 @@ Flickable {
             MouseArea { anchors.fill: parent }
 
             Image {
-                source: flick.source.source
+                id: img
                 anchors.fill: parent
                 asynchronous: true
             }

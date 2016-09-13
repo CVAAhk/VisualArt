@@ -1,4 +1,5 @@
 import QtQuick 2.0
+import "../../../utils"
 
 ListView{
     id: list
@@ -8,21 +9,33 @@ ListView{
     property var imageWidth
     property var imageHeight
 
-    model: ListModel {}
+    width: imageWidth ? imageWidth : currentItem.width
+    height: imageHeight ? imageHeight : currentItem.height
 
+    orientation: ListView.Horizontal
+    snapMode: ListView.SnapOneItem
+    cacheBuffer: width*model.count
+    interactive: model.count > 1
+    clip: true
+    spacing: Resolution.applyScale(90)
+    highlightRangeMode: ListView.StrictlyEnforceRange
+    preferredHighlightBegin: currentItem ? width/2 - currentItem.width/2 : 0
+    preferredHighlightEnd: currentItem ? width/2 + currentItem.width/2: 0
+
+    model: ListModel {}
     delegate: Image {
+        anchors.verticalCenter: parent.verticalCenter
         width: list.imageWidth
         height: list.imageHeight
         fillMode: Image.PreserveAspectFit
         asynchronous: true
         source: src
-        onWidthChanged: list.width = width
-        onHeightChanged: list.height = height
     }
 
     function setImages(images) {
         list.model.clear();
-        list.model.append({src:images[0]})
-    }
-
+        for(var i=0; i<images.length; i++) {
+            list.model.append({src:images[i]})
+        }
+    }        
 }

@@ -36,7 +36,7 @@ OmekaViewer {
            visible: root.visible && fullScreen
            width: Resolution.appWidth/parent.scale
            height: Resolution.appHeight/parent.scale
-           source: nav.currentItem
+           source: nav.currentItem.source
            contentWidth: item.contentWidth
            contentHeight: item.contentHeight
            onVisibleChanged: root.updateContent()
