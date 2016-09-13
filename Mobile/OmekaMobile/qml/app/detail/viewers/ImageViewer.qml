@@ -27,7 +27,7 @@ OmekaViewer {
        ImageNav{
             id: nav
             visible: !fullScreen
-            Component.onCompleted: setImages(viewer.sources)
+            urls: viewer.sources
         }
 
        ImageZoom {
