@@ -136,4 +136,6 @@ DISTFILES += \
     qml/utils/NumberUtils.qml \
     qml/app/detail/viewers/controls/PlaybackText.qml \
     qml/test/navigation/ImageNavigator.qml \
-    qml/app/detail/viewers/ImageNav.qml
+    qml/app/detail/viewers/ImageNav.qml \
+    qml/app/styles/IndexStyle.qml \
+    qml/app/detail/viewers/IndexIndicator.qml

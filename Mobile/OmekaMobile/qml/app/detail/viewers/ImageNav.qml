@@ -1,6 +1,5 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.4
-import QtQuick.Controls.Styles 1.4
 import "../../../utils"
 
 ListView{
@@ -21,8 +20,6 @@ ListView{
     clip: true
     spacing: Resolution.applyScale(90)
     highlightRangeMode: ListView.StrictlyEnforceRange
-    preferredHighlightBegin: .5
-    preferredHighlightEnd: .5
 
     model: ListModel {}
     delegate: Image {
@@ -62,23 +59,10 @@ ListView{
         }
     }
 
-    Item {
+    IndexIndicator {
         visible: list.interactive
         anchors.bottom: parent.bottom
         width: parent.width
         height: Resolution.applyScale(150)
-
-        Row {
-            anchors.centerIn: parent
-            ExclusiveGroup { id: indices }
-            Repeater {
-                model: list.model.count
-                RadioButton {
-                    enabled: false
-                    exclusiveGroup: indices
-                    checked: index === list.currentIndex
-                }
-            }
-        }
     }
 }

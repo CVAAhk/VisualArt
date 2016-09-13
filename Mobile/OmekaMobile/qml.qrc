@@ -49,6 +49,7 @@
 		<file>qml/app/styles/ScrubberStyle.qml</file>									
 		<file>qml/app/styles/PageButtonStyle.qml</file>									
 		<file>qml/app/styles/SearchBarStyle.qml</file>									
+		<file>qml/app/styles/IndexStyle.qml</file>									
 		<file>qml/app/detail/Detail.qml</file>										
 		<file>qml/app/detail/DetailContent.qml</file>										
 		<file>qml/app/detail/DetailColumn.qml</file>										
@@ -66,6 +67,7 @@
 		<file>qml/app/detail/viewers/VideoViewer.qml</file>										
 		<file>qml/app/detail/viewers/AudioViewer.qml</file>																			
 		<file>qml/app/detail/viewers/MediaState.qml</file>					
+		<file>qml/app/detail/viewers/IndexIndicator.qml</file>					
 		<file>qml/app/home/Home.qml</file>																				
 		<file>qml/app/home/settings/BrandBar.qml</file>																					
 		<file>qml/app/home/settings/Settings.qml</file>										
