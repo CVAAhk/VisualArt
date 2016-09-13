@@ -37,8 +37,8 @@ OmekaViewer {
            width: Resolution.appWidth/parent.scale
            height: Resolution.appHeight/parent.scale
            source: nav.currentItem ? nav.currentItem.source : ""
-           contentWidth: item.contentWidth
-           contentHeight: item.contentHeight
+           imgWidth: item.contentWidth
+           imgHeight: item.contentHeight
            onVisibleChanged: root.updateContent()
        }
     }

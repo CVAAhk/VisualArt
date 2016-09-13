@@ -7,10 +7,16 @@ Flickable {
     interactive: visible
 
     property alias source: img.source
+    property real imgWidth
+    property real imgHeight
     property real initWidth
     property real initHeight
+    property real initScale: 1
     property real minScale: 1
     property real maxScale: 10
+
+    Binding on contentWidth { when: imgWidth; value: imgWidth }
+    Binding on contentHeight { when: imgHeight; value: imgHeight }
 
     PinchArea {
         id: pinchArea        
@@ -21,17 +27,21 @@ Flickable {
         onPinchStarted: {
             initWidth = flick.contentWidth
             initHeight = flick.contentHeight
+            initScale = initWidth/imgWidth
         }
 
         onPinchUpdated: {
             flick.contentX += pinch.previousCenter.x - pinch.center.x
             flick.contentY += pinch.previousCenter.y - pinch.center.y
-            flick.resizeContent(initWidth*pinch.scale, initHeight*pinch.scale, pinch.center)
+            initScale = (initWidth*pinch.scale)/imgWidth
+            if(initScale > minScale && initScale < maxScale) {
+                flick.resizeContent(initWidth*pinch.scale, initHeight*pinch.scale, pinch.center)
+            }
         }
 
         onPinchFinished: {
            flick.returnToBounds()
-        }
+        }        
 
         Rectangle {
             anchors.fill: parent
