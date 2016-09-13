@@ -32,7 +32,7 @@ Item {
     //result browser
     Browser {
         id: browser
-        headerHeight: Resolution.applyScale(180)
+        headerHeight: Resolution.applyScale(192)
         headerColor: Style.transparent
     }
 }
