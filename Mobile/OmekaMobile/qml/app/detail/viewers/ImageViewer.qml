@@ -27,7 +27,7 @@ OmekaViewer {
        ImageNav{
             id: nav
             visible: !fullScreen
-            urls: viewer.sources
+            urls: root.visible ? viewer.images : null
         }
 
        ImageZoom {
@@ -36,7 +36,7 @@ OmekaViewer {
            visible: root.visible && fullScreen
            width: Resolution.appWidth/parent.scale
            height: Resolution.appHeight/parent.scale
-           source: nav.currentItem.source
+           source: nav.currentItem ? nav.currentItem.source : ""
            contentWidth: item.contentWidth
            contentHeight: item.contentHeight
            onVisibleChanged: root.updateContent()
