@@ -27,6 +27,8 @@ Item {
 
     property real headerHeight: 0
 
+    property color headerColor: "white"
+
     /*! Grid layout */
     GridView {
         id: grid
@@ -42,7 +44,7 @@ Item {
         boundsBehavior: Flickable.StopAtBounds
         bottomMargin: Resolution.applyScale(195)
         header: Rectangle{
-            color: "white"
+            color: view.headerColor
             width: view.width
             height: view.headerHeight
         }
@@ -62,7 +64,7 @@ Item {
         boundsBehavior: Flickable.StopAtBounds
         bottomMargin: Resolution.applyScale(220)
         header: Rectangle {
-            color: "white"
+            color: view.headerColor
             width: view.width
             height: view.headerHeight
         }

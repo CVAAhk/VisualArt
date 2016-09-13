@@ -30,5 +30,9 @@ Item {
     }
 
     //result browser
-    Browser { id: browser }
+    Browser {
+        id: browser
+        headerHeight: Resolution.applyScale(180)
+        headerColor: Style.transparent
+    }
 }
