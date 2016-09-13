@@ -26,6 +26,11 @@ Item {
     */
     property Item content
 
+    /*! \qml property bool Setting::uncheck
+      Uncheck currently selected
+    */
+    property bool uncheck: false
+
     //content bindings
     Binding { target: content; property: "parent"; value: setting }
     Binding { target: content; property: "width"; value: setting.width }
@@ -60,6 +65,15 @@ Item {
             anchors.right: parent.right
             anchors.rightMargin: Resolution.applyScale(30)
             source: Style.expand
+        }        
+
+        //uncheck current selection
+        onPressedChanged: {
+            if(pressed) {
+                uncheck = exclusiveGroup.current === category
+            } else if(uncheck) {
+                exclusiveGroup.current = null
+            }
         }
     }
 
