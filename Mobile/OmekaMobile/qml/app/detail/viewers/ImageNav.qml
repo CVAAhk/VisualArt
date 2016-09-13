@@ -1,4 +1,6 @@
 import QtQuick 2.0
+import QtQuick.Controls 1.4
+import QtQuick.Controls.Styles 1.4
 import "../../../utils"
 
 ListView{
@@ -56,6 +58,26 @@ ListView{
                 list.sourceHeight = Math.max(list.sourceHeight, images[i].sourceSize.height)
                 list.width = Math.max(list.width, images[i].width)
                 list.height = Math.max(list.height, images[i].height)
+            }
+        }
+    }
+
+    Item {
+        visible: list.interactive
+        anchors.bottom: parent.bottom
+        width: parent.width
+        height: Resolution.applyScale(150)
+
+        Row {
+            anchors.centerIn: parent
+            ExclusiveGroup { id: indices }
+            Repeater {
+                model: list.model.count
+                RadioButton {
+                    enabled: false
+                    exclusiveGroup: indices
+                    checked: index === list.currentIndex
+                }
             }
         }
     }
