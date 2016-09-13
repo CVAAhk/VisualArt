@@ -60,11 +60,19 @@ ListView{
         }
     }
 
+    Rectangle{
+        id: bkg
+        z:-1
+        anchors.centerIn: parent
+        width: portrait ? parent.width/fillScale : parent.width
+        height: portrait ? parent.height : parent.height/fillScale
+        color: "black"
+    }
+
     IndexIndicator {
         visible: list.interactive
-        anchors.bottom: parent.bottom
+        anchors.bottom: bkg.bottom
         width: parent.width
-        height: Resolution.applyScale(150)
-        scale: 1/viewer.scale
+        height: bkg.height*.1
     }
 }

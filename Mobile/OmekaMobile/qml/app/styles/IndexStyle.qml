@@ -6,7 +6,7 @@ RadioButtonStyle {
     indicator: Image {
         fillMode: Image.PreserveAspectFit
         source: Style.index
-        width: Resolution.applyScale(45)
+        width: Resolution.applyScale(45) / fillScale
 
         Image {
             anchors.fill: parent
