@@ -24,6 +24,8 @@ OmekaScrollView {
 
     property real cacheBuffer: rowHeight > 0 ? rowHeight * 200 : 0
 
+    property real headerHeight: 0
+
     /*! Grid layout */
     GridView {
         id: grid
@@ -41,7 +43,7 @@ OmekaScrollView {
         header: Rectangle{
             color: "white"
             width: view.width
-            height: view.height/2
+            height: view.headerHeight
         }
     }
 

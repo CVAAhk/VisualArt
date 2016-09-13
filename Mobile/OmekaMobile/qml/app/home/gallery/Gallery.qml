@@ -11,7 +11,7 @@ Item {
 
     /*!Load first page*/
     Component.onCompleted: {
-        Omeka.getPage(9, gallery)
+        Omeka.getPage(1, gallery)
     }
 
     /*!Dynamically load omeka query results into browser*/
@@ -35,6 +35,7 @@ Item {
         id: browser
         anchors.top: bar.bottom
         height: parent.height - bar.height
+        headerHeight: height/2
         onCanPaginate: {
             Omeka.getNextPage(gallery)
         }
