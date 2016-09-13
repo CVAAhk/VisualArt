@@ -29,6 +29,19 @@ Item {
 
     property color headerColor: "white"
 
+    Component {
+        id: header
+        Item {
+            width: view.width
+            height: view.headerHeight
+            Rectangle {
+                color: view.headerColor
+                width: parent.width
+                height: parent.height - view.spacing
+            }
+        }
+    }
+
     /*! Grid layout */
     GridView {
         id: grid
@@ -43,11 +56,7 @@ Item {
         flickDeceleration: 3000
         boundsBehavior: Flickable.StopAtBounds
         bottomMargin: Resolution.applyScale(195)
-        header: Rectangle{
-            color: view.headerColor
-            width: view.width
-            height: view.headerHeight
-        }
+        header: header
     }
 
     /*! List layout */
@@ -63,11 +72,7 @@ Item {
         flickDeceleration: 3000
         boundsBehavior: Flickable.StopAtBounds
         bottomMargin: Resolution.applyScale(220)
-        header: Rectangle {
-            color: view.headerColor
-            width: view.width
-            height: view.headerHeight
-        }
+        header: header
     }
 
     /*! Add item from browser */
