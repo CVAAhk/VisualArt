@@ -63,7 +63,7 @@ OmekaScrollView {
         header: Rectangle {
             color: "white"
             width: view.width
-            height: view.height/2
+            height: view.headerHeight
         }
     }
 
