@@ -38,13 +38,13 @@ StackView {
       \internal
       Main navigation pages
     */
-    property variant pages: [home, search, likes]
+    property var pages: [home, search, likes]
 
     /*!
       \internal
       Tracks currently selected item
     */
-    property variant item: ItemManager.current
+    property var item: ItemManager.current
 
     //load corresponding detail on item selection
     onItemChanged: {

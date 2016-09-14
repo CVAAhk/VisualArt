@@ -7,7 +7,7 @@ import QtQuick 2.5
 */
 State {
     id: state
-    property variant target
+    property var target
     PropertyChanges { target: state.target; explicit: true; checked: true }
     AnchorChanges { target: bar; anchors.top: undefined; anchors.bottom: bar.parent.bottom }
 }
