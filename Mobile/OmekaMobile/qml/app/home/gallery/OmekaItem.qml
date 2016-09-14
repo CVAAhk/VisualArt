@@ -74,10 +74,12 @@ Component {
         //media thumbnail
         Image{
             id: img
+            opacity: 0
             anchors.verticalCenter: parent.verticalCenter
             asynchronous: true
             fillMode: Image.PreserveAspectCrop
-            layer.enabled: true
+
+            layer.enabled: true            
             layer.effect: OpacityMask {
                 maskSource: Rectangle {
                     radius: Resolution.applyScale(30)
@@ -86,12 +88,9 @@ Component {
                     anchors.centerIn: parent
                 }
             }
-        }
 
-        //load indicator
-        OmekaIndicator {
-            scale: Resolution.applyScale(2.25)
-            running: img.progress < 1
+            Behavior on opacity { PropertyAnimation{} }
+            onProgressChanged: if(progress === 1) opacity = 1
         }
 
         //loads detailed view
