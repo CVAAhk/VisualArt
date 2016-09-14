@@ -12,7 +12,7 @@ import "../../../utils"
 Item {
     id: viewer
     width: parent.width
-    height: current.height
+    height: current ? current.height : 0
     state: "image"
 
     /*!
@@ -36,7 +36,8 @@ Item {
     property OmekaViewer current    
 
     onSourcesChanged: {
-        images.length = 0
+        images = []
+        if(!sources) return
         for(var i=0; i<sources.length; i++){
             if(Omeka.mediaType(sources[i]) === "image"){
                 images.push(sources[i])

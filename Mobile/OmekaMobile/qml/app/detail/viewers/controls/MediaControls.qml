@@ -17,11 +17,11 @@ Item {
     property Rectangle size
 
     //media bindings
-    Binding on player { when: media; value: media.current.player }
-    Binding on size { when: media; value: media.current.background }
-    Binding on scalar { when: media; value: Resolution.portrait ? media.scale : 1 }
-    Binding on width { when: size; value: size.width }
-    Binding on height { when: size; value: size.height * scalar }
+    player: media && media.current ? media.current.player : null
+    size: media && media.current ? media.current.background : null
+    scalar: media && Resolution.portrait ? media.scale : 1
+    width: size ? size.width : 0
+    height: size ? size.height * scalar : 0
 
     //on touch, toggle between play and pause states
     MouseArea {

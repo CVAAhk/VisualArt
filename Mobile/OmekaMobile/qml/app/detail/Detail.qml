@@ -11,10 +11,19 @@ Item {
     height: parent.height
     objectName: "detail"
 
+    property DetailColumn column
+
     /*! scroll container */
     OmekaScrollView {
         id: scroll
         anchors.fill: parent
         DetailContent { }
+    }
+
+    //load item on transition complete
+    onXChanged: {
+        if(x === 0 && column) {
+            column.loadItem()
+        }
     }
 }
