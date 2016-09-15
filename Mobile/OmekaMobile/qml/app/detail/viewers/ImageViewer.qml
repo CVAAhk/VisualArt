@@ -22,8 +22,6 @@ OmekaViewer {
 
        property alias displayWidth: nav.imageWidth
        property alias displayHeight: nav.imageHeight
-       property real contentWidth: portrait ? zoom.width : width
-       property real contentHeight: portrait ? height: zoom.height
 
        ImageNav{
             id: nav
@@ -38,8 +36,6 @@ OmekaViewer {
            width: Resolution.appWidth/parent.scale
            height: Resolution.appHeight/parent.scale
            source: nav.currentItem ? nav.currentItem.source : ""
-           imgWidth: item.contentWidth
-           imgHeight: item.contentHeight
            onVisibleChanged: root.updateContent()
        }
     }
@@ -48,11 +44,11 @@ OmekaViewer {
 
     function updateContent() {
         if(portrait) {
-            zoom.contentWidth = zoom.width
-            zoom.contentHeight = item.height
+            zoom.imgWidth = zoom.width
+            zoom.imgHeight = item.height
         } else {
-            zoom.contentWidth = item.width
-            zoom.contentHeight = zoom.height
+            zoom.imgWidth = item.width
+            zoom.imgHeight = zoom.height
         }
     }
 }
