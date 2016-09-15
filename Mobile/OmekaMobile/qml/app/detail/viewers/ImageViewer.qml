@@ -11,6 +11,7 @@ OmekaViewer {
     id: root    
     sourceWidth: nav.sourceWidth
     sourceHeight: nav.sourceHeight
+    progress: nav.progress
 
     //image element
     display: Item{

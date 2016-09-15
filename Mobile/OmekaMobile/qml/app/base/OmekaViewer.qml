@@ -76,6 +76,12 @@ Item {
     */
     property real fillScale: portrait ? wScale : sourceWidth * hScale > viewer.width ? wScale : hScale
 
+    /*!
+      \qmlproperty Item OmekaViewer::progress
+      The load progress of the media file
+    */
+    property real progress: 0
+
     //parenting
     onDisplayChanged: {
         if(display){
