@@ -1,10 +1,11 @@
 import QtQuick 2.5
 import QtQuick.Controls 1.4
+import QtQuick.Controls.Styles 1.4
 import "../../utils"
 
 Rectangle {
     anchors.fill: parent
-    color: "red"
+    color: "#CCCCCC"
     opacity: enabled ? 1 : 0
 
     property alias progress: bar.value
@@ -27,6 +28,19 @@ Rectangle {
         minimumValue: 0
         maximumValue: 1
         Behavior on value { PropertyAnimation{} }
+
+        //custom style
+        style: ProgressBarStyle {
+            background: Rectangle {
+                radius: Resolution.applyScale(30)
+                color: Style.schemeColor3
+                implicitHeight: Resolution.applyScale(45)
+            }
+            progress: Rectangle {
+                radius: Resolution.applyScale(30)
+                color: Style.schemeColor1
+            }
+        }
     }
 
     //disable on load
@@ -37,6 +51,5 @@ Rectangle {
     }
 
     //block interaction
-    MouseArea { anchors.fill: parent}
-
+    MouseArea { anchors.fill: parent}   
 }
