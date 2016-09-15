@@ -11,6 +11,9 @@ ListView{
     property var imageHeight
     property var images: []
     property var urls
+    property real progress: 0
+    property real tally
+    property var total: ({})
 
     anchors.centerIn: parent
     orientation: ListView.Horizontal
@@ -29,6 +32,7 @@ ListView{
         fillMode: Image.PreserveAspectFit
         asynchronous: true
         source: src
+
         onWidthChanged: size()
         onHeightChanged: size()
         onStatusChanged: {
@@ -37,6 +41,8 @@ ListView{
                 size()
             }
         }
+
+        onProgressChanged: updateProgress(src, progress)
     }
 
     onUrlsChanged: {
@@ -58,6 +64,15 @@ ListView{
                 list.height = Math.max(list.height, images[i].height)
             }
         }
+    }
+
+    function updateProgress(src, progress) {
+        total[src] = progress
+        tally = 0
+        for(var p in total) {
+            tally += total[p]
+        }
+        list.progress = tally/list.model.count
     }
 
     Rectangle{

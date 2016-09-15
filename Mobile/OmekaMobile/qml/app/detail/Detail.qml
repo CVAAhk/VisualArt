@@ -10,7 +10,11 @@ Item {
     width: parent.width
     height: parent.height
     objectName: "detail"
+    //opacity: 0
 
+    Behavior on opacity { PropertyAnimation{} }
+
+    //primary display item
     property DetailColumn column
 
     /*! scroll container */
