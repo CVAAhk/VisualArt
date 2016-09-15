@@ -28,12 +28,23 @@ Item {
         enabled: scrubber.visible && !scrubber.pressed
         anchors.fill: parent
         onClicked: {
-            if(player.playbackState === MediaPlayer.PlayingState)
+            if(player.playbackState === MediaPlayer.PlayingState){
+                indicator.play = false
                 player.pause()
-            else
+            } else {
+                indicator.play = true
                 player.play()
+            }
         }
      }
+
+    //playback state indicator
+    PlaybackIndicator {
+        id: indicator
+        anchors.centerIn: parent
+        width: Resolution.applyScale(150)
+        height: width
+    }
 
     //full screen mode toggle control
     OmekaToggle {

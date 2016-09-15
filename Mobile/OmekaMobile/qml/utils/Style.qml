@@ -74,6 +74,10 @@ Item {
     property url index: rootPath+"index.png"
     /*! \qmlproperty index fill for image viewer */
     property url indexFill: rootPath+"index-fill.png"
+    /*! \qmlproperty media playback play indicator */
+    property url play: rootPath+"play.png"
+    /*! \qmlproperty media playback pause indicator */
+    property url pause: rootPath+"pause.png"
 
 
     property var thumbs: ({"image": imageIcon, "audio": audioIcon, "video": videoIcon, "document": documentIcon})
