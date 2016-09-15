@@ -55,6 +55,7 @@
 		<file>qml/app/detail/DetailColumn.qml</file>										
 		<file>qml/app/detail/DetailToolbar.qml</file>										
 		<file>qml/app/detail/ScaleColumn.qml</file>										
+		<file>qml/app/detail/LoadScreen.qml</file>										
 		<file>qml/app/detail/viewers/MediaViewer.qml</file>										
 		<file>qml/app/detail/viewers/ImageViewer.qml</file>										
 		<file>qml/app/detail/viewers/ImageZoom.qml</file>										

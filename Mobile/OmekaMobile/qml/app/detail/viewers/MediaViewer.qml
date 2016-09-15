@@ -21,6 +21,10 @@ Item {
     */
     property var sources
 
+    /*!
+      \qmlproperty var MediaViewer::images
+      Filtered list of image sources
+    */
     property var images: []
 
     /*!
@@ -33,7 +37,13 @@ Item {
       \qmlproperty OmekaViewer MediaViewer::current
       The current child viewer
     */
-    property OmekaViewer current    
+    property OmekaViewer current
+
+    /*!
+      \qmlproperty OmekaViewer MediaViewer::progress
+      The load progress of the current viewer
+    */
+    property real progress: current ? current.progress : 0
 
     onSourcesChanged: {
         images = []

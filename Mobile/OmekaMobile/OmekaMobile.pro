@@ -138,4 +138,5 @@ DISTFILES += \
     qml/test/navigation/ImageNavigator.qml \
     qml/app/detail/viewers/ImageNav.qml \
     qml/app/styles/IndexStyle.qml \
-    qml/app/detail/viewers/IndexIndicator.qml
+    qml/app/detail/viewers/IndexIndicator.qml \
+    qml/app/detail/LoadScreen.qml

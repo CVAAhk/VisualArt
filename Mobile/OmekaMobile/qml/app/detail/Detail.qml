@@ -10,18 +10,20 @@ Item {
     width: parent.width
     height: parent.height
     objectName: "detail"
-    //opacity: 0
-
-    Behavior on opacity { PropertyAnimation{} }
 
     //primary display item
-    property DetailColumn column
+    property DetailColumn column        
 
     /*! scroll container */
     OmekaScrollView {
         id: scroll
         anchors.fill: parent
         DetailContent { }
+    }
+
+    /*! scroll container */
+    LoadScreen{
+        progress: column && column.viewer ? column.viewer.progress : 0
     }
 
     //load item on transition complete
