@@ -59,7 +59,7 @@ StackView {
     //navigation controls
     PageNavigationBar {
         id: bar
-        hide: currentItem && currentItem.objectName === "detail"
+        hideBar: currentItem && currentItem.objectName === "detail"
         onIndexChanged: if(bar.index >= 0) navigator.navigate(pages[bar.index])
     }
 

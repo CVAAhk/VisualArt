@@ -21,7 +21,7 @@ Row {
     /*! \qmlproperty
        Flag indicating the bar is invisible
     */
-    property bool hide: false
+    property bool hideBar: false
 
     /*! \qmlproperty
        Button state names
@@ -75,7 +75,7 @@ Row {
     ]
 
     //update hide state
-    onHideChanged: state = hide ? "hide" : buttonStates[index]
+    onHideBarChanged: state = hideBar ? "hide" : buttonStates[index]
 
     //hide animations
     transitions: Transition {
