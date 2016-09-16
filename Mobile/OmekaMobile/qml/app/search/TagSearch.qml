@@ -8,7 +8,9 @@ Item {
     id: tags
     width: parent.width
     height: parent.height
+
     property var tagData: ({})
+    property int tagCount: 0
 
     //refresh tags
     Component.onCompleted: Omeka.getTags(tags)
@@ -18,6 +20,7 @@ Item {
         target: Omeka
         onRequestComplete: {
             if(result.context === tags) {
+                tagCount++
                 tagData[result.tag] = result
                 Omeka.getTaggedItemCount(result.tag, result.tag)
             }
@@ -26,6 +29,11 @@ Item {
                 tagItem.count = result.count;
                 list.model.append(tagItem)
                 delete tagData[result.context]
+                tagCount--
+
+                if(tagCount === 0) {
+                    target = null
+                }
             }
         }
     }
