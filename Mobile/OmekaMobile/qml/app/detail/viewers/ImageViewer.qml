@@ -36,13 +36,14 @@ OmekaViewer {
            width: Resolution.appWidth/parent.scale
            height: Resolution.appHeight/parent.scale
            source: nav.currentItem ? nav.currentItem.source : ""
-           onVisibleChanged: root.updateContent()
        }
     }
 
-    onPortraitChanged: updateContent()
+    onPortraitChanged: updateZoom()
+    onFullScreenChanged: updateZoom()
+    onStateChanged: nav.size()
 
-    function updateContent() {
+    function updateZoom() {
         if(portrait) {
             zoom.imgWidth = zoom.width
             zoom.imgHeight = item.height

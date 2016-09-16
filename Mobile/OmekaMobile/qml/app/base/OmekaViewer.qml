@@ -113,7 +113,6 @@ Item {
         //sizing of visual elements in portrait/minimized view
         State {
             name: "portrait_display"
-            extend: "portrait"
             PropertyChanges { target: display; displayWidth: parent.width; displayHeight: undefined }
             PropertyChanges { target: root; width: parent.width; height: display.height }
             PropertyChanges { target: background; height: root.height }
@@ -121,9 +120,9 @@ Item {
         //sizing of visual elements in landscape/minimized view
         State {
             name: "landscape_display"
-            extend: "landscape"
             PropertyChanges { target: display; displayWidth: undefined; displayHeight: parent.height }
             PropertyChanges { target: root; width: display.width; height: Resolution.appHeight *.8}
+            PropertyChanges { target: background; height: root.height }
         },
         //sizing of visual elements in portrait/maximized view
         State {
