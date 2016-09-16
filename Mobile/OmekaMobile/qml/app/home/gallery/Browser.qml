@@ -29,6 +29,8 @@ Item {
 
     property color headerColor: "white"
 
+    property bool busy: false
+
     Component {
         id: header
         Item {
@@ -38,6 +40,20 @@ Item {
                 color: view.headerColor
                 width: parent.width
                 height: parent.height - view.spacing
+            }
+        }
+    }
+
+    Component {
+        id: footer
+        Item{
+            width: view.width
+            height: Resolution.applyScale(150)
+            OmekaIndicator {
+                id: indicator
+                anchors.centerIn: parent
+                running: view.busy
+                scale: Resolution.applyScale(1.5)
             }
         }
     }
@@ -57,6 +73,7 @@ Item {
         boundsBehavior: Flickable.StopAtBounds
         bottomMargin: Resolution.applyScale(195)
         header: header
+        footer: footer
     }
 
     /*! List layout */
@@ -71,8 +88,9 @@ Item {
         maximumFlickVelocity: 8000
         flickDeceleration: 3000
         boundsBehavior: Flickable.StopAtBounds
-        bottomMargin: Resolution.applyScale(220)
+        bottomMargin: Resolution.applyScale(190)
         header: header
+        footer: footer
     }
 
     /*! Add item from browser */

@@ -16,10 +16,15 @@ ScaleColumn {
     height: childrenRect.height
     anchors.horizontalCenter: parent.horizontalCenter
 
+    //assign column to detail for delayed loading
+    Component.onCompleted: {
+        detail.column = column
+    }
+
     /*! \qmlproperty
         Currently selected item
     */
-    property var item: ItemManager.current
+    property var item
 
     /*! \qmlproperty
         Full screen state of selected item
@@ -30,8 +35,8 @@ ScaleColumn {
     toolbar: DetailToolbar {
         id: bar
         visible: opacity > 0
-        Binding on liked { when: item; value: ItemManager.isLiked(item) }
-        Binding on itemId { when: item; value: item.id }
+        liked: item ? ItemManager.isLiked(item) : false
+        itemId: item ? item.id : -1
         onLikedChanged: {
             if(liked) {
                 ItemManager.registerLike(item)
@@ -45,8 +50,8 @@ ScaleColumn {
     //media view
     viewer: MediaViewer {
         id: media
-        Binding on sources { when: item; value: item.media }
-        Binding on type { when: item; value: item.mediaTypes[0] }
+        sources: item ? item.media : null
+        type: item ? item.mediaTypes[0] : ""
     }
 
     //media specific controls
@@ -60,12 +65,13 @@ ScaleColumn {
         width: parent.width - Resolution.applyScale(60)
         height: contentHeight
         _font: Style.metadataFont
-        Binding on text { when: item; value: metadata() }
+        text: metadata()
         onLinkActivated: Qt.openUrlExternally(link)
     }
 
     //format metadata
     function metadata() {
+        if(!item) return ""
         var metadata = ""
         if(item.metadata){
             var element
@@ -75,6 +81,11 @@ ScaleColumn {
             }
         }
         return metadata
+    }
+
+    //load item details
+    function loadItem() {
+        item = ItemManager.current
     }
 
     //update screen state

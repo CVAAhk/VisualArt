@@ -8,7 +8,7 @@ ApplicationWindow {
     visible: true
     width: 470; height: 804
     title: "Omeka Mobile"
-    color: Style.viewBackgroundColor
+    color: Style.color3
 
     Component.onCompleted: {
         Resolution.appWindow = root

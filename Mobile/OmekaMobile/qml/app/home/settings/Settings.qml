@@ -16,7 +16,7 @@ Item {
         OmekaToolBar {
             id: bar
 
-            backgroundColor: Style.viewBackgroundColor
+            backgroundColor: Style.color3
 
             OmekaText {
                 anchors.centerIn: parent

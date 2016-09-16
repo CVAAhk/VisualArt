@@ -55,6 +55,7 @@
 		<file>qml/app/detail/DetailColumn.qml</file>										
 		<file>qml/app/detail/DetailToolbar.qml</file>										
 		<file>qml/app/detail/ScaleColumn.qml</file>										
+		<file>qml/app/detail/LoadScreen.qml</file>										
 		<file>qml/app/detail/viewers/MediaViewer.qml</file>										
 		<file>qml/app/detail/viewers/ImageViewer.qml</file>										
 		<file>qml/app/detail/viewers/ImageZoom.qml</file>										
@@ -64,6 +65,7 @@
 		<file>qml/app/detail/viewers/controls/Scrubber.qml</file>	
 		<file>qml/app/detail/viewers/controls/MediaControls.qml</file>	
 		<file>qml/app/detail/viewers/controls/PlaybackText.qml</file>	
+		<file>qml/app/detail/viewers/controls/PlaybackIndicator.qml</file>	
 		<file>qml/app/detail/viewers/VideoViewer.qml</file>										
 		<file>qml/app/detail/viewers/AudioViewer.qml</file>																			
 		<file>qml/app/detail/viewers/MediaState.qml</file>					
@@ -120,6 +122,8 @@
 		<file>ui/indicator.png</file>
 		<file>ui/index.png</file>
 		<file>ui/index-fill.png</file>
+		<file>ui/play.png</file>
+		<file>ui/pause.png</file>
 				
     </qresource>
 </RCC>

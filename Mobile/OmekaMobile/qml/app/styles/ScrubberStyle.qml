@@ -13,7 +13,7 @@ SliderStyle {
     groove: Rectangle {
         implicitWidth: parent.width
         implicitHeight: Resolution.applyScale(10)
-        color: Style.scrubberGrooveColor
+        color: Style.color5
 
         //the background groove up to handle position
         Rectangle {
@@ -21,14 +21,14 @@ SliderStyle {
             width: styleData.handlePosition
             implicitHeight: parent.implicitHeight
             implicitWidth: parent.implicitWidth
-            color: Style.scrubberGroovePositionColor
+            color: Style.color6
         }
     }
 
     //slider handle
     handle: Rectangle {
         anchors.centerIn: parent
-        color: Style.scrubberHandleColor
+        color: Style.color1
         implicitWidth: Resolution.applyScale(60)
         implicitHeight: implicitWidth
         radius: width * .5

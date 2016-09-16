@@ -37,7 +37,7 @@ Item {
         height: parent.height - bar.height
         headerHeight: height/3
         onCanPaginate: {
-            Omeka.getNextPage(gallery)
+           Omeka.getNextPage(gallery)
         }
     }
 

@@ -25,7 +25,7 @@ Item {
         anchors.horizontalCenter: parent.horizontalCenter
         width: display.width
         height: display.height + Resolution.applyScale(60)
-        color: Style.detailContentBackground
+        color: Style.color2
         radius: Resolution.applyScale(35)
     }
 

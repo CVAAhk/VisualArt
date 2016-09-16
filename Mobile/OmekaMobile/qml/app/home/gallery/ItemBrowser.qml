@@ -22,14 +22,21 @@ Browser {
     /*! /qmlsignal Invoked when content meets pagination threshold*/
     signal canPaginate()
 
+    signal pageLoaded()
+
     onContentYChanged: pagination()
 
-    /*! Evaluates content position relative to the center of the layout and
-        calls signal when the position surpasses the center*/
+    /*! Evaluates content position and paginates when the position reaches
+        the end of the page*/
     function pagination(){
-        if(nextCount === pageCount && contentY >= layoutCenter){
-            nextCount++;
-            canPaginate();
+        if(nextCount === pageCount){
+            busy = layout.atYEnd
+            if(busy) {
+                nextCount++;
+                canPaginate();
+            }
+        } else {
+            busy = false;
         }
     }
 }

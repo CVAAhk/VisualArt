@@ -21,7 +21,10 @@ OmekaToolBar {
         anchors.left: parent.left
         icon: Style.back
         iconScale: .7
-        onClicked: navigator.pop()
+        onClicked: {
+            detail.column = null
+            navigator.pop()
+        }
     }
 
     //provides content sharing options

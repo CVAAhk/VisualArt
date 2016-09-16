@@ -19,8 +19,11 @@ OmekaViewer {
     */
     property MediaPlayer player
 
+    progress: player.status === MediaPlayer.Buffered ? 1 : player.bufferProgress
+
     //player settings
     Binding { target: player; property: "autoPlay"; value: true }
     Binding { target: player; property: "seekable"; value: true }
     Binding { target: player; property: "source"; value: root.source }
+
 }

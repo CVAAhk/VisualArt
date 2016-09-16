@@ -43,12 +43,12 @@ Setting {
 
                 style: ButtonStyle {
                     background: Rectangle {
-                        color: control.pressed ? Style.schemeColor3 : Style.schemeColor1
+                        color: control.pressed ? Style.color3 : Style.color1
                         implicitWidth: control.width
                         implicitHeight: control.height
                     }
                     label: Text {
-                        color: control.pressed ? Style.schemeColor1 : "white"
+                        color: control.pressed ? Style.color1 : "white"
                         verticalAlignment: Text.AlignVCenter
                         horizontalAlignment: Text.AlignHCenter
                         text: control.text

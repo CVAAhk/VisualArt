@@ -38,13 +38,13 @@ StackView {
       \internal
       Main navigation pages
     */
-    property variant pages: [home, search, likes]
+    property var pages: [home, search, likes]
 
     /*!
       \internal
       Tracks currently selected item
     */
-    property variant item: ItemManager.current
+    property var item: ItemManager.current
 
     //load corresponding detail on item selection
     onItemChanged: {
@@ -59,7 +59,7 @@ StackView {
     //navigation controls
     PageNavigationBar {
         id: bar
-        hide: currentItem && currentItem.objectName === "detail"
+        hideBar: currentItem && currentItem.objectName === "detail"
         onIndexChanged: if(bar.index >= 0) navigator.navigate(pages[bar.index])
     }
 
