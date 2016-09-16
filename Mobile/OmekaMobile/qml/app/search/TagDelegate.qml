@@ -17,21 +17,7 @@ Rectangle {
     anchors.right: parent.right
     anchors.margins: Resolution.applyScale(30)
     border.width: 1
-    border.color: "#b1b1b1"
-
-    /*! /internal */
-    property int count
-
-    //query items with tag
-    Component.onCompleted: {
-        Omeka.getTaggedItemCount(tag, context)
-    }
-
-    //upate tag count
-    Connections {
-        target: Omeka
-        onRequestComplete: if(result.context === context){ count = result.count }
-    }
+    border.color: "#b1b1b1"   
 
     //text display
     OmekaText {
