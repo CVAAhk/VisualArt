@@ -11,7 +11,7 @@ import "../../utils"
 */
 Rectangle {
     id: context
-    color: Style.viewBackgroundColor
+    color: Style.color3
     height: Resolution.applyScale(150)
     anchors.left: parent.left
     anchors.right: parent.right

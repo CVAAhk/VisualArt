@@ -45,10 +45,10 @@ Setting {
             exclusiveGroup: layout
 
             style: ButtonStyle {
-                background: Rectangle { color: control.checked ? Style.checkedTabColor : "white" }
+                background: Rectangle { color: control.checked ? Style.color1 : "white" }
                 label: OmekaText {
                     text: control.text
-                    color: control.checked ? "white" : Style.checkedTabColor
+                    color: control.checked ? "white" : Style.color1
                     _font: Style.settingFont
                     font.pixelSize: Resolution.applyScale(55)
                     center: true

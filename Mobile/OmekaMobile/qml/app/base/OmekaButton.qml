@@ -14,9 +14,9 @@ Button {
     /*!scale relative to parent dimensions*/
     property real iconScale: .88
     /*!default background color*/
-    property color releasedColor: Style.releasedButtonColor
+    property color releasedColor: Style.transparent
     /*!pressed background color*/
-    property color pressedColor: Style.pressedButtonColor
+    property color pressedColor: Style.color4
 
     /*!Button icon image*/
     BorderImage{

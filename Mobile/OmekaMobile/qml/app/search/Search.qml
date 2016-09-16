@@ -24,7 +24,7 @@ Item {
     //background
     Rectangle {
         anchors.fill: parent
-        color: Style.viewBackgroundColor
+        color: Style.color3
     }
 
     //view

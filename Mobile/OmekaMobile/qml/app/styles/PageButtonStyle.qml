@@ -11,7 +11,7 @@ ButtonStyle {
 
         //background
         background: Rectangle {
-            color: control.checked ? Style.checkedTabColor: Style.uncheckedTabColor
+            color: control.checked ? Style.color1 : Style.color4
             implicitWidth: control.width
             implicitHeight: control.height
 

@@ -52,12 +52,12 @@ Rectangle {
             style: ProgressBarStyle {
                 background: Rectangle {
                     radius: Resolution.applyScale(30)
-                    color: Style.schemeColor3
+                    color: Style.color3
                     implicitHeight: Resolution.applyScale(45)
                 }
                 progress: Rectangle {
                     radius: Resolution.applyScale(30)
-                    color: Style.schemeColor1
+                    color: Style.color1
                 }
             }
         }
@@ -74,11 +74,11 @@ Rectangle {
                 background: Rectangle {
                     implicitWidth: control.width
                     implicitHeight: control.height
-                    border.color: Style.schemeColor1
-                    color: control.pressed ? Style.schemeColor1 : load.color
+                    border.color: Style.color1
+                    color: control.pressed ? Style.color1 : load.color
                 }
                 label: Text {
-                    color: control.pressed ? "white" : Style.schemeColor1
+                    color: control.pressed ? "white" : Style.color1
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignHCenter
                     text: control.text
