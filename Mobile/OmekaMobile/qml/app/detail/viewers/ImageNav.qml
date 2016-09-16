@@ -56,12 +56,12 @@ ListView{
 
     function size() {
         if(urls.length === images.length) {
-            list.width = list.height = list.sourceWidth = list.sourceHeight = 0
+            width = height = sourceWidth = sourceHeight = 0
             for(var i=0; i<images.length; i++) {
-                list.sourceWidth = Math.max(list.sourceWidth, images[i].sourceSize.width)
-                list.sourceHeight = Math.max(list.sourceHeight, images[i].sourceSize.height)
-                list.width = Math.max(list.width, images[i].width)
-                list.height = Math.max(list.height, images[i].height)
+                sourceWidth = ItemManager.fullScreen ? currentItem.sourceSize.width : Math.max(list.sourceWidth, images[i].sourceSize.width)
+                sourceHeight = ItemManager.fullScreen ? currentItem.sourceSize.height : Math.max(list.sourceHeight, images[i].sourceSize.height)
+                width = ItemManager.fullScreen ? currentItem.width : Math.max(list.width, images[i].width)
+                height = ItemManager.fullScreen ? currentItem.height : Math.max(list.height, images[i].height)
             }
         }
     }
