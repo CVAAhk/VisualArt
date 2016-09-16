@@ -13,11 +13,11 @@ ListView{
     property var urls
     property real progress: 0
     property real tally
-    property var total: ({})
+    property var total: ({})     
 
     anchors.centerIn: parent
     orientation: ListView.Horizontal
-    snapMode: ListView.SnapOneItem
+    snapMode: moving ? ListView.SnapOneItem : ListView.NoSnap
     cacheBuffer: viewer.width*model.count
     interactive: model.count > 1
     clip: true
