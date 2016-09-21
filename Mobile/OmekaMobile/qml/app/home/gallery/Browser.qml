@@ -52,7 +52,7 @@ Item {
             OmekaIndicator {
                 id: indicator
                 anchors.centerIn: parent
-                running: parent.y === 0 || view.busy
+                running: view.busy
                 scale: Resolution.applyScale(1.5)
             }
         }
