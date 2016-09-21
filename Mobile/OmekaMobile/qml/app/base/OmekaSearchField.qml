@@ -5,7 +5,7 @@ import "../styles"
 import "../../utils"
 
 OmekaToolBar {
-
+    id: bar
     property alias text: textField.text
     property alias placeholderText: textField.placeholderText
     property alias textField: textField
@@ -32,11 +32,13 @@ OmekaToolBar {
         anchors.right: textField.right
         icon: Style.clear
         iconScale: .62
-        onClicked: {
-            textField.text = ""
-            ItemManager.tagSearch = ""
-            ItemManager.searchTerm = ""
-        }
+        onClicked: bar.clear()
+    }
+
+    function clear() {
+        textField.text = ""
+        ItemManager.tagSearch = ""
+        ItemManager.searchTerm = ""
     }
 
     //button modes

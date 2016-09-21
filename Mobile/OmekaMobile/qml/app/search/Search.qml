@@ -12,6 +12,7 @@ import "../base"
 */
 Item {
     id: search
+    enabled: false
 
     /*! \qmlproperty
         Name of search tag
@@ -20,6 +21,13 @@ Item {
 
     //initiate tag search
     onTagChanged: { field.text = tag }
+
+    //clear search on visibility change
+    onVisibleChanged: {
+        if(!visible && searchStack.depth > 1) {
+            field.clear()
+        }
+    }
 
     //background
     Rectangle {

@@ -7,13 +7,11 @@ import "../home/gallery"
 /*! Display items liked by user */
 Item {
     id: likes
-
-    /*! \internal */
-    property bool current: navigator.currentItem === likes
+    enabled: false
 
     //refresh liked items current change
-    onCurrentChanged: {
-        if(current) {
+    onEnabledChanged: {
+        if(enabled) {
             var likes = ItemManager.getLikes();
             for(var i=0; i<likes.length; i++) {
                 browser.insert(0, likes[i])

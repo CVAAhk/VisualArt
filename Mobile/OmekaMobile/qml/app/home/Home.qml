@@ -5,6 +5,7 @@ Item {
     id: home
     width: parent.width
     height: parent.height
+    enabled: false
 
     onVisibleChanged: {
         if(!visible && homeStack.depth > 1) {

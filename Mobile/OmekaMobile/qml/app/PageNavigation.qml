@@ -36,6 +36,12 @@ StackView {
 
     /*!
       \internal
+      Tracks previous item on currentItem change
+    */
+    property var previousItem
+
+    /*!
+      \internal
       Main navigation pages
     */
     property var pages: [home, search, likes]
@@ -49,6 +55,15 @@ StackView {
     //load corresponding detail on item selection
     onItemChanged: {
         if(item.id) push(Qt.resolvedUrl("detail/Detail.qml"))
+    }
+
+    //disable previous item and enable current
+    onCurrentItemChanged: {
+        if(previousItem) {
+            previousItem.enabled = false;
+        }
+        currentItem.enabled = true;
+        previousItem = currentItem
     }
 
     //initialization
