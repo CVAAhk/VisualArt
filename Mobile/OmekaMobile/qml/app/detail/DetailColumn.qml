@@ -24,7 +24,7 @@ ScaleColumn {
     /*! \qmlproperty
         Currently selected item
     */
-    property var item
+    property var item: ItemManager.current
 
     /*! \qmlproperty
         Full screen state of selected item
@@ -81,11 +81,6 @@ ScaleColumn {
             }
         }
         return metadata
-    }
-
-    //load item details
-    function loadItem() {
-        item = ItemManager.current
     }
 
     //update screen state
