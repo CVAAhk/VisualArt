@@ -6,6 +6,12 @@ Item {
     width: parent.width
     height: parent.height
 
+    onVisibleChanged: {
+        if(!visible && homeStack.depth > 1) {
+            homeStack.pop()
+        }
+    }
+
     StackView{
         id: homeStack
         anchors.fill: parent
