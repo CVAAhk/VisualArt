@@ -93,6 +93,12 @@ Component {
             onProgressChanged: if(progress === 1) opacity = 1
         }
 
+        //load indicator
+        OmekaIndicator {
+            scale: Resolution.applyScale(2)
+            running: img.progress < 1
+        }
+
         //loads detailed view
         MouseArea{
             anchors.fill: parent

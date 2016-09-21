@@ -62,7 +62,9 @@ StackView {
         if(previousItem) {
             previousItem.enabled = false;
         }
-        currentItem.enabled = true;
+        if(currentItem) {
+            currentItem.enabled = true;
+        }
         previousItem = currentItem
     }
 
