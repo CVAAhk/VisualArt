@@ -12,6 +12,7 @@ import "../base"
 */
 Item {
     id: search
+    enabled: false
 
     /*! \qmlproperty
         Name of search tag

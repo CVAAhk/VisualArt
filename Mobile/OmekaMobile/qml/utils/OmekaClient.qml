@@ -163,5 +163,6 @@ Item {
             return "audio"
         if(videoExt.test(source))
             return "video"
+        return "image"
     }
 }

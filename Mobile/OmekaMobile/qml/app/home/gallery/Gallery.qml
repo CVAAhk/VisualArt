@@ -36,6 +36,7 @@ Item {
         anchors.top: bar.bottom
         height: parent.height - bar.height
         headerHeight: height/3
+        busy: true
         onCanPaginate: {
            Omeka.getNextPage(gallery)
         }
