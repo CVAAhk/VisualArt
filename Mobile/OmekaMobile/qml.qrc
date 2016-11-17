@@ -6,6 +6,7 @@
 		<file>qml/test/scalability/HomePage.qml</file>
 		<file>qml/test/scalability/SearchPage.qml</file>
 		<file>qml/test/scalability/LikesPage.qml</file>		
+		<file>qml/test/mvc/ColorPath.qml</file>	
 		<file>qml/test/mvc/PathViewTest.qml</file>	
 		<file>qml/test/mvc/ListViewTest.qml</file>		
 		<file>qml/test/mvc/GridViewTest.qml</file>
