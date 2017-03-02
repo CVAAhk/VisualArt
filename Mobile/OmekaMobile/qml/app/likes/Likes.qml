@@ -36,6 +36,8 @@ Item {
             }
         }
 
+        LikesFilter{}
+
         Browser {
             id: browser
             height: parent.height - bar.height

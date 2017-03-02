@@ -4,7 +4,7 @@ import "../../../utils"
 
 Rectangle {
     anchors.left: parent.left
-    anchors.leftMargin: 10
+    anchors.leftMargin: Resolution.applyScale(30)
     anchors.top: img.top
     width: parent.width - anchors.leftMargin*2
     height: img.height

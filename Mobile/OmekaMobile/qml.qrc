@@ -86,6 +86,7 @@
 		<file>qml/app/home/gallery/LikeButton.qml</file>																							
 		<file>qml/app/home/gallery/Logo.qml</file>																							
 		<file>qml/app/likes/Likes.qml</file>										
+		<file>qml/app/likes/LikesFilter.qml</file>
 		<file>qml/app/search/Search.qml</file>										
 		<file>qml/app/search/TagSearch.qml</file>										
 		<file>qml/app/search/TagDelegate.qml</file>										

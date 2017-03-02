@@ -141,4 +141,5 @@ DISTFILES += \
     qml/app/detail/viewers/IndexIndicator.qml \
     qml/app/detail/LoadScreen.qml \
     qml/app/detail/viewers/controls/PlaybackIndicator.qml \
-    qml/test/mvc/ColorPath.qml
+    qml/test/mvc/ColorPath.qml \
+    qml/app/likes/LikesFilter.qml
