@@ -10,7 +10,8 @@ Item {
     //border rectangle
     Rectangle {
         id: border
-        anchors.fill: column
+        width: parent.width
+        height: button.height + filters.verticalOffset
         color: Style.transparent
         border.width: Resolution.applyScale(6)
         border.color: Style.color1
@@ -33,7 +34,7 @@ Item {
 
         //filter list
         Filters {
-            id: content
+            id: filters
             width: parent.width
             state: button.state
         }
