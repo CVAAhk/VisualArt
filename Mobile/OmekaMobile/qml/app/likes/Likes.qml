@@ -24,11 +24,14 @@ Item {
 
     /*! Title and navigation components */
     Column {
+        anchors.top: likes.top
+        anchors.topMargin: Resolution.applyScale(40)
         anchors.fill: parent
-        spacing: 0
+        spacing: Resolution.applyScale(30)
 
         OmekaToolBar {
             id: bar
+            height: Resolution.applyScale(130)
             OmekaText {
                 anchors.centerIn: parent
                 text: "LIKES"
