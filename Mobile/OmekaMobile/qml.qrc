@@ -13,6 +13,7 @@
 		<file>qml/test/mvc/ContactModel.qml</file>			
 		<file>qml/test/providers/ImageProviderApp.qml</file>			
 		<file>qml/test/client/TestClient.qml</file>			
+		<file>qml/test/client/TestHeist.qml</file>	
 		<file>qml/test/settings/LikesTest.qml</file>			
 		<file>qml/test/navigation/Carousel.qml</file>	
 		<file>qml/test/navigation/Ellipse.qml</file>			

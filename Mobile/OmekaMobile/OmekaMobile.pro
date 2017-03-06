@@ -144,4 +144,5 @@ DISTFILES += \
     qml/test/mvc/ColorPath.qml \
     qml/app/likes/LikesFilter.qml \
     qml/app/likes/FilterButton.qml \
-    qml/app/likes/Filters.qml
+    qml/app/likes/Filters.qml \
+    qml/test/client/TestHeist.qml
