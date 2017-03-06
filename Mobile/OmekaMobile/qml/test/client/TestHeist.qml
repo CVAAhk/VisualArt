@@ -6,21 +6,47 @@ ApplicationWindow {
     visible: true
     width: 470; height: 800
 
-    Component.onCompleted: getData()
+    property var entry_id;
+    property var _pairId: "1245";
+
+    Component.onCompleted: {
+        timer.start()
+    }
+
+    Item {
+        anchors.fill: parent
+        focus: true
+
+        Keys.onReturnPressed: removeData()
+
+        Timer {
+            id: timer
+            interval: 1000
+            repeat: true
+            running: true
+            onTriggered: getData()
+        }
+
+        Text {
+            id: output
+            anchors.centerIn: parent
+        }
+    }
 
     //get entry
     function getData(){
-        var url = "http://dev.omeka.org/mallcopy/api/heist?pairing_id=7891";
+        var url = "http://dev.omeka.org/mallcopy/api/heist?pairing_id="+_pairId;
 
         var request = new XMLHttpRequest();
         request.onreadystatechange = function(){
             if(request.readyState === XMLHttpRequest.DONE){
                 var result = JSON.parse(request.responseText);
                 if(result.errors !== undefined){
-                    console.log("Request Error: "+result.errors[0].message);
+                    output.text = result.errors[0].message;
                 }
                 else{
-                    console.log(result[0].item_ids.length)
+                    entry_id = result[0] ? result[0].id : undefined
+                    output.text = entry_id ? entry_id : "polling..."
                 }
             }
         }
@@ -34,7 +60,7 @@ ApplicationWindow {
         var url = "http://dev.omeka.org/mallcopy/api/heist";
 
         var data = {};
-        data.pairing_id = "7788"
+        data.pairing_id = window._pairId
         data.device_id = "1234"
         data.item_ids = [88,3,556]
         var json = JSON.stringify(data);
@@ -89,12 +115,11 @@ ApplicationWindow {
     //delete entry
     function removeData() {
 
-        var url = "http://dev.omeka.org/mallcopy/api/heist/17";
+        var url = "http://dev.omeka.org/mallcopy/api/heist/"+entry_id;
 
         var request = new XMLHttpRequest();
         request.open("DELETE", url, true);
         request.send(null);
 
-    }
-
+    }    
 }
