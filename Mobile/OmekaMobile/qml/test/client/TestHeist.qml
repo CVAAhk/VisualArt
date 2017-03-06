@@ -6,8 +6,9 @@ ApplicationWindow {
     visible: true
     width: 470; height: 800
 
-    Component.onCompleted: postData()
+    Component.onCompleted: getData()
 
+    //get entry
     function getData(){
         var url = "http://dev.omeka.org/mallcopy/api/heist?pairing_id=7891";
 
@@ -28,6 +29,7 @@ ApplicationWindow {
         request.send();
     }
 
+    //create entry
     function postData() {
         var url = "http://dev.omeka.org/mallcopy/api/heist";
 
@@ -45,7 +47,7 @@ ApplicationWindow {
                     console.log("Request Error: "+result.errors[0].message);
                 }
                 else{
-                    console.log("Successful Post")
+                    console.log("Successful Add")
                 }
             }
         }
@@ -53,6 +55,46 @@ ApplicationWindow {
         request.open("POST", url, true);
         request.setRequestHeader('Content-type','application/json');
         request.send(json);
+    }
+
+    //update entry
+    function putData() {
+        var url = "http://dev.omeka.org/mallcopy/api/heist/1";
+
+        var data = {}
+        data.pairing_id = "6898"
+        data.device_id = ""
+        data.item_ids = [55,66,77]
+        var json = JSON.stringify(data);
+
+        var request = new XMLHttpRequest();
+        request.onreadystatechange = function() {
+            if(request.readyState === XMLHttpRequest.DONE) {
+                var result = JSON.parse(request.responseText);
+                if(result.errors !== undefined){
+                    console.log("Request Error: "+result.errors[0].message);
+                }
+                else{
+                    console.log("Successful Update")
+                }
+            }
+        }
+
+        request.open("PUT", url, true);
+        request.setRequestHeader('Content-type','application/json');
+        request.send(json);
+
+    }
+
+    //delete entry
+    function removeData() {
+
+        var url = "http://dev.omeka.org/mallcopy/api/heist/17";
+
+        var request = new XMLHttpRequest();
+        request.open("DELETE", url, true);
+        request.send(null);
+
     }
 
 }
