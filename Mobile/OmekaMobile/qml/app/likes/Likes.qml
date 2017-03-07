@@ -39,11 +39,16 @@ Item {
             }
         }
 
-        LikesFilter{}
+        LikesFilter{
+            id: filter
+        }
 
         Browser {
             id: browser
             height: parent.height - bar.height
+            clip: true
+            list.bottomMargin: Resolution.applyScale(150) + filter.height
+            grid.bottomMargin: Resolution.applyScale(120) + filter.height
         }
 
     }

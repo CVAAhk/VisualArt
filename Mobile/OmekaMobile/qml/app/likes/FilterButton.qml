@@ -25,7 +25,7 @@ Button {
 
     //label and background
     style: ButtonStyle {
-        background: Rectangle { color: Style.transparent }
+        background: Rectangle { color: Style.color3 }
         label: OmekaText {
             text: control.text
             horizontalAlignment: Text.AlignHCenter

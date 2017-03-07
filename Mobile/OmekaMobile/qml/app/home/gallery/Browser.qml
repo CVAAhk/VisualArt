@@ -31,6 +31,10 @@ Item {
 
     property bool busy: false
 
+    property alias list: list
+
+    property alias grid: grid
+
     Component {
         id: header
         Item {

@@ -11,8 +11,9 @@ Item {
     clip: true
     state: "close"
 
-    property var model: ["all", "collection 1", "collection 2"]
-    property var verticalOffset: list.height + list.y
+    property var model: ["all", "collection 1", "collection 2", "collection 3"]
+    property var maxVerticalOffset: Resolution.applyScale(438)
+    property var verticalOffset: Math.min(list.height + list.y, maxVerticalOffset)
 
     //prevent multiple selections
     ExclusiveGroup {

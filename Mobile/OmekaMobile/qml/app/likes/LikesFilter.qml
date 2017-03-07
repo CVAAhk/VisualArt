@@ -6,6 +6,7 @@ Item {
     anchors.right: parent.right
     anchors.margins: Resolution.applyScale(30)
     height: border.height
+    clip: true
 
     //border rectangle
     Rectangle {
@@ -16,11 +17,10 @@ Item {
         border.width: Resolution.applyScale(6)
         border.color: Style.color1
         z: 1
-    }
+    }   
 
     //main container
     Column {
-        id: column
         width: parent.width
         height: childrenRect.height
 
