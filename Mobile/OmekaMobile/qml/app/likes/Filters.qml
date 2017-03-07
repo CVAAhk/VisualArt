@@ -11,7 +11,7 @@ Item {
     clip: true
     state: "close"
 
-    property var model: ["all", "collection 1", "collection 2", "collection 3"]
+    property var model: ["all", "collection 1", "collection 2", "c3", "c4"]
     property var maxVerticalOffset: Resolution.applyScale(438)
     property var verticalOffset: Math.min(list.height + list.y, maxVerticalOffset)
 
@@ -28,6 +28,9 @@ Item {
         spacing: Resolution.applyScale(-6)
         model: root.model
         delegate: delegate
+        maximumFlickVelocity: 8000
+        flickDeceleration: 3000
+        bottomMargin: height - verticalOffset
     }
 
     //filter options
