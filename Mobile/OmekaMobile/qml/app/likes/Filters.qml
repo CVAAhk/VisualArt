@@ -30,6 +30,7 @@ Item {
         delegate: delegate
         maximumFlickVelocity: 8000
         flickDeceleration: 3000
+        boundsBehavior: Flickable.StopAtBounds
         bottomMargin: height - verticalOffset
     }
 
@@ -47,7 +48,7 @@ Item {
                 background: Rectangle {
                     border.color: Style.color1
                     border.width: Resolution.applyScale(6)
-                    color: Style.color3
+                    color: control.checked ? "white" : Style.color3
                 }
                 label: OmekaText {
                     text: control.text
