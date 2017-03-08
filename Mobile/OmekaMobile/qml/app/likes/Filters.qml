@@ -14,10 +14,12 @@ Item {
     property var model: ["all", "collection 1", "collection 2", "c3", "c4"]
     property var maxVerticalOffset: Resolution.applyScale(438)
     property var verticalOffset: Math.min(list.height + list.y, maxVerticalOffset)
+    property alias current: group.current
 
     //prevent multiple selections
     ExclusiveGroup {
-        id: group
+        id: group        
+        current: list.contentItem.children[0]
     }
 
     //filter list

@@ -20,7 +20,7 @@ Button {
         anchors.right: parent.right
         anchors.rightMargin: Resolution.applyScale(30)
         source: Style.expand
-        rotation: 180
+        opacity: 0
     }
 
     //label and background
@@ -38,7 +38,7 @@ Button {
     states: [
         State {
             name: "open"
-            PropertyChanges { target: arrow; explicit: true; rotation: 0 }
+            PropertyChanges { target: arrow; explicit: true; opacity: 1 }
         },
         State {
             name: "close"
@@ -47,7 +47,7 @@ Button {
 
     //state transitions
     transitions: Transition {
-        PropertyAnimation { target: arrow; property: "rotation"; duration: 250; easing.type:Easing.OutQuad }
+        PropertyAnimation { target: arrow; property: "opacity"; duration: 250; easing.type:Easing.OutQuad }
     }
 
 }
