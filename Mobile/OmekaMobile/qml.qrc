@@ -77,6 +77,7 @@
 		<file>qml/app/home/settings/Settings.qml</file>										
 		<file>qml/app/home/settings/Setting.qml</file>										
 		<file>qml/app/home/settings/LayoutSetting.qml</file>																			
+		<file>qml/app/home/settings/PairSetting.qml</file>
 		<file>qml/app/home/settings/ClearLikesSetting.qml</file>																			
 		<file>qml/app/home/settings/AboutSetting.qml</file>																			
 		<file>qml/app/home/gallery/Gallery.qml</file>																			

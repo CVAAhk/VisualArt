@@ -44,6 +44,7 @@ Item {
 
                     //settings
                     LayoutSetting { title: "Layout" }
+                    PairSetting { title: "Pair with Collection Viewer Table" }
                     ClearLikesSetting { title: "Clear All Likes" }
                     AboutSetting {
                         title: "About The Collections"
