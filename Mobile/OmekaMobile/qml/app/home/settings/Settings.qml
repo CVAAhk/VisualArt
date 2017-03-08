@@ -46,7 +46,11 @@ Item {
                 LayoutSetting { title: "Layout" }
                 PairSetting {
                     title: "Pair with Collection Viewer Table"
-                    onSelectedChanged: togglePairing(selected)
+                    onSelect: {
+                        if(homeStack) {
+                            homeStack.push(Qt.resolvedUrl("TablePairing.qml"))
+                        }
+                    }
                 }
                 ClearLikesSetting { title: "Clear All Likes" }
                 AboutSetting {
@@ -58,12 +62,6 @@ Item {
                     text: User.aboutOOE
                 }
             }
-        }
-    }
-
-    function togglePairing(toggle) {
-        if(homeStack && toggle) {
-            homeStack.push(Qt.resolvedUrl("TablePairing.qml"))
         }
     }
 }

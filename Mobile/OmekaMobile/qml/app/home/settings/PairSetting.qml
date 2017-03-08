@@ -15,9 +15,9 @@ Item {
     property alias title: category.text
 
     /*! \qml property string Setting::checked
-      Setting selected state
+      Invoked on select
     */
-    property alias selected: category.checked
+    signal select();
 
     //toggles the expanded state of setting
     Button{
@@ -37,5 +37,7 @@ Item {
                 center: true
             }
         }
+
+        onClicked: select()
     }
 }
