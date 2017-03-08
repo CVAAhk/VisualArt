@@ -33,29 +33,37 @@ Item {
         }
 
         /*!List of settings*/
-            OmekaScrollView {
-                width: parent.width
-                height: parent.height - bar.height * 2
-                Column {
-                    ExclusiveGroup { id: settingsGroup }
-                    Binding on width {when: parent; value: parent.width }
-                    height: childrenRect.height
-                    spacing: Resolution.applyScale(150)
+        OmekaScrollView {
+            width: parent.width
+            height: parent.height - bar.height * 2
+            Column {
+                ExclusiveGroup { id: settingsGroup }
+                Binding on width {when: parent; value: parent.width }
+                height: childrenRect.height
+                spacing: Resolution.applyScale(150)
 
-                    //settings
-                    LayoutSetting { title: "Layout" }
-                    PairSetting { title: "Pair with Collection Viewer Table" }
-                    ClearLikesSetting { title: "Clear All Likes" }
-                    AboutSetting {
-                        title: "About The Collections"
-                        text: User.aboutCollection
-                    }
-                    AboutSetting {
-                        title: "About Omeka and Open Exhibits"
-                        text: User.aboutOOE
-                    }
+                //settings
+                LayoutSetting { title: "Layout" }
+                PairSetting {
+                    title: "Pair with Collection Viewer Table"
+                    onSelectedChanged: togglePairing(selected)
+                }
+                ClearLikesSetting { title: "Clear All Likes" }
+                AboutSetting {
+                    title: "About The Collections"
+                    text: User.aboutCollection
+                }
+                AboutSetting {
+                    title: "About Omeka and Open Exhibits"
+                    text: User.aboutOOE
                 }
             }
+        }
+    }
 
+    function togglePairing(toggle) {
+        if(homeStack && toggle) {
+            homeStack.push(Qt.resolvedUrl("TablePairing.qml"))
+        }
     }
 }

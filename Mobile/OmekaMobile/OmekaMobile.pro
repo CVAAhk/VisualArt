@@ -146,4 +146,5 @@ DISTFILES += \
     qml/app/likes/FilterButton.qml \
     qml/app/likes/Filters.qml \
     qml/test/client/TestHeist.qml \
-    qml/app/home/settings/PairSetting.qml
+    qml/app/home/settings/PairSetting.qml \
+    qml/app/home/settings/TablePairing.qml

@@ -14,10 +14,10 @@ Item {
     */
     property alias title: category.text
 
-    /*! \qml property bool Setting::uncheck
-      Uncheck currently selected
+    /*! \qml property string Setting::checked
+      Setting selected state
     */
-    property bool uncheck: false
+    property alias selected: category.checked
 
     //toggles the expanded state of setting
     Button{
@@ -35,15 +35,6 @@ Item {
                 text: control.text
                 _font: Style.settingFont
                 center: true
-            }
-        }
-
-        //uncheck current selection
-        onPressedChanged: {
-            if(pressed) {
-                uncheck = exclusiveGroup.current === category
-            } else if(uncheck) {
-                exclusiveGroup.current = null
             }
         }
     }
