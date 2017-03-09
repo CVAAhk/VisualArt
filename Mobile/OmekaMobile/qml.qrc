@@ -77,11 +77,12 @@
 		<file>qml/app/home/settings/Settings.qml</file>										
 		<file>qml/app/home/settings/Setting.qml</file>										
 		<file>qml/app/home/settings/LayoutSetting.qml</file>																			
-		<file>qml/app/home/settings/PairSetting.qml</file>
-		<file>qml/app/home/settings/TablePairing.qml</file>
-		<file>qml/app/home/settings/Keypad.qml</file>
 		<file>qml/app/home/settings/ClearLikesSetting.qml</file>																			
 		<file>qml/app/home/settings/AboutSetting.qml</file>																			
+		<file>qml/app/home/settings/pairing/PairSetting.qml</file>
+		<file>qml/app/home/settings/pairing/TablePairing.qml</file>
+		<file>qml/app/home/settings/pairing/Keypad.qml</file>		
+		<file>qml/app/home/settings/pairing/CodeEntry.qml</file>
 		<file>qml/app/home/gallery/Gallery.qml</file>																			
 		<file>qml/app/home/gallery/Browser.qml</file>																			
 		<file>qml/app/home/gallery/ItemBrowser.qml</file>																					
@@ -132,6 +133,9 @@
 		<file>ui/index-fill.png</file>
 		<file>ui/play.png</file>
 		<file>ui/pause.png</file>
+		<file>ui/pair_icon.png</file>
+		<file>ui/linked_icon.png</file>
+		<file>ui/back_key.png</file>
 				
     </qresource>
 </RCC>

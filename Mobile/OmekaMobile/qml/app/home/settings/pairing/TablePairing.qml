@@ -1,6 +1,6 @@
 import QtQuick 2.5
-import "../../base"
-import "../../../utils"
+import "../../../base"
+import "../../../../utils"
 
 Item {
 
@@ -22,6 +22,15 @@ Item {
             iconScale: .7
             onClicked: if(homeStack) homeStack.pop()
         }
+    }
+
+    /*!Code display*/
+    CodeEntry {
+        id: entry
+        width: Resolution.applyScale(546)
+        anchors.top: parent.top
+        anchors.topMargin: Resolution.applyScale(438)
+        anchors.horizontalCenter: parent.horizontalCenter
     }
 
     /*!Keypad for code entry*/

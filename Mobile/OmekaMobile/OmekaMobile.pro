@@ -146,6 +146,7 @@ DISTFILES += \
     qml/app/likes/FilterButton.qml \
     qml/app/likes/Filters.qml \
     qml/test/client/TestHeist.qml \
-    qml/app/home/settings/PairSetting.qml \
-    qml/app/home/settings/TablePairing.qml \
-    qml/app/home/settings/Keypad.qml
+    qml/app/home/settings/pairing/PairSetting.qml \
+    qml/app/home/settings/pairing/TablePairing.qml \
+    qml/app/home/settings/pairing/Keypad.qml \
+    qml/app/home/settings/pairing/CodeEntry.qml

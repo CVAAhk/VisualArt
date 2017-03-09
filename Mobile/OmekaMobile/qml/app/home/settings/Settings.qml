@@ -4,6 +4,7 @@ import QtQuick.Controls.Styles 1.4
 import "../../home"
 import "../../base"
 import "../../../utils"
+import "pairing"
 
 /*!User settings*/
 Item {
@@ -48,7 +49,7 @@ Item {
                     title: "Pair with Collection Viewer Table"
                     onSelect: {
                         if(homeStack) {
-                            homeStack.push(Qt.resolvedUrl("TablePairing.qml"))
+                            homeStack.push(Qt.resolvedUrl("pairing/TablePairing.qml"))
                         }
                     }
                 }
