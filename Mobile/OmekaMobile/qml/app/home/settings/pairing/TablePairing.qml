@@ -36,6 +36,7 @@ Item {
     /*!Keypad for code entry*/
     Keypad {
         id: keypad
+        onKeyPressed: entry.submitEntry(key)
     }
 
 }

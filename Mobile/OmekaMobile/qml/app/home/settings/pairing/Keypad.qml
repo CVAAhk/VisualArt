@@ -12,6 +12,8 @@ Item {
     anchors.bottomMargin: keypad.cellHeight
     property var spacing: Resolution.applyScale(6)
 
+    signal keyPressed(var key)
+
 
     /*!Keypad key declarations*/
     ListModel {
@@ -46,6 +48,7 @@ Item {
                     width: control.width - root.spacing
                     color: control.pressed ? Style.color4 : control.defaultColor
 
+                    //icon
                     Image {
                         id: icon
                         anchors.centerIn: parent
@@ -53,6 +56,7 @@ Item {
                         fillMode: Image.PreserveAspectFit
                     }
 
+                    //assign icon
                     Component.onCompleted: {
                         if(back) {
                             icon.source = Style.backKey
@@ -60,6 +64,7 @@ Item {
                     }
 
                 }
+                //digit display
                 label: OmekaText {
                     text: control.text
                     center: true
@@ -67,7 +72,13 @@ Item {
                 }
             }
 
-            onClicked: console.log(back ? "back!" : text)
+            onClicked: {
+                if(text) {
+                    keyPressed(text)
+                } else if(back) {
+                    keyPressed("back")
+                }
+            }
         }
     }
 
