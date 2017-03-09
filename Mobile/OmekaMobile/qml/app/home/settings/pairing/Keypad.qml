@@ -12,6 +12,7 @@ Item {
     anchors.bottomMargin: keypad.cellHeight
     property var spacing: Resolution.applyScale(6)
 
+
     /*!Keypad key declarations*/
     ListModel {
         id: model
@@ -26,7 +27,7 @@ Item {
         ListElement { digit: "9" }
         ListElement { }
         ListElement { digit: "0" }
-        ListElement { }
+        ListElement { back: true }
     }
 
     /*!Keypad keys*/
@@ -40,9 +41,24 @@ Item {
 
             style: ButtonStyle {
                 background: Rectangle {
+                    id: bkg
                     anchors.horizontalCenter: parent.horizontalCenter
                     width: control.width - root.spacing
                     color: control.pressed ? Style.color4 : control.defaultColor
+
+                    Image {
+                        id: icon
+                        anchors.centerIn: parent
+                        width: Resolution.applyScale(66)
+                        fillMode: Image.PreserveAspectFit
+                    }
+
+                    Component.onCompleted: {
+                        if(back) {
+                            icon.source = Style.backKey
+                        }
+                    }
+
                 }
                 label: OmekaText {
                     text: control.text
@@ -51,7 +67,7 @@ Item {
                 }
             }
 
-            onClicked: console.log(text)
+            onClicked: console.log(back ? "back!" : text)
         }
     }
 

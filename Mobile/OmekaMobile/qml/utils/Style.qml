@@ -59,6 +59,8 @@ Item {
     property url pause: rootPath+"pause.png"
     /*! \qmlproperty pairing icon */
     property url pair: rootPath+"pair_icon.png"
+    /*! \qmlproperty pairing icon */
+    property url backKey: rootPath+"back_key.png"
 
     /*! \qmlproperty default thumbnail icons to display when an item does not provide one */
     property var thumbs: ({"image": imageIcon, "audio": audioIcon, "video": videoIcon, "document": documentIcon})
