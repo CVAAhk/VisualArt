@@ -40,6 +40,9 @@ Item {
     */
     property var videoExt: /\.(avi|mpe?g|mp4|qt|swf|wmv|mov)$/i
 
+    /*!Indicates the device is paired with the table for content sharing*/
+    property var isPaired: false
+
     /*! \qmlsignal
         Invoked on query result*/
     signal requestComplete(var result)

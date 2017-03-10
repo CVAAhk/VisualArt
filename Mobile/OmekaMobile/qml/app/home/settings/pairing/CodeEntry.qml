@@ -5,7 +5,7 @@ import "../../../../utils"
 Column {
 
     id: root
-    state: "pair"
+    state: Omeka.isPaired ? "link" : "pair"
     property var code: []    
     spacing: Resolution.applyScale(45)
 
@@ -80,7 +80,7 @@ Column {
             code.push(value);
         }
         if(code.length == 4) {
-            root.state = "link"
+            Omeka.isPaired = true;
         }
     }
 
@@ -90,6 +90,6 @@ Column {
             slots.contentItem.children[i].digit = "";
         }
         code.length = 0;
-        root.state = "pair"
+        Omeka.isPaired = false;
     }
 }
