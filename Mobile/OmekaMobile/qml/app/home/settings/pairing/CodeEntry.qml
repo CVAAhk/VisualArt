@@ -4,7 +4,9 @@ import "../../../../utils"
 
 Column {
 
-    property var code: []
+    id: root
+    state: "pair"
+    property var code: []    
     spacing: Resolution.applyScale(45)
 
     //icon
@@ -25,6 +27,7 @@ Column {
     //code slots
     ListView {
         id: slots
+        interactive: false
         width: childrenRect.width
         height: contentItem.children[0].height
         anchors.horizontalCenter: parent.horizontalCenter
@@ -61,6 +64,13 @@ Column {
         }
     }
 
+    //entry states
+    states: [
+        State { name: "pair" },
+        State { name: "link" }
+    ]
+
+    //manage code input
     function submitEntry(value) {
         if(value === "back" && code.length > 0) {
             code.pop();
@@ -69,5 +79,17 @@ Column {
             slots.contentItem.children[code.length].digit = value;
             code.push(value);
         }
+        if(code.length == 4) {
+            root.state = "link"
+        }
+    }
+
+    //restore initial state
+    function reset() {
+        for(var i=0; i<4; i++) {
+            slots.contentItem.children[i].digit = "";
+        }
+        code.length = 0;
+        root.state = "pair"
     }
 }

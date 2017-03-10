@@ -8,7 +8,6 @@ Item {
     id: root
     width: parent.width
     height: childrenRect.height
-    anchors.bottom: parent.bottom
     anchors.bottomMargin: keypad.cellHeight
     property var spacing: Resolution.applyScale(6)
 
