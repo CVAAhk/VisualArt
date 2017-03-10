@@ -2,6 +2,7 @@
 #include <QSurfaceFormat>
 #include <QGuiApplication>
 #include "shareutils.h"
+#include "applicationloader.h"
 
 int main(int argc, char *argv[])
 {
@@ -19,7 +20,8 @@ int main(int argc, char *argv[])
         QSurfaceFormat::setDefaultFormat(fmt);
     }
 
-    QQmlApplicationEngine engine;
-    engine.load(QUrl("qrc:/main.qml"));
+    ApplicationLoader app_loader;
+    app_loader.load();
+
     return app.exec();
 }

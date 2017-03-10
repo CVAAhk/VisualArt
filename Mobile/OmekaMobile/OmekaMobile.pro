@@ -10,10 +10,12 @@ CONFIG += c++11
 SOURCES += main.cpp \
     shareutils.cpp \
     heist.cpp \
+    applicationloader.cpp
 
 HEADERS += \
     shareutils.h \
     heist.h \
+    applicationloader.h
 
 RESOURCES += qml.qrc
 

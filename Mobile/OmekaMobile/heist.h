@@ -11,8 +11,8 @@ class Heist: public QObject
         Heist();
         ~Heist();
 
-        void initialize(void);
-
+        //// initialize heist
+        Q_INVOKABLE void initialize(QString rest);
         //// clears all heist records associated with this instance
         Q_INVOKABLE void clearAllSessions();
         //// start session by adding a new entry with provided code

@@ -47,6 +47,9 @@ Item {
         Invoked on query result*/
     signal requestComplete(var result)
 
+    /* Initialize heist*/
+    Component.onCompleted: heist.initialize(rest)
+
 
     /*! \internal
       Sends http request and links response handler
