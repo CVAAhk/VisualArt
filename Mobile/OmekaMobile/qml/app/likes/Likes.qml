@@ -19,6 +19,7 @@ Item {
         }
         else {
             browser.clear()
+            filter.close()
         }
     }
 

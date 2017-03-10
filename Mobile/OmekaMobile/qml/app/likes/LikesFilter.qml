@@ -39,4 +39,9 @@ Item {
             state: button.state
         }
     }
+
+    //close filters
+    function close() {
+        button.checked = false
+    }
 }
