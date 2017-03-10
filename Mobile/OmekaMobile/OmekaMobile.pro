@@ -8,12 +8,12 @@ QTPLUGIN += qsqlite
 CONFIG += c++11
 
 SOURCES += main.cpp \
-    cpp\test\imageprovidertest.cpp \
-    shareutils.cpp
+    shareutils.cpp \
+    heist.cpp \
 
 HEADERS += \
-    imageprovidertest.h \
-    shareutils.h
+    shareutils.h \
+    heist.h \
 
 RESOURCES += qml.qrc
 

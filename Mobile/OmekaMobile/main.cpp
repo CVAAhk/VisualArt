@@ -1,7 +1,6 @@
 #include <QQmlApplicationEngine>
 #include <QSurfaceFormat>
 #include <QGuiApplication>
-#include "imageprovidertest.h"
 #include "shareutils.h"
 
 int main(int argc, char *argv[])
