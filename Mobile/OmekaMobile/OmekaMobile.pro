@@ -149,4 +149,5 @@ DISTFILES += \
     qml/app/home/settings/pairing/PairSetting.qml \
     qml/app/home/settings/pairing/TablePairing.qml \
     qml/app/home/settings/pairing/Keypad.qml \
-    qml/app/home/settings/pairing/CodeEntry.qml
+    qml/app/home/settings/pairing/CodeEntry.qml \
+    qml/app/home/settings/pairing/Unpair.qml

@@ -44,17 +44,14 @@ Item {
         onKeyPressed: entry.submitEntry(key)
     }
 
-    Rectangle {
-        id: linked
+    /*!Control to terminate pairing session*/
+    Unpair {
+        id: unpair
         anchors.top: parent.top
         anchors.topMargin: Resolution.applyScale(438)
         width: parent.width
-        height: 272
-        color: "red"
-        MouseArea {
-            anchors.fill: parent
-            onClicked: entry.reset()
-        }
+        height: Resolution.applyScale(816)
+        onUnpair: entry.reset()
     }
 
     //pairing states
@@ -65,8 +62,8 @@ Item {
             PropertyChanges { target: keypad; opacity: 1 }
             AnchorChanges { target: entry; anchors.top: parent.top; anchors.bottom: undefined }
             PropertyChanges { target: entry; opacity: 1 }
-            AnchorChanges { target: linked; anchors.left: parent.right }
-            PropertyChanges { target: linked; opacity: 0 }
+            AnchorChanges { target: unpair; anchors.left: parent.right }
+            PropertyChanges { target: unpair; opacity: 0 }
         },
         State {
             name: "link"
@@ -74,14 +71,14 @@ Item {
             PropertyChanges { target: keypad; opacity: 0 }
             AnchorChanges { target: entry; anchors.top: undefined; anchors.bottom: parent.top }
             PropertyChanges { target: entry; opacity: 0 }
-            AnchorChanges { target: linked; anchors.left: parent.left }
-            PropertyChanges { target: linked; opacity: 1 }
+            AnchorChanges { target: unpair; anchors.left: parent.left }
+            PropertyChanges { target: unpair; opacity: 1 }
         }
     ]
 
     transitions: Transition {
         AnchorAnimation { duration: 400; easing.type: Easing.OutQuad }
-        PropertyAnimation { targets: [keypad, entry, linked]; duration: 400; property: "opacity"; easing.type: Easing.OutQuad }
+        PropertyAnimation { targets: [keypad, entry, unpair]; duration: 200; property: "opacity"; easing.type: Easing.OutQuad }
     }
 
 }
