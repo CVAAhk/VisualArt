@@ -2,7 +2,13 @@
 #define HEIST_H
 
 #include <QObject>
+#include <QNetworkAccessManager>
+#include <QUrl>
 
+QT_BEGIN_NAMESPACE
+class QNetworkReply;
+
+QT_END_NAMESPACE
 
 class Heist: public QObject
 {
@@ -10,6 +16,8 @@ class Heist: public QObject
     public:
         Heist();
         ~Heist();
+
+        void startRequest(QUrl url);
 
         //// initialize heist
         Q_INVOKABLE void initialize(QString rest);
@@ -30,6 +38,9 @@ class Heist: public QObject
         //// returns session's item list
         Q_INVOKABLE QString getItems(QString code);
 
+    private slots:
+        void httpFinished();
+
     private:
         //// returns heist entry id (internally incremented)
         QString sessionId(QString);
@@ -39,6 +50,10 @@ class Heist: public QObject
         std::map<QString, QString> m_items;
         //// omeka endpoint
         QString url;
+        //// network manager
+        QNetworkAccessManager qnam;
+        /// request response
+        QNetworkReply *reply;
 };
 
 #endif // HEIST_H
