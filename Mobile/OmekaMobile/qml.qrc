@@ -31,6 +31,7 @@
 		<file>qml/utils/ResolutionManager.qml</file>			
 		<file>qml/utils/Style.qml</file>			
 		<file>qml/utils/OmekaClient.qml</file>									
+		<file>qml/utils/HeistManager.qml</file>		
 		<file>qml/utils/ItemManager.qml</file>									
 		<file>qml/utils/UserSettings.qml</file>									
 		<file>qml/utils/NumberUtils.qml</file>									

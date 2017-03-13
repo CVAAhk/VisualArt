@@ -4,3 +4,4 @@ singleton Omeka 1.0 OmekaClient.qml
 singleton ItemManager 1.0 ItemManager.qml
 singleton User 1.0 UserSettings.qml
 singleton NumberUtils 1.0 NumberUtils.qml
+singleton HeistManager 1.0 HeistManager.qml

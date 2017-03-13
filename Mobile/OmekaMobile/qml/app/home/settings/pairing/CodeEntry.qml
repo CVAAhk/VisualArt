@@ -5,7 +5,7 @@ import "../../../../utils"
 Column {
 
     id: root
-    state: Omeka.isPaired ? "link" : "pair"
+    state: HeistManager.deviceIsPaired? "link" : "pair"
     property var code: []    
     spacing: Resolution.applyScale(45)
 
@@ -80,7 +80,7 @@ Column {
             code.push(value);
         }
         if(code.length == 4) {
-            Omeka.isPaired = true;
+            HeistManager.deviceIsPaired = true;
         }
     }
 
@@ -90,6 +90,6 @@ Column {
             slots.contentItem.children[i].digit = "";
         }
         code.length = 0;
-        Omeka.isPaired = false;
+        HeistManager.deviceIsPaired = false;
     }
 }

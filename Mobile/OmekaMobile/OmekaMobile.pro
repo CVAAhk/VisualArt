@@ -35,6 +35,7 @@ QML_IMPORT_PATH += \
     qml/utils/ItemManager 1.0 \
     qml/utils/User 1.0 \
     qml/utils/NumberUtils 1.0 \
+    qml/utils/HeistManager 1.0 \
 
 ios {
     OBJECTIVE_SOURCES += ios/iosshareutils.mm
@@ -152,4 +153,5 @@ DISTFILES += \
     qml/app/home/settings/pairing/TablePairing.qml \
     qml/app/home/settings/pairing/Keypad.qml \
     qml/app/home/settings/pairing/CodeEntry.qml \
-    qml/app/home/settings/pairing/Unpair.qml
+    qml/app/home/settings/pairing/Unpair.qml \
+    qml/utils/HeistManager.qml
