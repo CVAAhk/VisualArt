@@ -52,4 +52,5 @@ DISTFILES += \
     ItemManager.qml \
     Browser.qml \
     Gallery.qml \
-    ImageDisplayRow.qml
+    ImageDisplayRow.qml \
+    DetailImage.qml

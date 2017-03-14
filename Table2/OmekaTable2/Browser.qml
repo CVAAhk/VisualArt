@@ -6,7 +6,7 @@ import "settings.js" as Settings
 
 /*! Item browser component */
 Item {
-    id: view
+    id: root
     width: parent.width
     height: parent.height
     //state: User.layoutID
@@ -42,28 +42,29 @@ Item {
         PathView
         {
             id: path
-            model: view.model
+            model: root.model
             //visible: layout === path
             anchors.fill: parent
             anchors.horizontalCenter: parent.horizontalCenter
-            delegate: view.delegate
+            delegate: root.delegate
             maximumFlickVelocity: 800
             path: Path {
-                        startX: view.width /2 ; startY: view.height /2
-                        PathQuad { x: view.width /2; y: view.height /2; controlX: view.width; controlY: view.height /2 }
-                        PathQuad { x: view.width /2; y: view.height /2; controlX: 0; controlY: view.height /2 }
+                        startX: root.width /2 ; startY: root.height /2
+                        PathQuad { x: root.width /2; y: root.height /2; controlX: root.width; controlY: root.height /2 }
+                        PathQuad { x: root.width /2; y: root.height /2; controlX: 0; controlY: root.height /2 }
                     }
             onCurrentItemChanged:
             {
                 console.log("current index = ", currentIndex)
             }
-            Rectangle
-            {
-                anchors.fill: parent
-                color: "green"
-                opacity: 0.5
-                visible: parent.enabled && Settings.DEBUG_VIEW
-            }
+
+        }
+        Rectangle
+        {
+            anchors.fill: parent
+            color: "green"
+            opacity: 0.5
+            visible: parent.enabled && Settings.DEBUG_VIEW
         }
 //        Rectangle
 //        {
@@ -117,7 +118,9 @@ Item {
                         if(!dragAmounts[touchPoint.pointId])
                         {
                             dragAmounts[touchPoint.pointId] = 0.0;
-                            dragImages[touchPoint.pointId] = path.itemAt(touchPoint.x, touchPoint.y)//scroll_view.getImageAtX(touchPoint.x);
+                            dragImages[touchPoint.pointId] = path.currentItem//path.itemAt(touch_area.x +touchPoint.x, touch_area.y +touchPoint.y)//scroll_view.getImageAtX(touchPoint.x);
+                            console.log("touchPoint.x = ", touchPoint.x, " touchPoint.y = ", touchPoint.y)
+                            //console.log("touchPoint.pointId( ",touchPoint.pointId, " ) souce = ", dragImages[touchPoint.pointId])
                         }
 
                         var drag = dragAmounts[touchPoint.pointId] ?
@@ -129,6 +132,7 @@ Item {
                         {
                             var imageSource = dragImages[touchPoint.pointId].source;
                             var item = dragImages[touchPoint.pointId];
+                            console.log("touchPoint.pointId( ",touchPoint.pointId, " ) souce = ", imageSource)
 
                             if(imageSource !== "" &&
                                     (!item.inScene))
@@ -222,14 +226,14 @@ Item {
             y: screenY - height / 2
         }
 
-        Rectangle
-        {
-            width: path.width
-            height: path.height
-            color: "red"
-            opacity: 0.5
-            visible: parent.enabled && Settings.DEBUG_VIEW
-        }
+//        Rectangle
+//        {
+//            width: path.width
+//            height: path.height
+//            color: "red"
+//            opacity: 0.5
+//            visible: parent.enabled && Settings.DEBUG_VIEW
+//        }
 
         /*
         Rectangle
