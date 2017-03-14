@@ -75,7 +75,7 @@ Item {
                         }
                         break;
                     case put:
-                            console.log(request.status);
+                        console.log(request.status);
                         break;
                     case del:
                         console.log("ENTRY REMOVED");

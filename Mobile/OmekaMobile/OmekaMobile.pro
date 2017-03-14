@@ -9,12 +9,10 @@ CONFIG += c++11
 
 SOURCES += main.cpp \
     shareutils.cpp \
-    heist.cpp \
     applicationloader.cpp
 
 HEADERS += \
     shareutils.h \
-    heist.h \
     applicationloader.h
 
 RESOURCES += qml.qrc
@@ -148,10 +146,11 @@ DISTFILES += \
     qml/app/likes/LikesFilter.qml \
     qml/app/likes/FilterButton.qml \
     qml/app/likes/Filters.qml \
-    qml/test/client/TestHeist.qml \
     qml/app/home/settings/pairing/PairSetting.qml \
     qml/app/home/settings/pairing/TablePairing.qml \
     qml/app/home/settings/pairing/Keypad.qml \
     qml/app/home/settings/pairing/CodeEntry.qml \
     qml/app/home/settings/pairing/Unpair.qml \
-    qml/utils/HeistManager.qml
+    qml/utils/HeistManager.qml \
+    qml/test/heist/TestHeist.qml \
+    qml/test/heist/RequestUI.qml
