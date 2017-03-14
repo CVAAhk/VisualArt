@@ -54,5 +54,7 @@ DISTFILES += \
     Gallery.qml \
     ImageDisplayRow.qml \
     CollectionImageHolder.qml \
-    DetailImage.qml
+    DetailImage.qml \
+    TouchHelpers/ClickableButton.qml \
+    TouchHelpers/MultiPointPinchArea.qml
 
