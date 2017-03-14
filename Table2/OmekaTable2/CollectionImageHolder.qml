@@ -61,15 +61,15 @@ Item
 
             imageItem.x = startX - root.x;
             imageItem.y = startY - root.y;
-            imageItem.imageWidth = imageWidth;
-            imageItem.imageHeight = imageHeight;
+            //imageItem.imageWidth = imageWidth;
+            //imageItem.imageHeight = imageHeight;
             //imageItem.scale = 0.5;
             //imageItem.x -= imageItem.width / 4;
             //imageItem.y -= imageItem.height / 4;
 
-            imageItem.imageDragged.connect(root.imageDragged);
-            imageItem.finishedDragging.connect(root.imageFinishedDragging);
-            imageItem.finishedRecycle.connect(root.imageFinishedRecycle);
+            //imageItem.imageDragged.connect(root.imageDragged);
+            //imageItem.finishedDragging.connect(root.imageFinishedDragging);
+            //imageItem.finishedRecycle.connect(root.imageFinishedRecycle);
 
             //imageItem.collectionHolder = root;
 /*
@@ -83,18 +83,18 @@ Item
                 imageItem.rotation = imageRotation;
                 if(imageRotation > 0)
                 {
-                    imageItem.topScreen = true;
+                    //imageItem.topScreen = true;
                 }
             }
 
 
-            imageItem.deleteImage.connect(deleteImage);
+            //imageItem.deleteImage.connect(deleteImage);
 
             imageItems.push(imageItem);
 
             imageItem.z = imageItems.length;
 
-            imageItem.imageTimer.start();
+            //imageItem.imageTimer.start();
 
             root.imageAdded(imageItem);
 

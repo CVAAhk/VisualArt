@@ -132,7 +132,7 @@ Item {
                         {
                             var imageSource = dragImages[touchPoint.pointId].source;
                             var item = dragImages[touchPoint.pointId];
-                            console.log("touchPoint.pointId( ",touchPoint.pointId, " ) souce = ", imageSource)
+
 
                             if(imageSource !== "" &&
                                     (!item.inScene))
@@ -180,10 +180,10 @@ Item {
                 var imageCenterY = 0;
                 var rotation = 0;
 
-                imageCenterX = selected_image.x + root.x; // selected_image.width / 2 + root.x + touch_area.x;
-                imageCenterY = selected_image.y + root.y; // selected_image.height / 2 + root.y + touch_area.y;
-
-                 console.log("MAking select imag e " + selected_image.width + " " + selected_image.height);
+                imageCenterX = selected_image.x + root.x + touch_area.x; // selected_image.width / 2 + root.x + touch_area.x;
+                imageCenterY = selected_image.y + root.y + touch_area.y; // selected_image.height / 2 + root.y + touch_area.y;
+                console.log("selected_image.y = ",selected_image.y, " root.y = ", root.y)
+                 console.log("MAking select imag e " + imageCenterX + " " + imageCenterY);
 
                 root.createImage(selected_image.source, imageCenterX, imageCenterY, rotation,
                                  selected_image.width, selected_image.height);

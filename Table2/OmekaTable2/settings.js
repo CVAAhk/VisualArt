@@ -10,6 +10,6 @@ var SCREEN_HEIGHT = BASE_SCREEN_HEIGHT * SCALE;
 var SCREEN_X = 0//-BASE_SCREEN_WIDTH ;
 var SCREEN_Y = 0;
 
-var DEBUG_VIEW = true;
+var DEBUG_VIEW = false;
 
 var FULLSCREEN = true;

@@ -38,14 +38,18 @@ Item {
         height: parent.height
         headerHeight: height/3
         busy: true
-//        onCanPaginate: {
-//           Omeka.getNextPage(gallery)
-//        }
+        onCreateImage:
+        {
+            imageHolder.createImage(source, imageX, imageY, imageRotation, imageWidth, imageHeight)
+        }
     }
-//    ImageDisplayRow
-//    {
-//        height: parent.height
-//    }
+    CollectionImageHolder
+    {
+        id: imageHolder
+
+        width: parent.width
+        height: parent.height
+    }
 
 
 }
