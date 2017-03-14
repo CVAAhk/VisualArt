@@ -8,9 +8,55 @@ Component {
     Item
     {
         id: root
+        width: 500; height: 500
         property var itemData: ({})
         property var title
         property var source
+
+        //scale: changeScale()
+        z: changeZ();//1 - Math.abs(index - path.currentIndex)
+        opacity: Math.abs(index - path.currentIndex) < 3 || (path.count - index + path.currentIndex) < 3 ? 1.0 : 0.0
+        Behavior on opacity {
+            NumberAnimation
+            {
+                duration: 200
+            }
+        }
+
+        function changeScale()
+        {
+            if(!ListView.isCurrentItem)
+            {
+                return 1 /(Math.abs(index - path.currentIndex))
+            }
+            else
+            {
+                return 1
+            }
+        }
+        function changeZ()
+        {
+            if(Math.abs(index - path.currentIndex) >= path.count - 2)
+            {
+                return 1-(path.count - Math.abs(index - path.currentIndex))
+            }
+            else
+            {
+                return 1 - Math.abs(index - path.currentIndex)
+            }
+        }
+
+
+//        //property alias source: img.source
+//        property alias imageWidth: img.width
+//        property alias imageHeight: img.height
+
+//        property bool inScene: false
+
+//        property bool hasImage: img.source != ""
+
+//        signal imageClicked(string source)
+
 
         Component.onCompleted:
         {
@@ -59,14 +105,35 @@ Component {
         {
             id: bkg
             source: "content/POI/_Image_.png"
+            anchors.fill: parent
+
         }
         Image
         {
             id: img
             //opacity: 0
-            anchors.top: bkg.top
-            anchors.left: bkg.left
+            anchors.fill: parent
             fillMode: Image.PreserveAspectCrop
+            anchors.margins: 30
+//            MultiPointTouchArea
+//            {
+//                enabled: false
+
+//                anchors.fill: parent
+
+//                onPressed:
+//                {
+//                    root.imageClicked(image.source);
+//                }
+
+//                Rectangle
+//                {
+//                    anchors.fill: parent
+//                    color: "blue"
+//                    opacity: 0.5
+//                    visible: parent.enabled && Settings.showDebugInfo
+//                }
+//            }
         }
     }
 }

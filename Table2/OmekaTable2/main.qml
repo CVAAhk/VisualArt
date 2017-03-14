@@ -10,10 +10,12 @@ ApplicationWindow {
     height: Settings.SCREEN_HEIGHT
     visibility: Settings.fullscreen ? "FullScreen" : "Windowed";
     title: qsTr("OmekaTable2")
-Gallery
-{
 
-}
+    Gallery
+    {
+        width: Settings.SCREEN_WIDTH
+        height: Settings.SCREEN_HEIGHT
+    }
 
 //    SwipeView {
 //        id: swipeView

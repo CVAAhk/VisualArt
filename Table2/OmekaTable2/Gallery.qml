@@ -42,6 +42,10 @@ Item {
 //           Omeka.getNextPage(gallery)
 //        }
     }
+//    ImageDisplayRow
+//    {
+//        height: parent.height
+//    }
 
 
 }

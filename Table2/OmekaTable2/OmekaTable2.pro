@@ -51,4 +51,5 @@ DISTFILES += \
     qmldir \
     ItemManager.qml \
     Browser.qml \
-    Gallery.qml
+    Gallery.qml \
+    ImageDisplayRow.qml
