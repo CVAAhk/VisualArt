@@ -81,8 +81,8 @@ Item {
         x: path.currentItem.x
         y: path.currentItem.y
 
-        width: path.currentItem.width
-        height: path.currentItem.height
+        width: 500
+        height: 500
 
         enabled: true
 
