@@ -51,11 +51,20 @@ Component {
 //        property alias imageWidth: img.width
 //        property alias imageHeight: img.height
 
-//        property bool inScene: false
+        property bool inScene: false
 
 //        property bool hasImage: img.source != ""
 
 //        signal imageClicked(string source)
+
+        function imageInScene()
+        {
+            inScene = true;
+        }
+        function imageRemovedFromScene()
+        {
+            inScene = false;
+        }
 
 
         Component.onCompleted:

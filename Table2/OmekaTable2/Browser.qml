@@ -1,6 +1,8 @@
 import QtQuick 2.5
 import QtQuick.Controls 1.4
 
+import "settings.js" as Settings
+
 
 /*! Item browser component */
 Item {
@@ -30,111 +32,218 @@ Item {
 
     property bool busy: false
 
-//    Component {
-//        id: header
-//        Item {
-//            width: view.width
-//            height: view.headerHeight
-//            Rectangle {
-//                color: view.headerColor
-//                width: parent.width
-//                height: parent.height - view.spacing
-//            }
-//        }
-//    }
+    signal imageDragged();
 
-//    Component {
-//        id: footer
-//        Item{
-//            width: view.width
-//            height: Resolution.applyScale(150)
-//            OmekaIndicator {
-//                id: indicator
-//                anchors.centerIn: parent
-//                running: view.busy
-//                scale: Resolution.applyScale(1.5)
-//            }
-//        }
-//    }
+    signal createImage(string source, int imageX, int imageY, int imageRotation, int imageWidth, int imageHeight);
 
-    /*! Grid layout */
-//    GridView {
-//        id: grid
-//        model: view.model
-//        visible: layout === grid
-//        anchors.fill: parent
-//        anchors.horizontalCenter: parent.horizontalCenter
-//        cellWidth: cellHeight
-//        cellHeight: view.rowHeight
-//        cacheBuffer: view.cacheBuffer
-//        delegate: view.delegate
-//        maximumFlickVelocity: 8000
-//        flickDeceleration: 3000
-//        boundsBehavior: Flickable.StopAtBounds
-//        bottomMargin: 195
-//        //header: header
-//        //footer: footer
-//    }
-
-//    /*! List layout */
-//    ListView {
-//        id: list
-//        model: view.model
-//        visible: layout === list
-//        anchors.fill: parent
-//        anchors.horizontalCenter: parent.horizontalCenter
-//        orientation: ListView.Horizontal
-//        spacing: view.spacing
-//        cacheBuffer: view.cacheBuffer
-//        delegate: view.delegate
-//        maximumFlickVelocity: 8000
-//        flickDeceleration: 3000
-//        boundsBehavior: Flickable.StopAtBounds
-//        bottomMargin: 190//Resolution.applyScale(190)
-//        highlight: highlightBar
-//        highlightFollowsCurrentItem: false
-//        focus: true
-//        highlightRangeMode: ListView.StrictlyEnforceRange
-////        preferredHighlightBegin: 500
-////        preferredHighlightEnd: 1000
-
-////        header: header
-////        footer: footer
-//        onCurrentItemChanged:
-//        {
-//            console.log("current index = ", currentIndex)
-//        }
-//    }
-
-//    Component {
-//            id: highlightBar
-//            Rectangle {
-//                width: 200; height: 50
-//                color: "#FFFF88"
-//                x: list.currentItem.x;
-//                Behavior on x { SpringAnimation { spring: 2; damping: 0.1 } }
-//            }
-//        }
-
-    PathView
-    {
-        id: path
-        model: view.model
-        //visible: layout === path
-        anchors.fill: parent
-        anchors.horizontalCenter: parent.horizontalCenter
-        delegate: view.delegate
-        maximumFlickVelocity: 800
-        path: Path {
-                    startX: view.width /2 ; startY: view.height /2
-                    PathQuad { x: view.width /2; y: view.height /2; controlX: view.width; controlY: view.height /2 }
-                    PathQuad { x: view.width /2; y: view.height /2; controlX: 0; controlY: view.height /2 }
-                }
-        onCurrentItemChanged:
+//    Flickable
+//    {
+//        id: scroll_view
+        PathView
         {
-            console.log("current index = ", currentIndex)
+            id: path
+            model: view.model
+            //visible: layout === path
+            anchors.fill: parent
+            anchors.horizontalCenter: parent.horizontalCenter
+            delegate: view.delegate
+            maximumFlickVelocity: 800
+            path: Path {
+                        startX: view.width /2 ; startY: view.height /2
+                        PathQuad { x: view.width /2; y: view.height /2; controlX: view.width; controlY: view.height /2 }
+                        PathQuad { x: view.width /2; y: view.height /2; controlX: 0; controlY: view.height /2 }
+                    }
+            onCurrentItemChanged:
+            {
+                console.log("current index = ", currentIndex)
+            }
+            Rectangle
+            {
+                anchors.fill: parent
+                color: "green"
+                opacity: 0.5
+                visible: parent.enabled && Settings.DEBUG_VIEW
+            }
         }
+//        Rectangle
+//        {
+//            width: scroll_view.contentWidth
+//            height: scroll_view.contentHeight
+//            color: "green"
+//            opacity: 0.5
+//            visible: parent.enabled && Settings.DEBUG_VIEW
+//        }
+//    }
+    MultiPointTouchArea
+    {
+        id: touch_area
+
+        x: path.currentItem.x
+        y: path.currentItem.y
+
+        width: path.currentItem.width
+        height: path.currentItem.height
+
+        enabled: true
+
+        property bool creatingImage: false
+        property int touchId: -1
+
+        property int bottomFlickMax: 500
+
+        property var dragAmounts: ({})
+        property var dragImages: ({})
+
+        onTouchUpdated:
+        {
+            var updatedCreatedImage = false;
+
+            for(var i = 0; i < touchPoints.length; i++)
+            {
+                var touchPoint = touchPoints[i];
+
+                var deltaX = touchPoint.x - touchPoint.previousX;
+                var deltaY = touchPoint.y - touchPoint.previousY;
+
+                if(!creatingImage)
+                {
+//                    if(touchPoint.y < bottomFlickMax)
+//                    {
+//                        scroll_view.flick((touchPoint.x - touchPoint.previousX) * 100, 0);
+//                    }
+
+                    if(touchPoint.y < bottomFlickMax + 100)
+                    {
+                        if(!dragAmounts[touchPoint.pointId])
+                        {
+                            dragAmounts[touchPoint.pointId] = 0.0;
+                            dragImages[touchPoint.pointId] = path.itemAt(touchPoint.x, touchPoint.y)//scroll_view.getImageAtX(touchPoint.x);
+                        }
+
+                        var drag = dragAmounts[touchPoint.pointId] ?
+                                    dragAmounts[touchPoint.pointId] : 0.0
+
+                        dragAmounts[touchPoint.pointId] = drag + deltaY;
+
+                        if(dragAmounts[touchPoint.pointId] < -100)
+                        {
+                            var imageSource = dragImages[touchPoint.pointId].source;
+                            var item = dragImages[touchPoint.pointId];
+
+                            if(imageSource !== "" &&
+                                    (!item.inScene))
+                            {
+                                creatingImage = true;
+
+                                touchId = touchPoint.pointId;
+
+                                selected_image.source = imageSource;
+
+                                //scroll_view.cancelFlick();
+
+                                //scroll_view.imageInScene(selected_image.source);
+                                item.imageInScene();
+
+                                selected_image.screenX = touchPoint.x;
+                                selected_image.screenY = touchPoint.y;
+
+                                updatedCreatedImage = true;
+
+                                root.imageDragged();
+
+                                break;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    if(touchPoint.pointId === touchId && touchPoint.pressed)
+                    {
+                        selected_image.screenX = touchPoint.x;
+                        selected_image.screenY = touchPoint.y;
+
+                        updatedCreatedImage = true;
+                    }
+                }
+            }
+
+            if(creatingImage && !updatedCreatedImage)
+            {
+                creatingImage = false;
+
+                var imageCenterX = 0;
+                var imageCenterY = 0;
+                var rotation = 0;
+
+                imageCenterX = selected_image.x + root.x; // selected_image.width / 2 + root.x + touch_area.x;
+                imageCenterY = selected_image.y + root.y; // selected_image.height / 2 + root.y + touch_area.y;
+
+                 console.log("MAking select imag e " + selected_image.width + " " + selected_image.height);
+
+                root.createImage(selected_image.source, imageCenterX, imageCenterY, rotation,
+                                 selected_image.width, selected_image.height);
+            }
+
+            var dragEntries = Object.getOwnPropertyNames(dragAmounts);
+            for (var index = 0; index < dragEntries.length; index++)
+            {
+                var touchEntry = dragEntries[index];
+                var updatedEntry = false;
+                for(var j = 0; j < touchPoints.length; j++)
+                {
+                    if(touchPoints[j].pointId == touchEntry)
+                    {
+                        updatedEntry = true;
+                    }
+                }
+
+                if(!updatedEntry)
+                {
+                    dragAmounts[touchEntry] = 0.0;
+                }
+            }
+        }
+
+        Image
+        {
+            id: selected_image
+
+            visible: touch_area.creatingImage
+
+            source: ""
+            height: root.imageHeight
+            fillMode: Image.PreserveAspectFit
+
+            property int screenX: 0
+            property int screenY: 0
+
+            x: screenX - width / 2
+            y: screenY - height / 2
+        }
+
+        Rectangle
+        {
+            width: path.width
+            height: path.height
+            color: "red"
+            opacity: 0.5
+            visible: parent.enabled && Settings.DEBUG_VIEW
+        }
+
+        /*
+        Rectangle
+        {
+            width: scroll_view.contentWidth
+            height: scroll_view.contentHeight
+            color: "green"
+            opacity: 0.5
+            visible: parent.enabled && Settings.showDebugInfo
+        }
+        */
     }
+
+
 
     /*! Add item from browser */
     function append(item) {
