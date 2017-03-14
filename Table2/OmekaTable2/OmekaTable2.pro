@@ -53,4 +53,6 @@ DISTFILES += \
     Browser.qml \
     Gallery.qml \
     ImageDisplayRow.qml \
-    CollectionImageHolder.qml
+    CollectionImageHolder.qml \
+    DetailImage.qml
+

@@ -11,11 +11,11 @@ Component {
         width: 500; height: 500
         property var itemData: ({})
         property var title
-        property var source
+        property string source:img.source
 
         //scale: changeScale()
         z: changeZ();//1 - Math.abs(index - path.currentIndex)
-        opacity: Math.abs(index - path.currentIndex) < 3 || (path.count - index + path.currentIndex) < 3 ? 1.0 : 0.0
+        visible: Math.abs(index - path.currentIndex) < 3 || (path.count - index + path.currentIndex) < 3
         Behavior on opacity {
             NumberAnimation
             {

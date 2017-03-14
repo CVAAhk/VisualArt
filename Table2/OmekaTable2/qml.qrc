@@ -1,7 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>qtquickcontrols2.conf</file>
         <file>ImageViewer.qml</file>
         <file>OmekaClient.qml</file>
         <file>qmldir</file>
