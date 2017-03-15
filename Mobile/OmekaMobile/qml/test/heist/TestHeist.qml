@@ -5,7 +5,7 @@ import "../../utils"
 ApplicationWindow {
     id: window
     visible: true
-    width: 470; height: 800
+    width: 470; height: 600
 
     Column {
         width: parent.width-40
