@@ -153,4 +153,5 @@ DISTFILES += \
     qml/app/home/settings/pairing/Unpair.qml \
     qml/utils/HeistManager.qml \
     qml/test/heist/TestHeist.qml \
-    qml/test/heist/RequestUI.qml
+    qml/test/heist/RequestUI.qml \
+    qml/app/home/settings/pairing/HeistReceiver.qml

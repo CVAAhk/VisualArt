@@ -22,6 +22,9 @@ Item {
     /*Indicates the device is paired with the table for content sharing*/
     property var deviceIsPaired: false
 
+    /*List of registered receivers of iterative polling results*/
+    property var receivers: [];
+
     //iteratively polls heist for data updates
     Timer {
         id: timer
@@ -31,12 +34,42 @@ Item {
         onTriggered: pollData()
     }
 
+    /*
+      Register receiver for iterative heist updates of a specified pairing code
+    */
+    function registerReceiver(receiver) {
+        if(!registered(receiver)) {
+            receivers.push(receiver);
+        } if(!timer.running && receivers.length) {
+            timer.start();
+        }
+    }
+
+    /*
+      Unregister receiver from iterative heist updates of a specified pairing code
+    */
+    function unregisterReceiver(receiver) {
+        if(registered(receiver)) {
+            receivers.splice(receivers.indexOf(receiver), 1);
+        } if(timer.running && !receivers.length) {
+            timer.stop();
+        }
+    }
+
+    /*
+      Returns the registered state of the receiver
+    */
+    function registered(receiver) {
+        return receivers.indexOf(receiver) !== -1;
+    }
+
     /*! \internal
       Submits poll requests for heist updates
     */
     function pollData() {
-        var url = baseUrl+"?pairing_id=1245";
-        submitRequest(url, get, null, null);
+        for(var i=0; i<receivers.length; i++) {
+            getData(baseUrl+"?pairing_id="+receivers[i].code, receivers[i]);
+        }
     }
 
     /*! \internal
@@ -65,7 +98,8 @@ Item {
             if(request.readyState === XMLHttpRequest.DONE){
                 switch(request.type) {
                     case get:
-                        processResult(JSON.parse(request.responseText));
+                        var result = JSON.parse(request.responseText);
+                        request.context.data = result;
                         break;
                     case post:
                         var result = JSON.parse(request.responseText);

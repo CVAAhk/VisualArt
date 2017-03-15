@@ -64,6 +64,17 @@ Column {
         }
     }
 
+    //data receiver
+    HeistReceiver {
+        id: receiver
+        onRecordChanged: if(record) HeistManager.deviceIsPaired = true;
+        onErrorChanged: {
+            if(error) {
+                register = false;
+            }
+        }
+    }
+
     //entry states
     states: [
         State { name: "pair" },
@@ -79,17 +90,22 @@ Column {
             slots.contentItem.children[code.length].digit = value;
             code.push(value);
         }
-        if(code.length == 4) {
-            HeistManager.deviceIsPaired = true;
-        }
+        receiver.code = code.join("");
     }
 
     //restore initial state
     function reset() {
+
+        //unregister receiver
+        receiver.code = null;
+
+        //change paired state
+        HeistManager.deviceIsPaired = false;
+
+        //clear code
         for(var i=0; i<4; i++) {
             slots.contentItem.children[i].digit = "";
         }
         code.length = 0;
-        HeistManager.deviceIsPaired = false;
     }
 }
