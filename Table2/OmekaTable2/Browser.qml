@@ -180,10 +180,10 @@ Item {
                 var imageCenterY = 0;
                 var rotation = 0;
 
-                imageCenterX = selected_image.x + root.x + touch_area.x; // selected_image.width / 2 + root.x + touch_area.x;
+                imageCenterX = selected_image.x + root.x + touch_area.x; //selected_image.width / 2 + root.x + touch_area.x;//
                 imageCenterY = selected_image.y + root.y + touch_area.y; // selected_image.height / 2 + root.y + touch_area.y;
                 console.log("selected_image.y = ",selected_image.y, " root.y = ", root.y)
-                 console.log("MAking select imag e " + imageCenterX + " " + imageCenterY);
+                 console.log("MAking select imag e " + selected_image.width + " " + selected_image.height);
 
                 root.createImage(selected_image.source, imageCenterX, imageCenterY, rotation,
                                  selected_image.width, selected_image.height);

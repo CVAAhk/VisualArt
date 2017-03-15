@@ -61,8 +61,8 @@ Item
 
             imageItem.x = startX - root.x;
             imageItem.y = startY - root.y;
-            //imageItem.imageWidth = imageWidth;
-            //imageItem.imageHeight = imageHeight;
+            imageItem.imageWidth = 237;
+            imageItem.imageHeight = imageWidth / imageHeight * 237;
             //imageItem.scale = 0.5;
             //imageItem.x -= imageItem.width / 4;
             //imageItem.y -= imageItem.height / 4;

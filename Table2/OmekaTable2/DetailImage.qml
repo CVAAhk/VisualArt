@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import QtGraphicalEffects 1.0
 import "./TouchHelpers"
+import "settings.js" as Settings
 
 
 Item
@@ -9,9 +10,9 @@ Item
 
     property alias source: img.source
 
-    property alias imageWidth: image.width
+    property alias imageWidth: img.width
 
-    property alias imageHeight: image.height
+    property alias imageHeight: img.height
 
     property bool topScreen
 
@@ -30,6 +31,7 @@ Item
     Image
     {
         id: img
+        fillMode: Image.PreserveAspectFit
 
     }
     Image
@@ -50,24 +52,26 @@ Item
           radius: 8.0
           samples: 17
           color: "#80000000"
-          source: image
+          source: img
     }
     MultiPointPinchArea
     {
         anchors.fill: img
 
         dragOnPinch: true
+        listenForRotation: false
+        listenForScale: false
 
-        maximumScale: 2
-        minimumScale: 0.15
+//        maximumScale: 2
+//        minimumScale: 0.15
 
         mouseEnabled: true
 
         minimumX: 0
-        maximumX: 1920 - image.wid
+        maximumX: 1920 - root.imageWidth
 
         minimumY: 0
-        maximumY: 909 - image.imageHeight
+        maximumY: 1080 - root.imageHeight
 
         onDraggingChanged:
         {
@@ -95,7 +99,7 @@ Item
             image_timer.restart();
         }
 
-        debugView: Settings.showDebugInfo
+        debugView: Settings.DEBUG_VIEW
     }
 
     Rectangle
@@ -103,7 +107,7 @@ Item
         anchors.fill: parent
         color: "green"
         opacity: 0.5
-        visible: parent.enabled && Settings.showDebugInfo
+        visible: parent.enabled && Settings.DEBUG_VIEW
     }
 
     Timer
