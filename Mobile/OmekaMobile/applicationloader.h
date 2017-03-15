@@ -2,6 +2,7 @@
 
 #include <QObject>
 #include <QQmlApplicationEngine>
+#include "sequentialguid.h"
 
 class ApplicationLoader: public QObject
 {
@@ -11,5 +12,6 @@ class ApplicationLoader: public QObject
 
     private:
         QQmlApplicationEngine m_engine;
+        SequentialGUID m_guid;
 };
 

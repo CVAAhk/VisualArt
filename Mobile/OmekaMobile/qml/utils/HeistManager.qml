@@ -120,18 +120,6 @@ Item {
     }
 
     /*! \internal
-      Process results from GET requests
-      \a result - request result
-    */
-    function processResult(result) {
-        if(result.errors !== undefined) {
-
-        } else {
-
-        }
-    }
-
-    /*! \internal
       Add data entry to heist table
       \a data - record data
       \a context - calling object
