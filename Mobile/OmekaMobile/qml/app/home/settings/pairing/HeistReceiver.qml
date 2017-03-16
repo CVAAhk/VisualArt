@@ -53,9 +53,9 @@ Item {
         } else {
             var entry = data[0];
             if(entry) {
-                setDevice(entry.device_id);
-                setSession(entry.id);
-                setItems(entry.item_ids);
+                device = entry.device_id;
+                session = entry.id;
+                items = entry.item_ids;
             } else {
                 error = "Invalid Pairing Code";
             }
@@ -66,39 +66,10 @@ Item {
       Clear data fields
     */
     function clearFields() {
-        setSession(null);
-        setDevice(null);
-        setItems(null);
-        setError(null);
-    }
-
-    /*
-      Set record id
-    */
-    function setSession(value) {
-        if(session === value) return;
-        session = value;
-    }
-
-    /*
-      Set device id
-    */
-    function setDevice(value) {
-        if(device === value) return;
-        device = value;
-    }
-
-    /*
-      Set list of item ids
-    */
-    function setItems(value) {
-        if(items === value) return;
-        items = value;
-    }
-
-    function setError(value) {
-        if(error === value) return;
-        error = value;
+        device = null;
+        session = null;
+        items = null;
+        error = null;
     }
 
 }
