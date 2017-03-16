@@ -32,6 +32,8 @@ Item {
 
     property bool busy: false
 
+    property var imageItems: []
+
     signal imageDragged();
 
     signal createImage(string source, int imageX, int imageY, int imageRotation, int imageWidth, int imageHeight);
@@ -57,6 +59,7 @@ Item {
             {
                 console.log("current index = ", currentIndex)
             }
+
 
         }
         Rectangle
@@ -147,6 +150,7 @@ Item {
 
                                 //scroll_view.imageInScene(selected_image.source);
                                 item.imageInScene();
+                                imageItems.push(item);
 
                                 selected_image.screenX = touchPoint.x;
                                 selected_image.screenY = touchPoint.y;
@@ -182,8 +186,8 @@ Item {
 
                 imageCenterX = selected_image.x + root.x + touch_area.x; //selected_image.width / 2 + root.x + touch_area.x;//
                 imageCenterY = selected_image.y + root.y + touch_area.y; // selected_image.height / 2 + root.y + touch_area.y;
-                console.log("selected_image.y = ",selected_image.y, " root.y = ", root.y)
-                 console.log("MAking select imag e " + selected_image.width + " " + selected_image.height);
+
+                console.log("MAking select imag e " + selected_image.width + " " + selected_image.height);
 
                 root.createImage(selected_image.source, imageCenterX, imageCenterY, rotation,
                                  selected_image.width, selected_image.height);
@@ -262,6 +266,18 @@ Item {
     /*! Clear browser */
     function clear() {
         layout.model.clear();
+    }
+
+    function imageRemovedFromScene(source)
+    {
+        for(var i = 0; i < imageItems.length; i ++)
+        {
+            if(imageItems[i].source == source)
+            {
+                imageItems[i].imageRemovedFromScene();
+                imageItems.splice(i, 1);
+            }
+        }
     }
 
 

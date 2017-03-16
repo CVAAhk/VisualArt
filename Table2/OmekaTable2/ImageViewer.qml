@@ -46,16 +46,7 @@ Component {
             }
         }
 
-
-//        //property alias source: img.source
-//        property alias imageWidth: img.width
-//        property alias imageHeight: img.height
-
         property bool inScene: false
-
-//        property bool hasImage: img.source != ""
-
-//        signal imageClicked(string source)
 
         function imageInScene()
         {
@@ -120,29 +111,9 @@ Component {
         Image
         {
             id: img
-            //opacity: 0
             anchors.fill: parent
             fillMode: Image.PreserveAspectCrop
             anchors.margins: 30
-//            MultiPointTouchArea
-//            {
-//                enabled: false
-
-//                anchors.fill: parent
-
-//                onPressed:
-//                {
-//                    root.imageClicked(image.source);
-//                }
-
-//                Rectangle
-//                {
-//                    anchors.fill: parent
-//                    color: "blue"
-//                    opacity: 0.5
-//                    visible: parent.enabled && Settings.showDebugInfo
-//                }
-//            }
         }
     }
 }

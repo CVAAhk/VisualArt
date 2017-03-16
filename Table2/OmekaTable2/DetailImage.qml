@@ -28,6 +28,21 @@ Item
 
     signal deleteImage(var image);
 
+
+    Image
+    {
+        id: bkg
+        source: "content/POI/_Image_.png"
+        x: -20; y:-20
+        width: root.imageWidth + 40
+        height: root.imageHeight + title_bkg.height + description_bkg.height + 40
+    }
+    Rectangle
+    {
+        color: "#ffffff"
+        anchors.fill: img
+    }
+
     Image
     {
         id: img
@@ -37,22 +52,44 @@ Item
     Image
     {
         id: close
-        source: "content/POI/Asset 1.png"
+        source: "content/POI/Asset 4.png"
         anchors.bottom: img.top
         anchors.right: img.right
-        anchors.bottomMargin: -10
+        MultiPointTouchArea
+        {
+            anchors.fill: parent
+            onPressed:
+            {
+                root.deleteImage(root);
+            }
+        }
+    }
+    Image
+    {
+        id: title_bkg
+        source: "content/POI/title_bkg.png"
+        anchors.top: img.bottom
+        anchors.left: root.left
+
+    }
+    Image
+    {
+        id: description_bkg
+        source: "content/POI/description_bkg.png"
+        anchors.top: title_bkg.bottom
+        anchors.left: root.left
     }
 
     DropShadow
     {
         id: imageEffect
-          anchors.fill: img
+          anchors.fill: close
           horizontalOffset: 3
-          verticalOffset: 3
+          verticalOffset: 0
           radius: 8.0
           samples: 17
           color: "#80000000"
-          source: img
+          source: close
     }
     MultiPointPinchArea
     {

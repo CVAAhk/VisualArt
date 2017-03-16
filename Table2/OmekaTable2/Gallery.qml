@@ -49,6 +49,11 @@ Item {
 
         width: parent.width
         height: parent.height
+
+        onImageDeleted:
+        {
+            browser.imageRemovedFromScene(filepath)
+        }
     }
 
 

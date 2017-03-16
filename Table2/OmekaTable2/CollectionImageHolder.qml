@@ -61,8 +61,8 @@ Item
 
             imageItem.x = startX - root.x;
             imageItem.y = startY - root.y;
-            imageItem.imageWidth = 237;
-            imageItem.imageHeight = imageWidth / imageHeight * 237;
+            imageItem.imageWidth = 247;
+            imageItem.imageHeight = imageWidth / imageHeight * 247;
             //imageItem.scale = 0.5;
             //imageItem.x -= imageItem.width / 4;
             //imageItem.y -= imageItem.height / 4;
@@ -88,7 +88,7 @@ Item
             }
 
 
-            //imageItem.deleteImage.connect(deleteImage);
+            imageItem.deleteImage.connect(deleteImage);
 
             imageItems.push(imageItem);
 
