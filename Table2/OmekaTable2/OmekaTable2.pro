@@ -54,8 +54,12 @@ DISTFILES += \
     Gallery.qml \
     ImageDisplayRow.qml \
     CollectionImageHolder.qml \
-    DetailImage.qml \
     TouchHelpers/ClickableButton.qml \
     TouchHelpers/MultiPointPinchArea.qml \
-    ScrollBar.qml
+    ScrollBar.qml \
+    OmekaText.qml \
+    ScaleColumn.qml \
+    DetailColumn.qml \
+    Detail.qml \
+    OmekaScrollView.qml
 

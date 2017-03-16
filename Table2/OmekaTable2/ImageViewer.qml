@@ -51,6 +51,7 @@ Component {
         function imageInScene()
         {
             inScene = true;
+            ItemManager.current = itemData;
         }
         function imageRemovedFromScene()
         {

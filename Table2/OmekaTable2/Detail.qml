@@ -1,13 +1,15 @@
 import QtQuick 2.0
 import QtGraphicalEffects 1.0
+import QtQuick.Controls 1.4
+import QtQuick.Layouts 1.1
 import "./TouchHelpers"
 import "settings.js" as Settings
 
-
+/*! \qmltype Displays detailed view of media items and corresponding metadata */
 Item
 {
     id: root
-
+    objectName: "detail"
     property alias source: img.source
 
     property alias imageWidth: img.width
@@ -51,6 +53,27 @@ Item
         fillMode: Image.PreserveAspectFit
 
     }
+
+
+        //primary display item
+        //property DetailColumn column
+
+        /*! scroll container */
+        OmekaScrollView {
+            id: scroll
+            anchors.top: img.bottom
+            anchors.left: root.left
+            //media display
+            DetailColumn { id: display }
+        }
+
+        //Add if necessary
+        /*! scroll container */
+//        LoadScreen{
+//            progress: column && column.viewer ? column.viewer.progress : 0
+//        }
+
+
     Image
     {
         id: close
@@ -66,25 +89,25 @@ Item
             }
         }
     }
-    Image
-    {
-        id: title_bkg
-        source: "content/POI/title_bkg.png"
-        anchors.top: img.bottom
-        anchors.left: root.left
-        Text
-        {
-            id: title
-        }
+//    Image
+//    {
+//        id: title_bkg
+//        source: "content/POI/title_bkg.png"
+//        anchors.top: img.bottom
+//        anchors.left: root.left
+//        Text
+//        {
+//            id: title
+//        }
 
-    }
-    Image
-    {
-        id: description_bkg
-        source: "content/POI/description_bkg.png"
-        anchors.top: title_bkg.bottom
-        anchors.left: root.left
-    }
+//    }
+//    Image
+//    {
+//        id: description_bkg
+//        source: "content/POI/description_bkg.png"
+//        anchors.top: title_bkg.bottom
+//        anchors.left: root.left
+//    }
 
     DropShadow
     {

@@ -1,7 +1,7 @@
 pragma Singleton
 import QtQuick 2.5
 import QtQuick.LocalStorage 2.0
-import "../js/storage.js" as Settings
+import "settings.js" as Settings
 
 Item {
 

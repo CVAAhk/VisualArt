@@ -39,6 +39,7 @@ Component {
                     title = metadata.get(i).text
                 } else if(name === "source") {
                     source = metadata.get(i).text.split("View")[0]
+                    console.log("source : ", source)
                 }
             }
         }

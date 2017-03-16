@@ -1,1 +1,2 @@
 singleton Omeka 1.0 OmekaClient.qml
+singleton Style 1.0 Style.qml
