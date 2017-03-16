@@ -5,9 +5,27 @@ import "../../../../utils"
 Column {
 
     id: root
-    state: HeistManager.deviceIsPaired? "link" : "pair"
-    property var code: []    
     spacing: Resolution.applyScale(45)
+
+    /*
+     Unique device id for pairing with heist table user
+    */
+    property var deviceId: HeistManager.uid;
+
+    /*
+     Pairing code entered by device user in an attempt to pair with
+     table generated session
+    */
+    property var code: []
+
+    //update state based on heist paired status
+    Component.onCompleted: {
+        root.state = HeistManager.deviceIsPaired(deviceId) ? "paired" : "unpaired";
+    }
+
+    ///////////////////////////////////////////////////////////
+    //          UI
+    ///////////////////////////////////////////////////////////
 
     //icon
     Image {
@@ -64,48 +82,113 @@ Column {
         }
     }
 
-    //data receiver
-    HeistReceiver {
-        id: receiver
-        onRecordChanged: if(record) HeistManager.deviceIsPaired = true;
-        onErrorChanged: {
-            if(error) {
-                register = false;
-            }
-        }
-    }
-
-    //entry states
-    states: [
-        State { name: "pair" },
-        State { name: "link" }
-    ]
-
-    //manage code input
+    /*
+      Updates code according to values entered by the user via keypad
+      \a value - key value
+    */
     function submitEntry(value) {
+
+        //back key
         if(value === "back" && code.length > 0) {
             code.pop();
             slots.contentItem.children[code.length].digit = "";
-        } else if(value !== "back" && code.length < 4) {
+        }
+
+        //valid entry
+        else if(value !== "back" && code.length < 4) {
             slots.contentItem.children[code.length].digit = value;
             code.push(value);
         }
-        receiver.code = code.join("");
+
+        //update receiver
+        receiver.code = getCodeString();
     }
 
-    //restore initial state
-    function reset() {
-
-        //unregister receiver
-        receiver.code = null;
-
-        //change paired state
-        HeistManager.deviceIsPaired = false;
-
-        //clear code
+    /*! \internal
+     Clears code entry
+    */
+    function resetCode() {
         for(var i=0; i<4; i++) {
             slots.contentItem.children[i].digit = "";
         }
         code.length = 0;
+        receiver.code = getCodeString();
     }
+
+    /*
+      Code to string conversion
+    */
+    function getCodeString() {
+        return code ? code.join(""): "";
+    }
+
+
+    ///////////////////////////////////////////////////////////
+    //          DEVICE PAIRING
+    ///////////////////////////////////////////////////////////
+
+    //listens for iterative heist data updates
+    HeistReceiver {
+        id: receiver
+        onSessionChanged: validateSession();
+        onErrorChanged: pairingError();
+    }
+
+    /*
+      Once a valid session is determined, established pairing. Once a session
+      becomes invalid, terminate the pairing. A valid session is one that has
+      an heist entry corresponding with the pairing code and does not have an
+      assigned device.
+    */
+    function validateSession() {
+        //valid session
+        if(receiver.session) {
+            if(receiver.device) {
+                //code is already in use - terminate session on table
+            } else {
+                pair();
+            }
+        }
+        //session terminated on table
+        else {
+            unpair();
+        }
+    }
+
+    /*
+      Create the pairing in the manager and update the ui state
+    */
+    function pair() {
+        if(root.state === "unpaired") {
+            HeistManager.setPairing(getCodeString(), deviceId);
+            root.state = "paired";
+        }
+    }
+
+    /*
+      Destroy the pairing in the manager and update the ui state
+    */
+    function unpair() {
+        if(root.state === "paired") {
+            HeistManager.releasePairing(getCodeString(), deviceId);
+            resetCode();
+            root.state = "unpaired";
+        }
+    }
+
+    /*
+      Handles errors during pairing
+    */
+    function pairingError() {
+        if(receiver.error) {
+            HeistManager.removeSession(getCodeString());
+            receiver.register = false;
+        }
+    }
+
+    //heist paired states
+    states: [
+        State { name: "unpaired" },
+        State { name: "paired" }
+    ]
 }

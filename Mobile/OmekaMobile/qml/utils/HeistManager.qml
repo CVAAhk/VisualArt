@@ -8,22 +8,100 @@ Item {
     readonly property var get: "GET";
     readonly property var post: "POST";
     readonly property var put: "PUT";
-    readonly property var del: "DELETE";
+    readonly property var del: "DELETE";        
 
-    /*Url to heist plugin*/
+    /*
+     Url to heist plugin
+    */
     readonly property var baseUrl: Omeka.rest+"heist/"
 
-    /*Map session codes to heist record id*/
+    /*
+     Map session codes to heist record id
+    */
     readonly property var sessions: ({});
 
-    /*Map session codes to item lists*/
-    readonly property var items: ({});
+    /*
+     Map session codes to item lists
+    */
+    readonly property var items: ({});   
 
-    /*Indicates the device is paired with the table for content sharing*/
-    property var deviceIsPaired: false
+    /*
+      Universally unique identifier to tag the Heist instance. Currently only
+      applicable to mobile devices but can eventually be leveraged for multiple
+      table instances targeting the same omeka endpoint.
+    */
+    property var uid: guid.getSequentialGUID();
 
     /*List of registered receivers of iterative polling results*/
     property var receivers: [];
+
+
+    ///////////////////////////////////////////////////////////
+    //          PAIR TRACKING
+    ///////////////////////////////////////////////////////////
+
+    //tracks entities involved in pairings
+    Pairings {
+        id: pairings
+    }
+
+    /*
+      Establish pairing between table user and device
+    */
+    function setPairing(user, device) {
+        if(pairings.setPairing(user, device)) {
+            setDevice(user, device);
+        }
+    }
+
+    /*
+      Release pairing between table user and device
+    */
+    function releasePairing(user, device) {
+        var test = pairings.releasePairing(user, device)
+        if(test) {
+            setDevice(user, "");
+        }
+    }
+
+    /*
+      Determines if device is currently paired with table user
+    */
+    function deviceIsPaired(device) {
+        return pairings.deviceIsPaired(device);
+    }
+
+    /*
+      Determines if table user is currently paired with device
+    */
+    function userIsPaired(user) {
+        return pairings.userIsPaired(user);
+    }
+
+    /*! \internal
+     Add session if one does not exist
+     \a result - query result
+    */
+    function addSession(result) {
+        if(!result) return;
+        if(!(result.pairing_id in sessions)) {
+            sessions[result.pairing_id] = result.id;
+        }
+    }
+
+    /*! \internal
+     Remove existing session
+     \a code - session pairing code
+    */
+    function removeSession(code) {
+        if(code in sessions) {
+            delete sessions[code];
+        }
+    }
+
+    ///////////////////////////////////////////////////////////
+    //          DATA POLLING
+    ///////////////////////////////////////////////////////////
 
     //iteratively polls heist for data updates
     Timer {
@@ -32,6 +110,15 @@ Item {
         repeat: true
         triggeredOnStart: true
         onTriggered: pollData()
+    }
+
+    /*! \internal
+      Submits poll requests for heist updates
+    */
+    function pollData() {
+        for(var i=0; i<receivers.length; i++) {
+            getData(baseUrl+"?pairing_id="+receivers[i].code, receivers[i]);
+        }
     }
 
     /*
@@ -63,14 +150,10 @@ Item {
         return receivers.indexOf(receiver) !== -1;
     }
 
-    /*! \internal
-      Submits poll requests for heist updates
-    */
-    function pollData() {
-        for(var i=0; i<receivers.length; i++) {
-            getData(baseUrl+"?pairing_id="+receivers[i].code, receivers[i]);
-        }
-    }
+
+    ///////////////////////////////////////////////////////////
+    //          HEIST CORE
+    ///////////////////////////////////////////////////////////
 
     /*! \internal
       Sends http request and links response handler
@@ -80,6 +163,7 @@ Item {
       \a context - calling object instance
     */
     function submitRequest(url, type, body, context) {
+        console.log("REQUEST: "+url+" "+body);
         var request = new XMLHttpRequest();
         request.type = type;
         request.context = context;
@@ -99,20 +183,21 @@ Item {
                 switch(request.type) {
                     case get:
                         var result = JSON.parse(request.responseText);
+                        addSession(result[0]);
                         request.context.data = result;
                         break;
                     case post:
                         var result = JSON.parse(request.responseText);
-                        sessions[result.pairing_id] = result.id;
+                        addSession(result);
                         if(request.status === 201) {
-                            console.log("ENTRY ADDED");
+                            console.log("record ADDED");
                         }
                         break;
                     case put:
                         console.log(request.status);
                         break;
                     case del:
-                        console.log("ENTRY REMOVED");
+                        console.log("record REMOVED");
                         break;
                 }
             }
@@ -120,7 +205,7 @@ Item {
     }
 
     /*! \internal
-      Add data entry to heist table
+      Add data record to heist table
       \a data - record data
       \a context - calling object
     */
@@ -130,7 +215,7 @@ Item {
     }
 
     /*! \internal
-      Remove entry by id
+      Remove record by id
       \a id - record id
       \a context - calling object
     */
@@ -159,16 +244,19 @@ Item {
         submitRequest(url, get, "", context);
     }
 
-    /**********TABLE REQUESTS**********/
+    ///////////////////////////////////////////////////////////
+    //          TABLE REQUESTS
+    ///////////////////////////////////////////////////////////
 
     /*Clears all heist records generated by this instance*/
     function clearAllSessions() {
         for(var code in sessions) {
             removeData(sessions[code]);
         }
+        sessions = ({});
     }
 
-    /*Start session by adding a new entry with provided code
+    /*Start session by adding a new record with provided code
       /a code - pairing code
     */
     function startPairingSession(code) {
@@ -176,12 +264,13 @@ Item {
         addData(data, "");
     }
 
-    /*End session by removing entry with specified code
+    /*End session by removing record with specified code
       /a code - pairing code
     */
     function endPairingSession(code) {
         if(code in sessions) {
             removeData(sessions[code]);
+            removeSession(code);
         }
     }
 
@@ -191,6 +280,7 @@ Item {
       /a context - calling object
     */
     function addItem(code, item, context) {
+        if(!(code in sessions)) return;
         if(!(code in items)) {
             items[code] = [];
         }
@@ -198,7 +288,10 @@ Item {
         updateData(baseUrl+sessions[code], {item_ids: items[code]}, context);
     }
 
-    /**********DEVICE REQUESTS**********/
+
+    ///////////////////////////////////////////////////////////
+    //          DEVICE REQUESTS
+    ///////////////////////////////////////////////////////////
 
     /*Set device id corresponding to pairing code. A non empty value signals a connection to the table
       and an empty value signals a disconnection.
@@ -207,7 +300,9 @@ Item {
       /a context - calling object
     */
     function setDevice(code, device) {
-        updateData(baseUrl+sessions[code], {device_id: device}, "");
+        if(code in sessions) {
+            updateData(baseUrl+sessions[code], {device_id: device}, "");
+        }
     }
 
     /*Remove item from list
@@ -216,6 +311,7 @@ Item {
       /a context - calling object
     */
     function removeItem(code, item, context) {
+        if(!(code in sessions)) return;
         if(code in items && items[code].indexOf(item) > -1) {
             var index = items[code].indexOf(item);
             items[code].splice(index, 1);

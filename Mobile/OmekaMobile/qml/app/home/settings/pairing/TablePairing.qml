@@ -51,13 +51,13 @@ Item {
         anchors.topMargin: Resolution.applyScale(438)
         width: parent.width
         height: Resolution.applyScale(816)
-        onUnpair: entry.reset()
+        onUnpair: entry.unpair();
     }
 
     //pairing states
     states: [
         State {
-            name: "pair"
+            name: "unpaired"
             AnchorChanges { target: keypad; anchors.bottom: parent.bottom; anchors.top: undefined }
             PropertyChanges { target: keypad; opacity: 1 }
             AnchorChanges { target: entry; anchors.top: parent.top; anchors.bottom: undefined }
@@ -66,7 +66,7 @@ Item {
             PropertyChanges { target: unpair; opacity: 0 }
         },
         State {
-            name: "link"
+            name: "paired"
             AnchorChanges { target: keypad; anchors.bottom: undefined; anchors.top: parent.bottom }
             PropertyChanges { target: keypad; opacity: 0 }
             AnchorChanges { target: entry; anchors.top: undefined; anchors.bottom: parent.top }

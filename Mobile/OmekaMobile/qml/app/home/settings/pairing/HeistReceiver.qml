@@ -9,7 +9,7 @@ Item {
     id: receiver
 
     //heist data fields
-    property var record: null;
+    property var session: null;
     property var device: null;
     property var items: null;
     property var error: null;
@@ -49,11 +49,12 @@ Item {
     onDataChanged: {
         if(data.errors) {
             error = data.errors[0].message;
+            clearFields();
         } else {
             var entry = data[0];
             if(entry) {
-                setRecord(entry.id);
                 setDevice(entry.device_id);
+                setSession(entry.id);
                 setItems(entry.item_ids);
             } else {
                 error = "Invalid Pairing Code";
@@ -65,7 +66,7 @@ Item {
       Clear data fields
     */
     function clearFields() {
-        setRecord(null);
+        setSession(null);
         setDevice(null);
         setItems(null);
         setError(null);
@@ -74,9 +75,9 @@ Item {
     /*
       Set record id
     */
-    function setRecord(value) {
-        if(record === value) return;
-        record = value;
+    function setSession(value) {
+        if(session === value) return;
+        session = value;
     }
 
     /*
