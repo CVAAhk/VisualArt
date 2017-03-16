@@ -14,6 +14,8 @@ Item
 
     property alias imageHeight: img.height
 
+    property alias title: title.text
+
     property bool topScreen
 
     property int imageTimerDuration : 100000000 // Settings.IMAGE_TIMER_DURATION
@@ -70,6 +72,11 @@ Item
         source: "content/POI/title_bkg.png"
         anchors.top: img.bottom
         anchors.left: root.left
+        Text
+        {
+            id: title
+
+        }
 
     }
     Image

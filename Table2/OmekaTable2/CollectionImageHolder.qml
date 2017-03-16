@@ -43,10 +43,11 @@ Item
     //=========================================================================
     // FUNCTIONS
     //=========================================================================
-    function createImage(filepath, startX, startY, imageRotation, imageWidth, imageHeight)
+    function createImage(filepath, startX, startY, imageRotation, imageWidth, imageHeight, title)
     {
         console.log("Creating image in holder " + filepath + " " + startX + " " + startY +
-                    " " + imageRotation + ", width: " + imageWidth + ", height: " + imageHeight);
+                    " " + imageRotation + ", width: " + imageWidth + ", height: " + imageHeight +
+                    " title : ", title);
 
         var component = Qt.createComponent("DetailImage.qml");
 
@@ -63,6 +64,7 @@ Item
             imageItem.y = startY - root.y;
             imageItem.imageWidth = 247;
             imageItem.imageHeight = imageWidth / imageHeight * 247;
+            imageItem.title = title;
             //imageItem.scale = 0.5;
             //imageItem.x -= imageItem.width / 4;
             //imageItem.y -= imageItem.height / 4;

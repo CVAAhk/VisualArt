@@ -67,6 +67,8 @@ Component {
             itemData.media = []
             itemData.mediaTypes = []
 
+            //setInfo();
+
             Omeka.getFiles(itemData.id, root)
         }
         function setInfo()
@@ -76,9 +78,9 @@ Component {
                 name = metadata.get(i).element.name.toLowerCase();
                 if(name === "title") {
                     title = metadata.get(i).text
-                } else if(name === "source") {
+                } /*else if(name === "source") {
                     source = metadata.get(i).text.split("View")[0]
-                }
+                }*/
             }
         }
 

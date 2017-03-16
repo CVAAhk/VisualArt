@@ -56,5 +56,6 @@ DISTFILES += \
     CollectionImageHolder.qml \
     DetailImage.qml \
     TouchHelpers/ClickableButton.qml \
-    TouchHelpers/MultiPointPinchArea.qml
+    TouchHelpers/MultiPointPinchArea.qml \
+    ScrollBar.qml
 

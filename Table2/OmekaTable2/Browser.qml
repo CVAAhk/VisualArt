@@ -36,7 +36,7 @@ Item {
 
     signal imageDragged();
 
-    signal createImage(string source, int imageX, int imageY, int imageRotation, int imageWidth, int imageHeight);
+    signal createImage(string source, int imageX, int imageY, int imageRotation, int imageWidth, int imageHeight, string title);
 
 //    Flickable
 //    {
@@ -78,178 +78,190 @@ Item {
 //            visible: parent.enabled && Settings.DEBUG_VIEW
 //        }
 //    }
-    MultiPointTouchArea
-    {
-        id: touch_area
 
-        x: path.currentItem.x
-        y: path.currentItem.y
-
-        width: 500
-        height: 500
-
-        enabled: true
-
-        property bool creatingImage: false
-        property int touchId: -1
-
-        property int bottomFlickMax: 500
-
-        property var dragAmounts: ({})
-        property var dragImages: ({})
-
-        onTouchUpdated:
+        Component.onCompleted:
         {
-            var updatedCreatedImage = false;
 
-            for(var i = 0; i < touchPoints.length; i++)
+            MultiPointTouchArea
             {
-                var touchPoint = touchPoints[i];
+                id: touch_area
 
-                var deltaX = touchPoint.x - touchPoint.previousX;
-                var deltaY = touchPoint.y - touchPoint.previousY;
+                x: path.currentItem.x
+                y: path.currentItem.y
 
-                if(!creatingImage)
+                width: 500
+                height: 500
+
+                enabled: true
+
+                property bool creatingImage: false
+                property int touchId: -1
+
+                property int bottomFlickMax: 500
+
+                property var dragAmounts: ({})
+                property var dragImages: ({})
+
+                onTouchUpdated:
                 {
-//                    if(touchPoint.y < bottomFlickMax)
-//                    {
-//                        scroll_view.flick((touchPoint.x - touchPoint.previousX) * 100, 0);
-//                    }
+                    var updatedCreatedImage = false;
 
-                    if(touchPoint.y < bottomFlickMax + 100)
+                    for(var i = 0; i < touchPoints.length; i++)
                     {
-                        if(!dragAmounts[touchPoint.pointId])
+                        var touchPoint = touchPoints[i];
+
+                        var deltaX = touchPoint.x - touchPoint.previousX;
+                        var deltaY = touchPoint.y - touchPoint.previousY;
+
+                        if(!creatingImage)
                         {
-                            dragAmounts[touchPoint.pointId] = 0.0;
-                            dragImages[touchPoint.pointId] = path.currentItem//path.itemAt(touch_area.x +touchPoint.x, touch_area.y +touchPoint.y)//scroll_view.getImageAtX(touchPoint.x);
-                            console.log("touchPoint.x = ", touchPoint.x, " touchPoint.y = ", touchPoint.y)
-                            //console.log("touchPoint.pointId( ",touchPoint.pointId, " ) souce = ", dragImages[touchPoint.pointId])
-                        }
+        //                    if(touchPoint.y < bottomFlickMax)
+        //                    {
+        //                        scroll_view.flick((touchPoint.x - touchPoint.previousX) * 100, 0);
+        //                    }
 
-                        var drag = dragAmounts[touchPoint.pointId] ?
-                                    dragAmounts[touchPoint.pointId] : 0.0
-
-                        dragAmounts[touchPoint.pointId] = drag + deltaY;
-
-                        if(dragAmounts[touchPoint.pointId] < -100)
-                        {
-                            var imageSource = dragImages[touchPoint.pointId].source;
-                            var item = dragImages[touchPoint.pointId];
-
-
-                            if(imageSource !== "" &&
-                                    (!item.inScene))
+                            if(touchPoint.y < bottomFlickMax + 100)
                             {
-                                creatingImage = true;
+                                if(!dragAmounts[touchPoint.pointId])
+                                {
+                                    dragAmounts[touchPoint.pointId] = 0.0;
+                                    dragImages[touchPoint.pointId] = path.currentItem//path.itemAt(touch_area.x +touchPoint.x, touch_area.y +touchPoint.y)//scroll_view.getImageAtX(touchPoint.x);
+                                    console.log("touchPoint.x = ", touchPoint.x, " touchPoint.y = ", touchPoint.y)
+                                    //console.log("touchPoint.pointId( ",touchPoint.pointId, " ) souce = ", dragImages[touchPoint.pointId])
+                                }
 
-                                touchId = touchPoint.pointId;
+                                var drag = dragAmounts[touchPoint.pointId] ?
+                                            dragAmounts[touchPoint.pointId] : 0.0
 
-                                selected_image.source = imageSource;
+                                dragAmounts[touchPoint.pointId] = drag + deltaY;
 
-                                //scroll_view.cancelFlick();
+                                if(dragAmounts[touchPoint.pointId] < -100)
+                                {
+                                    var imageSource = dragImages[touchPoint.pointId].source;
+                                    var item = dragImages[touchPoint.pointId];
+                                    var title = dragImages[touchPoint.pointId].title;
 
-                                //scroll_view.imageInScene(selected_image.source);
-                                item.imageInScene();
-                                imageItems.push(item);
 
+                                    if(imageSource !== "" &&
+                                            (!item.inScene))
+                                    {
+                                        creatingImage = true;
+
+                                        touchId = touchPoint.pointId;
+
+                                        selected_image.source = imageSource;
+
+                                        selected_image.title = title;
+
+                                        //scroll_view.cancelFlick();
+
+                                        //scroll_view.imageInScene(selected_image.source);
+                                        item.imageInScene();
+                                        imageItems.push(item);
+
+                                        selected_image.screenX = touchPoint.x;
+                                        selected_image.screenY = touchPoint.y;
+
+                                        updatedCreatedImage = true;
+
+                                        root.imageDragged();
+
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if(touchPoint.pointId === touchId && touchPoint.pressed)
+                            {
                                 selected_image.screenX = touchPoint.x;
                                 selected_image.screenY = touchPoint.y;
 
                                 updatedCreatedImage = true;
-
-                                root.imageDragged();
-
-                                break;
                             }
                         }
                     }
-                }
-                else
-                {
-                    if(touchPoint.pointId === touchId && touchPoint.pressed)
-                    {
-                        selected_image.screenX = touchPoint.x;
-                        selected_image.screenY = touchPoint.y;
 
-                        updatedCreatedImage = true;
+                    if(creatingImage && !updatedCreatedImage)
+                    {
+                        creatingImage = false;
+
+                        var imageCenterX = 0;
+                        var imageCenterY = 0;
+                        var rotation = 0;
+
+                        imageCenterX = selected_image.x + root.x + touch_area.x; //selected_image.width / 2 + root.x + touch_area.x;//
+                        imageCenterY = selected_image.y + root.y + touch_area.y; // selected_image.height / 2 + root.y + touch_area.y;
+
+                        console.log("MAking select imag e " + selected_image.width + " " + selected_image.height);
+
+                        root.createImage(selected_image.source, imageCenterX, imageCenterY, rotation,
+                                         selected_image.width, selected_image.height, selected_image.title);
                     }
-                }
-            }
 
-            if(creatingImage && !updatedCreatedImage)
-            {
-                creatingImage = false;
-
-                var imageCenterX = 0;
-                var imageCenterY = 0;
-                var rotation = 0;
-
-                imageCenterX = selected_image.x + root.x + touch_area.x; //selected_image.width / 2 + root.x + touch_area.x;//
-                imageCenterY = selected_image.y + root.y + touch_area.y; // selected_image.height / 2 + root.y + touch_area.y;
-
-                console.log("MAking select imag e " + selected_image.width + " " + selected_image.height);
-
-                root.createImage(selected_image.source, imageCenterX, imageCenterY, rotation,
-                                 selected_image.width, selected_image.height);
-            }
-
-            var dragEntries = Object.getOwnPropertyNames(dragAmounts);
-            for (var index = 0; index < dragEntries.length; index++)
-            {
-                var touchEntry = dragEntries[index];
-                var updatedEntry = false;
-                for(var j = 0; j < touchPoints.length; j++)
-                {
-                    if(touchPoints[j].pointId == touchEntry)
+                    var dragEntries = Object.getOwnPropertyNames(dragAmounts);
+                    for (var index = 0; index < dragEntries.length; index++)
                     {
-                        updatedEntry = true;
+                        var touchEntry = dragEntries[index];
+                        var updatedEntry = false;
+                        for(var j = 0; j < touchPoints.length; j++)
+                        {
+                            if(touchPoints[j].pointId == touchEntry)
+                            {
+                                updatedEntry = true;
+                            }
+                        }
+
+                        if(!updatedEntry)
+                        {
+                            dragAmounts[touchEntry] = 0.0;
+                        }
                     }
                 }
 
-                if(!updatedEntry)
+                Image
                 {
-                    dragAmounts[touchEntry] = 0.0;
+                    id: selected_image
+
+                    visible: touch_area.creatingImage
+
+                    source: ""
+                    height: root.imageHeight
+                    fillMode: Image.PreserveAspectFit
+
+                    property int screenX: 0
+                    property int screenY: 0
+
+                    x: screenX - width / 2
+                    y: screenY - height / 2
+
+                    property string title: ""
+                    property string description: ""
                 }
+
+        //        Rectangle
+        //        {
+        //            width: path.width
+        //            height: path.height
+        //            color: "red"
+        //            opacity: 0.5
+        //            visible: parent.enabled && Settings.DEBUG_VIEW
+        //        }
+
+                /*
+                Rectangle
+                {
+                    width: scroll_view.contentWidth
+                    height: scroll_view.contentHeight
+                    color: "green"
+                    opacity: 0.5
+                    visible: parent.enabled && Settings.showDebugInfo
+                }
+                */
             }
         }
 
-        Image
-        {
-            id: selected_image
-
-            visible: touch_area.creatingImage
-
-            source: ""
-            height: root.imageHeight
-            fillMode: Image.PreserveAspectFit
-
-            property int screenX: 0
-            property int screenY: 0
-
-            x: screenX - width / 2
-            y: screenY - height / 2
-        }
-
-//        Rectangle
-//        {
-//            width: path.width
-//            height: path.height
-//            color: "red"
-//            opacity: 0.5
-//            visible: parent.enabled && Settings.DEBUG_VIEW
-//        }
-
-        /*
-        Rectangle
-        {
-            width: scroll_view.contentWidth
-            height: scroll_view.contentHeight
-            color: "green"
-            opacity: 0.5
-            visible: parent.enabled && Settings.showDebugInfo
-        }
-        */
-    }
 
 
 

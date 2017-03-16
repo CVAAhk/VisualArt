@@ -40,7 +40,7 @@ Item {
         busy: true
         onCreateImage:
         {
-            imageHolder.createImage(source, imageX, imageY, imageRotation, imageWidth, imageHeight)
+            imageHolder.createImage(source, imageX, imageY, imageRotation, imageWidth, imageHeight, title)
         }
     }
     CollectionImageHolder
