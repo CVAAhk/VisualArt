@@ -70,6 +70,10 @@ Item
         source: "content/POI/title_bkg.png"
         anchors.top: img.bottom
         anchors.left: root.left
+        Text
+        {
+            
+        }
 
     }
     Image
@@ -142,7 +146,7 @@ Item
     Rectangle
     {
         anchors.fill: parent
-        color: "green"
+        color: "blue"
         opacity: 0.5
         visible: parent.enabled && Settings.DEBUG_VIEW
     }

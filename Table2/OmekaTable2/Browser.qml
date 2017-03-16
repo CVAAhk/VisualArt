@@ -59,16 +59,37 @@ Item {
             {
                 console.log("current index = ", currentIndex)
             }
+            onDragStarted:
+            {
+                console.log("drag starts!!!!")
+
+            }
+            onDragEnded:
+            {
+                console.log("drag ends!!!!")
+                touch_area.enabled = true;
+
+            }
+            onFlickStarted:
+            {
+                console.log("flick starts!!!!")
+                touch_area.enabled = false;
+            }
+            onFlickEnded:
+            {
+                console.log("flick ends")
+                touch_area.enabled = true;
+            }
 
 
         }
-        Rectangle
-        {
-            anchors.fill: parent
-            color: "green"
-            opacity: 0.5
-            visible: parent.enabled && Settings.DEBUG_VIEW
-        }
+//        Rectangle
+//        {
+//            anchors.fill: parent
+//            color: "green"
+//            opacity: 0.5
+//            visible: parent.enabled && Settings.DEBUG_VIEW
+//        }
 //        Rectangle
 //        {
 //            width: scroll_view.contentWidth
@@ -82,11 +103,12 @@ Item {
     {
         id: touch_area
 
-        x: path.currentItem.x
-        y: path.currentItem.y
+        x: root.width/2 - 200
+        y: root.height/2 - 200
 
-        width: 500
-        height: 500
+        width: 400
+        height: 400
+        //anchors.fill: path
 
         enabled: true
 
@@ -98,6 +120,22 @@ Item {
         property var dragAmounts: ({})
         property var dragImages: ({})
 
+        onReleased:
+        {
+            for(var i = 0; i < touchPoints.length; i++)
+            {
+                var touchPoint = touchPoints[i];
+                if(touchPoint.y > 0 && dragAmounts[touchPoint.pointId] > -100)
+                {
+                    touch_area.enabled = false;
+                }
+                else
+                {
+                    touch_area.enabled = true;
+                }
+            }
+        }
+
         onTouchUpdated:
         {
             var updatedCreatedImage = false;
@@ -108,13 +146,12 @@ Item {
 
                 var deltaX = touchPoint.x - touchPoint.previousX;
                 var deltaY = touchPoint.y - touchPoint.previousY;
+                console.log("deltaY = ", deltaY)
+
+
 
                 if(!creatingImage)
                 {
-//                    if(touchPoint.y < bottomFlickMax)
-//                    {
-//                        scroll_view.flick((touchPoint.x - touchPoint.previousX) * 100, 0);
-//                    }
 
                     if(touchPoint.y < bottomFlickMax + 100)
                     {
@@ -239,16 +276,16 @@ Item {
 //            visible: parent.enabled && Settings.DEBUG_VIEW
 //        }
 
-        /*
+
         Rectangle
         {
-            width: scroll_view.contentWidth
-            height: scroll_view.contentHeight
+            width: parent.width
+            height: parent.height
             color: "green"
             opacity: 0.5
-            visible: parent.enabled && Settings.showDebugInfo
+            visible: parent.enabled && Settings.DEBUG_VIEW
         }
-        */
+
     }
 
 
