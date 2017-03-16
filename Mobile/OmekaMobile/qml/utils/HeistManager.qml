@@ -18,12 +18,12 @@ Item {
     /*
      Map session codes to heist record id
     */
-    readonly property var sessions: ({});
+    property var sessions: ({});
 
     /*
      Map session codes to item lists
     */
-    readonly property var items: ({});   
+    property var items: ({});
 
     /*
       Universally unique identifier to tag the Heist instance. Currently only

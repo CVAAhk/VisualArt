@@ -157,4 +157,5 @@ DISTFILES += \
     qml/test/heist/TestHeist.qml \
     qml/test/heist/RequestUI.qml \
     qml/app/home/settings/pairing/HeistReceiver.qml \
-    qml/utils/Pairings.qml
+    qml/utils/Pairings.qml \
+    qml/test/heist/StateLabel.qml
