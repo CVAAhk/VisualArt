@@ -65,6 +65,22 @@ Item {
     }
 
     /*
+      Returns user paired with device
+      \a device - device id
+    */
+    function getUserByDevice(device) {
+        return pairings.getUserByDevice(device);
+    }
+
+    /*
+      Returns device paired with user
+      \a user - pairing code
+    */
+    function getDeviceByUser(user) {
+        return pairings.getDeviceByUser(user);
+    }
+
+    /*
       Determines if device is currently paired with table user
     */
     function deviceIsPaired(device) {

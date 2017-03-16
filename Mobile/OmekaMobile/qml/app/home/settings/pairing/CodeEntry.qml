@@ -18,10 +18,17 @@ Column {
     */
     property var code: []
 
-    //update state based on heist paired status
+    //revive state based on paired status
     Component.onCompleted: {
         root.state = HeistManager.deviceIsPaired(deviceId) ? "paired" : "unpaired";
+        if(state === "paired") {
+            receiver.code = HeistManager.getUserByDevice(deviceId);
+            code = receiver.code.split('');
+        }
     }
+
+    //deactivate receiver
+    Component.onDestruction: resetCode();
 
     ///////////////////////////////////////////////////////////
     //          UI
