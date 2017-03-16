@@ -111,23 +111,15 @@ Item {
         height: 400
         //anchors.fill: path
 
+        property bool creatingImage: false
+        property int touchId: -1
 
-            MultiPointTouchArea
-            {
-                id: touch_area
 
-                x: path.currentItem.x
-                y: path.currentItem.y
+        property int bottomFlickMax: 500
 
-                width: 500
-                height: 500
+        property var dragAmounts: ({})
+        property var dragImages: ({})
 
-                enabled: true
-
-<<<<<<< HEAD
-                property bool creatingImage: false
-                property int touchId: -1
-=======
         onReleased:
         {
             for(var i = 0; i < touchPoints.length; i++)
@@ -147,163 +139,141 @@ Item {
         onTouchUpdated:
         {
             var updatedCreatedImage = false;
->>>>>>> origin/table2
+            for(var i = 0; i < touchPoints.length; i++)
+            {
+                var touchPoint = touchPoints[i];
 
-                property int bottomFlickMax: 500
-
-<<<<<<< HEAD
-                property var dragAmounts: ({})
-                property var dragImages: ({})
-=======
                 var deltaX = touchPoint.x - touchPoint.previousX;
                 var deltaY = touchPoint.y - touchPoint.previousY;
-                console.log("deltaY = ", deltaY)
 
-
->>>>>>> origin/table2
-
-                onTouchUpdated:
+                if(!creatingImage)
                 {
-<<<<<<< HEAD
-                    var updatedCreatedImage = false;
-=======
->>>>>>> origin/table2
+//                    if(touchPoint.y < bottomFlickMax)
+//                    {
+//                        scroll_view.flick((touchPoint.x - touchPoint.previousX) * 100, 0);
+//                    }
 
-                    for(var i = 0; i < touchPoints.length; i++)
+                    if(touchPoint.y < bottomFlickMax + 100)
                     {
-                        var touchPoint = touchPoints[i];
-
-                        var deltaX = touchPoint.x - touchPoint.previousX;
-                        var deltaY = touchPoint.y - touchPoint.previousY;
-
-                        if(!creatingImage)
+                        if(!dragAmounts[touchPoint.pointId])
                         {
-        //                    if(touchPoint.y < bottomFlickMax)
-        //                    {
-        //                        scroll_view.flick((touchPoint.x - touchPoint.previousX) * 100, 0);
-        //                    }
-
-                            if(touchPoint.y < bottomFlickMax + 100)
-                            {
-                                if(!dragAmounts[touchPoint.pointId])
-                                {
-                                    dragAmounts[touchPoint.pointId] = 0.0;
-                                    dragImages[touchPoint.pointId] = path.currentItem//path.itemAt(touch_area.x +touchPoint.x, touch_area.y +touchPoint.y)//scroll_view.getImageAtX(touchPoint.x);
-                                    console.log("touchPoint.x = ", touchPoint.x, " touchPoint.y = ", touchPoint.y)
-                                    //console.log("touchPoint.pointId( ",touchPoint.pointId, " ) souce = ", dragImages[touchPoint.pointId])
-                                }
-
-                                var drag = dragAmounts[touchPoint.pointId] ?
-                                            dragAmounts[touchPoint.pointId] : 0.0
-
-                                dragAmounts[touchPoint.pointId] = drag + deltaY;
-
-                                if(dragAmounts[touchPoint.pointId] < -100)
-                                {
-                                    var imageSource = dragImages[touchPoint.pointId].source;
-                                    var item = dragImages[touchPoint.pointId];
-                                    var title = dragImages[touchPoint.pointId].title;
-
-
-                                    if(imageSource !== "" &&
-                                            (!item.inScene))
-                                    {
-                                        creatingImage = true;
-
-                                        touchId = touchPoint.pointId;
-
-                                        selected_image.source = imageSource;
-
-                                        selected_image.title = title;
-
-                                        //scroll_view.cancelFlick();
-
-                                        //scroll_view.imageInScene(selected_image.source);
-                                        item.imageInScene();
-                                        imageItems.push(item);
-
-                                        selected_image.screenX = touchPoint.x;
-                                        selected_image.screenY = touchPoint.y;
-
-                                        updatedCreatedImage = true;
-
-                                        root.imageDragged();
-
-                                        break;
-                                    }
-                                }
-                            }
+                            dragAmounts[touchPoint.pointId] = 0.0;
+                            dragImages[touchPoint.pointId] = path.currentItem//path.itemAt(touch_area.x +touchPoint.x, touch_area.y +touchPoint.y)//scroll_view.getImageAtX(touchPoint.x);
+                            console.log("touchPoint.x = ", touchPoint.x, " touchPoint.y = ", touchPoint.y)
+                            //console.log("touchPoint.pointId( ",touchPoint.pointId, " ) souce = ", dragImages[touchPoint.pointId])
                         }
-                        else
+
+                        var drag = dragAmounts[touchPoint.pointId] ?
+                                    dragAmounts[touchPoint.pointId] : 0.0
+
+                        dragAmounts[touchPoint.pointId] = drag + deltaY;
+
+                        if(dragAmounts[touchPoint.pointId] < -100)
                         {
-                            if(touchPoint.pointId === touchId && touchPoint.pressed)
+                            var imageSource = dragImages[touchPoint.pointId].source;
+                            var item = dragImages[touchPoint.pointId];
+                            var title = dragImages[touchPoint.pointId].title;
+
+
+                            if(imageSource !== "" &&
+                                    (!item.inScene))
                             {
+                                creatingImage = true;
+
+                                touchId = touchPoint.pointId;
+
+                                selected_image.source = imageSource;
+
+                                selected_image.title = title;
+
+                                //scroll_view.cancelFlick();
+
+                                //scroll_view.imageInScene(selected_image.source);
+                                item.imageInScene();
+                                imageItems.push(item);
+
                                 selected_image.screenX = touchPoint.x;
                                 selected_image.screenY = touchPoint.y;
 
                                 updatedCreatedImage = true;
+
+                                root.imageDragged();
+
+                                break;
                             }
-                        }
-                    }
-
-                    if(creatingImage && !updatedCreatedImage)
-                    {
-                        creatingImage = false;
-
-                        var imageCenterX = 0;
-                        var imageCenterY = 0;
-                        var rotation = 0;
-
-                        imageCenterX = selected_image.x + root.x + touch_area.x; //selected_image.width / 2 + root.x + touch_area.x;//
-                        imageCenterY = selected_image.y + root.y + touch_area.y; // selected_image.height / 2 + root.y + touch_area.y;
-
-                        console.log("MAking select imag e " + selected_image.width + " " + selected_image.height);
-
-                        root.createImage(selected_image.source, imageCenterX, imageCenterY, rotation,
-                                         selected_image.width, selected_image.height, selected_image.title);
-                    }
-
-                    var dragEntries = Object.getOwnPropertyNames(dragAmounts);
-                    for (var index = 0; index < dragEntries.length; index++)
-                    {
-                        var touchEntry = dragEntries[index];
-                        var updatedEntry = false;
-                        for(var j = 0; j < touchPoints.length; j++)
-                        {
-                            if(touchPoints[j].pointId == touchEntry)
-                            {
-                                updatedEntry = true;
-                            }
-                        }
-
-                        if(!updatedEntry)
-                        {
-                            dragAmounts[touchEntry] = 0.0;
                         }
                     }
                 }
-
-                Image
+                else
                 {
-                    id: selected_image
+                    if(touchPoint.pointId === touchId && touchPoint.pressed)
+                    {
+                        selected_image.screenX = touchPoint.x;
+                        selected_image.screenY = touchPoint.y;
 
-                    visible: touch_area.creatingImage
+                        updatedCreatedImage = true;
+                    }
+                }
+            }
 
-                    source: ""
-                    height: root.imageHeight
-                    fillMode: Image.PreserveAspectFit
+            if(creatingImage && !updatedCreatedImage)
+            {
+                creatingImage = false;
 
-                    property int screenX: 0
-                    property int screenY: 0
+                var imageCenterX = 0;
+                var imageCenterY = 0;
+                var rotation = 0;
 
-                    x: screenX - width / 2
-                    y: screenY - height / 2
+                imageCenterX = selected_image.x + root.x + touch_area.x; //selected_image.width / 2 + root.x + touch_area.x;//
+                imageCenterY = selected_image.y + root.y + touch_area.y; // selected_image.height / 2 + root.y + touch_area.y;
 
-                    property string title: ""
-                    property string description: ""
+                console.log("MAking select imag e " + selected_image.width + " " + selected_image.height);
+
+                root.createImage(selected_image.source, imageCenterX, imageCenterY, rotation,
+                                 selected_image.width, selected_image.height, selected_image.title);
+            }
+
+            var dragEntries = Object.getOwnPropertyNames(dragAmounts);
+            for (var index = 0; index < dragEntries.length; index++)
+            {
+                var touchEntry = dragEntries[index];
+                var updatedEntry = false;
+                for(var j = 0; j < touchPoints.length; j++)
+                {
+                    if(touchPoints[j].pointId == touchEntry)
+                    {
+                        updatedEntry = true;
+                    }
                 }
 
-<<<<<<< HEAD
+                if(!updatedEntry)
+                {
+                    dragAmounts[touchEntry] = 0.0;
+                }
+            }
+        }
+
+        Image
+        {
+            id: selected_image
+
+            visible: touch_area.creatingImage
+
+            source: ""
+            height: root.imageHeight
+            fillMode: Image.PreserveAspectFit
+
+            property int screenX: 0
+            property int screenY: 0
+
+            x: screenX - width / 2
+            y: screenY - height / 2
+
+            property string title: ""
+            property string description: ""
+        }
+
+
         //        Rectangle
         //        {
         //            width: path.width
@@ -323,22 +293,9 @@ Item {
                     visible: parent.enabled && Settings.showDebugInfo
                 }
                 */
-            }
+
         }
 
-=======
-
-        Rectangle
-        {
-            width: parent.width
-            height: parent.height
-            color: "green"
-            opacity: 0.5
-            visible: parent.enabled && Settings.DEBUG_VIEW
-        }
-
-    }
->>>>>>> origin/table2
 
 
 
