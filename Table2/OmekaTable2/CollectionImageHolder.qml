@@ -32,13 +32,13 @@ Item
     //=========================================================================
     // UI ELEMENTS
     //=========================================================================
-    Rectangle
-    {
-        color: "red"
-        anchors.fill: parent
-        opacity: 0.5
-        visible: root.debugView
-    }
+//    Rectangle
+//    {
+//        color: "red"
+//        anchors.fill: parent
+//        opacity: 0.5
+//        visible: root.debugView
+//    }
 
     //=========================================================================
     // FUNCTIONS

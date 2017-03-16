@@ -16,12 +16,12 @@ Component {
         //scale: changeScale()
         z: changeZ();//1 - Math.abs(index - path.currentIndex)
         visible: Math.abs(index - path.currentIndex) < 3 || (path.count - index + path.currentIndex) < 3
-        Behavior on opacity {
-            NumberAnimation
-            {
-                duration: 200
-            }
-        }
+//        Behavior on opacity {
+//            NumberAnimation
+//            {
+//                duration: 200
+//            }
+//        }
 
         function changeScale()
         {

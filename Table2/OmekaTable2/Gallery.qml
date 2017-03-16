@@ -19,7 +19,6 @@ Item {
         target: Omeka
         onRequestComplete:{
             if(result.context === gallery){
-                console.log("result.context = ", result.context)
                 browser.append(result)
             }
         }
