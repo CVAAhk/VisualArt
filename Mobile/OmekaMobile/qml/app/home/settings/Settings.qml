@@ -35,13 +35,21 @@ Item {
 
         /*!List of settings*/
         OmekaScrollView {
+            id: scroll
             width: parent.width
             height: parent.height - bar.height * 2
             Column {
                 ExclusiveGroup { id: settingsGroup }
-                Binding on width {when: parent; value: parent.width }
+                width: scroll.width
                 height: childrenRect.height
                 spacing: Resolution.applyScale(150)
+
+                //restore initial state when invisible
+                onVisibleChanged: {
+                    if(!visible) {
+                        settingsGroup.current = null;
+                    }
+                }
 
                 //settings
                 LayoutSetting { title: "Layout" }
