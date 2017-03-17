@@ -6,6 +6,7 @@ Column {
 
     id: root
     spacing: Resolution.applyScale(45)
+    state: "unpaired"
 
     /*
      Unique device id for pairing with heist table user
@@ -17,18 +18,6 @@ Column {
      table generated session
     */
     property var code: []
-
-    //revive state based on paired status
-    Component.onCompleted: {
-        root.state = HeistManager.deviceIsPaired(deviceId) ? "paired" : "unpaired";
-        if(state === "paired") {
-            receiver.code = HeistManager.getUserByDevice(deviceId);
-            code = receiver.code.split('');
-        }
-    }
-
-    //deactivate receiver
-    Component.onDestruction: resetCode();
 
     ///////////////////////////////////////////////////////////
     //          UI

@@ -9,6 +9,8 @@ import "pairing"
 /*!User settings*/
 Item {
 
+    property TablePairing tablePairing: TablePairing {}
+
     Column {
         anchors.fill: parent
         spacing: 0
@@ -57,7 +59,7 @@ Item {
                     title: "Pair with Collection Viewer Table"
                     onSelect: {
                         if(homeStack) {
-                            homeStack.push(Qt.resolvedUrl("pairing/TablePairing.qml"))
+                            homeStack.push(tablePairing);
                         }
                     }
                 }
