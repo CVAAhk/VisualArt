@@ -8,26 +8,24 @@ Component {
     Item
     {
         id: root
-        width: 500; height: 500
+        width: 158; height: 190
         property var itemData: ({})
         property var title
         property string source:img.source
 
-        //scale: changeScale()
+        scale: changeScale()
         z: changeZ();//1 - Math.abs(index - path.currentIndex)
         visible: Math.abs(index - path.currentIndex) < 3 || (path.count - index + path.currentIndex) < 3
-//        Behavior on opacity {
-//            NumberAnimation
-//            {
-//                duration: 200
-//            }
-//        }
 
         function changeScale()
         {
-            if(!ListView.isCurrentItem)
+            if(Math.abs(index - path.currentIndex) == 1 || Math.abs(index - path.currentIndex) == path.count - 1)
             {
-                return 1 /(Math.abs(index - path.currentIndex))
+                return 0.9
+            }
+            else if(Math.abs(index - path.currentIndex) == 2 || Math.abs(index - path.currentIndex) == path.count - 2)
+            {
+                return 0.75
             }
             else
             {
@@ -38,11 +36,11 @@ Component {
         {
             if(Math.abs(index - path.currentIndex) >= path.count - 2)
             {
-                return 1-(path.count - Math.abs(index - path.currentIndex))
+                return path.count-(path.count - Math.abs(index - path.currentIndex))
             }
             else
             {
-                return 1 - Math.abs(index - path.currentIndex)
+                return path.count - Math.abs(index - path.currentIndex)
             }
         }
 
@@ -52,10 +50,19 @@ Component {
         {
             inScene = true;
             ItemManager.current = itemData;
+            ItemManager.selectedItems.push(itemData);
         }
-        function imageRemovedFromScene()
+        function imageRemovedFromScene(source)
         {
+            console.log("ImageViewer imageRemovedFromScene(source)= ", source)
             inScene = false;
+//            for(var i = 0; i < ItemManager.selectedItems.length; i ++)
+//            {
+//                if(ItemManager.selectedItems[i].source === source)
+//                {
+//                    ItemManager.selectedItems.slice(i,1);
+//                }
+//            }
         }
 
 
@@ -68,7 +75,7 @@ Component {
             itemData.media = []
             itemData.mediaTypes = []
 
-            //setInfo();
+            setInfo();
 
             Omeka.getFiles(itemData.id, root)
         }
@@ -116,7 +123,7 @@ Component {
             id: img
             anchors.fill: parent
             fillMode: Image.PreserveAspectCrop
-            anchors.margins: 30
+            anchors.margins: 10
         }
     }
 }

@@ -7,7 +7,7 @@ Text {
     color: _font.color
     wrapMode: _font.wrapMode
     textFormat: _font.textFormat
-    font.pixelSize: Resolution.applyScale(_font.size)
+    font.pixelSize: _font.size//Resolution.applyScale(_font.size)
     font.weight: _font.weight
     font.capitalization: _font.capitalization
     verticalAlignment: center ? Text.AlignVCenter : Text.AlignTop

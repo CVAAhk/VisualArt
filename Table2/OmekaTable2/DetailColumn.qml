@@ -1,5 +1,5 @@
 import QtQuick 2.5
-
+import "."
 
 /*!
     \qmltype DetailColumn
@@ -8,25 +8,32 @@ import QtQuick 2.5
 */
 ScaleColumn {
     id: column
-    y: parent.margins
-    width: parent.width - 2 * parent.margins
+    x: 15
+    y: 0//parent.margins
+    width: parent.width - 10//2 * parent.margins
     height: childrenRect.height
-    anchors.horizontalCenter: parent.horizontalCenter
+    //anchors.horizontalCenter: parent.horizontalCenter
 
     //assign column to detail for delayed loading
     Component.onCompleted: {
-        detail.column = column
+        //detail.column = column
     }
 
     /*! \qmlproperty
         Currently selected item
     */
-    property var item: ItemManager.current
+    property var item: getSelectedItem();//: ItemManager.current
+
+    function getSelectedItem()
+    {
+        return ItemManager.selectedItems[ItemManager.selectedItems.length - 1];
+
+    }
 
     /*! \qmlproperty
         Full screen state of selected item
     */
-    property bool fullScreen: ItemManager.fullScreen
+    //property bool fullScreen: ItemManager.fullScreen
 
     //TODO
     //primary controls
@@ -60,9 +67,9 @@ ScaleColumn {
     //info panel
     info: OmekaText {
         id: info
-        anchors.horizontalCenter: parent.horizontalCenter
+        //anchors.horizontalCenter: parent.horizontalCenter
         visible: opacity > 0
-        width: parent.width - Resolution.applyScale(60)
+        width: parent.width - 10//Resolution.applyScale(60)
         height: contentHeight
         _font: Style.metadataFont
         text: metadata()

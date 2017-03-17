@@ -12,6 +12,8 @@ Item {
     */
     property var current: ({})
 
+    property var selectedItems: []
+
     /*!
       \qmlproperty
       Flag indicating current item is in full screen mode
