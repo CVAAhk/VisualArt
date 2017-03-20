@@ -6,22 +6,18 @@ Column {
 
     id: root
     spacing: Resolution.applyScale(45)
-    state: "unpaired"
 
     /*
-     Unique device id for pairing with heist table user
-    */
-    property var deviceId: HeistManager.uid;
-
-    /*
+      \internal
      Pairing code entered by device user in an attempt to pair with
      table generated session
     */
-    property var code: []
+    readonly property var code: []
 
-    ///////////////////////////////////////////////////////////
-    //          UI
-    ///////////////////////////////////////////////////////////
+    /*
+     String conversion of entry code
+    */
+    property var codeString;
 
     //icon
     Image {
@@ -97,7 +93,7 @@ Column {
         }
 
         //update receiver
-        receiver.code = getCodeString();
+        codeString = getCodeString();
     }
 
     /*! \internal
@@ -108,7 +104,7 @@ Column {
             slots.contentItem.children[i].digit = "";
         }
         code.length = 0;
-        receiver.code = getCodeString();
+        codeString = getCodeString();
     }
 
     /*
@@ -117,74 +113,4 @@ Column {
     function getCodeString() {
         return code ? code.join(""): "";
     }
-
-
-    ///////////////////////////////////////////////////////////
-    //          DEVICE PAIRING
-    ///////////////////////////////////////////////////////////
-
-    //listens for iterative heist data updates
-    HeistReceiver {
-        id: receiver
-        onSessionChanged: validateSession();
-        onErrorChanged: pairingError();
-    }
-
-    /*
-      Once a valid session is determined, established pairing. Once a session
-      becomes invalid, terminate the pairing. A valid session is one that has
-      an heist entry corresponding with the pairing code and does not have an
-      assigned device.
-    */
-    function validateSession() {
-        //valid session
-        if(receiver.session) {
-            if(receiver.device) {
-                //code is already in use - terminate session on table
-            } else {
-                pair();
-            }
-        }
-        //session terminated on table
-        else {
-            unpair();
-        }
-    }
-
-    /*
-      Create the pairing in the manager and update the ui state
-    */
-    function pair() {
-        if(root.state === "unpaired") {
-            HeistManager.setPairing(getCodeString(), deviceId);
-            root.state = "paired";
-        }
-    }
-
-    /*
-      Destroy the pairing in the manager and update the ui state
-    */
-    function unpair() {
-        if(root.state === "paired") {
-            HeistManager.releasePairing(getCodeString(), deviceId);
-            resetCode();
-            root.state = "unpaired";
-        }
-    }
-
-    /*
-      Handles errors during pairing
-    */
-    function pairingError() {
-        if(receiver.error) {
-            HeistManager.removeSession(getCodeString());
-            receiver.register = false;
-        }
-    }
-
-    //heist paired states
-    states: [
-        State { name: "unpaired" },
-        State { name: "paired" }
-    ]
 }
