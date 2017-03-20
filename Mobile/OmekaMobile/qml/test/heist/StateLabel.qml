@@ -13,11 +13,15 @@ Row {
         id: label
         width: 100
         height: parent.height
+        verticalAlignment: Text.AlignVCenter
+        horizontalAlignment: Text.AlignHCenter
     }
 
     Text {
         id: valueLabel
         width: parent.width - label.width
         height: parent.height
+        verticalAlignment: Text.AlignVCenter
+        horizontalAlignment: Text.AlignHCenter
     }
 }
