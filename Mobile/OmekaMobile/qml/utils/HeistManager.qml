@@ -304,6 +304,17 @@ Item {
         updateData(baseUrl+sessions[code], {item_ids: items[code]}, context);
     }
 
+    /*Clear item list
+      /a code - pairing code
+      /a item - item url to add
+      /a context - calling object
+    */
+    function removeAllItems(code, context) {
+        if(code in sessions) {
+            items[code].length = 0;
+            updateData(baseUrl+sessions[code], {item_ids: items[code]}, context);
+        }
+    }
 
     ///////////////////////////////////////////////////////////
     //          DEVICE REQUESTS

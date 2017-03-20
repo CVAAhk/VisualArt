@@ -101,6 +101,7 @@ Item {
         id: receiver
         onSessionChanged: validateSession();
         onErrorChanged: pairingError();
+        onItemsChanged: console.log(items);
     }
 
     /*
