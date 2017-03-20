@@ -29,7 +29,7 @@ ApplicationWindow {
 
         RequestUI {
             operation: "End Pairing"
-            onSubmit: endSession(entry)
+            onSubmit: HeistManager.removeData(entry)//endSession(entry)
         }
 
         RequestUI {
@@ -68,7 +68,8 @@ ApplicationWindow {
         if(deviceId === null) return;
 
         if(paired && deviceId.length === 0) {
-            endSession(receiver.code);
+            deviceId = null;
+            paired = false;
         } else if(!paired && deviceId.length > 0) {
             paired = true;
         }
