@@ -101,7 +101,8 @@ Item {
         id: receiver
         onSessionChanged: validateSession();
         onErrorChanged: pairingError();
-        onItemsChanged: console.log(items);
+        onAddItem: console.log("add: "+item);
+        onRemoveItem: console.log("remove: "+item);
     }
 
     /*

@@ -11,7 +11,7 @@ Item {
     //heist data fields
     property var session: null;
     property var device: null;
-    property var items: null;
+    property var items: [];
     property var error: null;
 
     //pairing code
@@ -22,6 +22,13 @@ Item {
 
     //activation state of receiver
     property var register;
+
+    //comparison item list to identify mods
+    property var currentItems: []
+
+    //signals invoked on item list mods
+    signal addItem(var item);
+    signal removeItem(var item);
 
 
     /*
@@ -56,10 +63,46 @@ Item {
                 device = entry.device_id;
                 session = entry.id;
                 items = entry.item_ids;
+                updateItems();
             } else {
                 error = "Invalid Pairing Code";
             }
         }
+    }
+
+    /*
+      Evaluates the item list difference to identify additions and removals
+    */
+    function updateItems() {
+        if(!items) return;
+
+        var additions = diff(items, currentItems);
+        for(var a in additions) {
+            addItem(additions[a]);
+        }
+
+        var removals = diff(currentItems, items);
+        for(var r in removals) {
+            removeItem(removals[r]);
+        }
+
+        currentItems = items;
+    }
+
+    /*
+      Returns an array containing elements present in a1 that are not present in a2
+    */
+    function diff(a1, a2) {
+        if(!a2) {
+            return a1;
+        }
+        var d = [];
+        for(var i in a1) {
+            if(a2.indexOf(a1[i]) === -1) {
+                d.push(a1[i]);
+            }
+        }
+        return d;
     }
 
     /*
@@ -68,7 +111,7 @@ Item {
     function clearFields() {
         device = null;
         session = null;
-        items = null;
+        items = [];
         error = null;
     }
 
