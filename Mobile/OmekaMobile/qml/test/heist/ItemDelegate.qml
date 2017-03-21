@@ -40,13 +40,14 @@ Component {
             if(checked && currentCode) {
                 code = currentCode
                 HeistManager.addItem(code, itemData, object);
-            } else if(code) {
+            } else if(!checked && code) {
                 HeistManager.removeItem(code, itemData, object);
             }
         }
 
         function reset() {
             code = null
+            checked = false
         }
     }
 

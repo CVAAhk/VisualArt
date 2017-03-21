@@ -97,6 +97,7 @@ ApplicationWindow {
         codes.length = 0;
         HeistManager.clearAllSessions();        
         paired = false;
+        currentCode = "";
 
         //reset list items
         for(var i=0; i<item_list.count; i++) {
