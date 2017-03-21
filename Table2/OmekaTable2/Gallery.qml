@@ -66,6 +66,10 @@ Item {
         {
             imageHolder.createImage(source, imageX + x, imageY + y, imageRotation, imageWidth, imageHeight, title, "lower left")
         }
+        onCanPaginate:
+        {
+            Omeka.getNextPage(gallery)
+        }
     }
 
     CollectionImageHolder

@@ -88,7 +88,7 @@ Component {
             itemData.media = []
             itemData.mediaTypes = []
 
-            //setInfo();
+            setInfo();
 
             Omeka.getFiles(itemData.id, root)
         }
@@ -121,6 +121,8 @@ Component {
                     {
                         img.source = itemData.thumb
                         img_id.text = itemData.id //test
+                        //if(itemData.id - 1 == list.currentIndex) ItemManager.current = itemData;
+
                         target = null
                     }
                 }
@@ -145,6 +147,30 @@ Component {
                 id: img_id
                 color: "red"
                 anchors.centerIn: parent
+            }
+        }
+
+        Image
+        {
+            id: current_item_title_bkg
+            source: "content/POI/canrousel_title_bkg.png"
+            anchors.bottom: img.bottom
+            anchors.left: img.left
+            anchors.right: img.right
+            anchors.margins: -7
+            visible: itemData.id - 1 == list.currentIndex
+            Text
+            {
+                id: current_item_title
+                text: root.title
+                color: "#ffffff"
+                font.pixelSize : 9
+                //anchors.centerIn: parent
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.horizontalCenter: parent.horizontalCenter
+                horizontalAlignment: Text.AlignHCenter
+                wrapMode: Text.WordWrap
+                width: parent.width - 6
             }
         }
     }

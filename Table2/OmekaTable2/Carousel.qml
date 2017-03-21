@@ -1,10 +1,13 @@
 import QtQuick 2.0
+import "."
 
 Item
 {
     id: root
 
     property bool topScreen: false
+
+    signal canPaginate()
     signal createImage(string source, int imageX, int imageY, int imageRotation, int imageWidth, int imageHeight, string title);
     Image {
         id: bkg
@@ -23,10 +26,34 @@ Item
             {
                 root.createImage(source, imageX, imageY, imageRotation, imageWidth, imageHeight, title)
             }
+
+            property real contentX: layout.contentX
+
+            property int nextCount: 1
+
+            property int pageCount: layout.model ? layout.model.count / 50 : 0
+            onContentXChanged: pagination()
+
+
+
+            function pagination()
+            {
+                if(nextCount === pageCount)
+                {
+                    busy = layout.atXBeginning
+                    if(busy){
+                        nextCount++;
+                        console.log("can paginate!!")
+                        root.canPaginate();
+                    }
+                }else if(layout.model && layout.model.count)
+                {
+                    budy = false;
+                }
+            }
+
         }
     }
-
-
 
     Image
     {
@@ -52,6 +79,7 @@ Item
             onPressed: browser.decreaseCurrentItem();
         }
     }
+
 
     function appendItems(result)
     {

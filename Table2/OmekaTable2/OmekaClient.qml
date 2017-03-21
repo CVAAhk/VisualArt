@@ -112,6 +112,17 @@ Item {
     }
 
     /*! \qmlmethod
+        Query all pages*/
+    function getAllPages(maxPage, context){
+        while(currentPage < maxPage)
+        {
+            currentPage++
+            console.log("current page is ", currentPage)
+            getPage(currentPage, context)
+        }
+    }
+
+    /*! \qmlmethod
         Query next page*/
     function getNextPage(context){
         currentPage++

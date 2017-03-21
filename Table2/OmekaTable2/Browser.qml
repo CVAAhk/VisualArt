@@ -26,7 +26,9 @@ Item {
 
     property real headerHeight: 0
 
-    property alias currentIndex: list.currentIndex
+    property int currentIndex: list.currentIndex
+
+    property var currentItem: list.currentItem
 
     property color headerColor: "white"
 
@@ -39,6 +41,7 @@ Item {
     signal imageDragged();
 
     signal createImage(string source, int imageX, int imageY, int imageRotation, int imageWidth, int imageHeight, string title);
+
 
     ListView
     {
