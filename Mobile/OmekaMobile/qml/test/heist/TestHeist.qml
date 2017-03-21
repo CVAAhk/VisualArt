@@ -13,6 +13,19 @@ ApplicationWindow {
     property var codes: [];
     property var currentCode;
 
+    Component.onCompleted: {
+        Omeka.getItemsByTerm("earth", window)
+    }
+
+    Connections {
+        target: Omeka
+        onRequestComplete: {
+            if(result.context === window) {
+                item_list.model.append(result);
+            }
+        }
+    }
+
     HeistReceiver {
         id: receiver
         onDeviceChanged: deviceId = device;
@@ -47,6 +60,15 @@ ApplicationWindow {
             value: paired
         }
 
+        ListView {
+            id: item_list
+            clip: true
+            width: parent.width
+            height: 200
+            anchors.horizontalCenter: parent.horizontalCenter
+            model: ListModel {}
+            delegate: ItemDelegate {}
+        }
     }
 
     function startSession() {
@@ -73,8 +95,13 @@ ApplicationWindow {
 
     function clearAll() {
         codes.length = 0;
-        HeistManager.clearAllSessions();
+        HeistManager.clearAllSessions();        
         paired = false;
+
+        //reset list items
+        for(var i=0; i<item_list.count; i++) {
+            item_list.contentItem.children[i].reset();
+        }
     }
 
     onPairedChanged: {
@@ -90,5 +117,13 @@ ApplicationWindow {
         } else if(!paired && deviceId.length > 0) {
             paired = true;
         }
+    }
+
+    function addItem(item) {
+
+    }
+
+    function removeItem(item) {
+
     }
 }

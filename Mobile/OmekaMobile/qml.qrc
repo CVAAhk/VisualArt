@@ -16,6 +16,7 @@
 		<file>qml/test/heist/TestHeist.qml</file>	
 		<file>qml/test/heist/RequestUI.qml</file>	
 		<file>qml/test/heist/StateLabel.qml</file>	
+		<file>qml/test/heist/ItemDelegate.qml</file>	
 		<file>qml/test/settings/LikesTest.qml</file>			
 		<file>qml/test/navigation/Carousel.qml</file>	
 		<file>qml/test/navigation/Ellipse.qml</file>			
