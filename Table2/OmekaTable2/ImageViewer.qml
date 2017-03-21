@@ -14,33 +14,53 @@ Component {
         property string source:img.source
 
         scale: changeScale()
-        z: changeZ();//1 - Math.abs(index - path.currentIndex)
-        visible: Math.abs(index - path.currentIndex) < 3 || (path.count - index + path.currentIndex) < 3
+        z: changeZ();//1 - Math.abs(index - list.currentIndex)
+        //visible: Math.abs(index - list.currentIndex) < 3 || (list.count + index - list.currentIndex) < 3 ||
+        //         (list.count - index + list.currentIndex) < 3
+        opacity: Math.abs(index - list.currentIndex) < 3 || (list.count + index - list.currentIndex) < 3 ||
+                 (list.count - index + list.currentIndex) < 3 ? 1.0 : 1.0
+        Behavior on opacity {
+            NumberAnimation
+            {
+                duration: 500
+            }
+        }
+
+        Behavior on scale {
+            NumberAnimation
+            {
+                duration: 50
+            }
+        }
 
         function changeScale()
         {
-            if(Math.abs(index - path.currentIndex) == 1 || Math.abs(index - path.currentIndex) == path.count - 1)
+            if(Math.abs(index - list.currentIndex) == 1 || Math.abs(index - list.currentIndex) == list.count - 1)
             {
                 return 0.9
             }
-            else if(Math.abs(index - path.currentIndex) == 2 || Math.abs(index - path.currentIndex) == path.count - 2)
+            else if(Math.abs(index - list.currentIndex) == 2 || Math.abs(index - list.currentIndex) == list.count - 2)
             {
                 return 0.75
             }
-            else
+            else if(index == list.currentIndex)
             {
                 return 1
+            }
+            else
+            {
+                return 0.65
             }
         }
         function changeZ()
         {
-            if(Math.abs(index - path.currentIndex) >= path.count - 2)
+            if(Math.abs(index - list.currentIndex) >= list.count - 2)
             {
-                return path.count-(path.count - Math.abs(index - path.currentIndex))
+                return list.count-(list.count - Math.abs(index - list.currentIndex))
             }
             else
             {
-                return path.count - Math.abs(index - path.currentIndex)
+                return list.count - Math.abs(index - list.currentIndex)
             }
         }
 
@@ -56,26 +76,19 @@ Component {
         {
             console.log("ImageViewer imageRemovedFromScene(source)= ", source)
             inScene = false;
-//            for(var i = 0; i < ItemManager.selectedItems.length; i ++)
-//            {
-//                if(ItemManager.selectedItems[i].source === source)
-//                {
-//                    ItemManager.selectedItems.slice(i,1);
-//                }
-//            }
         }
 
 
         Component.onCompleted:
         {
             itemData.id = String(item)
-            console.log("itemData.id = ", itemData.id)
+            //console.log("itemData.id = ", itemData.id)
             itemData.fileCount = parseInt(file_count)
             itemData.metadata = metadata
             itemData.media = []
             itemData.mediaTypes = []
 
-            setInfo();
+            //setInfo();
 
             Omeka.getFiles(itemData.id, root)
         }
@@ -97,14 +110,17 @@ Component {
             onRequestComplete: {
                 if(result.context === root)
                 {
-                    console.log("thum = ", result.thumb)
+                    //console.log("thum = ", result.thumb)
                     itemData.thumb = result.thumb
+                    //if(!itemData.thumb) return;
+
                     itemData.media.push(result.media)
                     itemData.mediaTypes.push(result.media_type)
 
                     if(itemData.media.length === itemData.fileCount)
                     {
                         img.source = itemData.thumb
+                        img_id.text = itemData.id //test
                         target = null
                     }
                 }
@@ -124,6 +140,12 @@ Component {
             anchors.fill: parent
             fillMode: Image.PreserveAspectCrop
             anchors.margins: 10
+            Text
+            {
+                id: img_id
+                color: "red"
+                anchors.centerIn: parent
+            }
         }
     }
 }

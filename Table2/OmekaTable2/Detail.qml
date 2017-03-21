@@ -34,13 +34,13 @@ Item
 
     signal deleteImage(var image);
 
-    onVisibleChanged:
-    {
-        if(!visible)
-        {
-            root.destroy();
-        }
-    }
+//    onVisibleChanged:
+//    {
+//        if(!visible)
+//        {
+//            root.destroy();
+//        }
+//    }
 
 
     Image

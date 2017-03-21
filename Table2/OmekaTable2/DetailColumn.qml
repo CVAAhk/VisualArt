@@ -78,13 +78,17 @@ ScaleColumn {
 
     //format metadata
     function metadata() {
-        if(!item) return ""
+        if(!item)  return ""
         var metadata = ""
         if(item.metadata){
             var element
             for(var i=0; i<item.metadata.count; i++) {
                 element = item.metadata.get(i);
-                metadata += "<p><b>"+element.element.name+"</b><br/>"+element.text+"</p>"
+                console.log("element = ", element, " element.text = ", element.text)
+                if(element)
+                {
+                    metadata += "<p><b>"+element.element.name+"</b><br/>"+element.text+"</p>"
+                }
             }
         }
         return metadata

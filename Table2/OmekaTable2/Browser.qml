@@ -10,6 +10,8 @@ Item {
     width: parent.width
     height: parent.height
 
+    property Flickable layout : list
+
     property var model: ListModel{}
 
     property var delegate: ImageViewer{}
@@ -24,6 +26,8 @@ Item {
 
     property real headerHeight: 0
 
+    property alias currentIndex: list.currentIndex
+
     property color headerColor: "white"
 
     property bool busy: false
@@ -36,34 +40,28 @@ Item {
 
     signal createImage(string source, int imageX, int imageY, int imageRotation, int imageWidth, int imageHeight, string title);
 
-    PathView
+    ListView
     {
-        id: path
+        id: list
         model: root.model
-        anchors.fill: parent
-        anchors.horizontalCenter: parent.horizontalCenter
         delegate: root.delegate
+        spacing: -60
+        cacheBuffer: 478
         maximumFlickVelocity: 800
-        path: Path {
-                    startX: root.width /2 ; startY: root.height /2
-                    PathQuad { x: root.width /2; y: root.height /2; controlX: root.width; controlY: root.height /2 }
-                    PathQuad { x: root.width /2; y: root.height /2; controlX: 0; controlY: root.height /2 }
-                }
-        onCurrentItemChanged:
-        {
-            console.log("current index = ", currentIndex)
-        }
-        onDragStarted:
-        {
-            console.log("drag starts!!!!")
+        flickDeceleration: 3000
+        boundsBehavior: Flickable.StopAtBounds
+        orientation: ListView.Horizontal
+        //y: root.height /4
+        x: 262//root.width * 2/ 5
+        width: root.width
+        height: root.height
+        highlightRangeMode: ListView.StrictlyEnforceRange
+        snapMode: ListView.SnapOneItem
+        preferredHighlightBegin: 140
+        preferredHighlightEnd: 298
 
-        }
-        onDragEnded:
-        {
-            console.log("drag ends!!!!")
-            touch_area.enabled = true;
+        focus: true
 
-        }
         onFlickStarted:
         {
             console.log("flick starts!!!!")
@@ -74,9 +72,76 @@ Item {
             console.log("flick ends")
             touch_area.enabled = true;
         }
-
-
+        onMovementEnded:
+        {
+            touch_area.enabled = true;
+        }
+        onCurrentItemChanged:
+        {
+            console.log("current index = ", currentIndex)
+        }
     }
+
+//    PathView
+//    {
+//        id: path
+//        model: root.model
+//        anchors.fill: parent
+//        anchors.horizontalCenter: parent.horizontalCenter
+//        delegate: root.delegate
+//        maximumFlickVelocity: 800
+//        flickDeceleration: 50
+//        path: Path {
+//            id: path_curve
+//                    startX: root.width * 1 / 2; startY: root.height /2
+////                    PathArc {
+////                            x: root.width * 2; y: root.height /2
+////                            radiusX: 75; radiusY: 50
+////                            direction: PathArc.Counterclockwise
+////                        }
+//                    PathLine { x: root.width * 2; y: root.height /2}
+//                    //PathLine { x: -root.width *1/2; y: root.height /2}
+
+//                    //PathQuad { x: root.width /2; y: root.height /2; controlX: root.width * 2; controlY: root.height /2 }
+//                    //PathQuad { x: root.width /2; y: root.height /2; controlX: -root.width *1/2 ; controlY: root.height /2 }
+//                }
+//        onCurrentItemChanged:
+//        {
+//            console.log("current index = ", currentIndex)
+//        }
+//        onDragStarted:
+//        {
+//            console.log("drag starts!!!!")
+
+//        }
+//        onDragEnded:
+//        {
+//            console.log("drag ends!!!!")
+//            touch_area.enabled = true;
+
+//        }
+//        onFlickStarted:
+//        {
+//            console.log("flick starts!!!!")
+//            touch_area.enabled = false;
+//        }
+//        onFlickEnded:
+//        {
+//            console.log("flick ends")
+//            touch_area.enabled = true;
+//        }
+
+
+//    }
+    function increaseCurrentItem()
+    {
+        list.incrementCurrentIndex();
+    }
+    function decreaseCurrentItem()
+    {
+        list.decrementCurrentIndex();
+    }
+
 //        Rectangle
 //        {
 //            anchors.fill: parent
@@ -138,7 +203,7 @@ Item {
                         if(!dragAmounts[touchPoint.pointId])
                         {
                             dragAmounts[touchPoint.pointId] = 0.0;
-                            dragImages[touchPoint.pointId] = path.currentItem
+                            dragImages[touchPoint.pointId] = list.currentItem
                         }
 
                         var drag = dragAmounts[touchPoint.pointId] ?
@@ -162,7 +227,7 @@ Item {
 
                                 selected_image.source = imageSource;
 
-                                selected_image.title = title;
+                                //selected_image.title = title;
 
                                 item.imageInScene();
                                 imageItems.push(item);
@@ -274,7 +339,8 @@ Item {
 
     /*! Add item from browser */
     function append(item) {
-        path.model.append(item);
+        //path.model.append(item);
+        layout.model.append(item);
     }
 
     /*! Insert item from browser */

@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import "settings.js" as Settings
+import "."
 
 Item
 {
@@ -117,7 +118,16 @@ Item
 
             imageDeleted(selectedItem.source, selectedItem.whichScreen);
 
-            selectedItem.visible = false;
+            //selectedItem.visible = false;
+            selectedItem.destroy()
+
+//            for(var i = 0; i < ItemManager.selectedItems.length; i ++)
+//            {
+//                if(ItemManager.selectedItems[i].source === selectedItem.source)
+//                {
+//                    ItemManager.selectedItems.slice(i,1);
+//                }
+//            }
         }
     }
 

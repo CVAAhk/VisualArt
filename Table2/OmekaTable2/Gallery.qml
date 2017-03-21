@@ -11,7 +11,8 @@ Item {
 
     /*!Load first page*/
     Component.onCompleted: {
-        Omeka.getPage(1, gallery)
+        //Omeka.getPage(10, gallery)
+        Omeka.getAllPages(1, gallery)
     }
 
     /*!Dynamically load omeka query results into browser*/
@@ -19,7 +20,7 @@ Item {
         target: Omeka
         onRequestComplete:{
             if(result.context === gallery){
-                top_left_browser.append(result);
+                //top_left_browser.append(result);
                 //lower_left_browser.append(result);
                 lower_left_carousel.appendItems(result);
             }
@@ -59,8 +60,8 @@ Item {
     Carousel
     {
         id: lower_left_carousel
-        x: 240.5
-        y: 787
+        x: 241
+        y: 765
         onCreateImage:
         {
             imageHolder.createImage(source, imageX + x, imageY + y, imageRotation, imageWidth, imageHeight, title, "lower left")
