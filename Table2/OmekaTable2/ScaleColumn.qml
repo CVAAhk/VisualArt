@@ -40,12 +40,12 @@ Item {
     /*! \internal
         Scaled viewer height
     */
-    property real viewerHeight: Resolution.portrait ? viewer.height * viewer.scale : viewer.height
+    //property real viewerHeight: Resolution.portrait ? viewer.height * viewer.scale : viewer.height
 
     /*! \internal
         Vertical offset caused by scale transforms
     */
-    property real viewerYOffset: viewerHeight/2 - viewer.height/2
+    //property real viewerYOffset: viewerHeight/2 - viewer.height/2
 
     //parenting
     //Binding { target: toolbar; property: "parent"; value: column }

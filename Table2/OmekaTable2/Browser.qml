@@ -9,10 +9,6 @@ Item {
     id: root
     width: parent.width
     height: parent.height
-    //state: User.layoutID
-    z: -1
-
-    //property Flickable layout: path
 
     property var model: ListModel{}
 
@@ -32,57 +28,55 @@ Item {
 
     property bool busy: false
 
+    property bool topScreen: false
+
     property var imageItems: []
 
     signal imageDragged();
 
     signal createImage(string source, int imageX, int imageY, int imageRotation, int imageWidth, int imageHeight, string title);
 
-//    Flickable
-//    {
-//        id: scroll_view
-        PathView
+    PathView
+    {
+        id: path
+        model: root.model
+        anchors.fill: parent
+        anchors.horizontalCenter: parent.horizontalCenter
+        delegate: root.delegate
+        maximumFlickVelocity: 800
+        path: Path {
+                    startX: root.width /2 ; startY: root.height /2
+                    PathQuad { x: root.width /2; y: root.height /2; controlX: root.width; controlY: root.height /2 }
+                    PathQuad { x: root.width /2; y: root.height /2; controlX: 0; controlY: root.height /2 }
+                }
+        onCurrentItemChanged:
         {
-            id: path
-            model: root.model
-            //visible: layout === path
-            anchors.fill: parent
-            anchors.horizontalCenter: parent.horizontalCenter
-            delegate: root.delegate
-            maximumFlickVelocity: 800
-            path: Path {
-                        startX: root.width /2 ; startY: root.height /2
-                        PathQuad { x: root.width /2; y: root.height /2; controlX: root.width; controlY: root.height /2 }
-                        PathQuad { x: root.width /2; y: root.height /2; controlX: 0; controlY: root.height /2 }
-                    }
-            onCurrentItemChanged:
-            {
-                console.log("current index = ", currentIndex)
-            }
-            onDragStarted:
-            {
-                console.log("drag starts!!!!")
-
-            }
-            onDragEnded:
-            {
-                console.log("drag ends!!!!")
-                touch_area.enabled = true;
-
-            }
-            onFlickStarted:
-            {
-                console.log("flick starts!!!!")
-                touch_area.enabled = false;
-            }
-            onFlickEnded:
-            {
-                console.log("flick ends")
-                touch_area.enabled = true;
-            }
-
+            console.log("current index = ", currentIndex)
+        }
+        onDragStarted:
+        {
+            console.log("drag starts!!!!")
 
         }
+        onDragEnded:
+        {
+            console.log("drag ends!!!!")
+            touch_area.enabled = true;
+
+        }
+        onFlickStarted:
+        {
+            console.log("flick starts!!!!")
+            touch_area.enabled = false;
+        }
+        onFlickEnded:
+        {
+            console.log("flick ends")
+            touch_area.enabled = true;
+        }
+
+
+    }
 //        Rectangle
 //        {
 //            anchors.fill: parent
@@ -90,15 +84,6 @@ Item {
 //            opacity: 0.5
 //            visible: parent.enabled && Settings.DEBUG_VIEW
 //        }
-//        Rectangle
-//        {
-//            width: scroll_view.contentWidth
-//            height: scroll_view.contentHeight
-//            color: "green"
-//            opacity: 0.5
-//            visible: parent.enabled && Settings.DEBUG_VIEW
-//        }
-//    }
 
     MultiPointTouchArea
     {
@@ -148,19 +133,12 @@ Item {
 
                 if(!creatingImage)
                 {
-//                    if(touchPoint.y < bottomFlickMax)
-//                    {
-//                        scroll_view.flick((touchPoint.x - touchPoint.previousX) * 100, 0);
-//                    }
-
                     if(touchPoint.y < bottomFlickMax + 100)
                     {
                         if(!dragAmounts[touchPoint.pointId])
                         {
                             dragAmounts[touchPoint.pointId] = 0.0;
-                            dragImages[touchPoint.pointId] = path.currentItem//path.itemAt(touch_area.x +touchPoint.x, touch_area.y +touchPoint.y)//scroll_view.getImageAtX(touchPoint.x);
-                            console.log("touchPoint.x = ", touchPoint.x, " touchPoint.y = ", touchPoint.y)
-                            //console.log("touchPoint.pointId( ",touchPoint.pointId, " ) souce = ", dragImages[touchPoint.pointId])
+                            dragImages[touchPoint.pointId] = path.currentItem
                         }
 
                         var drag = dragAmounts[touchPoint.pointId] ?
@@ -186,9 +164,6 @@ Item {
 
                                 selected_image.title = title;
 
-                                //scroll_view.cancelFlick();
-
-                                //scroll_view.imageInScene(selected_image.source);
                                 item.imageInScene();
                                 imageItems.push(item);
 
@@ -224,9 +199,19 @@ Item {
                 var imageCenterY = 0;
                 var rotation = 0;
 
-                imageCenterX = selected_image.x + root.x + touch_area.x; //selected_image.width / 2 + root.x + touch_area.x;//
-                imageCenterY = selected_image.y + root.y + touch_area.y; // selected_image.height / 2 + root.y + touch_area.y;
-
+                if(root.topScreen)
+                {
+                    imageCenterX = 1920 - (selected_image.x + root.x + touch_area.x); //selected_image.width / 2 + root.x + touch_area.x;//
+                    imageCenterY = 1080 - (selected_image.y + root.y + touch_area.y); // selected_image.height / 2 + root.y + touch_area.y;
+                    rotation = 180;
+                }
+                else
+                {
+                    imageCenterX = selected_image.x + root.x + touch_area.x; //selected_image.width / 2 + root.x + touch_area.x;//
+                    imageCenterY = selected_image.y + root.y + touch_area.y; // selected_image.height / 2 + root.y + touch_area.y;
+                    rotation = 0;
+                }
+                console.log("selected_image.x = ", selected_image.x, " selected_image.y = ", selected_image.y)
                 console.log("MAking select imag e " + selected_image.width + " " + selected_image.height);
 
                 root.createImage(selected_image.source, imageCenterX, imageCenterY, rotation,
@@ -282,18 +267,6 @@ Item {
         //            opacity: 0.5
         //            visible: parent.enabled && Settings.DEBUG_VIEW
         //        }
-
-                /*
-                Rectangle
-                {
-                    width: scroll_view.contentWidth
-                    height: scroll_view.contentHeight
-                    color: "green"
-                    opacity: 0.5
-                    visible: parent.enabled && Settings.showDebugInfo
-                }
-                */
-
         }
 
 
@@ -316,11 +289,13 @@ Item {
 
     function imageRemovedFromScene(source)
     {
+        console.log("Browser! imageRemovedFromScene(source) = ", source)
         for(var i = 0; i < imageItems.length; i ++)
         {
-            if(imageItems[i].source == source)
+            if(imageItems[i].source === source)
             {
-                imageItems[i].imageRemovedFromScene();
+                console.log("Browser! imageRemovedFromScene(source) = ", source, " i = ", i)
+                imageItems[i].imageRemovedFromScene(source);
                 imageItems.splice(i, 1);
             }
         }

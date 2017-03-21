@@ -19,29 +19,54 @@ Item {
         target: Omeka
         onRequestComplete:{
             if(result.context === gallery){
-                browser.append(result)
+                top_left_browser.append(result);
+                //lower_left_browser.append(result);
+                lower_left_carousel.appendItems(result);
             }
         }
     }
 
-//    /*!Display logo and settings entry*/
-//    BrandBar {
-//        id: bar
-//        onActivated: if(homeStack) homeStack.push(Qt.resolvedUrl("../settings/Settings.qml"))
-//    }
 
     /*!Scroll through items*/
+    //top screen
     Browser {
-        id: browser
+        id: top_left_browser
+        rotation: 180
         //anchors.top: bar.bottom
-        height: parent.height
+        height: parent.height / 2
         headerHeight: height/3
-        busy: true
+        topScreen: true
         onCreateImage:
         {
             imageHolder.createImage(source, imageX, imageY, imageRotation, imageWidth, imageHeight, title)
         }
     }
+
+    //lower screen
+
+//    Browser {
+//        id: lower_left_browser
+//        //anchors.top: bar.bottom
+//        y: parent.height / 2
+//        height: parent.height / 2
+//        headerHeight: height/3
+//        topScreen: false
+//        onCreateImage:
+//        {
+//            imageHolder.createImage(source, imageX, imageY, imageRotation, imageWidth, imageHeight, title)
+//        }
+//    }
+    Carousel
+    {
+        id: lower_left_carousel
+        x: 240.5
+        y: 787
+        onCreateImage:
+        {
+            imageHolder.createImage(source, imageX + x, imageY + y, imageRotation, imageWidth, imageHeight, title, "lower left")
+        }
+    }
+
     CollectionImageHolder
     {
         id: imageHolder
@@ -51,9 +76,16 @@ Item {
 
         onImageDeleted:
         {
-            browser.imageRemovedFromScene(filepath)
+            console.log("delete filepath = ",filepath, "whichScreen = ", whichScreen)
+            //top_left_browser.imageRemovedFromScene(filepath)
+            if(whichScreen === "lower left") lower_left_carousel.imageRemovedFromScene(filepath);
+
         }
     }
+
+
+
+
 
 
 }

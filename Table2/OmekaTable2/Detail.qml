@@ -9,6 +9,8 @@ import "settings.js" as Settings
 Item
 {
     id: root
+
+    height: bkg.height
     objectName: "detail"
     property alias source: img.source
 
@@ -16,9 +18,9 @@ Item
 
     property alias imageHeight: img.height
 
-    property alias title: title.text
+    property var title//: title.text
 
-    property bool topScreen
+    property string whichScreen
 
     property int imageTimerDuration : 100000000 // Settings.IMAGE_TIMER_DURATION
 
@@ -32,6 +34,14 @@ Item
 
     signal deleteImage(var image);
 
+    onVisibleChanged:
+    {
+        if(!visible)
+        {
+            root.destroy();
+        }
+    }
+
 
     Image
     {
@@ -39,7 +49,7 @@ Item
         source: "content/POI/_Image_.png"
         x: -20; y:-20
         width: root.imageWidth + 40
-        height: root.imageHeight + title_bkg.height + description_bkg.height + 40
+        height: root.imageHeight + scroll_bkg.height + 40// + title_bkg.height + description_bkg.height + 40
     }
     Rectangle
     {
@@ -53,7 +63,14 @@ Item
         fillMode: Image.PreserveAspectFit
 
     }
-
+    Image
+    {
+        id: scroll_bkg
+        source: "content/POI/description_bkg.png"
+        height: 200
+        anchors.top: img.bottom
+        anchors.left: root.left
+    }
 
         //primary display item
         //property DetailColumn column
@@ -63,8 +80,12 @@ Item
             id: scroll
             anchors.top: img.bottom
             anchors.left: root.left
+            anchors.margins: 0
+            width: root.imageWidth
+            height: 180
+
             //media display
-            DetailColumn { id: display }
+            DetailColumn { id: display; width: root.imageWidth-35; }//height: 500 }
         }
 
         //Add if necessary
@@ -89,26 +110,6 @@ Item
             }
         }
     }
-//    Image
-//    {
-//        id: title_bkg
-//        source: "content/POI/title_bkg.png"
-//        anchors.top: img.bottom
-//        anchors.left: root.left
-//        Text
-//        {
-//            id: title
-//        }
-
-//    }
-//    Image
-//    {
-//        id: description_bkg
-//        source: "content/POI/description_bkg.png"
-//        anchors.top: title_bkg.bottom
-//        anchors.left: root.left
-//    }
-
     DropShadow
     {
         id: imageEffect
@@ -149,8 +150,8 @@ Item
 
         onPositionUpdated:
         {
-            root.x += delta_x;// * root.scale;
-            root.y += delta_y;// * root.scale;
+            root.x += delta_x// * (root.topScreen ? -1.0 : 1.0);// * root.scale;
+            root.y += delta_y// * (root.topScreen ? -1.0 : 1.0);// * root.scale;
 
             root.imageDragged(root);
         }

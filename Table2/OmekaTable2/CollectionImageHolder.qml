@@ -20,7 +20,7 @@ Item
     id: root
     // clip: true
 
-    signal imageDeleted(string filepath, bool topScreen);
+    signal imageDeleted(string filepath, string whichScreen);
 
     signal imageAdded(var image);
 
@@ -43,13 +43,13 @@ Item
     //=========================================================================
     // FUNCTIONS
     //=========================================================================
-    function createImage(filepath, startX, startY, imageRotation, imageWidth, imageHeight, title)
+    function createImage(filepath, startX, startY, imageRotation, imageWidth, imageHeight, title, whichScreen)
     {
         console.log("Creating image in holder " + filepath + " " + startX + " " + startY +
                     " " + imageRotation + ", width: " + imageWidth + ", height: " + imageHeight +
                     " title : ", title);
 
-        var component = Qt.createComponent("DetailImage.qml");
+        var component = Qt.createComponent("Detail.qml");
 
         if (component.status === Component.Ready)
         {
@@ -67,25 +67,20 @@ Item
             imageItem.title = title;
             //imageItem.scale = 0.5;
             //imageItem.x -= imageItem.width / 4;
-            //imageItem.y -= imageItem.height / 4;
+
 
             //imageItem.imageDragged.connect(root.imageDragged);
             //imageItem.finishedDragging.connect(root.imageFinishedDragging);
             //imageItem.finishedRecycle.connect(root.imageFinishedRecycle);
-
-            //imageItem.collectionHolder = root;
-/*
-            imageItem.title = collections.getImageTitle(filepath);
-            imageItem.date = collections.getImageDate(filepath);
-            imageItem.artist = collections.getImageArtist(filepath);
-            imageItem.description = collections.getImageDescription(filepath);
-*/
+            imageItem.whichScreen = whichScreen;
             if(imageRotation)
             {
                 imageItem.rotation = imageRotation;
                 if(imageRotation > 0)
                 {
                     //imageItem.topScreen = true;
+                    imageItem.y = imageItem.y - 2 * imageItem.height;
+                    console.log("imageItem.y = ", imageItem.y, " imageItem.height = ", imageItem.height)
                 }
             }
 
@@ -120,9 +115,9 @@ Item
             var deleteIndex = imageItems.indexOf(selectedItem);
             imageItems.splice(deleteIndex, 1);
 
-            imageDeleted(selectedItem.source, selectedItem.topScreen);
+            imageDeleted(selectedItem.source, selectedItem.whichScreen);
 
-            selectedItem.destroy();
+            selectedItem.visible = false;
         }
     }
 
