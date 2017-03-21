@@ -62,5 +62,6 @@ DISTFILES += \
     DetailColumn.qml \
     Detail.qml \
     OmekaScrollView.qml \
-    Carousel.qml
+    Carousel.qml \
+    OmekaIndicator.qml
 

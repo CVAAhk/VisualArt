@@ -14,7 +14,7 @@ Item {
 
     /*-------------UI Assets-------------*/
     /*! \qmlproperty root directory of ui assets */
-    property url rootPath: "qrc:///ui/"
+    property url rootPath: "qrc:///content/ui/"
     /*! \qmlproperty logo displayed in center of home toolbar */
     property url omekaLogo: rootPath+"logo.png"
     /*! \qmlproperty icon of settings button of home toolbar */

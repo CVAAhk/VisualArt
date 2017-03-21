@@ -173,5 +173,11 @@ Component {
                 width: parent.width - 6
             }
         }
+
+        //load indicator
+        OmekaIndicator {
+            scale: 2
+            running: img.progress < 1
+        }
     }
 }
