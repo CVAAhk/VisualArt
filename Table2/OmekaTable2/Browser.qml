@@ -20,7 +20,7 @@ Item {
 
     property real rowHeight: 300//width/Math.floor(width/(Math.floor(Resolution.applyScale(divisor))))
 
-    property real spacing: -200//Resolution.applyScale(30)
+    property real spacing: -300//Resolution.applyScale(30)
 
     property real cacheBuffer: rowHeight > 0 ? rowHeight * 200 : 0
 
@@ -38,6 +38,8 @@ Item {
 
     property var imageItems: []
 
+    property var touch_area: touch_area
+
     signal imageDragged();
 
     signal createImage(string source, int imageX, int imageY, int imageRotation, int imageWidth, int imageHeight, string title);
@@ -48,14 +50,14 @@ Item {
         id: list
         model: root.model
         delegate: root.delegate
-        spacing: -60
+        spacing: -70
         cacheBuffer: 478
-        maximumFlickVelocity: 800
+        maximumFlickVelocity: 8000
         flickDeceleration: 3000
         boundsBehavior: Flickable.StopAtBounds
         orientation: ListView.Horizontal
         //y: root.height /4
-        x: 262//root.width * 2/ 5
+        x: 21//root.width * 2/ 5
         width: root.width
         height: root.height
         highlightRangeMode: ListView.StrictlyEnforceRange
@@ -108,32 +110,6 @@ Item {
 //                    //PathQuad { x: root.width /2; y: root.height /2; controlX: root.width * 2; controlY: root.height /2 }
 //                    //PathQuad { x: root.width /2; y: root.height /2; controlX: -root.width *1/2 ; controlY: root.height /2 }
 //                }
-//        onCurrentItemChanged:
-//        {
-//            console.log("current index = ", currentIndex)
-//        }
-//        onDragStarted:
-//        {
-//            console.log("drag starts!!!!")
-
-//        }
-//        onDragEnded:
-//        {
-//            console.log("drag ends!!!!")
-//            touch_area.enabled = true;
-
-//        }
-//        onFlickStarted:
-//        {
-//            console.log("flick starts!!!!")
-//            touch_area.enabled = false;
-//        }
-//        onFlickEnded:
-//        {
-//            console.log("flick ends")
-//            touch_area.enabled = true;
-//        }
-
 
 //    }
     function increaseCurrentItem()
@@ -157,8 +133,8 @@ Item {
     {
         id: touch_area
 
-        x: root.width/2 - 200
-        y: root.height/2 - 200
+        x: 161//root.width/2 - 200
+        //y: //list.curoot.height/2 - 200
 
         width: 400
         height: 400
@@ -235,9 +211,9 @@ Item {
                                 item.imageInScene();
                                 imageItems.push(item);
 
-                                selected_image.screenX = touchPoint.x;
-                                selected_image.screenY = touchPoint.y;
-
+                                selected_image.screenX = touchPoint.x + touch_area.x + root.x - selected_image.width / 2;
+                                selected_image.screenY = touchPoint.y + touch_area.y - root.y + selected_image.height / 2;
+                                console.log("touchPoint.x = ", touchPoint.x, " touchPoint.y = ", touchPoint.y)
                                 updatedCreatedImage = true;
 
                                 root.imageDragged();
@@ -251,8 +227,8 @@ Item {
                 {
                     if(touchPoint.pointId === touchId && touchPoint.pressed)
                     {
-                        selected_image.screenX = touchPoint.x;
-                        selected_image.screenY = touchPoint.y;
+                        selected_image.screenX = touchPoint.x + touch_area.x + root.x - selected_image.width / 2;
+                        selected_image.screenY = touchPoint.y + touch_area.y - root.y + selected_image.height / 2;
 
                         updatedCreatedImage = true;
                     }
@@ -269,14 +245,14 @@ Item {
 
                 if(root.topScreen)
                 {
-                    imageCenterX = 1920 - (selected_image.x + root.x + touch_area.x); //selected_image.width / 2 + root.x + touch_area.x;//
-                    imageCenterY = 1080 - (selected_image.y + root.y + touch_area.y); // selected_image.height / 2 + root.y + touch_area.y;
+                    imageCenterX = 1920 - (selected_image.x); //selected_image.width / 2 + root.x + touch_area.x;//
+                    imageCenterY = 1080 - (selected_image.y); // selected_image.height / 2 + root.y + touch_area.y;
                     rotation = 180;
                 }
                 else
                 {
-                    imageCenterX = selected_image.x + root.x + touch_area.x; //selected_image.width / 2 + root.x + touch_area.x;//
-                    imageCenterY = selected_image.y + root.y + touch_area.y; // selected_image.height / 2 + root.y + touch_area.y;
+                    imageCenterX = selected_image.x//- selected_image.width / 2; //selected_image.width / 2 + root.x + touch_area.x;//
+                    imageCenterY = selected_image.y - selected_image.height / 2; // selected_image.height / 2 + root.y + touch_area.y;
                     rotation = 0;
                 }
                 console.log("selected_image.x = ", selected_image.x, " selected_image.y = ", selected_image.y)
@@ -306,25 +282,26 @@ Item {
             }
         }
 
-        Image
-        {
-            id: selected_image
+//        Image
+//        {
+//            id: selected_image
 
-            visible: touch_area.creatingImage
+//            visible: touch_area.creatingImage
 
-            source: ""
-            height: root.imageHeight
-            fillMode: Image.PreserveAspectFit
+//            source: ""
+//            height: root.imageHeight
+//            fillMode: Image.PreserveAspectFit
 
-            property int screenX: 0
-            property int screenY: 0
+//            property int screenX: 0
+//            property int screenY: 0
 
-            x: screenX - width / 2
-            y: screenY - height / 2
+//            x: screenX - width / 2
+//            y: screenY - height / 2
+//            z: 10
 
-            property string title: ""
-            property string description: ""
-        }
+//            property string title: ""
+//            property string description: ""
+//        }
 
 
         //        Rectangle
@@ -335,7 +312,7 @@ Item {
         //            opacity: 0.5
         //            visible: parent.enabled && Settings.DEBUG_VIEW
         //        }
-        }
+    }
 
 
 

@@ -18,7 +18,7 @@ Component {
         //visible: Math.abs(index - list.currentIndex) < 3 || (list.count + index - list.currentIndex) < 3 ||
         //         (list.count - index + list.currentIndex) < 3
         opacity: Math.abs(index - list.currentIndex) < 3 || (list.count + index - list.currentIndex) < 3 ||
-                 (list.count - index + list.currentIndex) < 3 ? 1.0 : 1.0
+                 (list.count - index + list.currentIndex) < 3 ? 1.0 : 0.0
         Behavior on opacity {
             NumberAnimation
             {
@@ -37,11 +37,11 @@ Component {
         {
             if(Math.abs(index - list.currentIndex) == 1 || Math.abs(index - list.currentIndex) == list.count - 1)
             {
-                return 0.9
+                return 0.8
             }
             else if(Math.abs(index - list.currentIndex) == 2 || Math.abs(index - list.currentIndex) == list.count - 2)
             {
-                return 0.75
+                return 0.6
             }
             else if(index == list.currentIndex)
             {
@@ -49,7 +49,7 @@ Component {
             }
             else
             {
-                return 0.65
+                return 0.5
             }
         }
         function changeZ()
@@ -120,9 +120,7 @@ Component {
                     if(itemData.media.length === itemData.fileCount)
                     {
                         img.source = itemData.thumb
-                        img_id.text = itemData.id //test
-                        //if(itemData.id - 1 == list.currentIndex) ItemManager.current = itemData;
-
+                        //img_id.text = itemData.id //test
                         target = null
                     }
                 }
@@ -142,12 +140,12 @@ Component {
             anchors.fill: parent
             fillMode: Image.PreserveAspectCrop
             anchors.margins: 10
-            Text
-            {
-                id: img_id
-                color: "red"
-                anchors.centerIn: parent
-            }
+//            Text
+//            {
+//                id: img_id
+//                color: "red"
+//                anchors.centerIn: parent
+//            }
         }
 
         Image

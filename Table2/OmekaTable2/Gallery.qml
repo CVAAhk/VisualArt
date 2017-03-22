@@ -11,8 +11,7 @@ Item {
 
     /*!Load first page*/
     Component.onCompleted: {
-        //Omeka.getPage(10, gallery)
-        Omeka.getAllPages(1, gallery)
+        Omeka.getPage(1, gallery)
     }
 
     /*!Dynamically load omeka query results into browser*/
@@ -20,9 +19,10 @@ Item {
         target: Omeka
         onRequestComplete:{
             if(result.context === gallery){
-                //top_left_browser.append(result);
-                //lower_left_browser.append(result);
+                top_left_carousel.appendItems(result);
                 lower_left_carousel.appendItems(result);
+                top_right_carousel.appendItems(result);
+                lower_right_carousel.appendItems(result);
             }
         }
     }
@@ -30,33 +30,40 @@ Item {
 
     /*!Scroll through items*/
     //top screen
-    Browser {
-        id: top_left_browser
-        rotation: 180
-        //anchors.top: bar.bottom
-        height: parent.height / 2
-        headerHeight: height/3
+    Carousel
+    {
+        id: top_left_carousel
+        x: 241 + 480
+        y: 315
         topScreen: true
+        rotation: 180
         onCreateImage:
         {
-            imageHolder.createImage(source, imageX, imageY, imageRotation, imageWidth, imageHeight, title)
+            imageHolder.createImage(source, imageX -(1920 - x), imageY, imageRotation, imageWidth, imageHeight, title, "top left")
+        }
+        onCanPaginate:
+        {
+            Omeka.getNextPage(gallery)
+        }
+    }
+    Carousel
+    {
+        id: top_right_carousel
+        x: 1201 + 480
+        y: 315
+        topScreen: true
+        rotation: 180
+        onCreateImage:
+        {
+            imageHolder.createImage(source, imageX -(1920 - x), imageY, imageRotation, imageWidth, imageHeight, title, "top right")
+        }
+        onCanPaginate:
+        {
+            Omeka.getNextPage(gallery)
         }
     }
 
     //lower screen
-
-//    Browser {
-//        id: lower_left_browser
-//        //anchors.top: bar.bottom
-//        y: parent.height / 2
-//        height: parent.height / 2
-//        headerHeight: height/3
-//        topScreen: false
-//        onCreateImage:
-//        {
-//            imageHolder.createImage(source, imageX, imageY, imageRotation, imageWidth, imageHeight, title)
-//        }
-//    }
     Carousel
     {
         id: lower_left_carousel
@@ -65,6 +72,20 @@ Item {
         onCreateImage:
         {
             imageHolder.createImage(source, imageX + x, imageY + y, imageRotation, imageWidth, imageHeight, title, "lower left")
+        }
+        onCanPaginate:
+        {
+            Omeka.getNextPage(gallery)
+        }
+    }
+    Carousel
+    {
+        id: lower_right_carousel
+        x: 1201
+        y: 765
+        onCreateImage:
+        {
+            imageHolder.createImage(source, imageX + x, imageY + y, imageRotation, imageWidth, imageHeight, title, "lower right")
         }
         onCanPaginate:
         {
@@ -82,15 +103,12 @@ Item {
         onImageDeleted:
         {
             console.log("delete filepath = ",filepath, "whichScreen = ", whichScreen)
-            //top_left_browser.imageRemovedFromScene(filepath)
+
             if(whichScreen === "lower left") lower_left_carousel.imageRemovedFromScene(filepath);
+            if(whichScreen === "lower right") lower_right_carousel.imageRemovedFromScene(filepath);
+            if(whichScreen === "top left") top_left_carousel.imageRemovedFromScene(filepath);
+            if(whichScreen === "top right") top_right_carousel.imageRemovedFromScene(filepath);
 
         }
     }
-
-
-
-
-
-
 }
