@@ -13,3 +13,5 @@ var SCREEN_Y = 0;
 var DEBUG_VIEW = false;
 
 var FULLSCREEN = true;
+
+var ATTRACT_RANDOM_TIMER = 9000;

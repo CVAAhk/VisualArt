@@ -10,7 +10,8 @@ Item
 {
     id: root
 
-    height: bkg.height
+    height: active ? root.imageHeight + scroll_bkg.height : root.imageHeight
+    width: root.imageWidth
     objectName: "detail"
     property alias source: img.source
 
@@ -28,28 +29,36 @@ Item
 
     readonly property double scaleFactor: 1.0
 
+    property bool active: false
+
     signal imageDragged(var image);
 
     signal finishedDragging(var image);
 
     signal deleteImage(var image);
 
-//    onVisibleChanged:
+//    DropShadow
 //    {
-//        if(!visible)
-//        {
-//            root.destroy();
-//        }
+//        id: imageEffect
+//          anchors.fill: root
+//          horizontalOffset: 20
+//          verticalOffset: 20
+//          radius: 8.0
+//          samples: 17
+//          color: "#80000000"
+//          source: root
+//          z: 0
 //    }
-
 
     Image
     {
         id: bkg
         source: "content/POI/_Image_.png"
-        x: -20; y:-20
-        width: root.imageWidth + 40
-        height: root.imageHeight + scroll_bkg.height + 40// + title_bkg.height + description_bkg.height + 40
+//        x: -20; y:-20
+//        width: root.imageWidth + 40
+//        height: active ? root.imageHeight + scroll_bkg.height + 40 : root.imageHeight + 40
+        anchors.fill: root
+        anchors.margins: -10
     }
     Rectangle
     {
@@ -62,64 +71,6 @@ Item
         id: img
         fillMode: Image.PreserveAspectFit
 
-    }
-    Image
-    {
-        id: scroll_bkg
-        source: "content/POI/description_bkg.png"
-        height: 200
-        anchors.top: img.bottom
-        anchors.left: root.left
-    }
-
-        //primary display item
-        //property DetailColumn column
-
-        /*! scroll container */
-        OmekaScrollView {
-            id: scroll
-            anchors.top: img.bottom
-            anchors.left: root.left
-            anchors.margins: 0
-            width: root.imageWidth
-            height: 180
-
-            //media display
-            DetailColumn { id: display; width: root.imageWidth-35; }//height: 500 }
-        }
-
-        //Add if necessary
-        /*! scroll container */
-//        LoadScreen{
-//            progress: column && column.viewer ? column.viewer.progress : 0
-//        }
-
-
-    Image
-    {
-        id: close
-        source: "content/POI/Asset 4.png"
-        anchors.bottom: img.top
-        anchors.right: img.right
-        MultiPointTouchArea
-        {
-            anchors.fill: parent
-            onPressed:
-            {
-                root.deleteImage(root);
-            }
-        }
-    }
-    DropShadow
-    {
-        id: imageEffect
-          anchors.fill: close
-          horizontalOffset: 3
-          verticalOffset: 0
-          radius: 8.0
-          samples: 17
-          color: "#80000000"
-          source: close
     }
     MultiPointPinchArea
     {
@@ -168,6 +119,76 @@ Item
 
         debugView: Settings.DEBUG_VIEW
     }
+    Image
+    {
+        id: info_btn
+        source: "content/POI/info-btn.png"
+        anchors.right: img.right
+        anchors.bottom: img.bottom
+        anchors.margins: -15
+        MultiPointTouchArea
+        {
+            anchors.fill: parent
+
+            onPressed:
+            {
+                active = !active
+                scroll_bkg.opacity = active ? 1.0 : 0.0
+            }
+        }
+    }
+    Image
+    {
+        id: scroll_bkg
+        source: "content/POI/description_bkg.png"
+        height: 200
+        anchors.top: img.bottom
+        anchors.left: root.left
+        opacity: 0.0
+
+        //primary display item
+        //property DetailColumn column
+
+        /*! scroll container */
+        OmekaScrollView {
+            id: scroll
+//            anchors.top: img.bottom
+//            anchors.left: root.left
+//            anchors.margins: 0
+            width: root.imageWidth
+            height: 180
+
+            //media display
+            DetailColumn { id: display; width: root.imageWidth-35; }//height: 500 }
+        }
+
+    }
+
+
+        //Add if necessary
+        /*! scroll container */
+//        LoadScreen{
+//            progress: column && column.viewer ? column.viewer.progress : 0
+//        }
+
+
+    Image
+    {
+        id: close
+        source: "content/POI/Asset 4.png"
+        anchors.bottom: img.top
+        anchors.right: img.right
+        MultiPointTouchArea
+        {
+            anchors.fill: parent
+            onPressed:
+            {
+                root.deleteImage(root);
+            }
+        }
+    }
+
+
 
     Rectangle
     {

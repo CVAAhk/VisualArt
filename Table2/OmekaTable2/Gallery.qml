@@ -26,6 +26,35 @@ Item {
             }
         }
     }
+    TouchToBegin
+    {
+        id: top_left_begin
+        x: 346; y: 30
+        color: "yellow"
+        onYellowPressed: top_left_carousel.opacity = active ? 1.0 : 0.0
+
+    }
+    TouchToBegin
+    {
+        id: top_right_begin
+        x: 1306; y: 30
+        color: "green"
+        onGreenPressed: top_right_carousel.opacity = active ? 1.0 : 0.0
+    }
+    TouchToBegin
+    {
+        id: lower_left_begin
+        x: 346; y: 960
+        color: "blue"
+        onBluePressed: lower_left_carousel.opacity = active ? 1.0 : 0.0
+    }
+    TouchToBegin
+    {
+        id: lower_right_begin
+        x: 1306; y: 960
+        color: "red"
+        onRedPressed: lower_right_carousel.opacity = active ? 1.0 : 0.0
+    }
 
 
     /*!Scroll through items*/
@@ -37,6 +66,7 @@ Item {
         y: 315
         topScreen: true
         rotation: 180
+        opacity: 0.0
         onCreateImage:
         {
             imageHolder.createImage(source, imageX -(1920 - x), imageY, imageRotation, imageWidth, imageHeight, title, "top left")
@@ -53,6 +83,7 @@ Item {
         y: 315
         topScreen: true
         rotation: 180
+        opacity: 0.0
         onCreateImage:
         {
             imageHolder.createImage(source, imageX -(1920 - x), imageY, imageRotation, imageWidth, imageHeight, title, "top right")
@@ -69,6 +100,7 @@ Item {
         id: lower_left_carousel
         x: 241
         y: 765
+        opacity: 0.0
         onCreateImage:
         {
             imageHolder.createImage(source, imageX + x, imageY + y, imageRotation, imageWidth, imageHeight, title, "lower left")
@@ -83,6 +115,7 @@ Item {
         id: lower_right_carousel
         x: 1201
         y: 765
+        opacity: 0.0
         onCreateImage:
         {
             imageHolder.createImage(source, imageX + x, imageY + y, imageRotation, imageWidth, imageHeight, title, "lower right")

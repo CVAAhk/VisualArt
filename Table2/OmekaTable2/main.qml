@@ -8,15 +8,26 @@ ApplicationWindow {
     visible: true
     width: Settings.SCREEN_WIDTH
     height: Settings.SCREEN_HEIGHT
-    visibility: Settings.fullscreen ? "FullScreen" : "Windowed";
+    visibility: Settings.FULLSCREEN ? "FullScreen" : "Windowed";
     title: qsTr("OmekaTable2")
 
-
-    Keys.onEscapePressed: Qt.quit()
-
-    Gallery
+    Item
     {
-        width: Settings.SCREEN_WIDTH
-        height: Settings.SCREEN_HEIGHT
+        id: root
+        focus: true
+        Keys.onEscapePressed: Qt.quit()
+
+        Gallery
+        {
+            width: Settings.SCREEN_WIDTH
+            height: Settings.SCREEN_HEIGHT
+        }
+
+        AttractPoolItem
+        {
+            y: 539
+        }
     }
+
+
 }

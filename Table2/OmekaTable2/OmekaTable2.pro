@@ -63,5 +63,8 @@ DISTFILES += \
     Detail.qml \
     OmekaScrollView.qml \
     Carousel.qml \
-    OmekaIndicator.qml
+    OmekaIndicator.qml \
+    TouchToBegin.qml \
+    AttractImageItem.qml \
+    AttractPoolItem.qml
 

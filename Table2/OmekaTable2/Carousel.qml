@@ -9,6 +9,13 @@ Item
 
     signal canPaginate()
     signal createImage(string source, int imageX, int imageY, int imageRotation, int imageWidth, int imageHeight, string title);
+
+    Behavior on opacity {
+        NumberAnimation
+        {
+            duration: 200
+        }
+    }
     Image
     {
         id: selected_image
@@ -16,7 +23,7 @@ Item
         visible: browser.touch_area.creatingImage
 
         source: ""
-        height: browser.imageHeight
+        //height: browser.imageHeight
         fillMode: Image.PreserveAspectFit
 
         property int screenX: 0

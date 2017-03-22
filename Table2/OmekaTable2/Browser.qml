@@ -213,6 +213,7 @@ Item {
 
                                 selected_image.screenX = touchPoint.x + touch_area.x + root.x - selected_image.width / 2;
                                 selected_image.screenY = touchPoint.y + touch_area.y - root.y + selected_image.height / 2;
+                                selected_image.width = 247;
                                 console.log("touchPoint.x = ", touchPoint.x, " touchPoint.y = ", touchPoint.y)
                                 updatedCreatedImage = true;
 
@@ -229,7 +230,7 @@ Item {
                     {
                         selected_image.screenX = touchPoint.x + touch_area.x + root.x - selected_image.width / 2;
                         selected_image.screenY = touchPoint.y + touch_area.y - root.y + selected_image.height / 2;
-
+                        selected_image.width = 247;
                         updatedCreatedImage = true;
                     }
                 }
