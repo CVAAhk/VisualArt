@@ -35,6 +35,10 @@ Item {
 
     /*-------------LIKES-------------*/
 
+    //ui notifications
+    signal itemAdded(var item)
+    signal itemRemoved(var item)
+
     /*!
       \qmlmethod
       Add like to local database
@@ -42,6 +46,7 @@ Item {
     function registerLike(item) {
         if(!isLiked(item)) {
             Settings.addLike(item.id, itemToEntry(item))
+            itemAdded(item)
         }
     }
 
@@ -51,6 +56,7 @@ Item {
     */
     function unregisterLike(item) {
         Settings.removeLike(item.id)
+        itemRemoved(item)
     }
 
     /*!

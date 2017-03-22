@@ -97,12 +97,17 @@ Item {
         footer: footer
     }
 
-    /*! Add item from browser */
+    /*! Add item to browser */
     function append(item) {
         layout.model.append(item);
     }
 
-    /*! Insert item from browser */
+    /*! Remove item from browser by index */
+    function remove(index) {
+        layout.model.remove(index);
+    }
+
+    /*! Insert item to browser */
     function insert(index, item) {
         layout.model.insert(index, item)
     }
