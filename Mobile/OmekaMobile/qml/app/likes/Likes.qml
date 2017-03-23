@@ -17,23 +17,18 @@ Item {
 
     //load likes from local storage on init
     Component.onCompleted: {
-        var likes = ItemManager.getLikes();
-        var like;
+        var likes = ItemManager.getLikes()
+        var like
         for(var i=0; i<likes.length; i++) {
-            like = likes[i];
-            browser.insert(0, like)
-            indices.unshift(like.item)
+            addItem(likes[i])
         }
     }
 
     //clear removals when disabled
     onEnabledChanged: {
         if(!enabled) {
-            var index;
             for(var i in removals) {
-                index = indices.indexOf(removals[i])
-                browser.remove(index)
-                indices.splice(index, 1)
+                removeItem(indices.indexOf(removals[i]))
             }
             removals.length = 0
             filter.close()
@@ -46,17 +41,22 @@ Item {
 
         //immediately update additions
         onItemAdded: {
-            if(indices.indexOf(item.id) === -1) {
-                //indices.unshift(item.id)
+            if(indices.indexOf(item.id) === -1) { //add item
+                var data = {item: item.id, metadata: item.metadata, file_count: String(item.fileCount) }
+                addItem(data)
             }
-            if(removals.indexOf(item.id) !== -1) {
+            if(removals.indexOf(item.id) !== -1) { //update removals
                 removals.splice(removals.indexOf(item.id), 1);
             }
         }
-        //postpone removals for disabled state
+
         onItemRemoved: {
             if(indices.indexOf(item.id) !== -1) {
-                removals.push(item.id);
+                if(enabled) { //postpone removals for disabled state
+                    removals.push(item.id);
+                } else {   //remove immediately on disabled
+                    removeItem(indices.indexOf(item.id))
+                }
             }
         }
     }
@@ -89,6 +89,16 @@ Item {
             list.bottomMargin: Resolution.applyScale(150) + filter.height
             grid.bottomMargin: Resolution.applyScale(120) + filter.height
         }
+    }
 
+    function addItem(item) {
+        console.log(item.metadata+" "+item.metadata.count)
+        browser.insert(0, item)
+        indices.unshift(item.item)
+    }
+
+    function removeItem(index) {
+        browser.remove(index)
+        indices.splice(index, 1)
     }
 }
