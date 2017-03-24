@@ -15,12 +15,17 @@ Item {
     //items tagged for removal
     property var removals: []
 
+    //used to implicitly normalize item data types in order to avoid the requirement
+    //of dynamic roles on the browser's model
+    property var loaded: ListModel{}
+
     //load likes from local storage on init
     Component.onCompleted: {
         var likes = ItemManager.getLikes()
         var like
         for(var i=0; i<likes.length; i++) {
-            addItem(likes[i])
+            loaded.append(likes[i])
+            addItem(loaded.get(loaded.count-1))
         }
     }
 
@@ -91,15 +96,17 @@ Item {
         }
     }
 
+    /*
+      Add new liked item
+    */
     function addItem(item) {
-        if(!item) {
-            console.log("ERRRROR")
-        }
-
         browser.insert(0, item)
         indices.unshift(item.item)
     }
 
+    /*
+      Remove liked item by index
+    */
     function removeItem(index) {
         browser.remove(index)
         indices.splice(index, 1)
