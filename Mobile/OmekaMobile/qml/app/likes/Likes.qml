@@ -44,11 +44,9 @@ Item {
     Connections {
         target: ItemManager
 
-        //immediately update additions
         onItemAdded: {
             if(indices.indexOf(item.id) === -1) { //add item
-                var data = {item: item.id, metadata: item.metadata, file_count: String(item.fileCount) }
-                addItem(data)
+                addItem({item: item.id, metadata: item.metadata, file_count: String(item.fileCount)})
             }
             if(removals.indexOf(item.id) !== -1) { //update removals
                 removals.splice(removals.indexOf(item.id), 1);
@@ -63,6 +61,12 @@ Item {
                     removeItem(indices.indexOf(item.id))
                 }
             }
+        }
+
+        onClearItems: {
+            browser.clear()
+            indices.length = 0
+            removals.length = 0
         }
     }
 

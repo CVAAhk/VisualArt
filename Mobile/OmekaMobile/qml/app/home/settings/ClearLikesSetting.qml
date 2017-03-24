@@ -56,8 +56,16 @@ Setting {
                     }
                 }
 
+                Component.onCompleted: {
+                    enabled = User.likesExist()
+                }
+
+                onVisibleChanged: {
+                    enabled = visible && User.likesExist()
+                }
+
                 onClicked: {
-                    User.clearAllLikes()
+                    ItemManager.unregisterAllLikes()
                     enabled = false
                 }
             }

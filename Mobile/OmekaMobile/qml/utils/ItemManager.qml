@@ -38,6 +38,7 @@ Item {
     //ui notifications
     signal itemAdded(var item)
     signal itemRemoved(var item)
+    signal clearItems()
 
     /*!
       \qmlmethod
@@ -57,6 +58,15 @@ Item {
     function unregisterLike(item) {
         Settings.removeLike(item.id)
         itemRemoved(item)
+    }
+
+    /*!
+      \qmlmethod
+      Remove all likes from local database
+    */
+    function unregisterAllLikes() {
+        Settings.clearAllLikes()
+        clearItems()
     }
 
     /*!
