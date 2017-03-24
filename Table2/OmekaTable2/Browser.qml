@@ -52,8 +52,8 @@ Item {
         delegate: root.delegate
         spacing: -70
         cacheBuffer: 478
-        maximumFlickVelocity: 8000
-        flickDeceleration: 3000
+        //maximumFlickVelocity: 8000
+        //flickDeceleration: 300
         boundsBehavior: Flickable.StopAtBounds
         orientation: ListView.Horizontal
         //y: root.height /4
@@ -61,16 +61,17 @@ Item {
         width: root.width
         height: root.height
         highlightRangeMode: ListView.StrictlyEnforceRange
-        snapMode: ListView.SnapOneItem
+        //snapMode: ListView.SnapToItem
         preferredHighlightBegin: 140
         preferredHighlightEnd: 298
 
-        focus: true
+        //focus: true
+        enabled: false
 
         onFlickStarted:
         {
-            console.log("flick starts!!!!")
-            touch_area.enabled = false;
+            console.log("flick starts!!!!list.width = ", list.width)
+            //touch_area.enabled = false;
         }
         onFlickEnded:
         {
@@ -85,6 +86,9 @@ Item {
         {
             console.log("current index = ", currentIndex)
         }
+
+        onContentXChanged: console.log("currentX = ", contentX)
+
     }
 
 //    PathView
@@ -133,11 +137,11 @@ Item {
     {
         id: touch_area
 
-        x: 161//root.width/2 - 200
+        x: 21//161//root.width/2 - 200
         //y: //list.curoot.height/2 - 200
 
-        width: 400
-        height: 400
+        width: list.width//400
+        height: list.height//400
         //anchors.fill: path
 
         property bool creatingImage: false
@@ -149,21 +153,21 @@ Item {
         property var dragAmounts: ({})
         property var dragImages: ({})
 
-        onReleased:
-        {
-            for(var i = 0; i < touchPoints.length; i++)
-            {
-                var touchPoint = touchPoints[i];
-                if(touchPoint.y > 0 && dragAmounts[touchPoint.pointId] > -100)
-                {
-                    touch_area.enabled = false;
-                }
-                else
-                {
-                    touch_area.enabled = true;
-                }
-            }
-        }
+//        onReleased:
+//        {
+//            for(var i = 0; i < touchPoints.length; i++)
+//            {
+//                var touchPoint = touchPoints[i];
+//                if(touchPoint.y > 0 && dragAmounts[touchPoint.pointId] > -100)
+//                {
+//                    touch_area.enabled = false;
+//                }
+//                else
+//                {
+//                    touch_area.enabled = true;
+//                }
+//            }
+//        }
 
         onTouchUpdated:
         {
@@ -177,6 +181,18 @@ Item {
 
                 if(!creatingImage)
                 {
+                    if(touchPoint.y < bottomFlickMax)
+                    {
+                        if(Math.abs(touchPoint.x - touchPoint.previousX) > 10)
+                        {
+                            list.flick((touchPoint.x - touchPoint.previousX) * 100, 0);
+                        }
+
+
+                        //list.flick(3000,0)
+                        console.log("touchPoint.y = ", touchPoint.y)
+                    }
+
                     if(touchPoint.y < bottomFlickMax + 100)
                     {
                         if(!dragAmounts[touchPoint.pointId])

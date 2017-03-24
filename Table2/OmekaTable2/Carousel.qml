@@ -10,6 +10,7 @@ Item
     signal canPaginate()
     signal createImage(string source, int imageX, int imageY, int imageRotation, int imageWidth, int imageHeight, string title);
 
+    enabled: opacity == 1.0
     Behavior on opacity {
         NumberAnimation
         {

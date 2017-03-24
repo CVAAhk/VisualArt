@@ -66,6 +66,7 @@ Item
             imageItem.imageWidth = 247;
             imageItem.imageHeight = imageHeight;
             imageItem.title = title;
+            imageItem.antialiasing = true;
             //imageItem.scale = 0.5;
             //imageItem.x -= imageItem.width / 4;
 

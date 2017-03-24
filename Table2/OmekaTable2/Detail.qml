@@ -77,11 +77,11 @@ Item
         anchors.fill: img
 
         dragOnPinch: true
-        listenForRotation: false
-        listenForScale: false
+        listenForRotation: true
+        listenForScale: true
 
-//        maximumScale: 2
-//        minimumScale: 0.15
+        maximumScale: 3
+        minimumScale: 1
 
         mouseEnabled: true
 

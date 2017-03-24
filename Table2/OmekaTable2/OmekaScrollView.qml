@@ -6,5 +6,6 @@ ScrollView {
     Component.onCompleted: {
         flickableItem.maximumFlickVelocity = 8000
         flickableItem.flickDeceleration = 3000
+        flickableItem.flickableDirection = Flickable.VerticalFlick
     }
 }
