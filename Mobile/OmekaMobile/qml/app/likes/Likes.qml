@@ -92,7 +92,10 @@ Item {
     }
 
     function addItem(item) {
-        console.log(item.metadata+" "+item.metadata.count)
+        if(!item) {
+            console.log("ERRRROR")
+        }
+
         browser.insert(0, item)
         indices.unshift(item.item)
     }

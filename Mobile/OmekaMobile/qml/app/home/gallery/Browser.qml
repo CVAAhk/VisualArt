@@ -13,7 +13,7 @@ Item {
 
     property Flickable layout
 
-    property var model: ListModel{}
+    property var model: ListModel{ dynamicRoles: true}
 
     property var delegate: OmekaItem{}
 
