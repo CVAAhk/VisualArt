@@ -101,8 +101,8 @@ Item {
         id: receiver
         onSessionChanged: validateSession();
         onErrorChanged: pairingError();
-        onAddItem: console.log("add: "+item);
-        onRemoveItem: console.log("remove: "+item);
+        onAddItem: addHeistItem(item);
+        onRemoveItem: removeHeistItem(item);
     }
 
     /*
@@ -157,4 +157,17 @@ Item {
         }
     }
 
+    /*
+      Trigger likes registration process of heist item
+    */
+    function addHeistItem(item_id) {
+        console.log("added: "+item_id)
+    }
+
+    /*
+      Unregister like of heist item
+    */
+    function removeHeistItem(item_id) {
+        console.log("removed: "+item_id)
+    }        
 }
