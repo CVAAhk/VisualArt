@@ -102,7 +102,6 @@ Item {
         onSessionChanged: validateSession();
         onErrorChanged: pairingError();
         onAddItem: addHeistItem(item);
-        onRemoveItem: removeHeistItem(item);
     }
 
     /*
@@ -164,10 +163,4 @@ Item {
         console.log("added: "+item_id)
     }
 
-    /*
-      Unregister like of heist item
-    */
-    function removeHeistItem(item_id) {
-        console.log("removed: "+item_id)
-    }        
 }

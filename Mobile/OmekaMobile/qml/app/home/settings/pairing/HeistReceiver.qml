@@ -26,9 +26,8 @@ Item {
     //comparison item list to identify mods
     property var currentItems: []
 
-    //signals invoked on item list mods
+    //signal invoked on item list change
     signal addItem(var item);
-    signal removeItem(var item);
 
 
     /*
@@ -71,7 +70,7 @@ Item {
     }
 
     /*
-      Evaluates the item list difference to identify additions and removals
+      Evaluates the item list difference to identify additions
     */
     function updateItems() {
         if(!items) return;
@@ -79,11 +78,6 @@ Item {
         var additions = diff(items, currentItems);
         for(var a in additions) {
             addItem(additions[a]);
-        }
-
-        var removals = diff(currentItems, items);
-        for(var r in removals) {
-            removeItem(removals[r]);
         }
 
         currentItems = items;
