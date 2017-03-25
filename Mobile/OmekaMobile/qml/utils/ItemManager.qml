@@ -36,7 +36,7 @@ Item {
     /*-------------LIKES-------------*/
 
     //ui notifications
-    signal itemAdded(var item)
+    signal itemAdded(var item, var normalize)
     signal itemRemoved(var item)
     signal clearItems()
 
@@ -44,10 +44,10 @@ Item {
       \qmlmethod
       Add like to local database
     */
-    function registerLike(item) {
+    function registerLike(item, normalize) {
         if(!isLiked(item)) {
             Settings.addLike(item.id, itemToEntry(item))
-            itemAdded(item)
+            itemAdded(item, normalize)
         }
     }
 

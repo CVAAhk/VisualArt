@@ -3,6 +3,7 @@ import QtQuick 2.0
 import "../utils"
 
 Item {
+    id: heist_manager
 
     //request types
     readonly property var get: "GET";
@@ -346,4 +347,25 @@ Item {
         }
     }
 
+    ///////////////////////////////////////////////////////////
+    //          LIKES PROCESSING
+    ///////////////////////////////////////////////////////////
+
+    //process heist item registration
+    Connections {
+        target: Omeka
+        onRequestComplete: {
+            if(result.context === heist_manager) {
+                ItemManager.registerLike(result, true);
+            }
+        }
+    }
+
+    /*
+      Trigger processing of heist item id
+      /a item_id - heist item id
+    */
+    function registerItem(item_id) {
+        Omeka.getItemById(item_id, heist_manager);
+    }
 }

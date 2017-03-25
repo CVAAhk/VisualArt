@@ -101,7 +101,7 @@ Item {
         id: receiver
         onSessionChanged: validateSession();
         onErrorChanged: pairingError();
-        onAddItem: addHeistItem(item);
+        onAddItem: HeistManager.registerItem(item);
     }
 
     /*
@@ -154,13 +154,6 @@ Item {
             HeistManager.removeSession(entry.codeString);
             receiver.register = false;
         }
-    }
-
-    /*
-      Trigger likes registration process of heist item
-    */
-    function addHeistItem(item_id) {
-        console.log("added: "+item_id)
     }
 
 }

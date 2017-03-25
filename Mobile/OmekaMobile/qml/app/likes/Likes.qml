@@ -43,7 +43,12 @@ Item {
 
         onItemAdded: {
             if(indices.indexOf(item.id) === -1) { //add item
-                addItem(ItemManager.itemToData(item));
+                if(normalize) {
+                    normalizeAndAddItem(item);
+                } else {
+                    addItem(ItemManager.itemToData(item));
+                }
+
             }
             if(removals.indexOf(item.id) !== -1) { //update removals
                 removals.splice(removals.indexOf(item.id), 1);
