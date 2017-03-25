@@ -105,6 +105,22 @@ Item {
 
     /*!
       \qmlmethod
+      Converts item to omeka result data format
+    */
+    function itemToData(item) {
+        return {item: item.id, metadata: item.metadata, file_count: String(item.fileCount)};
+    }
+
+    /*!
+      \qmlmethod
+      Converts omeka result to item data format
+    */
+    function dataToItem(data) {
+        return {id: data.item, metadata: data.metadata, fileCount: data.file_count};
+    }
+
+    /*!
+      \qmlmethod
       Returns true if the item has an entry in the database
     */
     function isLiked(item) {

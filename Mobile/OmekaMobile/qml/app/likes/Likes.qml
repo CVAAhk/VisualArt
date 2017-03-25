@@ -15,17 +15,14 @@ Item {
     //items tagged for removal
     property var removals: []
 
-    //used to implicitly normalize item data types in order to avoid the requirement
-    //of dynamic roles on the browser's model
-    property var loaded: ListModel{}
+    //used to normalize data types
+    property var normalizer: ListModel{}
 
     //load likes from local storage on init
     Component.onCompleted: {
         var likes = ItemManager.getLikes()
-        var like
         for(var i=0; i<likes.length; i++) {
-            loaded.append(likes[i])
-            addItem(loaded.get(loaded.count-1))
+            normalizeAndAddItem(likes[i])
         }
     }
 
@@ -46,7 +43,7 @@ Item {
 
         onItemAdded: {
             if(indices.indexOf(item.id) === -1) { //add item
-                addItem({item: item.id, metadata: item.metadata, file_count: String(item.fileCount)})
+                addItem(ItemManager.itemToData(item));
             }
             if(removals.indexOf(item.id) !== -1) { //update removals
                 removals.splice(removals.indexOf(item.id), 1);
@@ -98,6 +95,15 @@ Item {
             list.bottomMargin: Resolution.applyScale(150) + filter.height
             grid.bottomMargin: Resolution.applyScale(120) + filter.height
         }
+    }
+
+    /*
+      Implicitly normalize item data types in order to avoid the requirement
+      of dynamic roles on the browser's model
+    */
+    function normalizeAndAddItem(item) {
+        normalizer.append(item)
+        addItem(normalizer.get(normalizer.count-1))
     }
 
     /*
