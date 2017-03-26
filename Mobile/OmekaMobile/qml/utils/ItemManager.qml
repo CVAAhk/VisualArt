@@ -36,7 +36,7 @@ Item {
     /*-------------LIKES-------------*/
 
     //ui notifications
-    signal itemAdded(var item, var normalize)
+    signal itemAdded(var item)
     signal itemRemoved(var item)
     signal clearItems()
 
@@ -44,10 +44,10 @@ Item {
       \qmlmethod
       Add like to local database
     */
-    function registerLike(item, normalize) {
+    function registerLike(item) {
         if(!isLiked(item)) {
             Settings.addLike(item.id, itemToEntry(item))
-            itemAdded(item, normalize)
+            itemAdded(item)
         }
     }
 
@@ -108,7 +108,7 @@ Item {
       Converts item to omeka result data format
     */
     function itemToData(item) {
-        return {item: item.id, metadata: item.metadata, file_count: String(item.fileCount)};
+        return {item: String(item.id), metadata: item.metadata, file_count: String(item.fileCount)};
     }
 
     /*!

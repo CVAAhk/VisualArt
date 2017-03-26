@@ -351,12 +351,17 @@ Item {
     //          LIKES PROCESSING
     ///////////////////////////////////////////////////////////
 
+    //used to implicitly normalize data types
+    property var normalizer: ListModel {}
+
     //process heist item registration
     Connections {
         target: Omeka
         onRequestComplete: {
             if(result.context === heist_manager) {
-                ItemManager.registerLike(result, true);
+                normalizer.append(ItemManager.dataToItem(result));
+                var item = normalizer.get(normalizer.count -1);
+                ItemManager.registerLike(item);
             }
         }
     }
