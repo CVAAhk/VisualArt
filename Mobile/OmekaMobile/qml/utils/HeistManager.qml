@@ -374,7 +374,6 @@ Item {
       /a code - pairing code
     */
     function unregisterItem(item_id) {
-        console.log("unregister: "+pairingCode)
         removeItem(pairingCode, item_id, null);
     }
 
@@ -390,6 +389,13 @@ Item {
             items[code].splice(index, 1);
             updateData(baseUrl+sessions[code], {item_ids: items[code]}, context);
         }
+    }
+
+    /*
+      Unregister item submitted through heist
+    */
+    function unregisterAllItems() {
+        removeAllItems(pairingCode, null);
     }
 
 }

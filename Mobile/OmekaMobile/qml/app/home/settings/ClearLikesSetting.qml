@@ -66,6 +66,7 @@ Setting {
 
                 onClicked: {
                     ItemManager.unregisterAllLikes()
+                    HeistManager.unregisterAllItems()
                     enabled = false
                 }
             }
