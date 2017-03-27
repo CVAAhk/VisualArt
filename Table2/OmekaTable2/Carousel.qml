@@ -71,7 +71,7 @@ Item
             {
                 if(nextCount === pageCount)
                 {
-                    busy = layout.atXEnd
+                    busy = (layout.currentIndex === layout.count -4)//layout.atXEnd
                     if(busy){
                         nextCount++;
                         console.log("can paginate!!")

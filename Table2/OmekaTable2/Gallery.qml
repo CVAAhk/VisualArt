@@ -69,7 +69,7 @@ Item {
         opacity: 0.0
         onCreateImage:
         {
-            imageHolder.createImage(source, imageX -(1920 - x), imageY, imageRotation, imageWidth, imageHeight, title, "top left")
+            imageHolder.createImage(source, imageX + x, imageY + y, imageRotation, imageWidth, imageHeight, title, "top left")
         }
         onCanPaginate:
         {
@@ -86,7 +86,7 @@ Item {
         opacity: 0.0
         onCreateImage:
         {
-            imageHolder.createImage(source, imageX -(1920 - x), imageY, imageRotation, imageWidth, imageHeight, title, "top right")
+            imageHolder.createImage(source, imageX + x, imageY + y, imageRotation, imageWidth, imageHeight, title, "top right")
         }
         onCanPaginate:
         {

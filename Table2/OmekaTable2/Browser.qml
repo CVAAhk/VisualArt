@@ -65,57 +65,19 @@ Item {
         preferredHighlightBegin: 140
         preferredHighlightEnd: 298
 
-        //focus: true
+        focus: true
         enabled: false
 
-        onFlickStarted:
-        {
-            console.log("flick starts!!!!list.width = ", list.width)
-            //touch_area.enabled = false;
-        }
-        onFlickEnded:
-        {
-            console.log("flick ends")
-            touch_area.enabled = true;
-        }
-        onMovementEnded:
-        {
-            touch_area.enabled = true;
-        }
+
         onCurrentItemChanged:
         {
             console.log("current index = ", currentIndex)
         }
 
-        onContentXChanged: console.log("currentX = ", contentX)
+        //onContentXChanged: console.log("currentX = ", contentX)
 
     }
 
-//    PathView
-//    {
-//        id: path
-//        model: root.model
-//        anchors.fill: parent
-//        anchors.horizontalCenter: parent.horizontalCenter
-//        delegate: root.delegate
-//        maximumFlickVelocity: 800
-//        flickDeceleration: 50
-//        path: Path {
-//            id: path_curve
-//                    startX: root.width * 1 / 2; startY: root.height /2
-////                    PathArc {
-////                            x: root.width * 2; y: root.height /2
-////                            radiusX: 75; radiusY: 50
-////                            direction: PathArc.Counterclockwise
-////                        }
-//                    PathLine { x: root.width * 2; y: root.height /2}
-//                    //PathLine { x: -root.width *1/2; y: root.height /2}
-
-//                    //PathQuad { x: root.width /2; y: root.height /2; controlX: root.width * 2; controlY: root.height /2 }
-//                    //PathQuad { x: root.width /2; y: root.height /2; controlX: -root.width *1/2 ; controlY: root.height /2 }
-//                }
-
-//    }
     function increaseCurrentItem()
     {
         list.incrementCurrentIndex();
@@ -124,14 +86,6 @@ Item {
     {
         list.decrementCurrentIndex();
     }
-
-//        Rectangle
-//        {
-//            anchors.fill: parent
-//            color: "green"
-//            opacity: 0.5
-//            visible: parent.enabled && Settings.DEBUG_VIEW
-//        }
 
     MultiPointTouchArea
     {
@@ -153,22 +107,6 @@ Item {
         property var dragAmounts: ({})
         property var dragImages: ({})
 
-//        onReleased:
-//        {
-//            for(var i = 0; i < touchPoints.length; i++)
-//            {
-//                var touchPoint = touchPoints[i];
-//                if(touchPoint.y > 0 && dragAmounts[touchPoint.pointId] > -100)
-//                {
-//                    touch_area.enabled = false;
-//                }
-//                else
-//                {
-//                    touch_area.enabled = true;
-//                }
-//            }
-//        }
-
         onTouchUpdated:
         {
             var updatedCreatedImage = false;
@@ -188,8 +126,6 @@ Item {
                             list.flick((touchPoint.x - touchPoint.previousX) * 100, 0);
                         }
 
-
-                        //list.flick(3000,0)
                         console.log("touchPoint.y = ", touchPoint.y)
                     }
 
@@ -228,7 +164,7 @@ Item {
                                 imageItems.push(item);
 
                                 selected_image.screenX = touchPoint.x + touch_area.x + root.x - selected_image.width / 2;
-                                selected_image.screenY = touchPoint.y + touch_area.y - root.y + selected_image.height / 2;
+                                selected_image.screenY = touchPoint.y + touch_area.y - root.y// + selected_image.height / 2;
                                 selected_image.width = 247;
                                 console.log("touchPoint.x = ", touchPoint.x, " touchPoint.y = ", touchPoint.y)
                                 updatedCreatedImage = true;
@@ -245,7 +181,7 @@ Item {
                     if(touchPoint.pointId === touchId && touchPoint.pressed)
                     {
                         selected_image.screenX = touchPoint.x + touch_area.x + root.x - selected_image.width / 2;
-                        selected_image.screenY = touchPoint.y + touch_area.y - root.y + selected_image.height / 2;
+                        selected_image.screenY = touchPoint.y + touch_area.y - root.y// + selected_image.height / 2;
                         selected_image.width = 247;
                         updatedCreatedImage = true;
                     }
@@ -262,18 +198,17 @@ Item {
 
                 if(root.topScreen)
                 {
-                    imageCenterX = 1920 - (selected_image.x); //selected_image.width / 2 + root.x + touch_area.x;//
-                    imageCenterY = 1080 - (selected_image.y); // selected_image.height / 2 + root.y + touch_area.y;
+                    imageCenterX = -selected_image.x - selected_image.width// + root.x + touch_area.x;//
+                    imageCenterY = -selected_image.y - selected_image.height// / 2//1080 + (selected_image.y); // selected_image.height / 2 + root.y + touch_area.y;
                     rotation = 180;
                 }
                 else
                 {
                     imageCenterX = selected_image.x//- selected_image.width / 2; //selected_image.width / 2 + root.x + touch_area.x;//
-                    imageCenterY = selected_image.y - selected_image.height / 2; // selected_image.height / 2 + root.y + touch_area.y;
+                    imageCenterY = selected_image.y// - selected_image.height / 2; // selected_image.height / 2 + root.y + touch_area.y;
                     rotation = 0;
                 }
                 console.log("selected_image.x = ", selected_image.x, " selected_image.y = ", selected_image.y)
-                console.log("MAking select imag e " + selected_image.width + " " + selected_image.height);
 
                 root.createImage(selected_image.source, imageCenterX, imageCenterY, rotation,
                                  selected_image.width, selected_image.height, selected_image.title);
@@ -321,14 +256,13 @@ Item {
 //        }
 
 
-        //        Rectangle
-        //        {
-        //            width: path.width
-        //            height: path.height
-        //            color: "red"
-        //            opacity: 0.5
-        //            visible: parent.enabled && Settings.DEBUG_VIEW
-        //        }
+                Rectangle
+                {
+                    anchors.fill: parent
+                    color: "red"
+                    opacity: 0.5
+                    visible: parent.enabled && Settings.DEBUG_VIEW
+                }
     }
 
 

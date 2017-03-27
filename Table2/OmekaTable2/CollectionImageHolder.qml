@@ -82,7 +82,7 @@ Item
                 {
                     //imageItem.topScreen = true;
                     //imageItem.x = imageItem.x - imageItem.imageWidth;
-                    imageItem.y = imageItem.y - 2 * imageItem.height;
+                   // imageItem.y = imageItem.y - 2 * imageItem.height;
                     console.log("imageItem.x = ", imageItem.x,"imageItem.y = ", imageItem.y, " imageItem.height = ", imageItem.height)
                 }
             }
