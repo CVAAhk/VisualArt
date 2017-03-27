@@ -84,6 +84,7 @@ Item {
     /*!Keypad layout*/
     GridView {
         id: keypad
+        interactive: false
         width: parent.width
         height: childrenRect.height
         cellWidth: (parent.width/3)

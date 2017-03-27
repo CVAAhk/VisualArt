@@ -1,5 +1,5 @@
 pragma Singleton
-import QtQuick 2.0
+import QtQuick 2.5
 import "../utils"
 
 Item {
@@ -27,6 +27,11 @@ Item {
     property var items: ({});
 
     /*
+     Valid pairing code entered by phone
+    */
+    property var pairingCode: ""
+
+    /*
       Universally unique identifier to tag the Heist instance. Currently only
       applicable to mobile devices but can eventually be leveraged for multiple
       table instances targeting the same omeka endpoint.
@@ -52,6 +57,7 @@ Item {
     function setPairing(user, device) {
         if(pairings.setPairing(user, device)) {
             setDevice(user, device);
+            pairingCode = user;
         }
     }
 
@@ -59,9 +65,9 @@ Item {
       Release pairing between table user and device
     */
     function releasePairing(user, device) {
-        var test = pairings.releasePairing(user, device)
-        if(test) {
+        if(pairings.releasePairing(user, device)) {
             setDevice(user, "");
+            pairingCode = "";
         }
     }
 
@@ -321,6 +327,21 @@ Item {
     //          DEVICE REQUESTS
     ///////////////////////////////////////////////////////////
 
+    //used to implicitly normalize data types
+    property var normalizer: ListModel {}
+
+    //process heist item registration
+    Connections {
+        target: Omeka
+        onRequestComplete: {
+            if(result.context === heist_manager) {
+                normalizer.append(ItemManager.dataToItem(result));
+                var item = normalizer.get(normalizer.count -1);
+                ItemManager.registerLike(item);
+            }
+        }
+    }
+
     /*Set device id corresponding to pairing code. A non empty value signals a connection to the table
       and an empty value signals a disconnection.
       /a code - pairing code
@@ -331,6 +352,30 @@ Item {
         if(code in sessions) {
             updateData(baseUrl+sessions[code], {device_id: device}, "");
         }
+    }
+
+    /*
+      Trigger registration process of heist item
+      /a item_id - heist item id
+      /a code - pairing code
+    */
+    function registerItem(item_id, code) {
+        if(!(code in sessions)) return;
+        if(!(code in items)) {
+            items[code] = [];
+        }
+        items[code].push(item_id);
+        Omeka.getItemById(item_id, heist_manager);
+    }
+
+    /*
+      Unregister item submitted through heist
+      /a item_id - heist item id
+      /a code - pairing code
+    */
+    function unregisterItem(item_id) {
+        console.log("unregister: "+pairingCode)
+        removeItem(pairingCode, item_id, null);
     }
 
     /*Remove item from list
@@ -347,30 +392,4 @@ Item {
         }
     }
 
-    ///////////////////////////////////////////////////////////
-    //          LIKES PROCESSING
-    ///////////////////////////////////////////////////////////
-
-    //used to implicitly normalize data types
-    property var normalizer: ListModel {}
-
-    //process heist item registration
-    Connections {
-        target: Omeka
-        onRequestComplete: {
-            if(result.context === heist_manager) {
-                normalizer.append(ItemManager.dataToItem(result));
-                var item = normalizer.get(normalizer.count -1);
-                ItemManager.registerLike(item);
-            }
-        }
-    }
-
-    /*
-      Trigger processing of heist item id
-      /a item_id - heist item id
-    */
-    function registerItem(item_id) {
-        Omeka.getItemById(item_id, heist_manager);
-    }
 }

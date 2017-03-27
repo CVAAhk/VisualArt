@@ -16,6 +16,7 @@ OmekaToggle{
         }
         else{
             ItemManager.unregisterLike(itemData)
+            HeistManager.unregisterItem(itemData.id)
         }
     }
 

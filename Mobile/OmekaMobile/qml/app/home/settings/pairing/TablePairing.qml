@@ -101,7 +101,7 @@ Item {
         id: receiver
         onSessionChanged: validateSession();
         onErrorChanged: pairingError();
-        onAddItem: HeistManager.registerItem(item);
+        onAddItem: HeistManager.registerItem(item, entry.codeString);
     }
 
     /*
