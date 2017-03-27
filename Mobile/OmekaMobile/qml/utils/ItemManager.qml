@@ -46,7 +46,7 @@ Item {
     */
     function registerLike(item) {
         if(!isLiked(item)) {
-            Settings.addLike(item.id, itemToEntry(item))
+            Settings.addLike(String(item.id), itemToEntry(item))
             itemAdded(item)
         }
     }

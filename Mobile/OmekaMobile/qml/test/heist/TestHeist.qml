@@ -98,16 +98,20 @@ ApplicationWindow {
         HeistManager.clearAllSessions();        
         paired = false;
         currentCode = "";
+        resetItems();
+    }
 
-        //reset list items
+    function resetItems() {
         for(var i=0; i<item_list.count; i++) {
             item_list.contentItem.children[i].reset();
         }
+        HeistManager.removeAllItems(currentCode, null);
     }
 
     onPairedChanged: {
         if(!paired) {
             deviceId = null;
+            resetItems();
         }
     }
 
@@ -120,11 +124,4 @@ ApplicationWindow {
         }
     }
 
-    function addItem(item) {
-
-    }
-
-    function removeItem(item) {
-
-    }
 }
