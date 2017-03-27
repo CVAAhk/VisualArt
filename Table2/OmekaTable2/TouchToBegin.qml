@@ -18,7 +18,7 @@ Item
         {
             anchors.fill: parent
             property bool active: false
-            onPressed: {active = !active; root.opacity = active ? 0.0 : 1.0;root.bluePressed(active)}
+            onPressed: {active = !active; root.enabled = false; root.opacity = active ? 0.0 : 1.0;root.bluePressed(active)}
         }
     }
 

@@ -66,6 +66,7 @@ Item
             imageItem.imageWidth = 247;
             imageItem.imageHeight = imageHeight;
             imageItem.title = title;
+            imageItem.antialiasing = true;
             //imageItem.scale = 0.5;
             //imageItem.x -= imageItem.width / 4;
 
@@ -81,7 +82,7 @@ Item
                 {
                     //imageItem.topScreen = true;
                     //imageItem.x = imageItem.x - imageItem.imageWidth;
-                    imageItem.y = imageItem.y - 2 * imageItem.height;
+                   // imageItem.y = imageItem.y - 2 * imageItem.height;
                     console.log("imageItem.x = ", imageItem.x,"imageItem.y = ", imageItem.y, " imageItem.height = ", imageItem.height)
                 }
             }
