@@ -63,6 +63,52 @@ Item
         color: "#ffffff"
         anchors.fill: img
     }
+    Image
+    {
+        id: controls
+        anchors.bottom: img.top
+        anchors.left: img.left
+        anchors.right: img.right
+        anchors.leftMargin: -18
+        anchors.rightMargin: -18
+        anchors.bottomMargin: -16
+        source: "content/POI/info-panel-controls-bkg.png"
+
+        Image
+        {
+            id: close
+            source: "content/POI/close-off.png"
+            anchors.top: controls.top
+            anchors.right: controls.right
+            anchors.margins: 10
+            MultiPointTouchArea
+            {
+                anchors.fill: parent
+                onPressed:
+                {
+                    root.deleteImage(root);
+                }
+            }
+        }
+        Image
+        {
+            id: info_btn
+            source: "content/POI/info-icon-off.png"
+            anchors.top: controls.top
+            anchors.left: controls.left
+            anchors.margins: 10
+            MultiPointTouchArea
+            {
+                anchors.fill: parent
+                onPressed:
+                {
+                    active = !active
+                    scroll_bkg.opacity = active ? 1.0 : 0.0
+                    info_btn.source = active ? "content/POI/info-icon-on.png" : "content/POI/info-icon-off.png"
+                }
+            }
+        }
+    }
 
     Image
     {
@@ -117,24 +163,7 @@ Item
 
         debugView: Settings.DEBUG_VIEW
     }
-    Image
-    {
-        id: info_btn
-        source: "content/POI/info-btn.png"
-        anchors.right: img.right
-        anchors.bottom: img.bottom
-        anchors.margins: -15
-        MultiPointTouchArea
-        {
-            anchors.fill: parent
 
-            onPressed:
-            {
-                active = !active
-                scroll_bkg.opacity = active ? 1.0 : 0.0
-            }
-        }
-    }
     Image
     {
         id: scroll_bkg
@@ -170,21 +199,8 @@ Item
 //        }
 
 
-    Image
-    {
-        id: close
-        source: "content/POI/Asset 4.png"
-        anchors.bottom: img.top
-        anchors.right: img.right
-        MultiPointTouchArea
-        {
-            anchors.fill: parent
-            onPressed:
-            {
-                root.deleteImage(root);
-            }
-        }
-    }
+
+
 
 
 
