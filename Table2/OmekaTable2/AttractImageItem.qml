@@ -16,6 +16,7 @@ import "settings.js" as Settings
         property var title
         property string source:img.source
         property int file_id : -1
+        property bool topScreen: false
 
         signal imageDragged();
 
@@ -100,6 +101,7 @@ import "settings.js" as Settings
             anchors.fill: img
             anchors.margins: -10
             visible: img.progress >= 1
+            //rotation: topScreen ? 180 : 0
         }
         Image
         {
@@ -107,7 +109,7 @@ import "settings.js" as Settings
             //anchors.fill: parent
             width: root.width
             fillMode: Image.PreserveAspectFit
-            //anchors.margins: 10
+            //rotation: topScreen ? 180 : 0
             Text
             {
                 id: img_id
@@ -192,8 +194,8 @@ import "settings.js" as Settings
                                     root.imageInScene();
                                     //imageItems.push(item);
 
-                                    selected_image.screenX = touchPoint.x;
-                                    selected_image.screenY = touchPoint.y// + selected_image.height / 2;
+                                    selected_image.screenX = touchPoint.x - selected_image.width / 2;
+                                    selected_image.screenY = touchPoint.y - selected_image.height / 2;
                                     selected_image.width = 247;
                                     console.log("touchPoint.x = ", touchPoint.x, " touchPoint.y = ", touchPoint.y)
                                     updatedCreatedImage = true;
@@ -209,8 +211,8 @@ import "settings.js" as Settings
                     {
                         if(touchPoint.pointId === touchId && touchPoint.pressed)
                         {
-                            selected_image.screenX = touchPoint.x;
-                            selected_image.screenY = touchPoint.y// + selected_image.height / 2;
+                            selected_image.screenX = touchPoint.x - selected_image.width / 2;
+                            selected_image.screenY = touchPoint.y - selected_image.height / 2;
                             selected_image.width = 247;
                             updatedCreatedImage = true;
                         }
@@ -227,8 +229,8 @@ import "settings.js" as Settings
 
                     if(root.topScreen)
                     {
-                        imageCenterX = -selected_image.x - selected_image.width// + root.x + touch_area.x;//
-                        imageCenterY = -selected_image.y - selected_image.height// / 2//1080 + (selected_image.y); // selected_image.height / 2 + root.y + touch_area.y;
+                        imageCenterX = -selected_image.x - selected_image.width / 2// + root.x + touch_area.x;//
+                        imageCenterY = -selected_image.y - selected_image.height // / 2//1080 + (selected_image.y); // selected_image.height / 2 + root.y + touch_area.y;
                         rotation = 180;
                     }
                     else
@@ -277,8 +279,8 @@ import "settings.js" as Settings
                 property int screenX: 0
                 property int screenY: 0
 
-                x: screenX - width / 2
-                y: screenY - height / 2
+                x: screenX// - width / 2
+                y: screenY// - height / 2
                 z: 10
             }
 

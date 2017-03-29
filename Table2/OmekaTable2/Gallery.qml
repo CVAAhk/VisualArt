@@ -9,6 +9,8 @@ Item {
 
     property var current
 
+    signal removeAttractImage(string filepath,string whichScreen)
+
     /*!Load first page*/
     Component.onCompleted: {
         Omeka.getPage(1, gallery)
@@ -141,6 +143,7 @@ Item {
             if(whichScreen === "lower right") lower_right_carousel.imageRemovedFromScene(filepath);
             if(whichScreen === "top left") top_left_carousel.imageRemovedFromScene(filepath);
             if(whichScreen === "top right") top_right_carousel.imageRemovedFromScene(filepath);
+            if(whichScreen.includes("attract")) gallery.removeAttractImage(filepath,whichScreen);
 
         }
     }
