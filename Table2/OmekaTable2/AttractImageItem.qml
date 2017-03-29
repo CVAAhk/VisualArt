@@ -4,16 +4,22 @@ import QtQuick.Controls.Styles 1.4
 import QtGraphicalEffects 1.0
 import "."
 
+import "settings.js" as Settings
+
 
     Item
     {
         id: root
         width: 158; height: img.height
         property var itemData: ({})
+        property var itemResult
         property var title
         property string source:img.source
         property int file_id : -1
 
+        signal imageDragged();
+
+        signal createImage(string source, int imageX, int imageY, int imageRotation, int imageWidth, int imageHeight);
         //scale: changeScale()
         //z: changeZ();//1 - Math.abs(index - list.currentIndex)
         //visible: Math.abs(index - list.currentIndex) < 3 || (list.count + index - list.currentIndex) < 3 ||
@@ -30,32 +36,31 @@ import "."
 
         function imageInScene()
         {
-            inScene = true;
+            //inScene = true;
             ItemManager.current = itemData;
             ItemManager.selectedItems.push(itemData);
         }
         function imageRemovedFromScene(source)
         {
             console.log("ImageViewer imageRemovedFromScene(source)= ", source)
-            inScene = false;
+            //inScene = false;
         }
 
 
-        Component.onCompleted:
+        //Component.onCompleted:
+        onItemResultChanged:
         {
-            //itemData.id = String(result.item)
-            //console.log("itemData.id = ", itemData.id)
-            //itemData.fileCount = parseInt(result.file_count)
-            //itemData.metadata = result.metadata
+            itemData.id = String(itemResult.item)
+            console.log("itemData.id = ", itemData.id)
+            itemData.fileCount = parseInt(itemResult.file_count)
+            itemData.metadata = itemResult.metadata
+
             itemData.media = []
             itemData.mediaTypes = []
 
-            setInfo();
+            //setInfo();
+            Omeka.getFiles(itemData.id, root)
 
-        }
-        function randomizeId()
-        {
-            return Math.random() * 490
         }
 
         function setInfo()
@@ -72,8 +77,8 @@ import "."
                 if(result.context === root)
                 {
                     console.log("thum = ", result.thumb)
+
                     itemData.thumb = result.thumb
-                    //if(!itemData.thumb) return;
 
                     itemData.media.push(result.media)
                     itemData.mediaTypes.push(result.media_type)
@@ -81,8 +86,8 @@ import "."
 //                    if(itemData.media.length === itemData.fileCount)
 //                    {
                         img.source = itemData.thumb
-                        img_id.text = file_id //test
-                        target = null
+                        img_id.text = itemData.id //test
+                        //target = null
 //                    }
                 }
             }
@@ -115,8 +120,10 @@ import "."
         {
             id: touch_area
 
+            //anchors.fill: img
 
-            //anchors.fill: path
+            width: img.width//400
+            height: img.height//400
 
             property bool creatingImage: false
             property int touchId: -1
@@ -124,24 +131,9 @@ import "."
 
             property int bottomFlickMax: 500
 
-            property var dragAmounts: ({})
+            property var dragAmountsY: ({})
+            property var dragAmountsX: ({})
             property var dragImages: ({})
-
-            onReleased:
-            {
-                for(var i = 0; i < touchPoints.length; i++)
-                {
-                    var touchPoint = touchPoints[i];
-                    if(touchPoint.y > 0 && dragAmounts[touchPoint.pointId] > -100)
-                    {
-                        touch_area.enabled = false;
-                    }
-                    else
-                    {
-                        touch_area.enabled = true;
-                    }
-                }
-            }
 
             onTouchUpdated:
             {
@@ -155,28 +147,39 @@ import "."
 
                     if(!creatingImage)
                     {
-                        if(touchPoint.y < bottomFlickMax + 100)
-                        {
-                            if(!dragAmounts[touchPoint.pointId])
+
+                        //if(touchPoint.y < bottomFlickMax + 100)
+                        //{
+                            if(!dragAmountsY[touchPoint.pointId])
                             {
-                                dragAmounts[touchPoint.pointId] = 0.0;
-                                dragImages[touchPoint.pointId] = list.currentItem
+                                dragAmountsY[touchPoint.pointId] = 0.0;
+                                dragImages[touchPoint.pointId] = root;
+                            }
+                            if(!dragAmountsX[touchPoint.pointId])
+                            {
+                                dragAmountsX[touchPoint.pointId] = 0.0;
                             }
 
-                            var drag = dragAmounts[touchPoint.pointId] ?
-                                        dragAmounts[touchPoint.pointId] : 0.0
+                            var dragY = dragAmountsY[touchPoint.pointId] ?
+                                        dragAmountsY[touchPoint.pointId] : 0.0
 
-                            dragAmounts[touchPoint.pointId] = drag + deltaY;
+                            dragAmountsY[touchPoint.pointId] = dragY + deltaY;
 
-                            if(dragAmounts[touchPoint.pointId] < -100)
+
+
+                            var dragX = dragAmountsX[touchPoint.pointId] ?
+                                        dragAmountsX[touchPoint.pointId] : 0.0
+
+                            dragAmountsX[touchPoint.pointId] = dragX + deltaX;
+
+                            if(dragAmountsY[touchPoint.pointId] < -100 || dragAmountsY[touchPoint.pointId] > 100 ||
+                               dragAmountsX[touchPoint.pointId] < -100 || dragAmountsX[touchPoint.pointId] > 100)
                             {
                                 var imageSource = dragImages[touchPoint.pointId].source;
-                                var item = dragImages[touchPoint.pointId];
-                                var title = dragImages[touchPoint.pointId].title;
-
+                                //var item = dragImages[touchPoint.pointId];
 
                                 if(imageSource !== "" &&
-                                        (!item.inScene))
+                                        (!root.inScene))
                                 {
                                     creatingImage = true;
 
@@ -186,11 +189,12 @@ import "."
 
                                     //selected_image.title = title;
 
-                                    item.imageInScene();
-                                    imageItems.push(item);
+                                    root.imageInScene();
+                                    //imageItems.push(item);
 
-                                    selected_image.screenX = touchPoint.x + touch_area.x + root.x - selected_image.width / 2;
-                                    selected_image.screenY = touchPoint.y + touch_area.y - root.y + selected_image.height / 2;
+                                    selected_image.screenX = touchPoint.x;
+                                    selected_image.screenY = touchPoint.y// + selected_image.height / 2;
+                                    selected_image.width = 247;
                                     console.log("touchPoint.x = ", touchPoint.x, " touchPoint.y = ", touchPoint.y)
                                     updatedCreatedImage = true;
 
@@ -199,15 +203,15 @@ import "."
                                     break;
                                 }
                             }
-                        }
+                        //}
                     }
                     else
                     {
                         if(touchPoint.pointId === touchId && touchPoint.pressed)
                         {
-                            selected_image.screenX = touchPoint.x + touch_area.x + root.x - selected_image.width / 2;
-                            selected_image.screenY = touchPoint.y + touch_area.y - root.y + selected_image.height / 2;
-
+                            selected_image.screenX = touchPoint.x;
+                            selected_image.screenY = touchPoint.y// + selected_image.height / 2;
+                            selected_image.width = 247;
                             updatedCreatedImage = true;
                         }
                     }
@@ -223,24 +227,23 @@ import "."
 
                     if(root.topScreen)
                     {
-                        imageCenterX = 1920 - (selected_image.x); //selected_image.width / 2 + root.x + touch_area.x;//
-                        imageCenterY = 1080 - (selected_image.y); // selected_image.height / 2 + root.y + touch_area.y;
+                        imageCenterX = -selected_image.x - selected_image.width// + root.x + touch_area.x;//
+                        imageCenterY = -selected_image.y - selected_image.height// / 2//1080 + (selected_image.y); // selected_image.height / 2 + root.y + touch_area.y;
                         rotation = 180;
                     }
                     else
                     {
                         imageCenterX = selected_image.x//- selected_image.width / 2; //selected_image.width / 2 + root.x + touch_area.x;//
-                        imageCenterY = selected_image.y - selected_image.height / 2; // selected_image.height / 2 + root.y + touch_area.y;
+                        imageCenterY = selected_image.y// - selected_image.height / 2; // selected_image.height / 2 + root.y + touch_area.y;
                         rotation = 0;
                     }
                     console.log("selected_image.x = ", selected_image.x, " selected_image.y = ", selected_image.y)
-                    console.log("MAking select imag e " + selected_image.width + " " + selected_image.height);
 
                     root.createImage(selected_image.source, imageCenterX, imageCenterY, rotation,
-                                     selected_image.width, selected_image.height, selected_image.title);
+                                     selected_image.width, selected_image.height);
                 }
 
-                var dragEntries = Object.getOwnPropertyNames(dragAmounts);
+                var dragEntries = Object.getOwnPropertyNames(dragAmountsY);
                 for (var index = 0; index < dragEntries.length; index++)
                 {
                     var touchEntry = dragEntries[index];
@@ -255,41 +258,38 @@ import "."
 
                     if(!updatedEntry)
                     {
-                        dragAmounts[touchEntry] = 0.0;
+                        dragAmountsY[touchEntry] = 0.0;
+                        dragAmountsX[touchEntry] = 0.0;
                     }
                 }
             }
 
-    //        Image
-    //        {
-    //            id: selected_image
+            Image
+            {
+                id: selected_image
 
-    //            visible: touch_area.creatingImage
+                visible: touch_area.creatingImage
 
-    //            source: ""
-    //            height: root.imageHeight
-    //            fillMode: Image.PreserveAspectFit
+                source: ""
+                height: root.imageHeight
+                fillMode: Image.PreserveAspectFit
 
-    //            property int screenX: 0
-    //            property int screenY: 0
+                property int screenX: 0
+                property int screenY: 0
 
-    //            x: screenX - width / 2
-    //            y: screenY - height / 2
-    //            z: 10
-
-    //            property string title: ""
-    //            property string description: ""
-    //        }
+                x: screenX - width / 2
+                y: screenY - height / 2
+                z: 10
+            }
 
 
-            //        Rectangle
-            //        {
-            //            width: path.width
-            //            height: path.height
-            //            color: "red"
-            //            opacity: 0.5
-            //            visible: parent.enabled && Settings.DEBUG_VIEW
-            //        }
+                    Rectangle
+                    {
+                        anchors.fill: parent
+                        color: "red"
+                        opacity: 0.5
+                        visible: parent.enabled && Settings.DEBUG_VIEW
+                    }
         }
 
         //load indicator

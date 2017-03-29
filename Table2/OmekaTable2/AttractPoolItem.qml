@@ -6,35 +6,70 @@ Item
     id: root
     property int randomCount: 2
 
-    property int file_id : -1
+    property int fileId1 : -1
 
-//    property var imageItem1
-//    property var imageItem2
+    property int fileId2 : -1
 
-//    Component.onCompleted:
-//    {
+    property var allResults:[]//: ({})
+    property int maxResults: 490
+    property int resultCount: 0
 
-//        var component = Qt.createComponent("AttractImageItem.qml");
+    property var model: ListModel{}
 
-//        if (component.status === Component.Ready)
-//        {
-//            console.log("Component ready")
-//            imageItem1 = component.createObject(root);
-//            imageItem2 = component.createObject(root);
-//            //imageItem1.result = result
-//            imageItem1.x = 750;
-//            imageItem2.x = 970;
+    signal createImage(string source, int imageX, int imageY, int imageRotation, int imageWidth, int imageHeight);
 
-//            //random_timer.start();
-//        }
-//    }
-    AttractImageItem{
+
+    Component.onCompleted: {
+        Omeka.getAllPages(10, root)
+        //Omeka.getPage(1, root)
+    }
+
+    /*!Dynamically load omeka query results into browser*/
+    Connections {
+        target: Omeka
+        onRequestComplete:{
+            if(result.context === root){
+                allResults.push(result)
+                if(allResults.length == maxResults)
+                {
+                    var random_id1 = Math.floor(randomizeId());
+                    var random_id2 = Math.floor(randomizeId());
+
+                    imageItem1.itemResult = allResults[random_id1]
+                    imageItem2.itemResult = allResults[random_id2]
+                }
+            }
+        }
+    }
+
+    function randomizeId()
+    {
+        return Math.random() * maxResults
+    }
+
+    AttractImageItem
+    {
         id : imageItem1
         x: 750
+        onCreateImage:
+        {
+            console.log("create image in attractPoolItem")
+            root.createImage(source,imageX + x,imageY,imageRotation,imageWidth,imageHeight)
+            var random_id1 = Math.floor(randomizeId());
+            imageItem1.itemResult = allResults[random_id1]
+        }
     }
-    AttractImageItem {
+    AttractImageItem
+    {
         id: imageItem2
         x: 970
+        onCreateImage:
+        {
+            root.createImage(source,imageX + x,imageY,imageRotation,imageWidth,imageHeight)
+
+            var random_id2 = Math.floor(randomizeId());
+            imageItem2.itemResult = allResults[random_id2]
+        }
     }
 
 

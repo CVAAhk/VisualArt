@@ -69,7 +69,7 @@ Item {
         opacity: 0.0
         onCreateImage:
         {
-            imageHolder.createImage(source, imageX + x, imageY + y, imageRotation, imageWidth, imageHeight, title, "top left")
+            imageHolder.createImage(source, imageX + x, imageY + y, imageRotation, imageWidth, imageHeight, "top left")
         }
         onCanPaginate:
         {
@@ -86,7 +86,7 @@ Item {
         opacity: 0.0
         onCreateImage:
         {
-            imageHolder.createImage(source, imageX + x, imageY + y, imageRotation, imageWidth, imageHeight, title, "top right")
+            imageHolder.createImage(source, imageX + x, imageY + y, imageRotation, imageWidth, imageHeight, "top right")
         }
         onCanPaginate:
         {
@@ -103,7 +103,7 @@ Item {
         opacity: 0.0
         onCreateImage:
         {
-            imageHolder.createImage(source, imageX + x, imageY + y, imageRotation, imageWidth, imageHeight, title, "lower left")
+            imageHolder.createImage(source, imageX + x, imageY + y, imageRotation, imageWidth, imageHeight, "lower left")
         }
         onCanPaginate:
         {
@@ -118,7 +118,7 @@ Item {
         opacity: 0.0
         onCreateImage:
         {
-            imageHolder.createImage(source, imageX + x, imageY + y, imageRotation, imageWidth, imageHeight, title, "lower right")
+            imageHolder.createImage(source, imageX + x, imageY + y, imageRotation, imageWidth, imageHeight, "lower right")
         }
         onCanPaginate:
         {
@@ -143,5 +143,10 @@ Item {
             if(whichScreen === "top right") top_right_carousel.imageRemovedFromScene(filepath);
 
         }
+    }
+
+    function imageHolderCreateImage(filepath, startX, startY, imageRotation, imageWidth, imageHeight, whichScreen)
+    {
+        imageHolder.createImage(filepath, startX, startY, imageRotation, imageWidth, imageHeight, whichScreen)
     }
 }

@@ -8,7 +8,7 @@ Item
     property bool topScreen: false
 
     signal canPaginate()
-    signal createImage(string source, int imageX, int imageY, int imageRotation, int imageWidth, int imageHeight, string title);
+    signal createImage(string source, int imageX, int imageY, int imageRotation, int imageWidth, int imageHeight);
 
     enabled: opacity == 1.0
     Behavior on opacity {
@@ -53,7 +53,7 @@ Item
             topScreen: root.topScreen
             onCreateImage:
             {
-                root.createImage(source, imageX, imageY, imageRotation, imageWidth, imageHeight, title)
+                root.createImage(source, imageX, imageY, imageRotation, imageWidth, imageHeight)
             }
 
             property real contentX: layout.contentX

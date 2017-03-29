@@ -19,6 +19,7 @@ ApplicationWindow {
 
         Gallery
         {
+            id: gallery
             width: Settings.SCREEN_WIDTH
             height: Settings.SCREEN_HEIGHT
         }
@@ -26,6 +27,11 @@ ApplicationWindow {
         AttractPoolItem
         {
             y: 539
+            onCreateImage:
+            {
+                console.log("create an image!")
+                gallery.imageHolderCreateImage(source,imageX,imageY+y,imageRotation,imageWidth,imageHeight, "attract pool")
+            }
         }
     }
 
