@@ -12,4 +12,5 @@ Text {
     font.capitalization: _font.capitalization
     verticalAlignment: center ? Text.AlignVCenter : Text.AlignTop
     horizontalAlignment: center ? Text.AlignHCenter : Text.AlignTop
+    font.family: _font.family
 }
