@@ -73,24 +73,42 @@ ScaleColumn {
         height: contentHeight
         _font: Style.metadataFont
         text: metadata()
-        onLinkActivated: Qt.openUrlExternally(link)
+        //onLinkActivated: Qt.openUrlExternally(link)
     }
 
     //format metadata
     function metadata() {
-        if(!item)  return ""
+        if(!item)
+        {
+            return ""
+        }
         var metadata = ""
         if(item.metadata){
             var element
-            for(var i=0; i<item.metadata.count; i++) {
-                element = item.metadata.get(i);
-                console.log("element = ", element, " element.text = ", element.text)
-                if(element)
-                {
-                    metadata += "<p><b>"+element.element.name+"</b><br/>"+element.text+"</p>"
+            if(item.metadata.count)
+            {
+                for(var i=0; i<item.metadata.count; i++) {
+                    element = item.metadata.get(i);
+                    console.log("element = ", element, " element.text = ", element.text)
+                    if(element)
+                    {
+                        metadata += "<p><b>"+element.element.name+"</b><br/>"+element.text+"</p>"
+                    }
+                }
+            }
+            else
+            {
+                for(var i=0; i<item.metadata.length; i++) {
+                    element = item.metadata[i];
+                    console.log("element = ", element, " element.text = ", element.text)
+                    if(element)
+                    {
+                        metadata += "<p><b>"+element.element.name+"</b><br/>"+element.text+"</p>"
+                    }
                 }
             }
         }
+
         return metadata
     }
 

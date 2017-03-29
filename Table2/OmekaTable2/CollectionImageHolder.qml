@@ -13,7 +13,7 @@ Item
 
     //property alias itemsLength: imageItems.length
 
-    property int maxImages: 1000
+    property int maxImages: 5
 
     //=========================================================================
     // ROOT ITEM SETTINGS
@@ -44,11 +44,10 @@ Item
     //=========================================================================
     // FUNCTIONS
     //=========================================================================
-    function createImage(filepath, startX, startY, imageRotation, imageWidth, imageHeight, title, whichScreen)
+    function createImage(filepath, startX, startY, imageRotation, imageWidth, imageHeight, whichScreen)
     {
         console.log("Creating image in holder " + filepath + " " + startX + " " + startY +
-                    " " + imageRotation + ", width: " + imageWidth + ", height: " + imageHeight +
-                    " title : ", title);
+                    " " + imageRotation + ", width: " + imageWidth + ", height: " + imageHeight);
 
         var component = Qt.createComponent("Detail.qml");
 
@@ -65,7 +64,6 @@ Item
             imageItem.y = startY - root.y;
             imageItem.imageWidth = 247;
             imageItem.imageHeight = imageHeight;
-            imageItem.title = title;
             imageItem.antialiasing = true;
             //imageItem.scale = 0.5;
             //imageItem.x -= imageItem.width / 4;
@@ -91,6 +89,7 @@ Item
             imageItem.deleteImage.connect(deleteImage);
 
             imageItems.push(imageItem);
+            console.log("Added!images holder number of image items: ", imageItems.length)
 
             imageItem.z = imageItems.length;
 
@@ -122,6 +121,8 @@ Item
 
             //selectedItem.visible = false;
             selectedItem.destroy()
+
+            console.log("Deleted!images holder number of image items: ", imageItems.length)
 
 //            for(var i = 0; i < ItemManager.selectedItems.length; i ++)
 //            {

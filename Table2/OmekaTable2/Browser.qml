@@ -42,7 +42,7 @@ Item {
 
     signal imageDragged();
 
-    signal createImage(string source, int imageX, int imageY, int imageRotation, int imageWidth, int imageHeight, string title);
+    signal createImage(string source, int imageX, int imageY, int imageRotation, int imageWidth, int imageHeight);
 
 
     ListView
@@ -125,8 +125,6 @@ Item {
                         {
                             list.flick((touchPoint.x - touchPoint.previousX) * 100, 0);
                         }
-
-                        console.log("touchPoint.y = ", touchPoint.y)
                     }
 
                     if(touchPoint.y < bottomFlickMax + 100)
@@ -211,7 +209,7 @@ Item {
                 console.log("selected_image.x = ", selected_image.x, " selected_image.y = ", selected_image.y)
 
                 root.createImage(selected_image.source, imageCenterX, imageCenterY, rotation,
-                                 selected_image.width, selected_image.height, selected_image.title);
+                                 selected_image.width, selected_image.height);
             }
 
             var dragEntries = Object.getOwnPropertyNames(dragAmounts);

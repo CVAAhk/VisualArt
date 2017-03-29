@@ -19,8 +19,6 @@ Item
 
     property alias imageHeight: img.height
 
-    property var title//: title.text
-
     property string whichScreen
 
     property int imageTimerDuration : 100000000 // Settings.IMAGE_TIMER_DURATION

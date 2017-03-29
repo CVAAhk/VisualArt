@@ -85,6 +85,7 @@ Component {
             //console.log("itemData.id = ", itemData.id)
             itemData.fileCount = parseInt(file_count)
             itemData.metadata = metadata
+            //console.log("itemData.metadata = ", itemData.metadata)
             itemData.media = []
             itemData.mediaTypes = []
 
