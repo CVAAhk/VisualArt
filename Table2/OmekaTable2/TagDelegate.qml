@@ -10,13 +10,21 @@ import "."
 */
 Image {
     id: context
+
     source: "content/POI/tag-bkg.png"
 
     anchors.horizontalCenter: parent.horizontalCenter
-    opacity: ItemManager.tagSearch == tag ? 0.5 : 1.0
+    opacity: list.screenTag === tag ? 0.5 : 1.0
 
     //anchors.margins: 12 //TODO: A-Z area
 
+    function whichTag()
+    {
+        if(list.whichScreen === "lower left") return ItemManager.tagSearchLowerLeft;
+        if(list.whichScreen === "lower right") return ItemManager.tagSearchLowerRight;
+        if(list.whichScreen === "top left") return ItemManager.tagSearchTopLeft;
+        if(list.whichScreen === "top right") return ItemManager.tagSearchTopRight;
+    }
     //text display
     OmekaText {
         text: tag
@@ -29,7 +37,11 @@ Image {
         anchors.fill: parent
         onClicked:
         {
-            ItemManager.tagSearch = tag;
+            console.log("tag = ", tag)
+            if(list.whichScreen === "lower left") ItemManager.tagSearchLowerLeft = tag;
+            if(list.whichScreen === "lower right") ItemManager.tagSearchLowerRight = tag;
+            if(list.whichScreen === "top left") ItemManager.tagSearchTopLeft = tag;
+            if(list.whichScreen === "top right") ItemManager.tagSearchTopRight = tag;
         }
     }
 }

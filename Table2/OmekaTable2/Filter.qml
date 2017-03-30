@@ -5,6 +5,7 @@ Item
 {
     id: root
     property string color: "#2b89d9"//blue
+    property string whichScreen: "lower left"//default
     Rectangle
     {
         id: filter_header_bkg
@@ -45,6 +46,7 @@ Item
         id: tag_header
         y:30
         color: root.color
+        whichScreen: root.whichScreen
     }
 
     TagSearch
@@ -53,6 +55,8 @@ Item
         y: 60
         width: filter_bkg.width
         height: 190
+        listScreenTag: tag_header.screenTag
+        whichScreen: root.whichScreen
     }
 
     Rectangle

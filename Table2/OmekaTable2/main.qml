@@ -23,11 +23,13 @@ ApplicationWindow {
             width: Settings.SCREEN_WIDTH
             height: Settings.SCREEN_HEIGHT
             onRemoveAttractImage: attract_pool
+            onCarouselActivate: attract_pool.opacity = 0.0;
         }
 
         AttractPoolItem
         {
             id: attract_pool
+            enabled: opacity == 1.0
             onCreateImage:
             {
                 console.log("create an image!")

@@ -9,6 +9,8 @@ Item {
 
     property var tagData: ({})
     property int tagCount: 0
+    property alias listScreenTag: list.screenTag
+    property string whichScreen: "lower left"//default
 
     //refresh tags
     Component.onCompleted: Omeka.getTags(tags)
@@ -47,20 +49,12 @@ Item {
         //tag list
         ListView {
             id: list
+            property var screenTag
+            property string whichScreen: root.whichScreen
             anchors.fill: parent
             model: ListModel {}
             delegate: TagDelegate {}
-            //anchors.horizontalCenter: parent.horizontalCenter
             spacing: 6
-            //anchors.top: parent.top
-            //anchors.topMargin: 6
-            //anchors.left: parent.left
-            //anchors.right: parent.right
-            //contentHeight: list.contentHeight + 12
-           // anchors.bottom: parent.bottom
-            //anchors.bottomMargin: -6
-            //header: TagHeader {}
-            //onHeightChanged: contentY = -6
         }
     }
 }

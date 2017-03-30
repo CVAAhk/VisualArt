@@ -10,6 +10,7 @@ Item {
     property var current
 
     signal removeAttractImage(string filepath,string whichScreen)
+    signal carouselActivate()
 
     /*!Load first page*/
     Component.onCompleted: {
@@ -33,7 +34,7 @@ Item {
         id: top_left_begin
         x: 346; y: 30
         color: "yellow"
-        onYellowPressed: top_left_carousel.opacity = active ? 1.0 : 0.0
+        onYellowPressed: {top_left_carousel.opacity = active ? 1.0 : 0.0; gallery.carouselActivate()}
 
     }
     TouchToBegin
@@ -41,21 +42,21 @@ Item {
         id: top_right_begin
         x: 1306; y: 30
         color: "green"
-        onGreenPressed: top_right_carousel.opacity = active ? 1.0 : 0.0
+        onGreenPressed: {top_right_carousel.opacity = active ? 1.0 : 0.0; gallery.carouselActivate()}
     }
     TouchToBegin
     {
         id: lower_left_begin
         x: 346; y: 960
         color: "blue"
-        onBluePressed: lower_left_carousel.opacity = active ? 1.0 : 0.0
+        onBluePressed: {lower_left_carousel.opacity = active ? 1.0 : 0.0; gallery.carouselActivate()}
     }
     TouchToBegin
     {
         id: lower_right_begin
         x: 1306; y: 960
         color: "red"
-        onRedPressed: lower_right_carousel.opacity = active ? 1.0 : 0.0
+        onRedPressed: {lower_right_carousel.opacity = active ? 1.0 : 0.0; gallery.carouselActivate()}
     }
 
 
@@ -70,6 +71,7 @@ Item {
         rotation: 180
         opacity: 0.0
         color: "#faa918"
+        whichScreen: "top left"
         onCreateImage:
         {
             imageHolder.createImage(source, imageX + x, imageY + y, imageRotation, imageWidth, imageHeight, "top left")
@@ -88,6 +90,7 @@ Item {
         rotation: 180
         opacity: 0.0
         color: "#7ac70c"
+        whichScreen: "top right"
         onCreateImage:
         {
             imageHolder.createImage(source, imageX + x, imageY + y, imageRotation, imageWidth, imageHeight, "top right")
@@ -106,6 +109,7 @@ Item {
         y: 765
         opacity: 0.0
         color: "#2b89d9"
+        whichScreen: "lower left"
         onCreateImage:
         {
             imageHolder.createImage(source, imageX + x, imageY + y, imageRotation, imageWidth, imageHeight, "lower left")
@@ -122,6 +126,7 @@ Item {
         y: 765
         opacity: 0.0
         color: "#d33131"
+        whichScreen: "lower right"
         onCreateImage:
         {
             imageHolder.createImage(source, imageX + x, imageY + y, imageRotation, imageWidth, imageHeight, "lower right")

@@ -29,6 +29,11 @@ Item {
     */
     property string tagSearch
 
+    property string tagSearchLowerLeft
+    property string tagSearchLowerRight
+    property string tagSearchTopLeft
+    property string tagSearchTopRight
+
     /*!
       \qmlproperty
       Triggers items by keyword query

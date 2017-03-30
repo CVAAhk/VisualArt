@@ -40,6 +40,8 @@ Item {
 
     property var touch_area: touch_area
 
+    property int listItemsCount: list.count
+
     signal imageDragged();
 
     signal createImage(string source, int imageX, int imageY, int imageRotation, int imageWidth, int imageHeight);
