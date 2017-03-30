@@ -69,7 +69,7 @@ DISTFILES += \
     AttractPoolItem.qml \
     TagDelegate.qml \
     TagHeader.qml \
-    TagSearch.qml
+    TagSearch.qml \
     Filter.qml
 
 

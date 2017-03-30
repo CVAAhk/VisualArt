@@ -5,8 +5,7 @@ import "."
 
 Item {
     id: tags
-    width: parent.width
-    height: parent.height
+
 
     property var tagData: ({})
     property int tagCount: 0
@@ -40,9 +39,10 @@ Item {
     //tag scroll view
     OmekaScrollView {
         id: scroll
-        y: field.height
+        //y: field.height
         width: parent.width
-        height: parent.height - field.height * 2
+        height: parent.height
+        verticalScrollBarPolicy: Qt.ScrollBarAlwaysOff
 
         //tag list
         ListView {
@@ -50,8 +50,17 @@ Item {
             anchors.fill: parent
             model: ListModel {}
             delegate: TagDelegate {}
-            header: TagHeader {}
-            onHeightChanged: contentY = -headerItem.height
+            //anchors.horizontalCenter: parent.horizontalCenter
+            spacing: 6
+            //anchors.top: parent.top
+            //anchors.topMargin: 6
+            //anchors.left: parent.left
+            //anchors.right: parent.right
+            //contentHeight: list.contentHeight + 12
+           // anchors.bottom: parent.bottom
+            //anchors.bottomMargin: -6
+            //header: TagHeader {}
+            //onHeightChanged: contentY = -6
         }
     }
 }

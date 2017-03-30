@@ -3,7 +3,7 @@ import QtQuick 2.5
 
 Item {
     /*-------------Color Scheme-------------*/
-    property color color1: "#2B89D9"
+    property color color1: "#666666"
     property color color2: "white"
     property color color3: "#E6E6E6"
     property color color4: "#F0F0F0"
@@ -65,9 +65,9 @@ Item {
     /*-------------Font-------------*/
 
     property var titleFont: ({ color:color1, size:74, weight:Font.Bold, capitalization:Font.AllUppercase, wrapMode: Text.NoWrap, textFormat: Text.AutoText })
-    property var headerFont: ({ color:color1, size:55, weight:Font.Normal, capitalization:Font.AllUppercase, wrapMode: Text.NoWrap, textFormat: Text.AutoText })
+    property var headerFont: ({ color:color1, size:11, weight:Font.Normal, capitalization:Font.AllUppercase, wrapMode: Text.NoWrap, textFormat: Text.AutoText, family: roboto.name })
     property var settingFont: ({ color:color1, size:74, weight:Font.Normal, capitalization:Font.Capitalize, wrapMode: Text.NoWrap, textFormat: Text.AutoText })
-    property var tagFont: ({ color:color1, size:74, weight:Font.ExtraBold, capitalization:Font.Capitalize, wrapMode: Text.NoWrap, textFormat: Text.AutoText })
+    property var tagFont: ({ color:color1, size:11, weight:Font.Normal, capitalization:Font.AllUppercase, wrapMode: Text.NoWrap, textFormat: Text.AutoText, family: roboto.name })
     property var metadataFont: ({ color:"black", size:15, weight:Font.Normal, capitalization:Font.MixedCase, wrapMode: Text.Wrap, textFormat: Text.RichText, family: roboto.name})
     property var filterFont: ({ color:"white", size:11, weight:Font.Normal, capitalization:Font.Capitalize, wrapMode: Text.Wrap, textFormat: Text.RichText, family: roboto.name})
     property var infoTitleFont: ({ color:"black", size:16, weight:Font.Bold, capitalization:Font.AllUppercase, wrapMode: Text.NoWrap, textFormat: Text.AutoText })

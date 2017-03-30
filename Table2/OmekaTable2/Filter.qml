@@ -40,6 +40,21 @@ Item
         source: "content/POI/filter-bkg.png"
         anchors.top: filter_header.bottom
     }
+    TagHeader
+    {
+        id: tag_header
+        y:30
+        color: root.color
+    }
+
+    TagSearch
+    {
+        id: tags_view
+        y: 60
+        width: filter_bkg.width
+        height: 190
+    }
+
     Rectangle
     {
         id: filter_footer_bkg
