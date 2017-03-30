@@ -4,7 +4,8 @@ import "."
 Text {
     property var _font
     property bool center: false
-    color: _font.color
+    property string textColor: ""
+    color: textColor !== "" ? textColor : _font.color
     wrapMode: _font.wrapMode
     textFormat: _font.textFormat
     font.pixelSize: _font.size//Resolution.applyScale(_font.size)

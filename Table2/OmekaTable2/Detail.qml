@@ -10,7 +10,7 @@ Item
 {
     id: root
 
-    height: active ? root.imageHeight + scroll_bkg.height : root.imageHeight
+    height: active ? root.imageHeight + scroll_bkg.height + controls.height : root.imageHeight + controls.height
     width: root.imageWidth
     objectName: "detail"
     property alias source: img.source
@@ -66,12 +66,7 @@ Item
     Image
     {
         id: controls
-        anchors.bottom: img.top
-        anchors.left: img.left
-        anchors.right: img.right
-        anchors.leftMargin: -18
-        anchors.rightMargin: -18
-        anchors.bottomMargin: -16
+        width: scroll_bkg.width
         source: "content/POI/info-panel-controls-bkg.png"
 
         Image
@@ -114,6 +109,7 @@ Item
     {
         id: img
         fillMode: Image.PreserveAspectFit
+        anchors.top: controls.bottom
 
     }
     MultiPointPinchArea

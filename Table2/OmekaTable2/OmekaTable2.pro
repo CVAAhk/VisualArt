@@ -70,4 +70,6 @@ DISTFILES += \
     TagDelegate.qml \
     TagHeader.qml \
     TagSearch.qml
+    Filter.qml
+
 

@@ -6,6 +6,7 @@ Item
     id: root
 
     property bool topScreen: false
+    property string color: "#2b89d9"//blue
 
     signal canPaginate()
     signal createImage(string source, int imageX, int imageY, int imageRotation, int imageWidth, int imageHeight);
@@ -17,6 +18,13 @@ Item
             duration: 200
         }
     }
+    Filter
+    {
+        id: filter
+        color: root.color
+        x: -207; y: 10
+    }
+
     Image
     {
         id: selected_image
@@ -40,7 +48,54 @@ Item
 
     Image {
         id: bkg
-        source: "content/POI/Asset 11.png"
+        source: "content/POI/carousel-bkg.png"
+
+        Image
+        {
+            id: filter_btn
+            source: "content/POI/filter-btn.png"
+            x: 10; y: 10
+
+            OmekaText
+            {
+                id: filter_text
+
+                _font: Style.filterFont
+                text: "FILTER"
+                textColor: root.color
+                anchors.centerIn: parent
+                visible: false
+            }
+
+            MultiPointTouchArea
+            {
+                anchors.fill: parent
+                property bool active: false
+                onPressed:
+                {
+                    active = !active;
+                    filter_btn.source = active ? "content/POI/filter-btn-bkg.png" : "content/POI/filter-btn.png"
+                    filter_text.visible = active
+                }
+            }
+        }
+
+        Image
+        {
+            id: send_to_mobile_btn
+            source: "content/POI/send-to-mobile.png"
+            anchors.top: parent.top
+            anchors.right: parent.right
+            anchors.margins: 10
+            MultiPointTouchArea
+            {
+                anchors.fill: parent
+                onPressed:
+                {
+
+                }
+            }
+        }
 
         clip: true
 
