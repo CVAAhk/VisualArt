@@ -69,6 +69,7 @@ Item {
         topScreen: true
         rotation: 180
         opacity: 0.0
+        color: "#faa918"
         onCreateImage:
         {
             imageHolder.createImage(source, imageX + x, imageY + y, imageRotation, imageWidth, imageHeight, "top left")
@@ -86,6 +87,7 @@ Item {
         topScreen: true
         rotation: 180
         opacity: 0.0
+        color: "#7ac70c"
         onCreateImage:
         {
             imageHolder.createImage(source, imageX + x, imageY + y, imageRotation, imageWidth, imageHeight, "top right")
@@ -103,6 +105,7 @@ Item {
         x: 241
         y: 765
         opacity: 0.0
+        color: "#2b89d9"
         onCreateImage:
         {
             imageHolder.createImage(source, imageX + x, imageY + y, imageRotation, imageWidth, imageHeight, "lower left")
@@ -118,6 +121,7 @@ Item {
         x: 1201
         y: 765
         opacity: 0.0
+        color: "#d33131"
         onCreateImage:
         {
             imageHolder.createImage(source, imageX + x, imageY + y, imageRotation, imageWidth, imageHeight, "lower right")

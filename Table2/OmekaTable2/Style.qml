@@ -69,6 +69,7 @@ Item {
     property var settingFont: ({ color:color1, size:74, weight:Font.Normal, capitalization:Font.Capitalize, wrapMode: Text.NoWrap, textFormat: Text.AutoText })
     property var tagFont: ({ color:color1, size:74, weight:Font.ExtraBold, capitalization:Font.Capitalize, wrapMode: Text.NoWrap, textFormat: Text.AutoText })
     property var metadataFont: ({ color:"black", size:15, weight:Font.Normal, capitalization:Font.MixedCase, wrapMode: Text.Wrap, textFormat: Text.RichText, family: roboto.name})
+    property var filterFont: ({ color:"white", size:11, weight:Font.Normal, capitalization:Font.Capitalize, wrapMode: Text.Wrap, textFormat: Text.RichText, family: roboto.name})
     property var infoTitleFont: ({ color:"black", size:16, weight:Font.Bold, capitalization:Font.AllUppercase, wrapMode: Text.NoWrap, textFormat: Text.AutoText })
     property var infoSourceFont: ({ color:"black", size:10, weight:Font.Normal, capitalization:Font.MixedCase, wrapMode: Text.NoWrap, textFormat: Text.AutoText })
     property var playbackTimeFont: ({ color:"white", size:40, weight:Font.Normal, capitalization:Font.MixedCase, wrapMode: Text.NoWrap, textFormat: Text.AutoText })
@@ -76,6 +77,6 @@ Item {
     FontLoader
     {
         id: roboto
-        source: "content/font/Roboto/Roboto-Light.ttf"
+        source: "content/font/Roboto/Roboto-Regular.ttf"
     }
 }

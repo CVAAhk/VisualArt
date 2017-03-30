@@ -66,5 +66,6 @@ DISTFILES += \
     OmekaIndicator.qml \
     TouchToBegin.qml \
     AttractImageItem.qml \
-    AttractPoolItem.qml
+    AttractPoolItem.qml \
+    Filter.qml
 
