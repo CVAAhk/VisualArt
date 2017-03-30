@@ -6,6 +6,7 @@ Item
     id: root
     property string color: "#2b89d9"//blue
     property string whichScreen: "lower left"//default
+    property alias tagHeaderSearchByTag: tag_header.searchByTag
     Rectangle
     {
         id: filter_header_bkg
@@ -78,6 +79,12 @@ Item
         anchors.fill: filter_footer_bkg
         source: filter_footer_bkg
         maskSource: filter_footer
+    }
+
+    function resetFilters()
+    {
+        tag_header.setTagEmpty();
+        tags_view.resetFilters();
     }
 
 }

@@ -35,6 +35,8 @@ Item
                     imageItem2.itemResult = allResults[random_id2]
                     imageItem3.itemResult = allResults[random_id3]
                     imageItem4.itemResult = allResults[random_id4]
+
+                    random_timer.start();
                 }
             }
         }
@@ -110,17 +112,29 @@ Item
         if(whichScreen === "attract lower left") imageItem1.imageRemovedFromScene(filePath)
     }
 
-//    Timer
-//    {
-//        id: random_timer
-//        interval: Settings.ATTRACT_RANDOM_TIMER
-//        repeat: true
-//        onTriggered:
-//        {
-//            imageItem1.setInfo();
-//            imageItem2.setInfo();
-//        }
-//    }
+    Timer
+    {
+        id: random_timer
+        interval: Settings.ATTRACT_RANDOM_TIMER
+        repeat: true
+        onTriggered:
+        {
+            var random_id1 = Math.floor(randomizeId());
+            var random_id2 = Math.floor(randomizeId());
+            var random_id3 = Math.floor(randomizeId());
+            var random_id4 = Math.floor(randomizeId());
+
+            imageItem1.itemResult = allResults[random_id1]
+            imageItem2.itemResult = allResults[random_id2]
+            imageItem3.itemResult = allResults[random_id3]
+            imageItem4.itemResult = allResults[random_id4]
+        }
+    }
+
+    function stopAttractTimer()
+    {
+        random_timer.stop();
+    }
 
 
 }

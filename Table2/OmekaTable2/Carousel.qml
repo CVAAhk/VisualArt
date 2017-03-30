@@ -13,7 +13,17 @@ Item
     property bool searchByTag: false
 
     //submit tag search
-    onScreenTagChanged: if(screenTag) { searchByTag = true; browser.clear(); Omeka.getItemsByTag(screenTag, root) }
+    onScreenTagChanged:
+    {
+        if(screenTag)
+        {
+            console.log("whichTag() = ", screenTag);
+            searchByTag = true;
+            filter.tagHeaderSearchByTag = true;
+            browser.clear();
+            Omeka.getItemsByTag(screenTag, root)
+        }
+    }
 
 
 
@@ -45,6 +55,16 @@ Item
         x: -207; y: 10
         whichScreen: root.whichScreen
         opacity: 0.0
+        tagHeaderSearchByTag: searchByTag
+        onTagHeaderSearchByTagChanged:
+        {
+            if(!tagHeaderSearchByTag)
+            {
+                browser.clear();
+                Omeka.getPage(1, root);
+                searchByTag = tagHeaderSearchByTag;
+            }
+        }
     }
 
     Image
@@ -138,6 +158,12 @@ Item
                 filter_btn.source = active ? "content/POI/filter-btn-bkg.png" : "content/POI/filter-btn.png"
                 filter_text.visible = active;
                 filter.opacity = active ? 1.0 : 0.0
+                if(!active)
+                {
+                    filter.tagHeaderSearchByTag = false;
+                    filter.resetFilters();
+                }
+
             }
         }
     }
@@ -237,7 +263,7 @@ Item
         anchors.fill: left_arrow_bkg
         source: left_arrow_bkg
         maskSource: left_arrow
-        opacity: browser.currentIndex > 0 ? 1.0 : 0.5
+        opacity: (browser.currentIndex > 0 && browser.listItemsCount) ? 1.0 : 0.5
         Image
         {
             source: "content/POI/left-arrow.png"
@@ -272,7 +298,7 @@ Item
         anchors.fill: right_arrow_bkg
         source: right_arrow_bkg
         maskSource: right_arrow
-        opacity: browser.currentIndex < browser.listItemsCount ? 1.0 : 0.5
+        opacity: (browser.currentIndex < browser.listItemsCount && browser.listItemsCount) ? 1.0 : 0.5
         Image
         {
             source: "content/POI/right-arrow.png"
