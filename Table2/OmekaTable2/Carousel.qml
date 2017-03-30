@@ -22,6 +22,8 @@ Item
             filter.tagHeaderSearchByTag = true;
             browser.clear();
             Omeka.getItemsByTag(screenTag, root)
+
+            filter_text.text = "filter applied: " + screenTag;
         }
     }
 
@@ -136,7 +138,20 @@ Item
         id: filter_btn
         source: "content/POI/filter-btn.png"
         x: 10; y: 10
+        width: filter_text.width + 10
 
+
+    }
+    Rectangle
+    {
+        id: filter_applied_btn
+        width: filter_text.width + 10
+        height: 25
+        x: 10; y: 10
+        radius: 4
+        color: "white"
+        visible: false
+        enabled: true
         OmekaText
         {
             id: filter_text
@@ -145,26 +160,28 @@ Item
             text: "FILTER"
             textColor: root.color
             anchors.centerIn: parent
-            visible: false
+
         }
 
-        MultiPointTouchArea
-        {
-            anchors.fill: parent
-            property bool active: false
-            onPressed:
-            {
-                active = !active;
-                filter_btn.source = active ? "content/POI/filter-btn-bkg.png" : "content/POI/filter-btn.png"
-                filter_text.visible = active;
-                filter.opacity = active ? 1.0 : 0.0
-                if(!active)
-                {
-                    filter.tagHeaderSearchByTag = false;
-                    filter.resetFilters();
-                }
 
+    }
+    MultiPointTouchArea
+    {
+        anchors.fill: filter_applied_btn
+        property bool active: false
+        onPressed:
+        {
+            active = !active;
+            filter_btn.visible = !active//.source = active ? "content/POI/filter-btn-bkg.png" : "content/POI/filter-btn.png"
+            filter_applied_btn.visible = active;
+            filter.opacity = active ? 1.0 : 0.0
+            if(!active)
+            {
+                filter.tagHeaderSearchByTag = false;
+                filter.resetFilters();
+                filter_text.text = "FILTER";
             }
+
         }
     }
 
