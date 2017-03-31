@@ -23,7 +23,7 @@ ApplicationWindow {
             width: Settings.SCREEN_WIDTH
             height: Settings.SCREEN_HEIGHT
             onRemoveAttractImage: attract_pool
-            onCarouselActivate: attract_pool.opacity = 0.0;
+            onCarouselActivate: {attract_pool.opacity = 0.0; attract_pool.stopAttractTimer();}
         }
 
         AttractPoolItem
@@ -36,16 +36,6 @@ ApplicationWindow {
                 gallery.imageHolderCreateImage(source,imageX,imageY,imageRotation,imageWidth,imageHeight, whichScreen)
             }
         }
-//        AttractPoolItem
-//        {
-//            y: 539
-//            rotation: 180
-//            onCreateImage:
-//            {
-//                console.log("create an image!")
-//                gallery.imageHolderCreateImage(source,imageX,imageY+y,imageRotation,imageWidth,imageHeight, "attract pool")
-//            }
-//        }
     }
 
 

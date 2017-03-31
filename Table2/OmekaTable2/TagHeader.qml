@@ -14,6 +14,7 @@ Item
     property string color: "blue"
     property string whichScreen: "lower left"//default\
     property var screenTag: whichTag()
+    property bool searchByTag: false
 
     x: 6
 
@@ -30,6 +31,7 @@ Item
         if(root.whichScreen === "lower right") ItemManager.tagSearchLowerRight = "";
         if(root.whichScreen === "top left") ItemManager.tagSearchTopLeft = "";
         if(root.whichScreen === "top right") ItemManager.tagSearchTopRight = "";
+        searchByTag = false;
     }
 
     Item
@@ -84,8 +86,6 @@ Item
         source: "content/POI/no-filter.png"
         visible: screenTag === ""
     }
-
-
 
 
 

@@ -71,11 +71,13 @@ Component {
             inScene = true;
             ItemManager.current = itemData;
             ItemManager.selectedItems.push(itemData);
+            root.opacity = 0.5
         }
         function imageRemovedFromScene(source)
         {
             console.log("ImageViewer imageRemovedFromScene(source)= ", source)
             inScene = false;
+            root.opacity = 1.0
         }
 
 

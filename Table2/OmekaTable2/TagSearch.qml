@@ -57,4 +57,8 @@ Item {
             spacing: 6
         }
     }
+    function resetFilters()
+    {
+        list.contentY = 0;
+    }
 }

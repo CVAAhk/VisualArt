@@ -13,7 +13,19 @@ Item
     property bool searchByTag: false
 
     //submit tag search
-    onScreenTagChanged: if(screenTag) { searchByTag = true; browser.clear(); Omeka.getItemsByTag(screenTag, root) }
+    onScreenTagChanged:
+    {
+        if(screenTag)
+        {
+            console.log("whichTag() = ", screenTag);
+            searchByTag = true;
+            filter.tagHeaderSearchByTag = true;
+            browser.clear();
+            Omeka.getItemsByTag(screenTag, root)
+
+            filter_text.text = "filter applied: " + screenTag;
+        }
+    }
 
 
 
@@ -45,6 +57,16 @@ Item
         x: -207; y: 10
         whichScreen: root.whichScreen
         opacity: 0.0
+        tagHeaderSearchByTag: searchByTag
+        onTagHeaderSearchByTagChanged:
+        {
+            if(!tagHeaderSearchByTag)
+            {
+                browser.clear();
+                Omeka.getPage(1, root);
+                searchByTag = tagHeaderSearchByTag;
+            }
+        }
     }
 
     Image
@@ -116,7 +138,20 @@ Item
         id: filter_btn
         source: "content/POI/filter-btn.png"
         x: 10; y: 10
+        width: filter_text.width + 10
 
+
+    }
+    Rectangle
+    {
+        id: filter_applied_btn
+        width: filter_text.width + 10
+        height: 25
+        x: 10; y: 10
+        radius: 4
+        color: "white"
+        visible: false
+        enabled: true
         OmekaText
         {
             id: filter_text
@@ -125,20 +160,28 @@ Item
             text: "FILTER"
             textColor: root.color
             anchors.centerIn: parent
-            visible: false
+
         }
 
-        MultiPointTouchArea
+
+    }
+    MultiPointTouchArea
+    {
+        anchors.fill: filter_applied_btn
+        property bool active: false
+        onPressed:
         {
-            anchors.fill: parent
-            property bool active: false
-            onPressed:
+            active = !active;
+            filter_btn.visible = !active//.source = active ? "content/POI/filter-btn-bkg.png" : "content/POI/filter-btn.png"
+            filter_applied_btn.visible = active;
+            filter.opacity = active ? 1.0 : 0.0
+            if(!active)
             {
-                active = !active;
-                filter_btn.source = active ? "content/POI/filter-btn-bkg.png" : "content/POI/filter-btn.png"
-                filter_text.visible = active;
-                filter.opacity = active ? 1.0 : 0.0
+                filter.tagHeaderSearchByTag = false;
+                filter.resetFilters();
+                filter_text.text = "FILTER";
             }
+
         }
     }
 
@@ -237,7 +280,7 @@ Item
         anchors.fill: left_arrow_bkg
         source: left_arrow_bkg
         maskSource: left_arrow
-        opacity: browser.currentIndex > 0 ? 1.0 : 0.5
+        opacity: (browser.currentIndex > 0 && browser.listItemsCount) ? 1.0 : 0.5
         Image
         {
             source: "content/POI/left-arrow.png"
@@ -272,7 +315,7 @@ Item
         anchors.fill: right_arrow_bkg
         source: right_arrow_bkg
         maskSource: right_arrow
-        opacity: browser.currentIndex < browser.listItemsCount ? 1.0 : 0.5
+        opacity: (browser.currentIndex < browser.listItemsCount && browser.listItemsCount) ? 1.0 : 0.5
         Image
         {
             source: "content/POI/right-arrow.png"
