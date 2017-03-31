@@ -175,12 +175,9 @@ Item
         /*! scroll container */
         OmekaScrollView {
             id: scroll
-//            anchors.top: img.bottom
-//            anchors.left: root.left
-//            anchors.margins: 0
             width: root.imageWidth
             height: 180
-
+            verticalScrollBarPolicy: Qt.ScrollBarAlwaysOff
             //media display
             DetailColumn { id: display; width: root.imageWidth-35; }//height: 500 }
         }
