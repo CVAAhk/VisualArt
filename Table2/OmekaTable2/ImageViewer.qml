@@ -11,7 +11,7 @@ Component {
         width: 158; height: 190
         property var itemData: ({})
         property var title
-        property string source:img.source
+        property string source: img.source
 
         scale: changeScale()
         z: changeZ();//1 - Math.abs(index - list.currentIndex)
@@ -124,6 +124,7 @@ Component {
                     {
                         img.source = itemData.thumb
                         //img_id.text = itemData.id //test
+                        //root.source = itemData.media
                         target = null
                     }
                 }

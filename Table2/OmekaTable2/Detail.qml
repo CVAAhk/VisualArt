@@ -58,63 +58,25 @@ Item
         anchors.fill: root
         anchors.margins: -10
     }
-    Rectangle
-    {
-        color: "#ffffff"
-        anchors.fill: img
-    }
-    Image
-    {
-        id: controls
-        width: scroll_bkg.width
-        source: "content/POI/info-panel-controls-bkg.png"
 
-        Image
-        {
-            id: close
-            source: "content/POI/close-off.png"
-            anchors.top: controls.top
-            anchors.right: controls.right
-            anchors.margins: 10
-            MultiPointTouchArea
-            {
-                anchors.fill: parent
-                onPressed:
-                {
-                    root.deleteImage(root);
-                }
-            }
-        }
-        Image
-        {
-            id: info_btn
-            source: "content/POI/info-icon-off.png"
-            anchors.top: controls.top
-            anchors.left: controls.left
-            anchors.margins: 10
-            MultiPointTouchArea
-            {
-                anchors.fill: parent
-                onPressed:
-                {
-                    active = !active
-                    scroll_bkg.opacity = active ? 1.0 : 0.0
-                    info_btn.source = active ? "content/POI/info-icon-on.png" : "content/POI/info-icon-off.png"
-                }
-            }
-        }
-    }
 
     Image
     {
         id: img
         fillMode: Image.PreserveAspectFit
+        width: root.width
         anchors.top: controls.bottom
 
+    }
+    //load indicator
+    OmekaIndicator {
+        scale: 2
+        running: img.progress < 1
     }
     MultiPointPinchArea
     {
         anchors.fill: img
+        anchors.topMargin: -40
 
         dragOnPinch: true
         listenForRotation: true
@@ -149,15 +111,60 @@ Item
         onRotationUpdated:
         {
             root.rotation += delta_rotation;
-            image_timer.restart();
+            //image_timer.restart();
         }
         onScaleUpdated:
         {
             root.scale += delta_scale * root.scaleFactor;
-            image_timer.restart();
+            close.scale = 1/root.scale;
+            info_btn.scale = 1/root.scale;
+            //image_timer.restart();
         }
 
         debugView: Settings.DEBUG_VIEW
+    }
+    Image
+    {
+        id: controls
+        width: scroll_bkg.width
+        source: "content/POI/info-panel-controls-bkg.png"
+
+        Image
+        {
+            id: close
+            source: "content/POI/close-off.png"
+            anchors.top: controls.top
+            anchors.right: controls.right
+            anchors.margins: 10
+            MouseArea
+            {
+                anchors.fill: parent
+                anchors.margins: -10
+                onPressed:
+                {
+                    root.deleteImage(root);
+                }
+            }
+        }
+        Image
+        {
+            id: info_btn
+            source: "content/POI/info-icon-off.png"
+            anchors.top: controls.top
+            anchors.left: controls.left
+            anchors.margins: 10
+            MouseArea
+            {
+                anchors.fill: parent
+                anchors.margins: -10
+                onPressed:
+                {
+                    root.active = !root.active
+                    scroll_bkg.opacity = root.active ? 1.0 : 0.0
+                    info_btn.source = root.active ? "content/POI/info-icon-on.png" : "content/POI/info-icon-off.png"
+                }
+            }
+        }
     }
 
     Image
@@ -177,6 +184,8 @@ Item
             id: scroll
             width: root.imageWidth
             height: 180
+            //anchors.fill: parent
+            enabled: parent.opacity == 1.0
             verticalScrollBarPolicy: Qt.ScrollBarAlwaysOff
             //media display
             DetailColumn { id: display; width: root.imageWidth-35; }//height: 500 }
@@ -192,18 +201,6 @@ Item
 //        }
 
 
-
-
-
-
-
-    Rectangle
-    {
-        anchors.fill: parent
-        color: "blue"
-        opacity: 0.5
-        visible: parent.enabled && Settings.DEBUG_VIEW
-    }
 
     Timer
     {

@@ -8,6 +8,7 @@ Item
 
     property var allResults:[]
     property int maxResults: 490
+    property bool carouselActivate: false
 
 
     signal createImage(string source, int imageX, int imageY, int imageRotation, int imageWidth, int imageHeight, string whichScreen);
@@ -36,7 +37,7 @@ Item
                     imageItem3.itemResult = allResults[random_id3]
                     imageItem4.itemResult = allResults[random_id4]
 
-                    random_timer.start();
+                    if(!carouselActivate) random_timer.start();
                 }
             }
         }

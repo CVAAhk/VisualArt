@@ -44,7 +44,13 @@ Item
     //=========================================================================
     // FUNCTIONS
     //=========================================================================
-    function createImage(filepath, startX, startY, imageRotation, imageWidth, imageHeight, whichScreen)
+    NumberAnimation {
+        id: image_pop
+        duration: 200
+        easing.type: Easing.InOutQuad
+    }
+
+    function createImage(filepath, startX, startY, imageRotation, imageWidth, imageHeight, tapOpen, whichScreen)
     {
         console.log("Creating image in holder " + filepath + " " + startX + " " + startY +
                     " " + imageRotation + ", width: " + imageWidth + ", height: " + imageHeight);
@@ -58,15 +64,37 @@ Item
             var imageSource = filepath.toString();
 
             var imageItem = component.createObject(root);
+
             imageItem.source = imageSource;
 
             imageItem.x = startX - root.x;
-            imageItem.y = startY - root.y;
+            //imageItem.y = startY - root.y;
+            if(tapOpen)
+            {
+                image_pop.target = imageItem;
+                image_pop.property = "y";
+
+                if(imageRotation > 0)
+                {
+                    image_pop.from = 315 - imageHeight;
+                    image_pop.to = startY - root.y - imageHeight;
+                }
+                else
+                {
+                   image_pop.from = 765;
+                    image_pop.to = startY - root.y;
+                }
+
+                image_pop.start();
+            }
+            else
+            {
+                imageItem.y = startY - root.y;
+            }
+
             imageItem.imageWidth = 247;
-            imageItem.imageHeight = imageHeight;
             imageItem.antialiasing = true;
-            //imageItem.scale = 0.5;
-            //imageItem.x -= imageItem.width / 4;
+
 
 
             //imageItem.imageDragged.connect(root.imageDragged);
@@ -76,13 +104,6 @@ Item
             if(imageRotation)
             {
                 imageItem.rotation = imageRotation;
-                if(imageRotation > 0)
-                {
-                    //imageItem.topScreen = true;
-                    //imageItem.x = imageItem.x - imageItem.imageWidth;
-                   // imageItem.y = imageItem.y - 2 * imageItem.height;
-                    console.log("imageItem.x = ", imageItem.x,"imageItem.y = ", imageItem.y, " imageItem.height = ", imageItem.height)
-                }
             }
 
 
@@ -120,6 +141,7 @@ Item
             imageDeleted(selectedItem.source, selectedItem.whichScreen);
 
             //selectedItem.visible = false;
+            //selectedItem.imageRemovedFromScene(selectedItem.source);
             selectedItem.destroy()
 
             console.log("Deleted!images holder number of image items: ", imageItems.length)

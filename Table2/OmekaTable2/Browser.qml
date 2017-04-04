@@ -42,9 +42,41 @@ Item {
 
     property int listItemsCount: list.count
 
+    property var itemsPositions: [Qt.vector2d(-300,-300),
+        Qt.vector2d(-300,-300),
+        Qt.vector2d(-300,-300),
+        Qt.vector2d(-300,-300),
+        Qt.vector2d(-300,-300)]
+
+    property var usedPositions :[]
+
+    property vector2d assignedPosition: Qt.vector2d(0,0)
+
     signal imageDragged();
 
-    signal createImage(string source, int imageX, int imageY, int imageRotation, int imageWidth, int imageHeight);
+    signal createImage(string source, int imageX, int imageY, int imageRotation, int imageWidth, int imageHeight, bool tapOpen);
+
+    function assignItemPosition(x)
+    {
+        assignedPosition = itemsPositions.pop();
+
+        assignedPosition.x = x;
+
+        var addPositionX = x;
+        var addPositionY = assignedPosition.y;
+
+        usedPositions.push(Qt.vector2d(addPositionX, addPositionY));
+    }
+    function deleteAssignPosition()
+    {
+        var deletePosition = usedPositions.splice(0,1);
+        itemsPositions.unshift(deletePosition[0]);
+    }
+
+    function clearPositions()
+    {
+        usedPositions = [];
+    }
 
 
     ListView
@@ -101,6 +133,7 @@ Item {
         //anchors.fill: path
 
         property bool creatingImage: false
+        property bool flick: true
         property int touchId: -1
 
 
@@ -109,8 +142,63 @@ Item {
         property var dragAmounts: ({})
         property var dragImages: ({})
 
+        onReleased:
+        {
+            for(var i = 0; i < touchPoints.length; i++)
+            {
+                var touchPoint = touchPoints[i];
+
+                var deltaX = touchPoint.x - touchPoint.startX;
+                var deltaY = touchPoint.y - touchPoint.startY;
+
+                if(Math.abs(deltaX) < 10 &&
+                        Math.abs(deltaY) < 10)
+                {
+                    var imageSource = list.currentItem.source;
+                    var item = list.currentItem;
+
+                    if(imageSource && imageSource != "" && !item.inScene)
+                    {
+
+                        //console.log("image source = ", imageSource, " clicked!")
+                        var tap_x = 0;
+                        var tap_y = 0;
+                        var rotation = 0;
+                        if(root.topScreen)
+                        {
+                            tap_x = -(touchPoint.x + touch_area.x + root.x) - selected_image.width / 2;
+
+                            rotation = 180;
+                        }
+                        else
+                        {
+                            tap_x = touchPoint.x + touch_area.x + root.x - selected_image.width / 2;
+                            rotation = 0;
+                        }
+
+                        assignItemPosition(tap_x);
+                        if(root.topScreen)
+                        {
+                            tap_y = -assignedPosition.y - selected_image.height;
+                        }
+                        else
+                        {
+                            tap_y = assignedPosition.y;
+                        }
+                        root.createImage(imageSource, tap_x, tap_y, rotation,247, 247, true);
+                        //console.log("assign possition x: ", assignedPosition.x , " assign position y: ", assignedPosition.y);
+
+                        console.log("TAP!! createImage()");
+                        item.imageInScene();
+                        imageItems.push(item);
+                    }
+                }
+            }
+        }
+
         onTouchUpdated:
         {
+
             var updatedCreatedImage = false;
             for(var i = 0; i < touchPoints.length; i++)
             {
@@ -121,11 +209,17 @@ Item {
 
                 if(!creatingImage)
                 {
+
                     if(touchPoint.y < bottomFlickMax)
                     {
                         if(Math.abs(touchPoint.x - touchPoint.previousX) > 10)
                         {
                             list.flick((touchPoint.x - touchPoint.previousX) * 100, 0);
+                            touch_area.flick = true;
+                        }
+                        else
+                        {
+                            touch_area.flick = false;
                         }
                     }
 
@@ -141,7 +235,7 @@ Item {
                                     dragAmounts[touchPoint.pointId] : 0.0
 
                         dragAmounts[touchPoint.pointId] = drag + deltaY;
-
+                        console.log("pressed!touchPoint.y = ", touchPoint.y)
                         if(dragAmounts[touchPoint.pointId] < -100)
                         {
                             var imageSource = dragImages[touchPoint.pointId].source;
@@ -165,6 +259,7 @@ Item {
 
                                 selected_image.screenX = touchPoint.x + touch_area.x + root.x - selected_image.width / 2;
                                 selected_image.screenY = touchPoint.y + touch_area.y - root.y// + selected_image.height / 2;
+
                                 selected_image.width = 247;
                                 console.log("touchPoint.x = ", touchPoint.x, " touchPoint.y = ", touchPoint.y)
                                 updatedCreatedImage = true;
@@ -180,10 +275,12 @@ Item {
                 {
                     if(touchPoint.pointId === touchId && touchPoint.pressed)
                     {
+                        console.log("dragAmounts[touchPoint.pointId] = ", dragAmounts[touchPoint.pointId])
+                        //console.log("touchPoint.x = ", touchPoint.x, " touchPoint.y = ", touchPoint.y)
                         selected_image.screenX = touchPoint.x + touch_area.x + root.x - selected_image.width / 2;
                         selected_image.screenY = touchPoint.y + touch_area.y - root.y// + selected_image.height / 2;
                         selected_image.width = 247;
-                        updatedCreatedImage = true;
+                        updatedCreatedImage = true;                        
                     }
                 }
             }
@@ -211,7 +308,7 @@ Item {
                 console.log("selected_image.x = ", selected_image.x, " selected_image.y = ", selected_image.y)
 
                 root.createImage(selected_image.source, imageCenterX, imageCenterY, rotation,
-                                 selected_image.width, selected_image.height);
+                                 selected_image.width, selected_image.height, false);
             }
 
             var dragEntries = Object.getOwnPropertyNames(dragAmounts);
@@ -233,6 +330,8 @@ Item {
                 }
             }
         }
+
+
 
 //        Image
 //        {
@@ -287,6 +386,7 @@ Item {
     function imageRemovedFromScene(source)
     {
         console.log("Browser! imageRemovedFromScene(source) = ", source)
+        deleteAssignPosition();
         for(var i = 0; i < imageItems.length; i ++)
         {
             if(imageItems[i].source === source)

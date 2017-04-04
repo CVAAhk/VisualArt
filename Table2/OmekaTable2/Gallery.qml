@@ -74,7 +74,7 @@ Item {
         whichScreen: "top left"
         onCreateImage:
         {
-            imageHolder.createImage(source, imageX + x, imageY + y, imageRotation, imageWidth, imageHeight, "top left")
+            imageHolder.createImage(source, imageX + x, imageY + y, imageRotation, imageWidth, imageHeight, tapOpen, "top left")
         }
         onCanPaginate:
         {
@@ -93,7 +93,7 @@ Item {
         whichScreen: "top right"
         onCreateImage:
         {
-            imageHolder.createImage(source, imageX + x, imageY + y, imageRotation, imageWidth, imageHeight, "top right")
+            imageHolder.createImage(source, imageX + x, imageY + y, imageRotation, imageWidth, imageHeight, tapOpen, "top right")
         }
         onCanPaginate:
         {
@@ -112,7 +112,7 @@ Item {
         whichScreen: "lower left"
         onCreateImage:
         {
-            imageHolder.createImage(source, imageX + x, imageY + y, imageRotation, imageWidth, imageHeight, "lower left")
+            imageHolder.createImage(source, imageX + x, imageY + y, imageRotation, imageWidth, imageHeight, tapOpen, "lower left")
         }
         onCanPaginate:
         {
@@ -129,7 +129,7 @@ Item {
         whichScreen: "lower right"
         onCreateImage:
         {
-            imageHolder.createImage(source, imageX + x, imageY + y, imageRotation, imageWidth, imageHeight, "lower right")
+            imageHolder.createImage(source, imageX + x, imageY + y, imageRotation, imageWidth, imageHeight, tapOpen, "lower right")
         }
         onCanPaginate:
         {

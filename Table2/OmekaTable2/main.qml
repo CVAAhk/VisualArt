@@ -22,8 +22,8 @@ ApplicationWindow {
             id: gallery
             width: Settings.SCREEN_WIDTH
             height: Settings.SCREEN_HEIGHT
-            onRemoveAttractImage: attract_pool
-            onCarouselActivate: {attract_pool.opacity = 0.0; attract_pool.stopAttractTimer();}
+            //onRemoveAttractImage:
+            onCarouselActivate: {attract_pool.opacity = 0.0; attract_pool.stopAttractTimer(); attract_pool.carouselActivate = true;}
         }
 
         AttractPoolItem
