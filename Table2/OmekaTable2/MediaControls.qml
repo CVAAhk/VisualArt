@@ -8,7 +8,7 @@ Item {
     id: root
     visible: height
     z: 1
-    y: ItemManager.fullScreen ? size.height/2 - height/2 : toolbar.height
+    y: 0//ItemManager.fullScreen ? size.height/2 - height/2 : toolbar.height
     anchors.horizontalCenter: parent.horizontalCenter
 
     property alias player: scrubber.player

@@ -65,6 +65,7 @@ Item
             type: item ? item.mediaTypes[0] : ""
             //visible: media.progress == 1
         }
+    MediaControls { media: media }
 
 //    Image
 //    {

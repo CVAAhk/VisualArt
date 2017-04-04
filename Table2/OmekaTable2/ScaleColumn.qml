@@ -29,7 +29,7 @@ Item {
       \qmlproperty MediaViewer ScaleColumn::controls
        Overlay containing controls for media operations
     */
-    property MediaControls controls
+    //property MediaControls controls
 
     /*!
       \qmlproperty OmekaText ScaleColumn::info
@@ -50,12 +50,12 @@ Item {
     //parenting
     //Binding { target: toolbar; property: "parent"; value: column }
     //Binding { target: viewer; property: "parent"; value: column }
-    Binding { target: controls; property: "parent"; value: column }
+    //Binding { target: controls; property: "parent"; value: column }
     Binding { target: info; property: "parent"; value: column }
 
     //vertical positioning
     //Binding { target: viewer; property: "y"; value: ItemManager.fullScreen ? 0 : viewerYOffset }
-    Binding { target: info.anchors; property: "top"; value: controls?controls.bottom: column.top }
-    Binding { target: info.anchors; property: "topMargin"; value: 60}//Resolution.applyScale(60) }
+    //Binding { target: info.anchors; property: "top"; value: controls?controls.bottom: column.top }
+    //Binding { target: info.anchors; property: "topMargin"; value: 60}//Resolution.applyScale(60) }
 
 }
