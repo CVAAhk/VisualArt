@@ -185,12 +185,13 @@ Item {
                         {
                             tap_y = assignedPosition.y;
                         }
+                        item.imageInScene();
+                        imageItems.push(item);
                         root.createImage(imageSource, tap_x, tap_y, rotation,247, 247, true);
                         //console.log("assign possition x: ", assignedPosition.x , " assign position y: ", assignedPosition.y);
 
                         console.log("TAP!! createImage()");
-                        item.imageInScene();
-                        imageItems.push(item);
+
                     }
                 }
             }

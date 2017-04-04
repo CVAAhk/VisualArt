@@ -142,7 +142,7 @@ Item
 
             //selectedItem.visible = false;
             //selectedItem.imageRemovedFromScene(selectedItem.source);
-            selectedItem.destroy()
+            //selectedItem.destroy()
 
             //console.log("Deleted!images holder number of image items: ", imageItems.length)
 
