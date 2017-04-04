@@ -16,7 +16,7 @@ ScaleColumn {
 
     //assign column to detail for delayed loading
     Component.onCompleted: {
-        //detail.column = column
+        detail.column = column
     }
 
     /*! \qmlproperty
@@ -52,7 +52,6 @@ ScaleColumn {
 //        }
 //    }
 
-    //TODO
     //media view
 //    viewer: MediaViewer {
 //        id: media

@@ -46,7 +46,6 @@ HEADERS += \
 DISTFILES += \
     main.qml \
     OmekaClient.qml \
-    ImageViewer.qml \
     settings.js \
     qmldir \
     ItemManager.qml \
@@ -70,7 +69,27 @@ DISTFILES += \
     TagDelegate.qml \
     TagHeader.qml \
     TagSearch.qml \
-    Filter.qml
+    Filter.qml \
+    DetailContent.qml \
+    LoadScreen.qml \
+    MediaViewer.qml \
+    ThumbnailViewer.qml \
+    OmekaViewer.qml \
+    MediaControls.qml \
+    PlaybackIndicator.qml \
+    ImageViewer.qml \
+    AudioViewer.qml \
+    PlaybackViewer.qml \
+    ImageNav.qml \
+    IndexIndicator.qml \
+    IndexStyle.qml \
+    ImageZoom.qml \
+    MediaState.qml \
+    VideoViewer.qml \
+    Scrubber.qml \
+    PlaybackText.qml \
+    ProgressTimer.qml \
+    ScrubberStyle.qml
 
 
 

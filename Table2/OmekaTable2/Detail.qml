@@ -4,20 +4,21 @@ import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.1
 import "./TouchHelpers"
 import "settings.js" as Settings
+import "."
 
 /*! \qmltype Displays detailed view of media items and corresponding metadata */
 Item
 {
-    id: root
+    id: detail
 
-    height: active ? root.imageHeight + scroll_bkg.height + controls.height : root.imageHeight + controls.height
-    width: root.imageWidth
+    height: active ? detail.imageHeight + scroll_bkg.height + controls.height : detail.imageHeight + controls.height
+    width: detail.imageWidth
     objectName: "detail"
-    property alias source: img.source
+    property var source//: img.source
 
-    property alias imageWidth: img.width
+    property int imageWidth//: img.width
 
-    property alias imageHeight: img.height
+    property int imageHeight : media.height//: img.height
 
     property string whichScreen
 
@@ -35,48 +36,53 @@ Item
 
     signal deleteImage(var image);
 
-//    DropShadow
-//    {
-//        id: imageEffect
-//          anchors.fill: root
-//          horizontalOffset: 20
-//          verticalOffset: 20
-//          radius: 8.0
-//          samples: 17
-//          color: "#80000000"
-//          source: root
-//          z: 0
-//    }
+    /*! \qmlproperty
+        Currently selected item
+    */
+    property var item: getSelectedItem();//: ItemManager.current
 
+    function getSelectedItem()
+    {
+        return ItemManager.selectedItems[ItemManager.selectedItems.length - 1];
+
+    }
     Image
     {
         id: bkg
         source: "content/POI/_Image_.png"
 //        x: -20; y:-20
-//        width: root.imageWidth + 40
-//        height: active ? root.imageHeight + scroll_bkg.height + 40 : root.imageHeight + 40
-        anchors.fill: root
+//        width: detail.imageWidth + 40
+//        height: active ? detail.imageHeight + scroll_bkg.height + 40 : detail.imageHeight + 40
+        anchors.fill: detail
         anchors.margins: -10
+        visible: media.progress == 1
     }
 
+    MediaViewer {
+            id: media
+            anchors.top: controls.bottom
+            sources: item ? item.media : null
+            type: item ? item.mediaTypes[0] : ""
+            //visible: media.progress == 1
+        }
 
-    Image
-    {
-        id: img
-        fillMode: Image.PreserveAspectFit
-        width: root.width
-        anchors.top: controls.bottom
+//    Image
+//    {
+//        id: img
+//        fillMode: Image.PreserveAspectFit
+//        width: detail.width
+//        anchors.top: controls.bottom
 
-    }
-    //load indicator
-    OmekaIndicator {
-        scale: 2
-        running: img.progress < 1
-    }
+//    }
+//    //load indicator
+//    OmekaIndicator {
+//        scale: 2
+//        running: img.progress < 1
+//    }
     MultiPointPinchArea
     {
-        anchors.fill: img
-        anchors.topMargin: -40
+        anchors.fill: detail
+        //anchors.topMargin: -40
 
         dragOnPinch: true
         listenForRotation: true
@@ -88,36 +94,36 @@ Item
         mouseEnabled: true
 
         minimumX: 0
-        maximumX: 1920 - root.imageWidth
+        maximumX: 1920 - detail.imageWidth
 
         minimumY: 0
-        maximumY: 1080 - root.imageHeight
+        maximumY: 1080 - detail.imageHeight
 
         onDraggingChanged:
         {
 //            if(!dragging)
 //            {
-//                root.finishedDragging(root);
+//                detail.finishedDragging(detail);
 //            }
         }
 
         onPositionUpdated:
         {
-            root.x += delta_x// * (root.topScreen ? -1.0 : 1.0);// * root.scale;
-            root.y += delta_y// * (root.topScreen ? -1.0 : 1.0);// * root.scale;
+            detail.x += delta_x// * (detail.topScreen ? -1.0 : 1.0);// * detail.scale;
+            detail.y += delta_y// * (detail.topScreen ? -1.0 : 1.0);// * detail.scale;
 
-            root.imageDragged(root);
+            detail.imageDragged(detail);
         }
         onRotationUpdated:
         {
-            root.rotation += delta_rotation;
+            detail.rotation += delta_rotation;
             //image_timer.restart();
         }
         onScaleUpdated:
         {
-            root.scale += delta_scale * root.scaleFactor;
-            close.scale = 1/root.scale;
-            info_btn.scale = 1/root.scale;
+            detail.scale += delta_scale * detail.scaleFactor;
+            close.scale = 1/detail.scale;
+            info_btn.scale = 1/detail.scale;
             //image_timer.restart();
         }
 
@@ -142,7 +148,7 @@ Item
                 anchors.margins: -10
                 onPressed:
                 {
-                    root.deleteImage(root);
+                    detail.deleteImage(detail);
                 }
             }
         }
@@ -159,59 +165,59 @@ Item
                 anchors.margins: -10
                 onPressed:
                 {
-                    root.active = !root.active
-                    scroll_bkg.opacity = root.active ? 1.0 : 0.0
-                    info_btn.source = root.active ? "content/POI/info-icon-on.png" : "content/POI/info-icon-off.png"
+                    detail.active = !detail.active
+                    scroll_bkg.opacity = detail.active ? 1.0 : 0.0
+                    info_btn.source = detail.active ? "content/POI/info-icon-on.png" : "content/POI/info-icon-off.png"
                 }
             }
         }
     }
+
+
+    //primary display item
+    property DetailColumn column
+    /*! scroll container */
+
 
     Image
     {
         id: scroll_bkg
         source: "content/POI/description_bkg.png"
         height: 200
-        anchors.top: img.bottom
-        anchors.left: root.left
+        anchors.top: media.bottom
+        anchors.left: detail.left
         opacity: 0.0
-
-        //primary display item
-        //property DetailColumn column
 
         /*! scroll container */
         OmekaScrollView {
             id: scroll
-            width: root.imageWidth
+            width: detail.imageWidth
             height: 180
             //anchors.fill: parent
             enabled: parent.opacity == 1.0
             verticalScrollBarPolicy: Qt.ScrollBarAlwaysOff
             //media display
-            DetailColumn { id: display; width: root.imageWidth-35; }//height: 500 }
+            //DetailColumn { id: display; width: detail.imageWidth-35; }//height: 500 }
+            DetailContent{id: detail_content}
         }
 
     }
-
-
-        //Add if necessary
-        /*! scroll container */
-//        LoadScreen{
-//            progress: column && column.viewer ? column.viewer.progress : 0
-//        }
-
-
+    LoadScreen{
+        width: detail.width
+        height: controls.height
+        progress: media ? media.progress : 0
+    }
 
     Timer
     {
         id: image_timer
 
-        interval: root.imageTimerDuration
+        interval: detail.imageTimerDuration
 
         onTriggered:
         {
             //image back to the viewer
-            root.deleteImage(root);
+            detail.deleteImage(detail);
         }
     }
 }

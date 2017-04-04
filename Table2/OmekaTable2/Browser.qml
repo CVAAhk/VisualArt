@@ -14,7 +14,7 @@ Item {
 
     property var model: ListModel{}
 
-    property var delegate: ImageViewer{}
+    property var delegate: ThumbnailViewer{}
 
     property real divisor: 478
 
@@ -275,8 +275,6 @@ Item {
                 {
                     if(touchPoint.pointId === touchId && touchPoint.pressed)
                     {
-                        console.log("dragAmounts[touchPoint.pointId] = ", dragAmounts[touchPoint.pointId])
-                        //console.log("touchPoint.x = ", touchPoint.x, " touchPoint.y = ", touchPoint.y)
                         selected_image.screenX = touchPoint.x + touch_area.x + root.x - selected_image.width / 2;
                         selected_image.screenY = touchPoint.y + touch_area.y - root.y// + selected_image.height / 2;
                         selected_image.width = 247;
