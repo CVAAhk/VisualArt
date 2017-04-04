@@ -88,7 +88,7 @@ ScaleColumn {
             {
                 for(var i=0; i<item.metadata.count; i++) {
                     element = item.metadata.get(i);
-                    console.log("element = ", element, " element.text = ", element.text)
+                    //console.log("element = ", element, " element.text = ", element.text)
                     if(element)
                     {
                         metadata += "<p><b>"+element.element.name+"</b><br/>"+element.text+"</p>"
@@ -99,7 +99,7 @@ ScaleColumn {
             {
                 for(var i=0; i<item.metadata.length; i++) {
                     element = item.metadata[i];
-                    console.log("element = ", element, " element.text = ", element.text)
+                    //console.log("element = ", element, " element.text = ", element.text)
                     if(element)
                     {
                         metadata += "<p><b>"+element.element.name+"</b><br/>"+element.text+"</p>"

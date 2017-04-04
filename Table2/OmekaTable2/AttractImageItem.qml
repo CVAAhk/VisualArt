@@ -43,7 +43,7 @@ import "settings.js" as Settings
         }
         function imageRemovedFromScene(source)
         {
-            console.log("ImageViewer imageRemovedFromScene(source)= ", source)
+            //console.log("ImageViewer imageRemovedFromScene(source)= ", source)
             //inScene = false;
         }
 
@@ -52,7 +52,7 @@ import "settings.js" as Settings
         onItemResultChanged:
         {
             itemData.id = String(itemResult.item)
-            console.log("itemData.id = ", itemData.id)
+            //console.log("itemData.id = ", itemData.id)
             itemData.fileCount = parseInt(itemResult.file_count)
             itemData.metadata = itemResult.metadata
 
@@ -67,7 +67,7 @@ import "settings.js" as Settings
         function setInfo()
         {
             file_id = Math.floor(randomizeId())
-            console.log("file_id  = ", file_id )
+            //console.log("file_id  = ", file_id )
             Omeka.getFiles(file_id, root)
 
         }
@@ -77,7 +77,7 @@ import "settings.js" as Settings
             onRequestComplete: {
                 if(result.context === root)
                 {
-                    console.log("thum = ", result.thumb)
+                    //console.log("thum = ", result.thumb)
 
                     itemData.thumb = result.thumb
 
@@ -197,7 +197,7 @@ import "settings.js" as Settings
                                     selected_image.screenX = touchPoint.x - selected_image.width / 2;
                                     selected_image.screenY = touchPoint.y - selected_image.height / 2;
                                     selected_image.width = 247;
-                                    console.log("touchPoint.x = ", touchPoint.x, " touchPoint.y = ", touchPoint.y)
+                                    //console.log("touchPoint.x = ", touchPoint.x, " touchPoint.y = ", touchPoint.y)
                                     updatedCreatedImage = true;
 
                                     root.imageDragged();
@@ -239,7 +239,7 @@ import "settings.js" as Settings
                         imageCenterY = selected_image.y// - selected_image.height / 2; // selected_image.height / 2 + root.y + touch_area.y;
                         rotation = 0;
                     }
-                    console.log("selected_image.x = ", selected_image.x, " selected_image.y = ", selected_image.y)
+                    //console.log("selected_image.x = ", selected_image.x, " selected_image.y = ", selected_image.y)
 
                     root.createImage(selected_image.source, imageCenterX, imageCenterY, rotation,
                                      selected_image.width, selected_image.height);

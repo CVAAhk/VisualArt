@@ -59,7 +59,7 @@ Item
 
         if (component.status === Component.Ready)
         {
-            console.log("Component ready")
+            //console.log("Component ready")
 
             var imageSource = filepath.toString();
 
@@ -110,7 +110,7 @@ Item
             imageItem.deleteImage.connect(deleteImage);
 
             imageItems.push(imageItem);
-            console.log("Added!images holder number of image items: ", imageItems.length)
+            //console.log("Added!images holder number of image items: ", imageItems.length)
 
             imageItem.z = imageItems.length;
 
@@ -144,7 +144,7 @@ Item
             //selectedItem.imageRemovedFromScene(selectedItem.source);
             selectedItem.destroy()
 
-            console.log("Deleted!images holder number of image items: ", imageItems.length)
+            //console.log("Deleted!images holder number of image items: ", imageItems.length)
 
 //            for(var i = 0; i < ItemManager.selectedItems.length; i ++)
 //            {

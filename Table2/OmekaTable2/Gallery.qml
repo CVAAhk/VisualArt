@@ -146,7 +146,7 @@ Item {
 
         onImageDeleted:
         {
-            console.log("delete filepath = ",filepath, "whichScreen = ", whichScreen)
+            //console.log("delete filepath = ",filepath, "whichScreen = ", whichScreen)
 
             if(whichScreen === "lower left") lower_left_carousel.imageRemovedFromScene(filepath);
             if(whichScreen === "lower right") lower_right_carousel.imageRemovedFromScene(filepath);

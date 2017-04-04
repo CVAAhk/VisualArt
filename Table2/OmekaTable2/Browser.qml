@@ -235,7 +235,7 @@ Item {
                                     dragAmounts[touchPoint.pointId] : 0.0
 
                         dragAmounts[touchPoint.pointId] = drag + deltaY;
-                        console.log("pressed!touchPoint.y = ", touchPoint.y)
+                        //console.log("pressed!touchPoint.y = ", touchPoint.y)
                         if(dragAmounts[touchPoint.pointId] < -100)
                         {
                             var imageSource = dragImages[touchPoint.pointId].source;
@@ -261,7 +261,7 @@ Item {
                                 selected_image.screenY = touchPoint.y + touch_area.y - root.y// + selected_image.height / 2;
 
                                 selected_image.width = 247;
-                                console.log("touchPoint.x = ", touchPoint.x, " touchPoint.y = ", touchPoint.y)
+                                //console.log("touchPoint.x = ", touchPoint.x, " touchPoint.y = ", touchPoint.y)
                                 updatedCreatedImage = true;
 
                                 root.imageDragged();
@@ -303,7 +303,7 @@ Item {
                     imageCenterY = selected_image.y// - selected_image.height / 2; // selected_image.height / 2 + root.y + touch_area.y;
                     rotation = 0;
                 }
-                console.log("selected_image.x = ", selected_image.x, " selected_image.y = ", selected_image.y)
+                //console.log("selected_image.x = ", selected_image.x, " selected_image.y = ", selected_image.y)
 
                 root.createImage(selected_image.source, imageCenterX, imageCenterY, rotation,
                                  selected_image.width, selected_image.height, false);
@@ -383,13 +383,13 @@ Item {
 
     function imageRemovedFromScene(source)
     {
-        console.log("Browser! imageRemovedFromScene(source) = ", source)
+        //console.log("Browser! imageRemovedFromScene(source) = ", source)
         deleteAssignPosition();
         for(var i = 0; i < imageItems.length; i ++)
         {
             if(imageItems[i].source === source)
             {
-                console.log("Browser! imageRemovedFromScene(source) = ", source, " i = ", i)
+                //console.log("Browser! imageRemovedFromScene(source) = ", source, " i = ", i)
                 imageItems[i].imageRemovedFromScene(source);
                 imageItems.splice(i, 1);
             }

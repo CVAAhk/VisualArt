@@ -17,7 +17,7 @@ Rectangle {
     onProgressChanged: {
         if(enabled) {
             bar.value = progress
-            console.log("load bar value = ", bar.value)
+            //console.log("load bar value = ", bar.value)
         }
     }
 

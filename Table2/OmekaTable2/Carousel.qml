@@ -17,7 +17,7 @@ Item
     {
         if(screenTag)
         {
-            console.log("whichTag() = ", screenTag);
+            //console.log("whichTag() = ", screenTag);
             searchByTag = true;
             filter.tagHeaderSearchByTag = true;
             browser.clear();
@@ -239,7 +239,7 @@ Item
                     busy = (layout.currentIndex === layout.count -4)//layout.atXEnd
                     if(busy){
                         nextCount++;
-                        console.log("can paginate!!")
+                        //console.log("can paginate!!")
                         root.canPaginate();
                     }
                 }else if(layout.model && layout.model.count)

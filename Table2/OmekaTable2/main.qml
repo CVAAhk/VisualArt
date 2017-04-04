@@ -32,7 +32,7 @@ ApplicationWindow {
             enabled: opacity == 1.0
             onCreateImage:
             {
-                console.log("create an image!")
+                //console.log("create an image!")
                 gallery.imageHolderCreateImage(source,imageX,imageY,imageRotation,imageWidth,imageHeight, whichScreen)
             }
         }

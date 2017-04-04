@@ -37,7 +37,7 @@ Image {
         anchors.fill: parent
         onClicked:
         {
-            console.log("tag = ", tag)
+            //console.log("tag = ", tag)
             if(list.whichScreen === "lower left") ItemManager.tagSearchLowerLeft = tag;
             if(list.whichScreen === "lower right") ItemManager.tagSearchLowerRight = tag;
             if(list.whichScreen === "top left") ItemManager.tagSearchTopLeft = tag;
