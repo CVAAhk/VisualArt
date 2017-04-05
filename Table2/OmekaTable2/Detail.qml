@@ -185,7 +185,7 @@ Item
     {
         id: scroll_bkg
         source: "content/POI/description_bkg.png"
-        height: 200
+        height: 200 / root.scale
         anchors.top: media.bottom
         anchors.left: root.left
         opacity: 0.0
@@ -195,12 +195,17 @@ Item
         {
             id: scroll
             width: root.imageWidth
-            height: 180
+            height: 180 / root.scale
             enabled: parent.opacity == 1.0
             verticalScrollBarPolicy: Qt.ScrollBarAlwaysOff
+
             //media display
-            //DetailColumn { id: display; width: detail.imageWidth-35; }//height: 500 }
-            DetailContent{id: detail_content}
+            DetailContent
+            {
+                id: detail_content;
+                width: root.width
+                rootScale: root.scale
+            }
         }
 
     }
