@@ -147,8 +147,12 @@ Item {
                 if(Math.abs(deltaX) < 10 &&
                         Math.abs(deltaY) < 10)
                 {
+
                     var item = list.itemAt(list.contentX +touchPoint.x - touch_area.x, touchPoint.y);//list.currentItem;
                     var imageSource = item.source;//list.currentItem.source;
+
+
+                    var newImageWidth = 247;
 
 
                     if(imageSource && imageSource != "" && !item.inScene)
@@ -160,28 +164,29 @@ Item {
                         var rotation = 0;
                         if(root.topScreen)
                         {
-                            tap_x = -(touchPoint.x + touch_area.x + root.x) - selected_image.width / 2;
-
-                            rotation = 180;
+                            tap_x = (root.width * 0.5) * -0.5 + -newImageWidth * 0.5;//  -(touchPoint.x + touch_area.x + root.x) - selected_image.width / 2;
                         }
                         else
                         {
-                            tap_x = touchPoint.x + touch_area.x + root.x - selected_image.width / 2;
-                            rotation = 0;
+                            tap_x = (root.width * 0.5) * 0.5 - newImageWidth * 0.5
                         }
 
                         assignItemPosition(tap_x);
                         if(root.topScreen)
                         {
-                            tap_y = -assignedPosition.y - selected_image.height;
+                            tap_y = -assignedPosition.y;
+
+                            rotation = 180;
                         }
                         else
                         {
                             tap_y = assignedPosition.y;
+
+                            rotation = 0;
                         }
                         item.imageInScene();
                         imageItems.push(item);
-                        root.createImage(imageSource, tap_x, tap_y, rotation,247, 247, true);
+                        root.createImage(imageSource, tap_x, tap_y, rotation, newImageWidth, newImageWidth, true);
                         //console.log("assign possition x: ", assignedPosition.x , " assign position y: ", assignedPosition.y);
 
                         console.log("TAP!! createImage()");
