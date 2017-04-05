@@ -2,3 +2,6 @@
 /Mobile/*.keystore
 
 Table2/OmekaTable2/DetailImage.qml
+Table2/OmekaTable2/*.qmlc
+Table2/OmekaTable2/settings.jsc
+Table2/OmekaTable2/TouchHelpers/*.qmlc

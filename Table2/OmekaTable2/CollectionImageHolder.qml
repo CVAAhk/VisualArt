@@ -140,7 +140,7 @@ Item
 
             imageDeleted(selectedItem.source, selectedItem.whichScreen);
 
-            //selectedItem.visible = false;
+            selectedItem.visible = false;
             //selectedItem.imageRemovedFromScene(selectedItem.source);
             //selectedItem.destroy()
 

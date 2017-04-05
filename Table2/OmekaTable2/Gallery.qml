@@ -157,8 +157,8 @@ Item {
         }
     }
 
-    function imageHolderCreateImage(filepath, startX, startY, imageRotation, imageWidth, imageHeight, whichScreen)
+    function imageHolderCreateImage(filepath, startX, startY, imageRotation, imageWidth, imageHeight, tapOpen, whichScreen)
     {
-        imageHolder.createImage(filepath, startX, startY, imageRotation, imageWidth, imageHeight, whichScreen)
+        imageHolder.createImage(filepath, startX, startY, imageRotation, imageWidth, imageHeight, tapOpen, whichScreen)
     }
 }

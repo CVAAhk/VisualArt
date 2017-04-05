@@ -20,7 +20,7 @@ import "settings.js" as Settings
 
         signal imageDragged();
 
-        signal createImage(string source, int imageX, int imageY, int imageRotation, int imageWidth, int imageHeight);
+        signal createImage(string source, int imageX, int imageY, int imageRotation, int imageWidth, int imageHeight, bool tapOpen);
         //scale: changeScale()
         //z: changeZ();//1 - Math.abs(index - list.currentIndex)
         //visible: Math.abs(index - list.currentIndex) < 3 || (list.count + index - list.currentIndex) < 3 ||
@@ -137,6 +137,60 @@ import "settings.js" as Settings
             property var dragAmountsX: ({})
             property var dragImages: ({})
 
+            onReleased:
+            {
+                for(var i = 0; i < touchPoints.length; i++)
+                {
+                    var touchPoint = touchPoints[i];
+
+                    var deltaX = touchPoint.x - touchPoint.startX;
+                    var deltaY = touchPoint.y - touchPoint.startY;
+
+                    if(Math.abs(deltaX) < 10 &&
+                            Math.abs(deltaY) < 10)
+                    {
+                        var imageSource = list.currentItem.source;
+                        var item = list.currentItem;
+
+                        if(imageSource && imageSource != "" && !item.inScene)
+                        {
+
+                            //console.log("image source = ", imageSource, " clicked!")
+                            var tap_x = 0;
+                            var tap_y = 0;
+                            var rotation = 0;
+                            if(root.topScreen)
+                            {
+                                tap_x = -(touchPoint.x + touch_area.x + root.x) - selected_image.width / 2;
+
+                                rotation = 180;
+                            }
+                            else
+                            {
+                                tap_x = touchPoint.x + touch_area.x + root.x - selected_image.width / 2;
+                                rotation = 0;
+                            }
+
+                            assignItemPosition(tap_x);
+                            if(root.topScreen)
+                            {
+                                tap_y = -assignedPosition.y - selected_image.height;
+                            }
+                            else
+                            {
+                                tap_y = assignedPosition.y;
+                            }
+                            item.imageInScene();
+                            imageItems.push(item);
+                            root.createImage(imageSource, tap_x, tap_y, rotation,247, 247, true);
+                            //console.log("assign possition x: ", assignedPosition.x , " assign position y: ", assignedPosition.y);
+
+                            console.log("TAP!! createImage()");
+
+                        }
+                    }
+                }
+            }
             onTouchUpdated:
             {
                 var updatedCreatedImage = false;
@@ -242,7 +296,7 @@ import "settings.js" as Settings
                     //console.log("selected_image.x = ", selected_image.x, " selected_image.y = ", selected_image.y)
 
                     root.createImage(selected_image.source, imageCenterX, imageCenterY, rotation,
-                                     selected_image.width, selected_image.height);
+                                     selected_image.width, selected_image.height, false);
                 }
 
                 var dragEntries = Object.getOwnPropertyNames(dragAmountsY);

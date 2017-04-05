@@ -54,17 +54,6 @@ Item
         visible: false // media.progress == 1
     }
 
-    MediaViewer
-    {
-        id: media
-        anchors.top: controls.bottom
-        sources: item ? item.media : null
-        type: item ? item.mediaTypes[0] : ""
-        //visible: media.progress == 1
-    }
-
-    MediaControls { media: media }
-
     MultiPointPinchArea
     {
         anchors.fill: root
@@ -104,6 +93,15 @@ Item
 
         debugView: Settings.DEBUG_VIEW
     }
+    MediaViewer
+    {
+        id: media
+        anchors.top: controls.bottom
+        sources: item ? item.media : null
+        type: item ? item.mediaTypes[0] : ""
+        //visible: media.progress == 1
+    }
+    MediaControls { media: media }
     Image
     {
         id: controls
