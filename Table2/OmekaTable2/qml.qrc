@@ -33,5 +33,6 @@
         <file>content/ui/search-on.png</file>
         <file>content/ui/settings.png</file>
         <file>content/ui/video.png</file>
+        <file>NumberUtils.qml</file>
     </qresource>
 </RCC>

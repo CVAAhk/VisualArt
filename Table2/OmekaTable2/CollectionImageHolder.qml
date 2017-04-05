@@ -65,43 +65,23 @@ Item
 
             var imageItem = component.createObject(root);
 
-            imageItem.x = startX - root.x;
-            //imageItem.y = startY - root.y;
-
             if(tapOpen)
             {
                 image_pop.target = imageItem;
-                if(whichScreen === "attract lower right")
-                {
-                    imageItem.y = startY - root.y;
-                    image_pop.property = "x";
-
-//                    if(imageRotation > 0)
-//                    {
-//                        image_pop.from = 315 - imageHeight;
-//                        image_pop.to = startY - root.y - imageHeight;
-//                    }
-//                    else
-//                    {
-                       image_pop.from = Settings.ATTRACT_RIGHT_X;
-                       image_pop.to = startX;
-//                    }
-                }
-                else if(whichScreen === "attract lower left")
-                {
-                    imageItem.y = startY - root.y;
-                    image_pop.property = "x";
-                    image_pop.from = Settings.ATTRACT_LEFT_X;
-                    image_pop.to = startX;
-                }
-                else if(whichScreen === "attract top right")
+                if(whichScreen.includes("attract") &&whichScreen.includes("right"))
                 {
                     imageItem.y = startY - root.y;
                     image_pop.property = "x";
                     image_pop.from = Settings.ATTRACT_RIGHT_X;
                     image_pop.to = startX;
                 }
-
+                else if(whichScreen.includes("attract") &&whichScreen.includes("left"))
+                {
+                    imageItem.y = startY - root.y;
+                    image_pop.property = "x";
+                    image_pop.from = Settings.ATTRACT_LEFT_X;
+                    image_pop.to = startX;
+                }
                 else
                 {
                     imageItem.x = startX - root.x;

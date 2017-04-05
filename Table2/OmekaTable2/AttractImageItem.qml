@@ -144,9 +144,9 @@ Item
                         selected_image.width = 247;
                         if(root.topScreen)
                         {
-                            if(root.x > 750) tap_x = root.width + 50;
-                            else tap_x = -selected_image.width - 50;
-                            tap_y = -selected_image.height;
+                            if(root.x > 750) tap_x = root.width + 20;
+                            else tap_x = -selected_image.width - 30;
+                            tap_y = 0;
                             rotation = 180;
                         }
                         else
