@@ -114,6 +114,21 @@ Item
 
         Image
         {
+            source: "content/POI/info-panel-controls-bkg-left.png"
+            width: 32 / root.scale
+            height: controls.height
+        }
+
+        Image
+        {
+            source: "content/POI/info-panel-controls-bkg-right.png"
+            width: 32 / root.scale
+            height: controls.height
+            x: controls.width - width
+        }
+
+        Image
+        {
             id: close
             source: "content/POI/close-off.png"
 
