@@ -82,8 +82,6 @@ Item
         }
         onRotationUpdated:
         {
-            console.log("Rotation updated " + delta_rotation)
-
             root.rotation += delta_rotation;
         }
         onScaleUpdated:
@@ -189,6 +187,21 @@ Item
         anchors.top: media.bottom
         anchors.left: root.left
         opacity: 0.0
+
+        Image
+        {
+            source: "content/POI/description_bkg-left.png"
+            width: 64 / root.scale
+            height: scroll_bkg.height
+        }
+
+        Image
+        {
+            source: "content/POI/description_bkg-right.png"
+            width: 64 / root.scale
+            height: scroll_bkg.height
+            x: scroll_bkg.width - width
+        }
 
         /*! scroll container */
         OmekaScrollView
