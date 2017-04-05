@@ -144,6 +144,8 @@ Item {
         width: parent.width
         height: parent.height
 
+        antialiasing: true
+
         onImageDeleted:
         {
             //console.log("delete filepath = ",filepath, "whichScreen = ", whichScreen)
