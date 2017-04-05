@@ -65,8 +65,6 @@ Item
 
             var imageItem = component.createObject(root);
 
-            imageItem.source = imageSource;
-
             imageItem.x = startX - root.x;
             //imageItem.y = startY - root.y;
             if(tapOpen)
