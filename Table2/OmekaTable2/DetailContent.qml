@@ -8,7 +8,7 @@ import "."
 */
 Item {
     id: content
-    width: detail.width
+    width: root.width
     height: display.height + (margins*4)
     anchors.top: parent.top
     anchors.topMargin: margins

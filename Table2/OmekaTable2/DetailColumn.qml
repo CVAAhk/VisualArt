@@ -16,7 +16,7 @@ ScaleColumn {
 
     //assign column to detail for delayed loading
     Component.onCompleted: {
-        detail.column = column
+        root.column = column
     }
 
     /*! \qmlproperty
