@@ -33,7 +33,7 @@ ApplicationWindow {
             onCreateImage:
             {
                 //console.log("create an image!")
-                gallery.imageHolderCreateImage(source,imageX,imageY,imageRotation,imageWidth,imageHeight, whichScreen)
+                gallery.imageHolderCreateImage(source,imageX,imageY,imageRotation,imageWidth,imageHeight, tapOpen, whichScreen);
             }
         }
     }

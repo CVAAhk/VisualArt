@@ -46,6 +46,7 @@ Item {
         Qt.vector2d(-300,-300),
         Qt.vector2d(-300,-300),
         Qt.vector2d(-300,-300),
+        Qt.vector2d(-300,-300),
         Qt.vector2d(-300,-300)]
 
     property var usedPositions :[]

@@ -9,6 +9,7 @@ Item {
     property color color4: "#F0F0F0"
     property color color5: "#66676A"
     property color color6: "#CDCDCE"
+    property color color7: "#2b89d9"
 
     property color transparent: "#00FFFFFF"
 
@@ -72,7 +73,7 @@ Item {
     property var filterFont: ({ color:"white", size:11, weight:Font.Normal, capitalization:Font.AllUppercase, wrapMode: Text.Wrap, textFormat: Text.RichText, family: roboto.name})
     property var infoTitleFont: ({ color:"black", size:16, weight:Font.Bold, capitalization:Font.AllUppercase, wrapMode: Text.NoWrap, textFormat: Text.AutoText, family: roboto.name })
     property var infoSourceFont: ({ color:"black", size:10, weight:Font.Normal, capitalization:Font.MixedCase, wrapMode: Text.NoWrap, textFormat: Text.AutoText, family: roboto.name })
-    property var playbackTimeFont: ({ color:"white", size:40, weight:Font.Normal, capitalization:Font.MixedCase, wrapMode: Text.NoWrap, textFormat: Text.AutoText, family: roboto.name })
+    property var playbackTimeFont: ({ color:"white", size:11, weight:Font.Normal, capitalization:Font.MixedCase, wrapMode: Text.NoWrap, textFormat: Text.AutoText, family: roboto.name })
 
     FontLoader
     {

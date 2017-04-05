@@ -58,14 +58,7 @@ Item
         visible: media.progress == 1
     }
 
-    MediaViewer {
-            id: media
-            anchors.top: controls.bottom
-            sources: item ? item.media : null
-            type: item ? item.mediaTypes[0] : ""
-            //visible: media.progress == 1
-        }
-    MediaControls { media: media }
+
 
 //    Image
 //    {
@@ -125,16 +118,30 @@ Item
             detail.scale += delta_scale * detail.scaleFactor;
             close.scale = 1/detail.scale;
             info_btn.scale = 1/detail.scale;
+            //console.log("detail.scale = ", detail.scale)
+            //controls.scale = 1 /detail.scale;
+            //console.log("controls.height = ", controls.height)
+            //controls.width = controls.width * detail.scale
             //image_timer.restart();
         }
 
         debugView: Settings.DEBUG_VIEW
     }
+    MediaViewer
+    {
+        id: media
+        anchors.top: controls.bottom
+        sources: item ? item.media : null
+        type: item ? item.mediaTypes[0] : ""
+        //visible: media.progress == 1
+    }
+    MediaControls { media: media }
     Image
     {
         id: controls
         width: scroll_bkg.width
         source: "content/POI/info-panel-controls-bkg.png"
+
 
         Image
         {

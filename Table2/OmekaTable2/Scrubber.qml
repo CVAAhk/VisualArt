@@ -16,7 +16,7 @@ Item {
     width: parent.width
     anchors.horizontalCenter: parent.horizontalCenter
     anchors.bottom: parent.bottom
-    anchors.margins: 36//Resolution.applyScale(36)
+    anchors.margins: 10//Resolution.applyScale(36)
 
     property alias player: scrubber.player
 
@@ -41,7 +41,7 @@ Item {
 
         //position and sizing
         anchors.centerIn: parent
-        width: parent.width - 300//Resolution.applyScale(300)
+        width: parent.width - 30//Resolution.applyScale(300)
 
         //set max value to the number timer ticks
         maximumValue: timer.totalTicks
