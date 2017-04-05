@@ -35,10 +35,7 @@ Item {
                     target = null
                 }
             }
-            else
-            {
-                target = null
-            }
+
         }
     }
 

@@ -91,8 +91,7 @@ Item {
         //flickDeceleration: 300
         boundsBehavior: Flickable.StopAtBounds
         orientation: ListView.Horizontal
-        //y: root.height /4
-        x: 21//root.width * 2/ 5
+        x: 21
         width: root.width
         height: root.height
         highlightRangeMode: ListView.StrictlyEnforceRange
@@ -103,13 +102,6 @@ Item {
         focus: true
         enabled: false
 
-
-        onCurrentItemChanged:
-        {
-            console.log("current index = ", currentIndex)
-        }
-
-        //onContentXChanged: console.log("currentX = ", contentX)
 
     }
 
@@ -155,8 +147,9 @@ Item {
                 if(Math.abs(deltaX) < 10 &&
                         Math.abs(deltaY) < 10)
                 {
-                    var imageSource = list.currentItem.source;
-                    var item = list.currentItem;
+                    var item = list.itemAt(list.contentX +touchPoint.x - touch_area.x, touchPoint.y);//list.currentItem;
+                    var imageSource = item.source;//list.currentItem.source;
+
 
                     if(imageSource && imageSource != "" && !item.inScene)
                     {

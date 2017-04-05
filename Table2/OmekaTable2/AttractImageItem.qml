@@ -145,7 +145,7 @@ Item
                         if(root.topScreen)
                         {
                             if(root.x > 750) tap_x = root.width + 20;
-                            else tap_x = -selected_image.width - 30;
+                            else tap_x = -selected_image.width - 80;
                             tap_y = 0;
                             rotation = 180;
                         }
