@@ -91,6 +91,7 @@ ScaleColumn {
                     //console.log("element = ", element, " element.text = ", element.text)
                     if(element)
                     {
+                        element.text = element.text.replace(/<a\b[^>]*>/i,"").replace(/<\/a>/i, "");
                         metadata += "<p><b>"+element.element.name+"</b><br/>"+element.text+"</p>"
                     }
                 }
@@ -102,6 +103,7 @@ ScaleColumn {
                     //console.log("element = ", element, " element.text = ", element.text)
                     if(element)
                     {
+                        element.text = element.text.replace(/<a\b[^>]*>/i,"").replace(/<\/a>/i, "");
                         metadata += "<p><b>"+element.element.name+"</b><br/>"+element.text+"</p>"
                     }
                 }

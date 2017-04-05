@@ -124,7 +124,6 @@ Component {
                     {
                         img.source = itemData.thumb
                         //img_id.text = itemData.id //test
-                        //root.source = itemData.media
                         target = null
                     }
                 }
