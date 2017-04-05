@@ -6,7 +6,10 @@ import "."
 
     DetailColumn is the vertical layout container for detail items.
 */
-ScaleColumn {
+ScaleColumn
+{
+    property double rootScale: 1.0
+
     id: column
     x: 15
     y: 0//parent.margins
@@ -71,6 +74,7 @@ ScaleColumn {
         width: parent.width - 10//Resolution.applyScale(60)
         height: contentHeight
         _font: Style.metadataFont
+        rootScale: column.rootScale
         text: metadata()
         //onLinkActivated: Qt.openUrlExternally(link)
     }

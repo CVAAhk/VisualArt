@@ -82,8 +82,6 @@ Item
         }
         onRotationUpdated:
         {
-            console.log("Rotation updated " + delta_rotation)
-
             root.rotation += delta_rotation;
         }
         onScaleUpdated:
@@ -185,22 +183,42 @@ Item
     {
         id: scroll_bkg
         source: "content/POI/description_bkg.png"
-        height: 200
+        height: 200 / root.scale
         anchors.top: media.bottom
         anchors.left: root.left
         opacity: 0.0
+
+        Image
+        {
+            source: "content/POI/description_bkg-left.png"
+            width: 64 / root.scale
+            height: scroll_bkg.height
+        }
+
+        Image
+        {
+            source: "content/POI/description_bkg-right.png"
+            width: 64 / root.scale
+            height: scroll_bkg.height
+            x: scroll_bkg.width - width
+        }
 
         /*! scroll container */
         OmekaScrollView
         {
             id: scroll
             width: root.imageWidth
-            height: 180
+            height: 180 / root.scale
             enabled: parent.opacity == 1.0
             verticalScrollBarPolicy: Qt.ScrollBarAlwaysOff
+
             //media display
-            //DetailColumn { id: display; width: detail.imageWidth-35; }//height: 500 }
-            DetailContent{id: detail_content}
+            DetailContent
+            {
+                id: detail_content;
+                width: root.width
+                rootScale: root.scale
+            }
         }
 
     }

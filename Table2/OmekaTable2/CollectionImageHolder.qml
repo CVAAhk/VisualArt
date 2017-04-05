@@ -65,10 +65,6 @@ Item
 
             var imageItem = component.createObject(root);
 
-            //imageItem.source = imageSource;
-
-
-
             if(tapOpen)
             {
                 image_pop.target = imageItem;

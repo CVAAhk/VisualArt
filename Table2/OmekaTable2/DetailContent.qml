@@ -6,9 +6,11 @@ import "."
 
   The content container of the detail scroll view
 */
-Item {
+Item
+{
+    property double rootScale: 1.0
+
     id: content
-    width: root.width
     height: display.height + (margins*4)
     anchors.top: parent.top
     anchors.topMargin: margins
@@ -19,7 +21,8 @@ Item {
     property real margins: 30
 
     //background rectangle
-    Rectangle {
+    Rectangle
+    {
         id: background
         visible: opacity > 0
         anchors.horizontalCenter: parent.horizontalCenter
@@ -30,5 +33,9 @@ Item {
     }
 
     //media display
-    DetailColumn { id: display }
+    DetailColumn
+    {
+        id: display
+        rootScale: content.rootScale
+    }
 }
