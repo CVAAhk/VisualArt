@@ -76,7 +76,7 @@ ScaleColumn
         _font: Style.metadataFont
         rootScale: column.rootScale
         text: metadata()
-        //onLinkActivated: Qt.openUrlExternally(link)
+        onLinkActivated: Qt.openUrlExternally(link)
     }
 
     //format metadata
@@ -95,7 +95,7 @@ ScaleColumn
                     //console.log("element = ", element, " element.text = ", element.text)
                     if(element)
                     {
-                        element.text = element.text.replace(/<a\b[^>]*>/i,"").replace(/<\/a>/i, "");
+                        element.text = element.text.replace(/<[\/]{0,1}(a|A)[^><]*>/g,"")
                         metadata += "<p><b>"+element.element.name+"</b><br/>"+element.text+"</p>"
                     }
                 }
@@ -107,7 +107,7 @@ ScaleColumn
                     //console.log("element = ", element, " element.text = ", element.text)
                     if(element)
                     {
-                        element.text = element.text.replace(/<a\b[^>]*>/i,"").replace(/<\/a>/i, "");
+                        element.text = element.text.replace(/<[\/]{0,1}(a|A)[^><]*>/g,"")
                         metadata += "<p><b>"+element.element.name+"</b><br/>"+element.text+"</p>"
                     }
                 }

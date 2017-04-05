@@ -157,14 +157,12 @@ Item {
 
                     if(imageSource && imageSource != "" && !item.inScene)
                     {
-
-                        //console.log("image source = ", imageSource, " clicked!")
                         var tap_x = 0;
                         var tap_y = 0;
                         var rotation = 0;
                         if(root.topScreen)
                         {
-                            tap_x = (root.width * 0.5) * -0.5 + -newImageWidth * 0.5;//  -(touchPoint.x + touch_area.x + root.x) - selected_image.width / 2;
+                            tap_x = (root.width * 0.5) * -0.5 + -newImageWidth * 0.5;
                         }
                         else
                         {
@@ -228,7 +226,6 @@ Item {
                         if(!dragAmounts[touchPoint.pointId])
                         {
                             dragAmounts[touchPoint.pointId] = 0.0;
-                            //dragImages[touchPoint.pointId] = list.currentItem;
                             dragImages[touchPoint.pointId] = list.itemAt(list.contentX +touchPoint.x + touch_area.x, touchPoint.y);
                         }
 
