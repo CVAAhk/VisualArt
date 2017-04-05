@@ -89,7 +89,8 @@ DISTFILES += \
     Scrubber.qml \
     PlaybackText.qml \
     ProgressTimer.qml \
-    ScrubberStyle.qml
+    ScrubberStyle.qml \
+    NumberUtils.qml
 
 
 
