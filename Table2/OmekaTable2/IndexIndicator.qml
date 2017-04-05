@@ -30,7 +30,7 @@ Item
     Image
     {
         id: leftButton
-        source: 'content/POI/Asset 10.png'
+        source: 'content/POI/doc-left-arrow.png'
         y: 5
         width: 32; height: 32
 
@@ -45,7 +45,7 @@ Item
     Image
     {
         id: rightButton
-        source: 'content/POI/Asset 9.png'
+        source: 'content/POI/doc-right-arrow.png'
         y: 5
         width: 32; height: 32
         anchors.right: parent.right
