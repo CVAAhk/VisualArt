@@ -148,9 +148,9 @@ Item {
                         Math.abs(deltaY) < 10)
                 {
 
-                    var item = list.itemAt(list.contentX +touchPoint.x - touch_area.x, touchPoint.y);//list.currentItem;
-                    var imageSource = item.source;//list.currentItem.source;
+                    var item = list.itemAt(list.contentX +touchPoint.x + touch_area.x, touchPoint.y);
 
+                    if(item) var imageSource = item.source;
 
                     var newImageWidth = 247;
 
@@ -228,7 +228,8 @@ Item {
                         if(!dragAmounts[touchPoint.pointId])
                         {
                             dragAmounts[touchPoint.pointId] = 0.0;
-                            dragImages[touchPoint.pointId] = list.currentItem
+                            //dragImages[touchPoint.pointId] = list.currentItem;
+                            dragImages[touchPoint.pointId] = list.itemAt(list.contentX +touchPoint.x + touch_area.x, touchPoint.y);
                         }
 
                         var drag = dragAmounts[touchPoint.pointId] ?
