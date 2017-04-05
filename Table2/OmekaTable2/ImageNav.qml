@@ -15,11 +15,13 @@ ListView{
     property real tally
     property var total: ({})
 
+    property bool multiPage: model.count > 1
+
     anchors.centerIn: parent
     orientation: ListView.Horizontal
     snapMode: moving ? ListView.SnapOneItem : ListView.NoSnap
     cacheBuffer: 247*model.count//viewer.width*model.count
-    interactive: model.count > 1
+    interactive: false //multiPage
     clip: true
     spacing: 90//Resolution.applyScale(90)
     highlightRangeMode: ListView.StrictlyEnforceRange
@@ -84,10 +86,21 @@ ListView{
         color: "black"
     }
 
-    IndexIndicator {
-        visible: list.interactive
+    IndexIndicator
+    {
+        visible: list.multiPage
         anchors.bottom: bkg.bottom
         width: parent.width
         height: bkg.height*.1
+
+        onLeftPressed:
+        {
+            list.flick(1000, 0);
+        }
+
+        onRightPressed:
+        {
+            list.flick(-1000, 0);
+        }
     }
 }
