@@ -86,7 +86,6 @@ Item {
     onDisplayChanged: {
         if(display){
             display.parent = root
-            console.log("wScale = ", wScale)
         }
     }
 
