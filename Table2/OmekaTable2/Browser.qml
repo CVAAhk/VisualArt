@@ -234,7 +234,7 @@ Item {
 
                         dragAmounts[touchPoint.pointId] = drag + deltaY;
                         //console.log("pressed!touchPoint.y = ", touchPoint.y)
-                        if(dragAmounts[touchPoint.pointId] != null &&
+                        if(dragImages[touchPoint.pointId] != null &&
                                 dragAmounts[touchPoint.pointId] < -100)
                         {
                             var imageSource = dragImages[touchPoint.pointId].source;
@@ -328,37 +328,13 @@ Item {
             }
         }
 
-
-
-//        Image
-//        {
-//            id: selected_image
-
-//            visible: touch_area.creatingImage
-
-//            source: ""
-//            height: root.imageHeight
-//            fillMode: Image.PreserveAspectFit
-
-//            property int screenX: 0
-//            property int screenY: 0
-
-//            x: screenX - width / 2
-//            y: screenY - height / 2
-//            z: 10
-
-//            property string title: ""
-//            property string description: ""
-//        }
-
-
-                Rectangle
-                {
-                    anchors.fill: parent
-                    color: "red"
-                    opacity: 0.5
-                    visible: parent.enabled && Settings.DEBUG_VIEW
-                }
+        Rectangle
+        {
+            anchors.fill: parent
+            color: "red"
+            opacity: 0.5
+            visible: parent.enabled && Settings.DEBUG_VIEW
+        }
     }
 
 
