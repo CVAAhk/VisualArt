@@ -6,16 +6,19 @@ import "../../app/home/settings/pairing"
 ApplicationWindow {
     id: window
     visible: true
-    width: 470; height: 600
+    width: 470; height: 600    
 
     property var deviceId: null;
     property var paired: false;
     property var codes: [];
     property var currentCode;
+    property var cleanDelay: 2000;
 
     Component.onCompleted: {
         Omeka.getItemsByTerm("earth", window)
     }
+
+    Component.onDestruction: clean();
 
     Connections {
         target: Omeka
@@ -94,11 +97,10 @@ ApplicationWindow {
     }
 
     function clearAll() {
-        codes.length = 0;
-        HeistManager.clearAllSessions();        
         paired = false;
         currentCode = "";
-        resetItems();
+        codes.length = 0;
+        HeistManager.clearAllSessions();
     }
 
     function resetItems() {
@@ -106,6 +108,22 @@ ApplicationWindow {
             item_list.contentItem.children[i].reset();
         }
         HeistManager.removeAllItems(currentCode, null);
+    }
+
+    function clean() {
+        HeistManager.clearAllSessions();
+        cleanDelay *= codes.length;
+        while(cleanDelay) {
+            cleanDelay--;
+            console.log("cleaning");
+        }
+        console.log("cleaned");
+    }
+
+    function removeData(data) {
+        for(var i in data) {
+            HeistManager.removeData(data[i])
+        }
     }
 
     onPairedChanged: {
@@ -122,6 +140,6 @@ ApplicationWindow {
         } else if(!paired && deviceId.length > 0) {
             paired = true;
         }
-    }
+    }    
 
 }
