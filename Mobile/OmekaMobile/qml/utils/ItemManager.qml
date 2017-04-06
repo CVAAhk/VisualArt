@@ -56,7 +56,7 @@ Item {
       Remove like from local database
     */
     function unregisterLike(item) {
-        Settings.removeLike(item.id)
+        Settings.removeLike(String(item.id))
         itemRemoved(item)
     }
 
@@ -124,7 +124,7 @@ Item {
       Returns true if the item has an entry in the database
     */
     function isLiked(item) {
-        return Settings.isLiked(item.id)
+        return Settings.isLiked(String(item.id))
     }
 
     /*!
