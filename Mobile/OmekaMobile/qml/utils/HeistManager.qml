@@ -316,8 +316,8 @@ Item {
       /a item - item url to add
       /a context - calling object
     */
-    function removeAllItems(code, context) {
-        if(code in sessions) {
+    function removeAllItems(code, context) {        
+        if(code in sessions && code in items) {
             items[code].length = 0;
             updateData(baseUrl+sessions[code], {item_ids: items[code]}, context);
         }
