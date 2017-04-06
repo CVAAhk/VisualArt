@@ -141,7 +141,7 @@ Item
 
             scale: 1.0 / root.scale
 
-            MultiPointPinchArea
+            MultiPointTouchArea
             {
                 anchors.fill: parent
                 anchors.margins: -10
@@ -165,7 +165,7 @@ Item
 
             scale: 1.0 / root.scale
 
-            MultiPointPinchArea
+            MultiPointTouchArea
             {
                 anchors.fill: parent
                 anchors.margins: -10
