@@ -20,6 +20,8 @@ Item
 
     signal imageDragged();
 
+    signal recreateItem();
+
     signal createImage(string source, int imageX, int imageY, int imageRotation, int imageWidth, int imageHeight, bool tapOpen);
 
     Behavior on opacity {
@@ -49,6 +51,7 @@ Item
         itemData.id = String(itemResult.item)
         //console.log("itemData.id = ", itemData.id)
         itemData.fileCount = parseInt(itemResult.file_count)
+        console.log("fileCount = ", itemData.fileCount);
         itemData.metadata = itemResult.metadata
 
         itemData.media = []
@@ -64,14 +67,16 @@ Item
             if(result.context === root)
             {
                 itemData.thumb = result.thumb
+                if(!itemData.thumb) {recreateItem(); return;}
 
                 itemData.media.push(result.media)
                 itemData.mediaTypes.push(result.media_type)
-
+                console.log("itemData.media.length = ", itemData.media.length);
 //                if(itemData.media.length === itemData.fileCount)
 //                {
                     img.source = itemData.thumb
                     img_id.text = itemData.id //test
+                    console.log("random id:", itemData.id)
 //                    target = null
 //                }
             }

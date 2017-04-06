@@ -11,7 +11,7 @@ Item
     property double rootScale: 1.0
 
     id: content
-    height: display.height + (margins*4)
+    height: display.height + (margins*1)
     anchors.top: parent.top
     anchors.topMargin: margins
 
@@ -27,7 +27,7 @@ Item
         visible: opacity > 0
         anchors.horizontalCenter: parent.horizontalCenter
         width: display.width
-        height: display.height + 60
+        height: display.height
         color: Style.color2
         radius: 35
     }

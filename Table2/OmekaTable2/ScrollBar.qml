@@ -24,12 +24,6 @@ Item {
 //        bottom: flickable.bottom
 //    }
 
-
-    onFlickableChanged:
-    {
-        console.log("flickable changed!!", flickable)
-    }
-
     //=========================================================================
     // UI ELEMENTS
     //=========================================================================

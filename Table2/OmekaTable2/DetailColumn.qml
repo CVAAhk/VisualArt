@@ -71,7 +71,7 @@ ScaleColumn
         id: info
         //anchors.horizontalCenter: parent.horizontalCenter
         visible: opacity > 0
-        width: parent.width - 10//Resolution.applyScale(60)
+        width: parent.width - 20//Resolution.applyScale(60)
         height: contentHeight
         _font: Style.metadataFont
         rootScale: column.rootScale

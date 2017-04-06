@@ -70,15 +70,33 @@ Item
                 image_pop.target = imageItem;
                 if(whichScreen.includes("attract") &&whichScreen.includes("right"))
                 {
-                    imageItem.y = startY - root.y;
+                    //imageItem.y = startY - root.y;
                     image_pop.property = "x";
+                    if(imageRotation > 0)
+                    {
+                        imageItem.y = startY - root.y - imageItem.height;
+                    }
+                    else
+                    {
+                        imageItem.y = startY - root.y;
+                    }
+
                     image_pop.from = Settings.ATTRACT_RIGHT_X;
                     image_pop.to = startX;
                 }
                 else if(whichScreen.includes("attract") &&whichScreen.includes("left"))
                 {
-                    imageItem.y = startY - root.y;
+                    //imageItem.y = startY - root.y;
                     image_pop.property = "x";
+                    if(imageRotation > 0)
+                    {
+                        imageItem.y = startY - root.y - imageItem.height;
+                    }
+                    else
+                    {
+                        imageItem.y = startY - root.y;
+                    }
+
                     image_pop.from = Settings.ATTRACT_LEFT_X;
                     image_pop.to = startX;
                 }

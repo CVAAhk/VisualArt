@@ -29,6 +29,8 @@ Item
 
     property bool active: false
 
+    property bool openedAttract: false
+
     signal imageDragged(var image);
 
     signal finishedDragging(var image);
@@ -40,10 +42,17 @@ Item
     */
     property var item: getSelectedItem();//: ItemManager.current
 
+    onHeightChanged:
+    {
+        if(root.rotation === 180 && !active && whichScreen.includes("attract")&& !openedAttract )   {root.y -= root.height - controls.height;}
+        else if(root.rotation === 180 && active && whichScreen.includes("attract") )   {root.y -= scroll_bkg.height;}
+        else if(root.rotation === 180 && !active && whichScreen.includes("attract") ) {root.y += scroll_bkg.height;}
+
+    }
+
     function getSelectedItem()
     {
         return ItemManager.selectedItems[ItemManager.selectedItems.length - 1];
-
     }
     Image
     {
@@ -59,7 +68,7 @@ Item
         anchors.fill: root
 
         dragOnPinch: true
-        listenForRotation: true
+        listenForRotation: false//true
         listenForScale: true
 
         maximumScale: 3
@@ -67,16 +76,25 @@ Item
 
         mouseEnabled: true
 
-        minimumX: 0
+        minimumX: 0 - root.imageWidth
         maximumX: 1920 - root.imageWidth
 
-        minimumY: 0
+        minimumY: 0 - root.imageHeight
         maximumY: 1080 - root.imageHeight
 
         onPositionUpdated:
         {
             root.x += delta_x// * (detail.topScreen ? -1.0 : 1.0);// * detail.scale;
             root.y += delta_y// * (detail.topScreen ? -1.0 : 1.0);// * detail.scale;
+
+            if(root.y + root.height/2 > Settings.BASE_SCREEN_HEIGHT / 2)
+            {
+                root.rotation = 0;
+            }
+            else
+            {
+                root.rotation = 180;
+            }
 
             root.imageDragged(root);
         }
@@ -90,6 +108,13 @@ Item
         }
 
         debugView: Settings.DEBUG_VIEW
+
+        Behavior on rotation {
+            NumberAnimation
+            {
+                duration: 500
+            }
+        }
     }
     MediaViewer
     {
@@ -168,6 +193,7 @@ Item
                     root.active = !root.active
                     scroll_bkg.opacity = root.active ? 1.0 : 0.0
                     info_btn.source = root.active ? "content/POI/info-icon-on.png" : "content/POI/info-icon-off.png"
+                    if(!openedAttract) openedAttract=true; //todo: reset
                 }
             }
         }
@@ -232,7 +258,7 @@ Item
             anchors.right: scroll_bkg.right
             anchors.rightMargin: 5
             anchors.bottomMargin: 15
-            anchors.topMargin: 5
+            anchors.topMargin: 10
         }
 
     }
