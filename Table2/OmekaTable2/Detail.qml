@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.8
 import QtGraphicalEffects 1.0
 import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.1
@@ -219,6 +219,20 @@ Item
                 width: root.width
                 rootScale: root.scale
             }
+            Component.onCompleted: scroll_bar.flickable = scroll.flickableItem;
+        }
+        ScrollBar
+        {
+            id: scroll_bar
+            //flickable: scroll.flickableItem
+            handleSrc: "content/POI/scroll-handle.png"
+            barSrc: "content/POI/scroll-bar.png"
+            anchors.top: scroll_bkg.top
+            anchors.bottom: scroll_bkg.bottom
+            anchors.right: scroll_bkg.right
+            anchors.rightMargin: 5
+            anchors.bottomMargin: 15
+            anchors.topMargin: 5
         }
 
     }

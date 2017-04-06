@@ -17,6 +17,13 @@ ApplicationWindow {
         focus: true
         Keys.onEscapePressed: Qt.quit()
 
+        Rectangle
+        {
+            width: Settings.SCREEN_WIDTH
+            height: Settings.SCREEN_HEIGHT
+            color: "#e6e6e6"
+        }
+
         Gallery
         {
             id: gallery
