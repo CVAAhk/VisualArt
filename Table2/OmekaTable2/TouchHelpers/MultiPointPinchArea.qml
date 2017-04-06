@@ -99,6 +99,7 @@ MultiPointTouchArea
     signal positionUpdated(real delta_x, real delta_y)
     signal rotationUpdated(real delta_rotation)
     signal scaleUpdated(real delta_scale)
+    signal itemPressed()
 
     // Just for debugging
     Rectangle
@@ -161,6 +162,8 @@ MultiPointTouchArea
                 }
             }
         }
+
+        root.itemPressed();
     }
     onUpdated:
     {

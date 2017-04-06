@@ -159,7 +159,6 @@ Item {
             if(whichScreen === "top left") top_left_carousel.imageRemovedFromScene(filepath);
             if(whichScreen === "top right") top_right_carousel.imageRemovedFromScene(filepath);
             if(whichScreen.includes("attract")) gallery.removeAttractImage(filepath,whichScreen);
-
         }
     }
 

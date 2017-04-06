@@ -15,6 +15,9 @@ Item
 
     property int maxImages: 5
 
+    property double maxImageHeight: 0.0
+    property var maxImage: null
+
     //=========================================================================
     // ROOT ITEM SETTINGS
     //=========================================================================
@@ -146,13 +149,14 @@ Item
                 imageItem.rotation = imageRotation;
             }
 
-
+            imageItem.imagePressed.connect(imagePressed);
             imageItem.deleteImage.connect(deleteImage);
 
             imageItems.push(imageItem);
             //console.log("Added!images holder number of image items: ", imageItems.length)
 
-            imageItem.z = imageItems.length;
+            maxImageHeight += 0.01;
+            imageItem.z = maxImageHeight;
 
             root.imageAdded(imageItem);
 
@@ -180,6 +184,16 @@ Item
         }
     }
 
+    function imagePressed(selectedItem)
+    {
+        if(selectedItem == maxImage)
+            return;
+
+        maxImageHeight += 0.01;
+        selectedItem.z = maxImageHeight;
+        maxImage = selectedItem;
+    }
+
     function imagesCount()
     {
         return imageItems.length;
@@ -192,14 +206,4 @@ Item
             deleteImage(imageItems[0]);
         }
     }
-
-    function lowerAllImagesZ()
-    {
-        for(var i = 0; i < imageItems.length; i ++)
-        {
-            imageItems[i].z --;
-        }
-    }
-
-
 }
