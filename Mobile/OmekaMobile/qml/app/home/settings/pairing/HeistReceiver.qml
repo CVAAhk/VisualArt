@@ -34,7 +34,7 @@ Item {
       Update registered state depending length of code entered by user
     */
     onCodeChanged: {
-        register = code && code.length === 4;
+        register = code && String(code).length === 4;
     }
 
     /*
