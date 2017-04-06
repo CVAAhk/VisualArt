@@ -17,10 +17,10 @@ Item
         focus: true
         Keys.onEscapePressed: Qt.quit()
 
-        // property double screenScaleX: Screen.width / Settings.SCREEN_WIDTH
-        // property double screenScaleY: Screen.height / Settings.SCREEN_HEIGHT
+        property double screenScaleX: Screen.width / Settings.SCREEN_WIDTH
+        property double screenScaleY: Screen.height / Settings.SCREEN_HEIGHT
 
-        // transform: Scale { xScale: root.screenScaleX; yScale: root.screenScaleY; }
+        transform: Scale { xScale: root.screenScaleX; yScale: root.screenScaleY; }
 
         Rectangle
         {
@@ -48,7 +48,11 @@ Item
                 gallery.imageHolderCreateImage(source,imageX,imageY,imageRotation,imageWidth,imageHeight, tapOpen, whichScreen);
             }
         }
+
+        Component.onCompleted:
+        {
+            Settings.SCREEN_SCALE_X = 1.0 / root.screenScaleX;
+            Settings.SCREEN_SCALE_Y = 1.0 / root.screenScaleY;
+        }
     }
-
-
 }
