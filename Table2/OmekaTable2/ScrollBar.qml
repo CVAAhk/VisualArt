@@ -5,7 +5,7 @@ Item {
     // ROOT ITEM PROPERTIES
     //=====================================================================
     property Flickable flickable               : null
-    property int       handleSize              : 30
+    property int       handleSize              : 5
     property string barSrc: ""
     property string handleSrc: ""
 
@@ -18,12 +18,17 @@ Item {
     width: handleSize
     visible: (flickable.visibleArea.heightRatio < 1.0)
 
-    anchors
-    {
-        top: flickable.top
-        bottom: flickable.bottom
-    }
+//    anchors
+//    {
+//        top: flickable.top
+//        bottom: flickable.bottom
+//    }
 
+
+    onFlickableChanged:
+    {
+        console.log("flickable changed!!", flickable)
+    }
 
     //=========================================================================
     // UI ELEMENTS
@@ -115,15 +120,9 @@ Item {
         id: groove
         clip: true
 
-//        anchors
-//        {
-//            fill: parent
-//        }
         anchors.top: parent.top
         anchors.bottom: parent.bottom
-        //anchors.left: parent.left
-
-        x: root.x - 50
+        x: -50
         width: 132
 
         MouseArea
@@ -150,6 +149,7 @@ Item {
             id: handle
             //height: Math.max (20, (flickable.visibleArea.heightRatio * groove.height))
             x: backScrollbar.x - (backHandle.width - backScrollbar.width) * 0.5 + 50
+            //anchors.horizontalCenter: backScrollbar.horizontalCenter
             width: 132
             Image
             {
