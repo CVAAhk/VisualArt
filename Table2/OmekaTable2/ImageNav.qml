@@ -57,6 +57,7 @@ ListView{
     }
 
     function size() {
+        if(urls == null || images == null) return;
         if(urls.length === images.length) {
             width = height = sourceWidth = sourceHeight = 0
             for(var i=0; i<images.length; i++) {
