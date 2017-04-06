@@ -263,20 +263,25 @@ Item
                 width: root.width
                 rootScale: root.scale
             }
-            Component.onCompleted: scroll_bar.flickable = scroll.flickableItem;
+
+            flickableItem.onContentYChanged:
+            {
+                scroll_bar.updateBar(flickableItem.contentY / (flickableItem.contentHeight - flickableItem.height));
+            }
         }
         ScrollBar
         {
             id: scroll_bar
-            //flickable: scroll.flickableItem
-            handleSrc: "content/POI/scroll-handle.png"
-            barSrc: "content/POI/scroll-bar.png"
-            anchors.top: scroll_bkg.top
-            anchors.bottom: scroll_bkg.bottom
-            anchors.right: scroll_bkg.right
-            anchors.rightMargin: 5
-            anchors.bottomMargin: 15
-            anchors.topMargin: 10
+
+            x: (scroll_bkg.width * root.scale - 15) / root.scale
+            y: 40 / root.scale
+
+            transform: Scale { xScale: 1.0 / root.scale; yScale: 1.0 / root.scale }
+
+            onScrollChanged:
+            {
+                scroll.flickableItem.contentY = percent * (scroll.flickableItem.contentHeight - scroll.flickableItem.height);
+            }
         }
 
     }
