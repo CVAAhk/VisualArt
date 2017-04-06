@@ -1,4 +1,4 @@
-QT += qml quick widgets
+QT += qml quick widgets network
 
 CONFIG += c++11
 
@@ -9,8 +9,6 @@ SOURCES += main.cpp \
     collectionentryinfo.cpp \
     collections.cpp \
     collectionset.cpp
-
-RESOURCES += qml.qrc
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH += \

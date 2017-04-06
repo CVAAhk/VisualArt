@@ -1,21 +1,26 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.0
+import QtQuick.Window 2.2
 
 import "settings.js" as Settings
 
-ApplicationWindow {
-    visible: true
+Item
+{
+    x: 0; y: 0
     width: Settings.SCREEN_WIDTH
     height: Settings.SCREEN_HEIGHT
-    visibility: Settings.FULLSCREEN ? "FullScreen" : "Windowed";
-    title: qsTr("OmekaTable2")
 
     Item
     {
         id: root
         focus: true
         Keys.onEscapePressed: Qt.quit()
+
+        // property double screenScaleX: Screen.width / Settings.SCREEN_WIDTH
+        // property double screenScaleY: Screen.height / Settings.SCREEN_HEIGHT
+
+        // transform: Scale { xScale: root.screenScaleX; yScale: root.screenScaleY; }
 
         Rectangle
         {
