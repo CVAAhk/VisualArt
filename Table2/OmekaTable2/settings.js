@@ -13,8 +13,6 @@ var SCREEN_Y = 0;
 var ATTRACT_RIGHT_X = 970;
 var ATTRACT_LEFT_X = 750;
 
-var DEBUG_VIEW = true;
-
-var FULLSCREEN = true;
+var DEBUG_VIEW = false;
 
 var ATTRACT_RANDOM_TIMER = 90000;

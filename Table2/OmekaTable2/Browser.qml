@@ -234,7 +234,8 @@ Item {
 
                         dragAmounts[touchPoint.pointId] = drag + deltaY;
                         //console.log("pressed!touchPoint.y = ", touchPoint.y)
-                        if(dragAmounts[touchPoint.pointId] < -100)
+                        if(dragAmounts[touchPoint.pointId] != null &&
+                                dragAmounts[touchPoint.pointId] < -100)
                         {
                             var imageSource = dragImages[touchPoint.pointId].source;
                             var item = dragImages[touchPoint.pointId];
@@ -385,9 +386,9 @@ Item {
         deleteAssignPosition();
         for(var i = 0; i < imageItems.length; i ++)
         {
-            if(imageItems[i].source === source)
+            if(imageItems[i].source == source)
             {
-                //console.log("Browser! imageRemovedFromScene(source) = ", source, " i = ", i)
+                console.log("Browser! imageRemovedFromScene(source) = ", source, " i = ", i)
                 imageItems[i].imageRemovedFromScene(source);
                 imageItems.splice(i, 1);
             }

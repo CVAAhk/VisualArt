@@ -75,7 +75,7 @@ Component {
         }
         function imageRemovedFromScene(source)
         {
-            //console.log("ImageViewer imageRemovedFromScene(source)= ", source)
+            console.log("ImageViewer imageRemovedFromScene(source)= ", source)
             inScene = false;
             root.opacity = 1.0
         }

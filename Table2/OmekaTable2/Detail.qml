@@ -14,12 +14,14 @@ Item
     height: active ? root.imageHeight + scroll_bkg.height + controls.height : root.imageHeight + controls.height
     width: root.imageWidth
     objectName: "detail"
+    visible: false
 
     property int imageWidth//: img.width
 
     property int imageHeight : media.height//: img.height
 
     property string whichScreen
+    property string source
 
     property int imageTimerDuration : 100000000 // Settings.IMAGE_TIMER_DURATION
 
@@ -31,6 +33,8 @@ Item
 
     property bool openedAttract: false
 
+    property bool inUse: false
+
     signal imageDragged(var image);
 
     signal finishedDragging(var image);
@@ -40,7 +44,8 @@ Item
     /*! \qmlproperty
         Currently selected item
     */
-    property var item: getSelectedItem();//: ItemManager.current
+    property var item: null //getSelectedItem();//: ItemManager.current
+
 
     onHeightChanged:
     {
@@ -50,10 +55,15 @@ Item
 
     }
 
+
+    /*
+
     function getSelectedItem()
     {
         return ItemManager.selectedItems[ItemManager.selectedItems.length - 1];
     }
+    */
+
     Image
     {
         id: bkg
@@ -122,7 +132,8 @@ Item
         anchors.top: controls.bottom
         sources: item ? item.media : null
         type: item ? item.mediaTypes[0] : ""
-        //visible: media.progress == 1
+        //visible: root.visible ? true : false
+        opacity: root.visible ? 1.0 : 0.0
     }
     MediaControls { media: media }
     Image
@@ -160,7 +171,7 @@ Item
 
             scale: 1.0 / root.scale
 
-            MouseArea
+            MultiPointTouchArea
             {
                 anchors.fill: parent
                 anchors.margins: -10
@@ -184,7 +195,7 @@ Item
 
             scale: 1.0 / root.scale
 
-            MouseArea
+            MultiPointTouchArea
             {
                 anchors.fill: parent
                 anchors.margins: -10
@@ -200,7 +211,7 @@ Item
     }
 
 
-    //primary display item
+    //primary display
     property DetailColumn column
     /*! scroll container */
 

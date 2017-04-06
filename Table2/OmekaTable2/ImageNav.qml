@@ -57,6 +57,7 @@ ListView{
     }
 
     function size() {
+        if(urls == null || images == null) return;
         if(urls.length === images.length) {
             width = height = sourceWidth = sourceHeight = 0
             for(var i=0; i<images.length; i++) {
@@ -81,6 +82,7 @@ ListView{
         id: bkg
         z:-1
         anchors.centerIn: parent
+        visible: list.progress == 1
         width: portrait ? parent.width/fillScale : parent.width
         height: portrait ? parent.height : parent.height/fillScale
         color: "black"

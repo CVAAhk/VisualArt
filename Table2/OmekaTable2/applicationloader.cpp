@@ -1,18 +1,18 @@
 #include "applicationloader.h"
 
-
 #include "asyncimageprovider.h"
-
-//#include "screencapture.h"
 #include "collections.h"
-//#include "imagemanager.h"
 
 #include <QMessageBox>
 #include <QQmlContext>
 #include <QQmlEngine>
+#include <QQuickItem>
 #include <QFileInfo>
 #include <QDir>
+#include <QLoggingCategory>
 #include <QDebug>
+
+static const bool FULLSCREEN = true;
 
 ApplicationLoader *ApplicationLoader::Instance = nullptr;
 
@@ -24,37 +24,25 @@ ApplicationLoader::ApplicationLoader(QObject *parent) : QObject(parent),
 
 void ApplicationLoader::load()
 {
-    AsyncImageProvider *image_provider = new AsyncImageProvider;
+    //  AsyncImageProvider *image_provider = new AsyncImageProvider;
 
-    m_engine.addImageProvider("async", image_provider);
+    //  m_engine.addImageProvider("async", image_provider);
 
-    //qmlRegisterType<ImageManager>("IdeumImage", 1, 0, "ImageManager");
+    QLoggingCategory::setFilterRules("qt.network.ssl.warning=false");
 
     m_install_path = QFileInfo(QDir::currentPath() + "\\..\\OmekaTable2\\").absolutePath() + "/";
 
-    //m_settings = new Settings(m_install_path);
-    //m_engine.rootContext()->setContextProperty("Settings", m_settings);
-
-//    m_screen_capture = new ScreenCapture;
-//    m_engine.rootContext()->setContextProperty("screenCapture", m_screen_capture);
-
-//    m_content_settings = new Content(m_install_path);
-//    m_engine.rootContext()->setContextProperty("ContentSettings", m_settings);
-
-//    QList<Content::CollectionEntrySettings> collection_settings =
-//            m_content_settings->getCollectionEntrySettings();
-
     Collections *collections = new Collections;
-//    for(int i = 0; i != collection_settings.size(); ++i)
-//    {
-//        collections->parseContentFolder(i, collection_settings[i].collectionName,
-//                                        m_install_path + collection_settings[i].collectionFolderPath);
-//    }
-
     m_engine.rootContext()->setContextProperty("collections", collections);
 
-    connect(&m_engine, &QQmlApplicationEngine::objectCreated,
-            this, &ApplicationLoader::objectCreated);
+    connect(&m_engine, &QQuickView::statusChanged, this, &ApplicationLoader::viewStatusChanged);
+
+    QSurfaceFormat format = m_engine.format();
+    format.setSamples(16);
+    m_engine.setFormat(format);
+
+    // connect(&m_engine, &QQmlApplicationEngine::objectCreated,
+    //        this, &ApplicationLoader::objectCreated);
 
     QString main_qml = m_install_path + "main.qml";
 
@@ -63,23 +51,33 @@ void ApplicationLoader::load()
         QMessageBox::warning(nullptr, "Could not find main.qml", "Could not find main.qml");
     }
 
-    m_engine.load(main_qml);
+    m_engine.setSource(QUrl::fromLocalFile(main_qml));
 
-    QObject::connect(&m_engine, SIGNAL(quit()), QCoreApplication::instance(), SLOT(quit()));
+    if(FULLSCREEN)
+    {
+        m_engine.showFullScreen();
+    }
+    else
+    {
+        m_engine.show();
+    }
 
+    QObject::connect(m_engine.rootContext()->engine(), SIGNAL(quit()), QCoreApplication::instance(), SLOT(quit()));
 }
 
 void ApplicationLoader::objectCreated(QObject *object, const QUrl &url)
 {
     Q_UNUSED(url);
 
-    m_main_window_object = object->findChild<QQuickWindow*>("mainWindow");
+    m_main_window_object = object;
+}
 
-    //m_screen_capture->setQuickWindow(m_main_window_object);
+void ApplicationLoader::viewStatusChanged(QQuickView::Status status)
+{
+    if(status == QQuickView::Status::Ready)
+    {
+        QObject *main_window = m_engine.rootObject();
 
-//    m_image_manager = m_main_window_object->findChild<ImageManager*>("imageManager");
-//    if(m_image_manager)
-//    {
-//        m_image_manager->loadPreviousImages();
-//    }
+        objectCreated(main_window, QUrl());
+    }
 }

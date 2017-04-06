@@ -31,7 +31,8 @@ Item
     {
         id: leftButton
         source: 'content/POI/doc-left-arrow.png'
-        y: 5
+        //y: 5
+        anchors.verticalCenter: parent.verticalCenter
         width: 32; height: 32
 
         MultiPointTouchArea
@@ -46,7 +47,8 @@ Item
     {
         id: rightButton
         source: 'content/POI/doc-right-arrow.png'
-        y: 5
+        //y: 5
+        anchors.verticalCenter: parent.verticalCenter
         width: 32; height: 32
         anchors.right: parent.right
 
