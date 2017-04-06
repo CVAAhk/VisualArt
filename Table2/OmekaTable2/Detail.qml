@@ -29,6 +29,8 @@ Item
 
     property bool active: false
 
+    property bool inUse: false
+
     signal imageDragged(var image);
 
     signal finishedDragging(var image);
@@ -38,13 +40,16 @@ Item
     /*! \qmlproperty
         Currently selected item
     */
-    property var item: getSelectedItem();//: ItemManager.current
+    property var item: null //getSelectedItem();//: ItemManager.current
 
+    /*
     function getSelectedItem()
     {
         return ItemManager.selectedItems[ItemManager.selectedItems.length - 1];
 
     }
+    */
+
     Image
     {
         id: bkg
@@ -174,7 +179,7 @@ Item
     }
 
 
-    //primary display item
+    //primary display
     property DetailColumn column
     /*! scroll container */
 

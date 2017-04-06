@@ -50,20 +50,45 @@ Item
         easing.type: Easing.InOutQuad
     }
 
+    property var allImageItems: []
+
+    Repeater
+    {
+        model: root.maxImages
+
+        Detail { }
+
+        onItemAdded:
+        {
+            allImageItems.push(item);
+        }
+    }
+
+    function getNextImage()
+    {
+        for(var i = 0; i != allImageItems.length; i++)
+        {
+            if(!allImageItems[i].inUse)
+            {
+                return allImageItems[i];
+            }
+        }
+
+        allImageItems[0].inUse = false;
+        return allImageItems[0];
+    }
+
     function createImage(filepath, startX, startY, imageRotation, imageWidth, imageHeight, tapOpen, whichScreen)
     {
         console.log("Creating image in holder " + filepath + " " + startX + " " + startY +
                     " " + imageRotation + ", width: " + imageWidth + ", height: " + imageHeight);
 
-        var component = Qt.createComponent("Detail.qml");
-
-        if (component.status === Component.Ready)
+        var imageItem = getNextImage();
+        if (!imageItem.inUse)
         {
-            //console.log("Component ready")
+            imageItem.inUse = true;
 
-            var imageSource = filepath.toString();
-
-            var imageItem = component.createObject(root);
+            imageItem.item = ItemManager.selectedItems[ItemManager.selectedItems.length - 1];
 
             if(tapOpen)
             {
@@ -99,9 +124,6 @@ Item
                     }
                 }
 
-
-
-
                 image_pop.start();
             }
             else
@@ -132,21 +154,12 @@ Item
 
             imageItem.z = imageItems.length;
 
-            //imageItem.imageTimer.start();
-
             root.imageAdded(imageItem);
 
-            if(imageItems.length > root.maxImages)
-            {
-                root.deleteImage(imageItems[0]);
-            }
-        }
-        else if(component.status === Component.Error)
-        {
-          console.log("error is ", component.errorString());
+            imageItem.visible = true;
         }
 
-        return component;
+        return imageItem;
     }
 
     function deleteImage(selectedItem)
@@ -159,18 +172,11 @@ Item
             imageDeleted(selectedItem.source, selectedItem.whichScreen);
 
             selectedItem.visible = false;
-            //selectedItem.imageRemovedFromScene(selectedItem.source);
-            //selectedItem.destroy()
+            selectedItem.x = -10000;
 
-            //console.log("Deleted!images holder number of image items: ", imageItems.length)
+            selectedItem.inUse = false;
 
-//            for(var i = 0; i < ItemManager.selectedItems.length; i ++)
-//            {
-//                if(ItemManager.selectedItems[i].source === selectedItem.source)
-//                {
-//                    ItemManager.selectedItems.slice(i,1);
-//                }
-//            }
+            selectedItem = null;
         }
     }
 
