@@ -12,6 +12,13 @@ Item
     property var screenTag: whichTag()
     property bool searchByTag: false
 
+    property var selectedParent: null
+
+    Component.onCompleted:
+    {
+        selected_image.parent = selectedParent;
+    }
+
     //submit tag search
     onScreenTagChanged:
     {

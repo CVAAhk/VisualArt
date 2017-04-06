@@ -41,6 +41,8 @@ Item
 
     signal deleteImage(var image);
 
+    signal imagePressed(var image);
+
     /*! \qmlproperty
         Currently selected item
     */
@@ -115,6 +117,11 @@ Item
         onScaleUpdated:
         {
             root.scale += delta_scale * root.scaleFactor;
+        }
+
+        onItemPressed:
+        {
+            root.imagePressed(root);
         }
 
         debugView: Settings.DEBUG_VIEW

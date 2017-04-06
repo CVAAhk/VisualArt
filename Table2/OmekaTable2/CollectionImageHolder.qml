@@ -15,6 +15,9 @@ Item
 
     property int maxImages: 100
 
+    property double maxImageHeight: 0.0
+    property var maxImage: null
+
     //=========================================================================
     // ROOT ITEM SETTINGS
     //=========================================================================
@@ -158,21 +161,25 @@ Item
             imageItem.imageWidth = 247;
             imageItem.antialiasing = true;
 
-
-
             //imageItem.imageDragged.connect(root.imageDragged);
             //imageItem.finishedDragging.connect(root.imageFinishedDragging);
             //imageItem.finishedRecycle.connect(root.imageFinishedRecycle);
             imageItem.whichScreen = whichScreen;
 
+
             imageItem.rotation = imageRotation;
+
+
+            imageItem.imagePressed.connect(imagePressed);
 
             imageItem.deleteImage.connect(deleteImage);
 
+            if(imageItems.length == 0) maxImageHeight = 0.0;
+            maxImageHeight += 0.01;
+            imageItem.z = maxImageHeight;
+
             imageItems.push(imageItem);
             //console.log("Added!images holder number of image items: ", imageItems.length)
-
-            imageItem.z = imageItems.length;
 
             root.imageAdded(imageItem);
 
@@ -206,6 +213,16 @@ Item
         }
     }
 
+    function imagePressed(selectedItem)
+    {
+        if(selectedItem == maxImage)
+            return;
+
+        maxImageHeight += 0.01;
+        selectedItem.z = maxImageHeight;
+        maxImage = selectedItem;
+    }
+
     function imagesCount()
     {
         return imageItems.length;
@@ -218,14 +235,4 @@ Item
             deleteImage(imageItems[0]);
         }
     }
-
-    function lowerAllImagesZ()
-    {
-        for(var i = 0; i < imageItems.length; i ++)
-        {
-            imageItems[i].z --;
-        }
-    }
-
-
 }
