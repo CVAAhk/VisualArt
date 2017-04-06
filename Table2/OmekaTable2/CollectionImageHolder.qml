@@ -138,8 +138,6 @@ Item
             imageItem.imageWidth = 247;
             imageItem.antialiasing = true;
 
-
-
             //imageItem.imageDragged.connect(root.imageDragged);
             //imageItem.finishedDragging.connect(root.imageFinishedDragging);
             //imageItem.finishedRecycle.connect(root.imageFinishedRecycle);
@@ -152,11 +150,12 @@ Item
             imageItem.imagePressed.connect(imagePressed);
             imageItem.deleteImage.connect(deleteImage);
 
-            imageItems.push(imageItem);
-            //console.log("Added!images holder number of image items: ", imageItems.length)
-
+            if(imageItems.length == 0) maxImageHeight = 0.0;
             maxImageHeight += 0.01;
             imageItem.z = maxImageHeight;
+
+            imageItems.push(imageItem);
+            //console.log("Added!images holder number of image items: ", imageItems.length)
 
             root.imageAdded(imageItem);
 
