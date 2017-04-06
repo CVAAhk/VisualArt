@@ -14,6 +14,7 @@ Item
     height: active ? root.imageHeight + scroll_bkg.height + controls.height : root.imageHeight + controls.height
     width: root.imageWidth
     objectName: "detail"
+    visible: false
 
     property int imageWidth//: img.width
 
