@@ -207,7 +207,6 @@ Item {
 
                 if(!creatingImage)
                 {
-
                     if(touchPoint.y < bottomFlickMax)
                     {
                         if(Math.abs(touchPoint.x - touchPoint.previousX) > 10)
@@ -246,6 +245,8 @@ Item {
                                     (!item.inScene))
                             {
                                 creatingImage = true;
+
+                                layout.cancelFlick();
 
                                 touchId = touchPoint.pointId;
 
