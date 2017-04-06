@@ -234,7 +234,8 @@ Item {
 
                         dragAmounts[touchPoint.pointId] = drag + deltaY;
                         //console.log("pressed!touchPoint.y = ", touchPoint.y)
-                        if(dragAmounts[touchPoint.pointId] < -100)
+                        if(dragAmounts[touchPoint.pointId] != null &&
+                                dragAmounts[touchPoint.pointId] < -100)
                         {
                             var imageSource = dragImages[touchPoint.pointId].source;
                             var item = dragImages[touchPoint.pointId];
