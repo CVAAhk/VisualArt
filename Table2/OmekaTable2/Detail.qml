@@ -83,7 +83,7 @@ Item
         listenForRotation: false//true
         listenForScale: true
 
-        maximumScale: 3
+        maximumScale: 2
         minimumScale: 1
 
         mouseEnabled: true

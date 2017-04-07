@@ -100,10 +100,11 @@ ListView{
     Image
     {
         id: leftButton
-        source: 'content/POI/Asset 10.png'
-        //y: 5
+        source: 'content/POI/doc-left-arrow.png'
+        x: -10
         anchors.verticalCenter: parent.verticalCenter
-        width: 32; height: 32
+        width: 49; height: 49
+        visible: list.multiPage
 
         MultiPointTouchArea
         {
@@ -116,11 +117,13 @@ ListView{
     Image
     {
         id: rightButton
-        source: 'content/POI/Asset 9.png'
+        source: 'content/POI/doc-right-arrow.png'
         //y: 5
         anchors.verticalCenter: parent.verticalCenter
-        width: 32; height: 32
+        width: 49; height: 49
         anchors.right: parent.right
+        anchors.rightMargin: -10
+        visible: list.multiPage
 
         MultiPointTouchArea
         {
