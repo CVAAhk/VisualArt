@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.8
 import QtGraphicalEffects 1.0
 import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.1
@@ -14,12 +14,14 @@ Item
     height: active ? root.imageHeight + scroll_bkg.height + controls.height : root.imageHeight + controls.height
     width: root.imageWidth
     objectName: "detail"
+    visible: false
 
     property int imageWidth//: img.width
 
     property int imageHeight : media.height//: img.height
 
     property string whichScreen
+    property string source
 
     property int imageTimerDuration : 100000000 // Settings.IMAGE_TIMER_DURATION
 
@@ -29,22 +31,41 @@ Item
 
     property bool active: false
 
+    property bool openedAttract: false
+
+    property bool inUse: false
+
     signal imageDragged(var image);
 
     signal finishedDragging(var image);
 
     signal deleteImage(var image);
 
+    signal imagePressed(var image);
+
     /*! \qmlproperty
         Currently selected item
     */
-    property var item: getSelectedItem();//: ItemManager.current
+    property var item: null //getSelectedItem();//: ItemManager.current
+
+
+    onHeightChanged:
+    {
+        if(root.rotation === 180 && !active && whichScreen.includes("attract")&& !openedAttract )   {root.y -= root.height - controls.height;}
+        else if(root.rotation === 180 && active && whichScreen.includes("attract") )   {root.y -= scroll_bkg.height;}
+        else if(root.rotation === 180 && !active && whichScreen.includes("attract") ) {root.y += scroll_bkg.height;}
+
+    }
+
+
+    /*
 
     function getSelectedItem()
     {
         return ItemManager.selectedItems[ItemManager.selectedItems.length - 1];
-
     }
+    */
+
     Image
     {
         id: bkg
@@ -59,7 +80,7 @@ Item
         anchors.fill: root
 
         dragOnPinch: true
-        listenForRotation: true
+        listenForRotation: false//true
         listenForScale: true
 
         maximumScale: 3
@@ -67,16 +88,25 @@ Item
 
         mouseEnabled: true
 
-        minimumX: 0
+        minimumX: 0 - root.imageWidth
         maximumX: 1920 - root.imageWidth
 
-        minimumY: 0
+        minimumY: 0 - root.imageHeight
         maximumY: 1080 - root.imageHeight
 
         onPositionUpdated:
         {
             root.x += delta_x// * (detail.topScreen ? -1.0 : 1.0);// * detail.scale;
             root.y += delta_y// * (detail.topScreen ? -1.0 : 1.0);// * detail.scale;
+
+            if(root.y + root.height/2 > Settings.BASE_SCREEN_HEIGHT / 2)
+            {
+                root.rotation = 0;
+            }
+            else
+            {
+                root.rotation = 180;
+            }
 
             root.imageDragged(root);
         }
@@ -89,7 +119,19 @@ Item
             root.scale += delta_scale * root.scaleFactor;
         }
 
+        onItemPressed:
+        {
+            root.imagePressed(root);
+        }
+
         debugView: Settings.DEBUG_VIEW
+
+        Behavior on rotation {
+            NumberAnimation
+            {
+                duration: 500
+            }
+        }
     }
     MediaViewer
     {
@@ -97,7 +139,8 @@ Item
         anchors.top: controls.bottom
         sources: item ? item.media : null
         type: item ? item.mediaTypes[0] : ""
-        //visible: media.progress == 1
+        //visible: root.visible ? true : false
+        opacity: root.visible ? 1.0 : 0.0
     }
     MediaControls { media: media }
     Image
@@ -135,7 +178,7 @@ Item
 
             scale: 1.0 / root.scale
 
-            MouseArea
+            MultiPointTouchArea
             {
                 anchors.fill: parent
                 anchors.margins: -10
@@ -159,7 +202,7 @@ Item
 
             scale: 1.0 / root.scale
 
-            MouseArea
+            MultiPointTouchArea
             {
                 anchors.fill: parent
                 anchors.margins: -10
@@ -168,13 +211,14 @@ Item
                     root.active = !root.active
                     scroll_bkg.opacity = root.active ? 1.0 : 0.0
                     info_btn.source = root.active ? "content/POI/info-icon-on.png" : "content/POI/info-icon-off.png"
+                    if(!openedAttract) openedAttract=true; //todo: reset
                 }
             }
         }
     }
 
 
-    //primary display item
+    //primary display
     property DetailColumn column
     /*! scroll container */
 
@@ -218,6 +262,25 @@ Item
                 id: detail_content;
                 width: root.width
                 rootScale: root.scale
+            }
+
+            flickableItem.onContentYChanged:
+            {
+                scroll_bar.updateBar(flickableItem.contentY / (flickableItem.contentHeight - flickableItem.height));
+            }
+        }
+        ScrollBar
+        {
+            id: scroll_bar
+
+            x: (scroll_bkg.width * root.scale - 15) / root.scale
+            y: 40 / root.scale
+
+            transform: Scale { xScale: 1.0 / root.scale; yScale: 1.0 / root.scale }
+
+            onScrollChanged:
+            {
+                scroll.flickableItem.contentY = percent * (scroll.flickableItem.contentHeight - scroll.flickableItem.height);
             }
         }
 

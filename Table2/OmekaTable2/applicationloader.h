@@ -4,6 +4,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQuickWindow>
+#include <QQuickView>
 
 //class Settings;
 class ApplicationLoader : public QObject
@@ -21,13 +22,15 @@ signals:
 public slots:
     void objectCreated(QObject * object, const QUrl & url);
 
+    void viewStatusChanged(QQuickView::Status status);
+
 private:
 
-    //Settings *m_settings;
+    QQuickView m_engine;
 
-    QQmlApplicationEngine m_engine;
+    // QQmlApplicationEngine m_engine;
 
-    QQuickWindow *m_main_window_object;
+    QObject *m_main_window_object;
 
     QString m_install_path;
 };

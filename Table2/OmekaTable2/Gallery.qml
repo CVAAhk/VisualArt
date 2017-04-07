@@ -72,6 +72,7 @@ Item {
         opacity: 0.0
         color: "#faa918"
         whichScreen: "top left"
+        selectedParent: overlayImageTopLeftRoot
         onCreateImage:
         {
             imageHolder.createImage(source, imageX + x, imageY + y, imageRotation, imageWidth, imageHeight, tapOpen, "top left")
@@ -91,6 +92,7 @@ Item {
         opacity: 0.0
         color: "#7ac70c"
         whichScreen: "top right"
+        selectedParent: overlayImageTopRightRoot
         onCreateImage:
         {
             imageHolder.createImage(source, imageX + x, imageY + y, imageRotation, imageWidth, imageHeight, tapOpen, "top right")
@@ -110,6 +112,7 @@ Item {
         opacity: 0.0
         color: "#2b89d9"
         whichScreen: "lower left"
+        selectedParent: overlayImageLowerLeftRoot
         onCreateImage:
         {
             imageHolder.createImage(source, imageX + x, imageY + y, imageRotation, imageWidth, imageHeight, tapOpen, "lower left")
@@ -127,6 +130,7 @@ Item {
         opacity: 0.0
         color: "#d33131"
         whichScreen: "lower right"
+        selectedParent: overlayImageLowerRightRoot
         onCreateImage:
         {
             imageHolder.createImage(source, imageX + x, imageY + y, imageRotation, imageWidth, imageHeight, tapOpen, "lower right")
@@ -155,9 +159,13 @@ Item {
             if(whichScreen === "top left") top_left_carousel.imageRemovedFromScene(filepath);
             if(whichScreen === "top right") top_right_carousel.imageRemovedFromScene(filepath);
             if(whichScreen.includes("attract")) gallery.removeAttractImage(filepath,whichScreen);
-
         }
     }
+
+    Item { id: overlayImageTopLeftRoot; x: top_left_carousel.x; y: top_left_carousel.y; rotation: top_left_carousel.rotation }
+    Item { id: overlayImageTopRightRoot; x: top_right_carousel.x; y: top_right_carousel.y; rotation: top_right_carousel.rotation }
+    Item { id: overlayImageLowerLeftRoot; x: lower_left_carousel.x; y: lower_left_carousel.y; rotation: lower_left_carousel.rotation }
+    Item { id: overlayImageLowerRightRoot; x: lower_right_carousel.x; y: lower_right_carousel.y; rotation: lower_right_carousel.rotation }
 
     function imageHolderCreateImage(filepath, startX, startY, imageRotation, imageWidth, imageHeight, tapOpen, whichScreen)
     {

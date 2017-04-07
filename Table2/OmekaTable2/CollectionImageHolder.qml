@@ -13,7 +13,10 @@ Item
 
     //property alias itemsLength: imageItems.length
 
-    property int maxImages: 5
+    property int maxImages: 100
+
+    property double maxImageHeight: 0.0
+    property var maxImage: null
 
     //=========================================================================
     // ROOT ITEM SETTINGS
@@ -50,35 +53,83 @@ Item
         easing.type: Easing.InOutQuad
     }
 
+    property var allImageItems: []
+
+    Repeater
+    {
+        model: root.maxImages + 1
+
+        Detail { }
+
+        onItemAdded:
+        {
+            allImageItems.push(item);
+        }
+    }
+
+    function getNextImage()
+    {
+        for(var i = 0; i != allImageItems.length; i++)
+        {
+            if(!allImageItems[i].inUse)
+            {
+                return allImageItems[i];
+            }
+        }
+
+
+        allImageItems[0].inUse = false;
+        return allImageItems[0];
+    }
+
     function createImage(filepath, startX, startY, imageRotation, imageWidth, imageHeight, tapOpen, whichScreen)
     {
         console.log("Creating image in holder " + filepath + " " + startX + " " + startY +
                     " " + imageRotation + ", width: " + imageWidth + ", height: " + imageHeight);
 
-        var component = Qt.createComponent("Detail.qml");
-
-        if (component.status === Component.Ready)
+        var imageItem = getNextImage();
+        if (!imageItem.inUse)
         {
-            //console.log("Component ready")
+            imageItem.inUse = true;
+            imageItem.active = false;
+            imageItem.openedAttract = false;
 
-            var imageSource = filepath.toString();
-
-            var imageItem = component.createObject(root);
-
+            imageItem.item = null;
+            imageItem.item = ItemManager.selectedItems[ItemManager.selectedItems.length - 1];
+            imageItem.source = filepath;
+            console.log("selected itemdata = ", imageItem.item)
             if(tapOpen)
             {
                 image_pop.target = imageItem;
                 if(whichScreen.includes("attract") &&whichScreen.includes("right"))
                 {
-                    imageItem.y = startY - root.y;
+                    //imageItem.y = startY - root.y;
                     image_pop.property = "x";
+                    if(imageRotation > 0)
+                    {
+                        imageItem.y = startY - root.y - imageItem.height;
+                    }
+                    else
+                    {
+                        imageItem.y = startY - root.y;
+                    }
+
                     image_pop.from = Settings.ATTRACT_RIGHT_X;
                     image_pop.to = startX;
                 }
                 else if(whichScreen.includes("attract") &&whichScreen.includes("left"))
                 {
-                    imageItem.y = startY - root.y;
+                    //imageItem.y = startY - root.y;
                     image_pop.property = "x";
+                    if(imageRotation > 0)
+                    {
+                        imageItem.y = startY - root.y - imageItem.height;
+                    }
+                    else
+                    {
+                        imageItem.y = startY - root.y;
+                    }
+
                     image_pop.from = Settings.ATTRACT_LEFT_X;
                     image_pop.to = startX;
                 }
@@ -99,9 +150,6 @@ Item
                     }
                 }
 
-
-
-
                 image_pop.start();
             }
             else
@@ -113,26 +161,25 @@ Item
             imageItem.imageWidth = 247;
             imageItem.antialiasing = true;
 
-
-
             //imageItem.imageDragged.connect(root.imageDragged);
             //imageItem.finishedDragging.connect(root.imageFinishedDragging);
             //imageItem.finishedRecycle.connect(root.imageFinishedRecycle);
             imageItem.whichScreen = whichScreen;
-            if(imageRotation)
-            {
-                imageItem.rotation = imageRotation;
-            }
 
+
+            imageItem.rotation = imageRotation;
+
+
+            imageItem.imagePressed.connect(imagePressed);
 
             imageItem.deleteImage.connect(deleteImage);
 
+            if(imageItems.length == 0) maxImageHeight = 0.0;
+            maxImageHeight += 0.01;
+            imageItem.z = maxImageHeight;
+
             imageItems.push(imageItem);
             //console.log("Added!images holder number of image items: ", imageItems.length)
-
-            imageItem.z = imageItems.length;
-
-            //imageItem.imageTimer.start();
 
             root.imageAdded(imageItem);
 
@@ -140,13 +187,11 @@ Item
             {
                 root.deleteImage(imageItems[0]);
             }
-        }
-        else if(component.status === Component.Error)
-        {
-          console.log("error is ", component.errorString());
+
+            imageItem.visible = true;
         }
 
-        return component;
+        return imageItem;
     }
 
     function deleteImage(selectedItem)
@@ -159,19 +204,23 @@ Item
             imageDeleted(selectedItem.source, selectedItem.whichScreen);
 
             selectedItem.visible = false;
-            //selectedItem.imageRemovedFromScene(selectedItem.source);
-            //selectedItem.destroy()
+            selectedItem.x = -10000;
 
-            //console.log("Deleted!images holder number of image items: ", imageItems.length)
+            selectedItem.inUse = false;
+            selectedItem.item = null;
 
-//            for(var i = 0; i < ItemManager.selectedItems.length; i ++)
-//            {
-//                if(ItemManager.selectedItems[i].source === selectedItem.source)
-//                {
-//                    ItemManager.selectedItems.slice(i,1);
-//                }
-//            }
+            //selectedItem = null;
         }
+    }
+
+    function imagePressed(selectedItem)
+    {
+        if(selectedItem == maxImage)
+            return;
+
+        maxImageHeight += 0.01;
+        selectedItem.z = maxImageHeight;
+        maxImage = selectedItem;
     }
 
     function imagesCount()
@@ -186,14 +235,4 @@ Item
             deleteImage(imageItems[0]);
         }
     }
-
-    function lowerAllImagesZ()
-    {
-        for(var i = 0; i < imageItems.length; i ++)
-        {
-            imageItems[i].z --;
-        }
-    }
-
-
 }

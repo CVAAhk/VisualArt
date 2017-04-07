@@ -55,8 +55,12 @@ Item
         x: 750;y: 539
         onCreateImage:
         {
-            //console.log("create image in attractPoolItem")
             root.createImage(source,imageX + x,imageY + y,imageRotation,imageWidth,imageHeight, tapOpen, "attract lower left")
+            var random_id1 = Math.floor(randomizeId());
+            imageItem1.itemResult = allResults[random_id1]
+        }
+        onRecreateItem:
+        {
             var random_id1 = Math.floor(randomizeId());
             imageItem1.itemResult = allResults[random_id1]
         }
@@ -68,7 +72,11 @@ Item
         onCreateImage:
         {
             root.createImage(source,imageX + x,imageY + y,imageRotation,imageWidth,imageHeight, tapOpen, "attract lower right")
-
+            var random_id2 = Math.floor(randomizeId());
+            imageItem2.itemResult = allResults[random_id2]
+        }
+        onRecreateItem:
+        {
             var random_id2 = Math.floor(randomizeId());
             imageItem2.itemResult = allResults[random_id2]
         }
@@ -84,8 +92,12 @@ Item
         rotation: 180
         onCreateImage:
         {
-            //console.log("create image in attractPoolItem")
             root.createImage(source,imageX + x + 30,imageY + 509,imageRotation,imageWidth,imageHeight, tapOpen, "attract top left")
+            var random_id3 = Math.floor(randomizeId());
+            imageItem3.itemResult = allResults[random_id3]
+        }
+        onRecreateItem:
+        {
             var random_id3 = Math.floor(randomizeId());
             imageItem3.itemResult = allResults[random_id3]
         }
@@ -101,8 +113,12 @@ Item
         rotation: 180
         onCreateImage:
         {
-            //console.log("create image in attractPoolItem")
             root.createImage(source,imageX + x + 30,imageY + 509,imageRotation,imageWidth,imageHeight, tapOpen, "attract top right")
+            var random_id4 = Math.floor(randomizeId());
+            imageItem4.itemResult = allResults[random_id4]
+        }
+        onRecreateItem:
+        {
             var random_id4 = Math.floor(randomizeId());
             imageItem4.itemResult = allResults[random_id4]
         }

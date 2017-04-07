@@ -25,7 +25,7 @@ ScaleColumn
     /*! \qmlproperty
         Currently selected item
     */
-    property var item: getSelectedItem();//: ItemManager.current
+    property var item: root.item? root.item: null//getSelectedItem();//: ItemManager.current
 
     function getSelectedItem()
     {
@@ -71,11 +71,11 @@ ScaleColumn
         id: info
         //anchors.horizontalCenter: parent.horizontalCenter
         visible: opacity > 0
-        width: parent.width - 10//Resolution.applyScale(60)
+        width: parent.width - 20//Resolution.applyScale(60)
         height: contentHeight
         _font: Style.metadataFont
         rootScale: column.rootScale
-        text: metadata()
+        text: item ? metadata(): ""
         onLinkActivated: Qt.openUrlExternally(link)
     }
 

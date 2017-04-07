@@ -1,173 +1,61 @@
 import QtQuick 2.5
+import "./TouchHelpers"
 
-Item {
-    //=====================================================================
-    // ROOT ITEM PROPERTIES
-    //=====================================================================
-    property Flickable flickable               : null
-    property int       handleSize              : 30
-    property string barSrc: ""
-    property string handleSrc: ""
+Image
+{
+    id: root
 
-    signal scrollbarMoved()
+    source: "content/POI/scroll-bar.png"
 
-    //=====================================================================
-    // ROOT ITEM SETTINGS
-    //=====================================================================
-    id: scrollbar
-    width: handleSize
-    visible: (flickable.visibleArea.heightRatio < 1.0)
+    property double scrollLength: 133 - 45
 
-    anchors
-    {
-        top: flickable.top
-        bottom: flickable.bottom
-    }
+    signal scrollChanged(double percent);
 
-
-    //=========================================================================
-    // UI ELEMENTS
-    //=========================================================================
-
-
-    function scrollDown ()
-    {
-        flickable.contentY = Math.min (flickable.contentY + (flickable.height / 4), flickable.contentHeight - flickable.height)
-    }
-    function scrollUp ()
-    {
-        flickable.contentY = Math.max (flickable.contentY - (flickable.height / 4), 0)
-    }
-
-
-   Binding
-   {
-        target: handle
-        property: "y"
-        value: (flickable.contentY * clicker.drag.maximumY / (flickable.contentHeight - flickable.height))
-        when: (!clicker.drag.active)
-    }
-    Binding
-    {
-        target: flickable
-        property: "contentY"
-        value: (handle.y * (flickable.contentHeight - flickable.height) / clicker.drag.maximumY)
-        when: (clicker.drag.active || clicker.pressed)
-    }
-
-    Image
-    {
-       id: backScrollbar;
-
-       antialiasing: true;
-
-       source: barSrc
-       anchors { fill: parent; }
-
-       MouseArea {
-           anchors.fill: parent;
-           onClicked: { }
-       }
-     }
-    //=========================================================================
-    // SCROLL UP BUTTON
-    //=========================================================================
-//    MouseArea {
-//        id: btnUp
-//        height: width
-//        anchors {
-//            bottom: parent.top
-//            left: parent.left
-//            right: parent.right
-//            //margins: (backScrollbar.border.width +1)
-//        }
-//        onClicked: { scrollUp () }
-
-//        Text {
-//            text: "V"
-//            color: (btnUp.pressed ? "blue" : "black")
-//            rotation: -180
-//            anchors.centerIn: parent
-//        }
-//    }
-    //=========================================================================
-    // SCROLL DOWN BUTTON
-    //=========================================================================
-//    MouseArea {
-//        id: btnDown
-//        height: width
-//        anchors {
-//            left: parent.left
-//            right: parent.right
-//            bottom: parent.bottom
-//            //margins: (backScrollbar.border.width +1)
-//        }
-//        onClicked: { scrollDown () }
-
-//        Text {
-//            text: "V"
-//            color: (btnDown.pressed ? "blue" : "black")
-//            anchors.centerIn: parent
-//        }
-//    }
     Item
     {
-        id: groove
-        clip: true
+        x: 1.5; y: 1
 
-//        anchors
-//        {
-//            fill: parent
-//        }
-        anchors.top: parent.top
-        anchors.bottom: parent.bottom
-        //anchors.left: parent.left
-
-        x: root.x - 50
-        width: 132
-
-        MouseArea
+        Image
         {
-            id: clicker
-            drag
+            id: scroller
+
+            source: 'content/POI/scroll-handle.png'
+
+            MultiPointPinchArea
             {
-                target: handle
-                minimumY: 0
-                maximumY: (groove.height - backHandle.height)
-                axis: Drag.YAxis
+                x: -20
+                width: parent.width + 40
+                height: parent.height
+                mouseEnabled: true
 
+                Rectangle
+                {
+                    anchors.fill: parent
+                    visible: false // parent.enabled
+                    opacity: 0.7
+                    color: 'red'
+                }
 
-            }
-            anchors.fill: parent
+                onPositionUpdated:
+                {
+                    var newY = scroller.y + delta_y;
+                    if(newY < 0) newY = 0;
+                    if(newY > root.scrollLength) newY = root.scrollLength;
 
-            onClicked:
-            {
-                flickable.contentY = (mouse.y / groove.height * (flickable.contentHeight - flickable.height));
+                    scroller.y = newY;
+
+                    root.scrollChanged(scroller.y / root.scrollLength);
+                }
             }
         }
-        Item
-        {
-            id: handle
-            //height: Math.max (20, (flickable.visibleArea.heightRatio * groove.height))
-            x: backScrollbar.x - (backHandle.width - backScrollbar.width) * 0.5 + 50
-            width: 132
-            Image
-            {
-                id: backHandle
+    }
 
-                source: handleSrc
-            }
-            onYChanged:
-            {
-                scrollbar.scrollbarMoved();
-            }
-            Drag.active: clicker.drag.active
+    function updateBar(percent)
+    {
+        var newY = percent * root.scrollLength;
+        if(newY < 0) newY = 0;
+        if(newY > root.scrollLength) newY = root.scrollLength;
 
-//            Drag.onActiveChanged :
-//            {
-//                console.log("SCROLL BAR MOVED");
-//                scrollbar.scrollbarMoved();
-//            }
-        }
+        scroller.y = newY;
     }
 }
