@@ -96,15 +96,37 @@ ListView{
         anchors.bottom: bkg.bottom
         width: parent.width
         height: bkg.height*.1
+    }
+    Image
+    {
+        id: leftButton
+        source: 'content/POI/Asset 10.png'
+        //y: 5
+        anchors.verticalCenter: parent.verticalCenter
+        width: 32; height: 32
 
-        onLeftPressed:
+        MultiPointTouchArea
         {
-            list.flick(1000, 0);
+            anchors.fill: parent
+
+            onReleased: { list.flick(1000, 0); }
         }
+    }
 
-        onRightPressed:
+    Image
+    {
+        id: rightButton
+        source: 'content/POI/Asset 9.png'
+        //y: 5
+        anchors.verticalCenter: parent.verticalCenter
+        width: 32; height: 32
+        anchors.right: parent.right
+
+        MultiPointTouchArea
         {
-            list.flick(-1000, 0);
+            anchors.fill: parent
+
+            onReleased: { list.flick(-1000, 0); }
         }
     }
 }

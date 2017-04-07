@@ -1,5 +1,7 @@
 import QtQuick 2.6
 
+import "../settings.js" as Settings
+
 /**
     ----------------------------------------------------------------------------
     EXAMPLE USAGE:
@@ -256,6 +258,8 @@ MultiPointTouchArea
         var new_y = parent.y + dy;
         dx = root.checkXBounds(dx, new_x, curr_pos);
         dy = root.checkYBounds(dy, new_y, curr_pos);
+        dx *= Settings.SCREEN_SCALE_X;
+        dy *= Settings.SCREEN_SCALE_Y;
         root.positionUpdated(dx, dy);
     }
     function updatePinchPosition()
@@ -269,6 +273,8 @@ MultiPointTouchArea
         var new_y = parent.y + dy;
         dx = root.checkXBounds(dx, new_x, curr_pos);
         dy = root.checkYBounds(dy, new_y, curr_pos);
+        dx *= Settings.SCREEN_SCALE_X;
+        dy *= Settings.SCREEN_SCALE_Y;
         root.positionUpdated(dx, dy);
     }
     function updateRotation()
