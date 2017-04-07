@@ -7,9 +7,6 @@ Item
 {
     id: root
 
-    signal leftPressed();
-    signal rightPressed();
-
     Row
     {
         anchors.centerIn: parent
@@ -27,34 +24,5 @@ Item
         }
     }
 
-    Image
-    {
-        id: leftButton
-        source: 'content/POI/Asset 10.png'
-        y: 5
-        width: 32; height: 32
 
-        MultiPointTouchArea
-        {
-            anchors.fill: parent
-
-            onReleased: { root.leftPressed(); }
-        }
-    }
-
-    Image
-    {
-        id: rightButton
-        source: 'content/POI/Asset 9.png'
-        y: 5
-        width: 32; height: 32
-        anchors.right: parent.right
-
-        MultiPointTouchArea
-        {
-            anchors.fill: parent
-
-            onReleased: { root.rightPressed(); }
-        }
-    }
 }
