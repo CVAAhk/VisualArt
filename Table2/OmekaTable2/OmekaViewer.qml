@@ -10,7 +10,7 @@ import "."
   */
 Item {
     id: root
-    visible: false
+    visible: progress == 1//false
     enabled: false
     anchors.centerIn: parent
     width: parent.width

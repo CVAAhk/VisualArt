@@ -26,7 +26,7 @@ OmekaViewer {
        ImageNav{
             id: nav
             visible: !fullScreen
-            urls: root.visible ? viewer.images : null
+            urls: viewer.state == "image" ? viewer.images : null
         }
 
        ImageZoom {

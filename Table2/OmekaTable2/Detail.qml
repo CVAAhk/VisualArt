@@ -191,7 +191,7 @@ Item
         Image
         {
             id: info_btn
-            source: "content/POI/info-icon-off.png"
+            source: root.active ? "content/POI/info-icon-on.png" : "content/POI/info-icon-off.png"
             //anchors.left: controls.left
             //anchors.margins: 10
 
@@ -209,8 +209,6 @@ Item
                 onPressed:
                 {
                     root.active = !root.active
-                    scroll_bkg.opacity = root.active ? 1.0 : 0.0
-                    info_btn.source = root.active ? "content/POI/info-icon-on.png" : "content/POI/info-icon-off.png"
                     if(!openedAttract) openedAttract=true; //todo: reset
                 }
             }
@@ -230,7 +228,7 @@ Item
         height: 200 / root.scale
         anchors.top: media.bottom
         anchors.left: root.left
-        opacity: 0.0
+        opacity: root.active ? 1.0 : 0.0
 
         Image
         {

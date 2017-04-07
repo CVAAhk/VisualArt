@@ -10,7 +10,7 @@ ListView{
     property var imageWidth
     property var imageHeight
     property var images: []
-    property var urls
+    property var urls: null
     property real progress: 0
     property real tally
     property var total: ({})
@@ -44,12 +44,14 @@ ListView{
             }
         }
 
-        onProgressChanged: updateProgress(src, progress)
+        onProgressChanged: updateProgress(src, progress);
     }
 
     onUrlsChanged: {
         images = []
         list.model.clear();
+        total = ({});
+        progress = 0;
         if(!urls) return;
         for(var i=0; i<urls.length; i++) {
             list.model.append({src:urls[i]})

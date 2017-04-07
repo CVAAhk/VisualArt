@@ -15,10 +15,7 @@ Rectangle {
 
     //update progress bar
     onProgressChanged: {
-        if(enabled) {
-            bar.value = progress
-            //console.log("load bar value = ", bar.value)
-        }
+        bar.value = progress
     }
 
     //fade transition

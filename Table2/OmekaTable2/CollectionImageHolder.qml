@@ -13,7 +13,7 @@ Item
 
     //property alias itemsLength: imageItems.length
 
-    property int maxImages: 100
+    property int maxImages: 5
 
     property double maxImageHeight: 0.0
     property var maxImage: null
@@ -94,7 +94,7 @@ Item
             imageItem.active = false;
             imageItem.openedAttract = false;
 
-            imageItem.item = null;
+            //imageItem.item = null;
             imageItem.item = ItemManager.selectedItems[ItemManager.selectedItems.length - 1];
             imageItem.source = filepath;
             console.log("selected itemdata = ", imageItem.item)
@@ -168,6 +168,7 @@ Item
 
 
             imageItem.rotation = imageRotation;
+            imageItem.scale = 1;
 
 
             imageItem.imagePressed.connect(imagePressed);
