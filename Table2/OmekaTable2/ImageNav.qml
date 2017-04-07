@@ -100,7 +100,7 @@ ListView{
     Image
     {
         id: leftButton
-        source: 'content/POI/doc-left-arrow.png'
+        source: 'content/POI/left@4x.png'
         x: -10
         anchors.verticalCenter: parent.verticalCenter
         width: 49; height: 49
@@ -117,7 +117,7 @@ ListView{
     Image
     {
         id: rightButton
-        source: 'content/POI/doc-right-arrow.png'
+        source: 'content/POI/right@4x.png'
         //y: 5
         anchors.verticalCenter: parent.verticalCenter
         width: 49; height: 49

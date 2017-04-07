@@ -41,7 +41,7 @@ Item {
 
         //position and sizing
         anchors.centerIn: parent
-        width: parent.width - 30//Resolution.applyScale(300)
+        width: parent.width - 80//Resolution.applyScale(300)
 
         //set max value to the number timer ticks
         maximumValue: timer.totalTicks
@@ -84,6 +84,7 @@ Item {
         MouseArea{
             id: area
             anchors.centerIn: parent
+            //anchors.margins: 100
             width: parent.width
             height: parent.height*2
             onPressed: {
@@ -96,6 +97,7 @@ Item {
                 }
             }
             onPositionChanged: scrubber.scrub(mouseX)
+
         }
 
         /*! \qmlmethod Scrubber::reset()
