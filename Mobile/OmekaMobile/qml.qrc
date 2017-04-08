@@ -45,6 +45,7 @@
 		<file>qml/app/PageNavigationBar.qml</file>					
 		<file>qml/app/PageButton.qml</file>								
 		<file>qml/app/PageState.qml</file>								
+		<file>qml/app/FloatMessage.qml</file>				
 		<file>qml/app/base/OmekaToolBar.qml</file>									
 		<file>qml/app/base/OmekaButton.qml</file>									
 		<file>qml/app/base/OmekaToggle.qml</file>									

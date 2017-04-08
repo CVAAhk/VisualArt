@@ -12,6 +12,7 @@ ApplicationWindow {
 
     Component.onCompleted: {
         Resolution.appWindow = root
+        message.showError("test errortest errortest errortest errortest errortest error", false, 200)
     }
 
     PageNavigation { }
@@ -31,5 +32,10 @@ ApplicationWindow {
             Resolution.targetWidth = 1440
             Resolution.targetHeight = 2464
         }
+    }
+
+    //unobtrusive floating message to display errors and other notifications
+    FloatMessage {
+        id: message
     }
 }

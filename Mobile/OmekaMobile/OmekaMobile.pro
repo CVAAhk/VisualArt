@@ -159,4 +159,5 @@ DISTFILES += \
     qml/app/home/settings/pairing/HeistReceiver.qml \
     qml/utils/Pairings.qml \
     qml/test/heist/StateLabel.qml \
-    qml/test/heist/ItemDelegate.qml
+    qml/test/heist/ItemDelegate.qml \
+    qml/app/FloatMessage.qml \
