@@ -22,9 +22,7 @@ Rectangle {
     height: messageText.height + padding
     radius: Resolution.applyScale(150)
 
-    //constraints
-    property real minWidth: Resolution.applyScale(600)
-    property real maxWidth: Resolution.applyScale(1200)
+    //text padding
     property real padding: Resolution.applyScale(60)
 
     /*! Triggers hide state after set interval */
@@ -39,15 +37,7 @@ Rectangle {
         _font: Style.floatMessageFont
         anchors.centerIn: parent
         horizontalAlignment: Text.AlignHCenter
-
-        //constrain message widh
-        onTextChanged: {
-            if(contentWidth < minWidth) {
-                width = minWidth
-            } else if(contentWidth > maxWidth) {
-                width = maxWidth
-            }
-        }
+        width: Resolution.applyScale(1200)
     }
 
     /*!
