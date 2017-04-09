@@ -116,8 +116,8 @@ Item {
     HeistReceiver {
         id: receiver
         onSessionChanged: validateSession();
-        onErrorChanged: pairingError();
         onAddItem: HeistManager.registerItem(item, entry.codeString);
+        onErrorChanged: pairingError(error);
     }
 
     /*
@@ -130,7 +130,7 @@ Item {
         //valid session
         if(receiver.session) {
             if(receiver.device) {
-                //code is already in use - terminate session on table
+               pairingError("This pairing code has been claimed by another device. Terminate the pairing session on the table to release.")
             } else {
                 pair();
             }
@@ -165,10 +165,9 @@ Item {
     /*
       Handles errors during pairing
     */
-    function pairingError() {
-        if(receiver.error) {
-            Foreground.showError(receiver.error, 0, Resolution.applyScale(1150));
-            HeistManager.removeSession(entry.codeString);
+    function pairingError(error) {
+        if(error) {
+            Foreground.showError(error, 0, Resolution.applyScale(1150));
             receiver.register = false;
         }
     }
