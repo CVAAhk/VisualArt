@@ -81,5 +81,6 @@ Item {
     property var keypadFont: ({ color:"black", size:68, weight:Font.Bold, capitalization:Font.AllUppercase, wrapMode: Text.NoWrap, textFormat: Text.AutoText })
     property var pairingInstructions: ({ color:color5, size:42, weight:Font.Normal, capitalization:Font.AllUppercase, wrapMode: Text.Wrap, textFormat: Text.AutoText })
     property var unpairText: ({ color:color5, size:80, weight:Font.Normal, capitalization:Font.AllUppercase, wrapMode: Text.NoWrap, textFormat: Text.AutoText })
+    property var floatMessageFont: ({ color:"white", size:42, weight:Font.Normal, capitalization:Font.MixedCase, wrapMode: Text.Wrap, textFormat: Text.AutoText })
 
 }

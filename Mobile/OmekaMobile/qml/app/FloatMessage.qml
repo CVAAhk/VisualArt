@@ -1,37 +1,43 @@
 import QtQuick 2.5
 import "../utils"
+import "../app/base"
 
 Rectangle {
     id: root
 
+    //initially invisible
     state: "hide"
+    visible: opacity !== 0;
 
+    //position
     anchors.horizontalCenter: parent.horizontalCenter
     anchors.bottom: parent.bottom
 
+    //display
     width: messageText.width + padding
     height: messageText.height + padding
     radius: 50
 
-    property var minWidth: 200
-    property var maxWidth: 400
-    property var padding: 20
-    property var autoHide: false
-    property var autoHideDelay: 0
+    //constraints
+    property real minWidth: 200
+    property real maxWidth: 400
+    property real padding: 20
 
-    property alias text: messageText.text
+    /*! Triggers hide state after set interval */
+    Timer {
+        id: hideTimer
+        onTriggered: hide();
+    }
 
-    Text {
+    /*! Message display */
+    OmekaText {
         id: messageText
-        color: "white"
-        //text: "test errortest errortest errortest errortest errortest error"
+        _font: Style.floatMessageFont
         anchors.centerIn: parent
         horizontalAlignment: Text.AlignHCenter
-        wrapMode: Text.WordWrap
-        font.pixelSize: 14
 
-        onContentWidthChanged: {
-            console.log(contentWidth)
+        //constrain message widh
+        onTextChanged: {
             if(contentWidth < minWidth) {
                 width = minWidth
             } else if(contentWidth > maxWidth) {
@@ -40,38 +46,59 @@ Rectangle {
         }
     }
 
-    function showError(message, autoHide, margin) {
-        show(message, autoHide, margin ? margin : 100, "red");
+    /*!
+      Set error message to display
+      \a message  The message value
+      \a duration  The time to display the message. Negative values imply display indefinitely until hide is explicitly called.
+      \a margin  The margin between the bottom of the message and the bottom of the viewport.
+    */
+    function showError(message, duration, margin) {
+        show(message, duration, margin, "red");
     }
 
-    function showMessage(message, autoHide, margin) {
-        show(message, autoHide, margin ? margin : 100, "#656565");
+    /*!
+      Set standard message to display
+      \a message  The message value
+      \a duration  The time to display the message. Negative values imply display indefinitely until hide is explicitly called.
+      \a margin  The margin between the bottom of the message and the bottom of the viewport.
+    */
+    function showMessage(message, duration, margin) {
+        show(message, duration, margin, "#656565");
     }
 
-    function show(message, autoHide, margin, color) {
+    /*!
+      Show message based on specified parameters
+      \a message  The message value
+      \a duration  The time to display the message. Negative values imply display indefinitely until hide is explicitly called.
+      \a margin  The margin between the bottom of the message and the bottom of the viewport.
+      \a color  The background color of text area to indicate message type
+    */
+    function show(message, duration, margin, color) {
+        hideTimer.stop();
+
         root.color = color;
-        root.text = message;
-        root.autoHide = autoHide;
+        messageText.text = message;
         root.anchors.bottomMargin = margin;
-        root.state = "show"
-    }
+        root.state = "show";
 
-    function hide() {
-        root.autoHideDelay = 0
-        root.state = "hide"
-    }
-
-    onOpacityChanged: {
-        if(opacity === 1 && autoHide) {
-            root.autoHideDelay = 2000
-            root.state = "hide"
+        if(duration > 0) {
+            hideTimer.interval = duration;
+            hideTimer.start();
         }
     }
 
+    /*!
+      Hide message
+    */
+    function hide() {
+        root.state = "hide";
+    }
+
+    //display states
     states: [
         State {
             name: "show"
-            PropertyChanges { target: root; opacity: 1; autoHideDelay: 0 }
+            PropertyChanges { target: root; opacity: 1 }
         },
         State {
             name: "hide"
@@ -79,10 +106,8 @@ Rectangle {
         }
     ]
 
+    //state animations
     transitions: Transition {
-        SequentialAnimation {
-            PauseAnimation { duration: root.autoHideDelay }
-            PropertyAnimation { duration: 500; property: "opacity"; easing.type: Easing.OutQuad }
-        }
+        PropertyAnimation { duration: 1000; property: "opacity"; easing.type: Easing.OutQuad }
     }
 }

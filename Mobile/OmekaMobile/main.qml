@@ -12,7 +12,7 @@ ApplicationWindow {
 
     Component.onCompleted: {
         Resolution.appWindow = root
-        message.showError("test errortest errortest errortest errortest errortest error", false, 200)
+        message.showMessage("test error", 1000, 100)
     }
 
     PageNavigation { }
