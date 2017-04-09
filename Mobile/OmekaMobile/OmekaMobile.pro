@@ -36,6 +36,7 @@ QML_IMPORT_PATH += \
     qml/utils/User 1.0 \
     qml/utils/NumberUtils 1.0 \
     qml/utils/HeistManager 1.0 \
+    qml/utils/Foreground 1.0 \
 
 ios {
     OBJECTIVE_SOURCES += ios/iosshareutils.mm
@@ -161,3 +162,4 @@ DISTFILES += \
     qml/test/heist/StateLabel.qml \
     qml/test/heist/ItemDelegate.qml \
     qml/app/FloatMessage.qml \
+    qml/utils/Foreground.qml

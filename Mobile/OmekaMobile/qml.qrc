@@ -39,6 +39,7 @@
 		<file>qml/utils/UserSettings.qml</file>									
 		<file>qml/utils/NumberUtils.qml</file>									
 		<file>qml/utils/Pairings.qml</file>		
+		<file>qml/utils/Foreground.qml</file>		
 		<file>qml/utils/qmldir</file>	
 							
 		<file>qml/app/PageNavigation.qml</file>					

@@ -2,6 +2,10 @@ import QtQuick 2.5
 import "../utils"
 import "../app/base"
 
+/*!
+  Onobtrusive floating message to display errors and other notifications on top of
+  the current UI.
+ */
 Rectangle {
     id: root
 
@@ -16,12 +20,12 @@ Rectangle {
     //display
     width: messageText.width + padding
     height: messageText.height + padding
-    radius: 50
+    radius: Resolution.applyScale(150)
 
     //constraints
-    property real minWidth: 200
-    property real maxWidth: 400
-    property real padding: 20
+    property real minWidth: Resolution.applyScale(600)
+    property real maxWidth: Resolution.applyScale(1200)
+    property real padding: Resolution.applyScale(60)
 
     /*! Triggers hide state after set interval */
     Timer {
@@ -44,26 +48,6 @@ Rectangle {
                 width = maxWidth
             }
         }
-    }
-
-    /*!
-      Set error message to display
-      \a message  The message value
-      \a duration  The time to display the message. Negative values imply display indefinitely until hide is explicitly called.
-      \a margin  The margin between the bottom of the message and the bottom of the viewport.
-    */
-    function showError(message, duration, margin) {
-        show(message, duration, margin, "red");
-    }
-
-    /*!
-      Set standard message to display
-      \a message  The message value
-      \a duration  The time to display the message. Negative values imply display indefinitely until hide is explicitly called.
-      \a margin  The margin between the bottom of the message and the bottom of the viewport.
-    */
-    function showMessage(message, duration, margin) {
-        show(message, duration, margin, "#656565");
     }
 
     /*!

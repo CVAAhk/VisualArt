@@ -13,6 +13,14 @@ Item {
     property var deviceId: HeistManager.uid;
 
 
+    //clear float message when invisible
+    onVisibleChanged: {
+        if(!visible) {
+            Foreground.hideMessage()
+        }
+    }
+
+
     ///////////////////////////////////////////////////////////
     //          UI
     ///////////////////////////////////////////////////////////
@@ -51,7 +59,15 @@ Item {
     Keypad {
         id: keypad
         anchors.bottom: parent.bottom
-        onKeyPressed: entry.submitEntry(key)
+        onKeyPressed: {
+            //clear message if displayed
+            if(key === "back")   {
+                Foreground.hideMessage();
+            }
+
+            //submit entry
+            entry.submitEntry(key)
+        }
     }
 
     /*!Control to terminate pairing session*/
@@ -151,6 +167,7 @@ Item {
     */
     function pairingError() {
         if(receiver.error) {
+            Foreground.showError(receiver.error, 0, Resolution.applyScale(1150));
             HeistManager.removeSession(entry.codeString);
             receiver.register = false;
         }
