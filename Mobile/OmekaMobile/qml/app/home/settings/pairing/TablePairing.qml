@@ -137,6 +137,7 @@ Item {
         }
         //session terminated on table
         else {
+            Foreground.showMessage("Pairing session terminated from table.", 3000, Resolution.applyScale(300))
             unpair();
         }
     }
