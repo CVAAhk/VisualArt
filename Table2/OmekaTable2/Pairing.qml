@@ -69,7 +69,7 @@ Item
         anchors.top: pairing_bkg.top
         color: root.color
         x: 12
-        visible: false
+        visible: true
         onWhatIsThis: {pairing_instruction.visible = true;pair_code.visible = false;}
     }
     PairingInstruction
