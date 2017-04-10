@@ -44,6 +44,9 @@ Item {
         Invoked on query result*/
     signal requestComplete(var result)
 
+    /* Initialize heist*/
+   // Component.onCompleted: heist.initialize(rest+"heist?pairing_id=1245");
+
 
     /*! \internal
       Sends http request and links response handler

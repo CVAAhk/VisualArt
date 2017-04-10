@@ -8,8 +8,10 @@ Item {
     enabled: false
 
     onVisibleChanged: {
-        if(!visible && homeStack.depth > 1) {
-            homeStack.pop()
+        if(!visible) {
+            while(homeStack.depth > 1) {
+                homeStack.pop()
+            }
         }
     }
 

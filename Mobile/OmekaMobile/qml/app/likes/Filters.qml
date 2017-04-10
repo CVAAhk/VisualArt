@@ -11,12 +11,15 @@ Item {
     clip: true
     state: "close"
 
-    property var model: ["all", "collection 1", "collection 2"]
-    property var verticalOffset: list.height + list.y
+    property var model: ["all", "collection 1", "collection 2", "c3", "c4"]
+    property var maxVerticalOffset: Resolution.applyScale(438)
+    property var verticalOffset: Math.min(list.height + list.y, maxVerticalOffset)
+    property alias current: group.current
 
     //prevent multiple selections
     ExclusiveGroup {
-        id: group
+        id: group        
+        current: list.contentItem.children[0]
     }
 
     //filter list
@@ -27,6 +30,10 @@ Item {
         spacing: Resolution.applyScale(-6)
         model: root.model
         delegate: delegate
+        maximumFlickVelocity: 8000
+        flickDeceleration: 3000
+        boundsBehavior: Flickable.StopAtBounds
+        bottomMargin: height - verticalOffset
     }
 
     //filter options
@@ -43,7 +50,7 @@ Item {
                 background: Rectangle {
                     border.color: Style.color1
                     border.width: Resolution.applyScale(6)
-                    color: Style.color3
+                    color: control.checked ? "white" : Style.color3
                 }
                 label: OmekaText {
                     text: control.text

@@ -31,11 +31,27 @@ Item {
     */
     property bool uncheck: false
 
+    /*! \qml property bool Setting::checked
+      Checked state
+    */
+    property alias checked: category.checked
+
+    //change state on check
+    onCheckedChanged: {
+        state = checked ? "expand" : "collapse"
+    }
+
+    //set initial state after dimensions
+    onWidthChanged: {
+        if(width) {
+            state = "collapse"
+        }
+    }
+
     //content bindings
     Binding { target: content; property: "parent"; value: setting }
     Binding { target: content; property: "width"; value: setting.width }
     Binding { target: content.anchors; property: "topMargin"; value: 2 }
-    Binding on state {when: content; value: category.checked ? "expand" : "collapse" }
 
     //toggles the expanded state of setting
     Button{
@@ -71,8 +87,10 @@ Item {
         onPressedChanged: {
             if(pressed) {
                 uncheck = exclusiveGroup.current === category
+                //setting.state = "expand"
             } else if(uncheck) {
                 exclusiveGroup.current = null
+                //setting.state = "collapse"
             }
         }
     }

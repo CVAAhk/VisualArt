@@ -57,6 +57,12 @@ Item {
     property url play: rootPath+"play.png"
     /*! \qmlproperty media playback pause indicator */
     property url pause: rootPath+"pause.png"
+    /*! \qmlproperty pairing icon */
+    property url pair: rootPath+"pair_icon.png"
+    /*! \qmlproperty linked icon */
+    property url linked: rootPath+"linked_icon.png"
+    /*! \qmlproperty pairing icon */
+    property url backKey: rootPath+"back_key.png"
 
     /*! \qmlproperty default thumbnail icons to display when an item does not provide one */
     property var thumbs: ({"image": imageIcon, "audio": audioIcon, "video": videoIcon, "document": documentIcon})
@@ -72,5 +78,9 @@ Item {
     property var infoTitleFont: ({ color:"black", size:46, weight:Font.Bold, capitalization:Font.AllUppercase, wrapMode: Text.NoWrap, textFormat: Text.AutoText })
     property var infoSourceFont: ({ color:"black", size:40, weight:Font.Normal, capitalization:Font.MixedCase, wrapMode: Text.NoWrap, textFormat: Text.AutoText })
     property var playbackTimeFont: ({ color:"white", size:40, weight:Font.Normal, capitalization:Font.MixedCase, wrapMode: Text.NoWrap, textFormat: Text.AutoText })
+    property var keypadFont: ({ color:"black", size:68, weight:Font.Bold, capitalization:Font.AllUppercase, wrapMode: Text.NoWrap, textFormat: Text.AutoText })
+    property var pairingInstructions: ({ color:color5, size:42, weight:Font.Normal, capitalization:Font.AllUppercase, wrapMode: Text.Wrap, textFormat: Text.AutoText })
+    property var unpairText: ({ color:color5, size:80, weight:Font.Normal, capitalization:Font.AllUppercase, wrapMode: Text.NoWrap, textFormat: Text.AutoText })
+    property var floatMessageFont: ({ color:"white", size:42, weight:Font.Normal, capitalization:Font.MixedCase, wrapMode: Text.Wrap, textFormat: Text.AutoText })
 
 }
