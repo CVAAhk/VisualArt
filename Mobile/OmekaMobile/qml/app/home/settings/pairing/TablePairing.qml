@@ -129,14 +129,14 @@ Item {
     function validateSession() {
         //valid session
         if(receiver.session) {
-            if(receiver.device) {
-               pairingError("This pairing code has been claimed by another device. Terminate the pairing session on the table to release.")
+            if(receiver.device && receiver.device !== deviceId) {
+               pairingError("This pairing code has been claimed by another device. Terminate the pairing session on the table and start a new one.")
             } else {
                 pair();
             }
         }
         //session terminated on table
-        else {
+        else if(state === "paired") {
             Foreground.showMessage("Pairing session terminated from table.", 3000, Resolution.applyScale(300))
             unpair();
         }
