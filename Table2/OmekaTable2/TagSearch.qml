@@ -12,6 +12,8 @@ Item {
     property string whichScreen: "lower left"//default
     property var tempModel: ListModel {}
 
+    signal letterSelected(string letter)
+
     //refresh tags
     Component.onCompleted: Omeka.getTags(tags)
 
@@ -72,13 +74,57 @@ Item {
         {
             id: list
             property var screenTag
-            property string whichScreen: root.whichScreen
+            property string whichScreen: root.whichScreen            
+            property bool updatingY: false
+
             anchors.fill: parent
             model: ListModel {}
             delegate: TagDelegate {}
             spacing: 6
+
+            Behavior on contentY { enabled: list.updatingY; NumberAnimation { duration: 300 } }
+
+            onContentYChanged:
+            {
+                if(updatingY) return;
+                var contentIndex = Math.round((contentY + 12) / 33);
+
+                if(contentIndex < 0 || contentIndex >= list.model.count)
+                {
+                    return;
+                }
+
+                var tag = list.model.get(contentIndex).tag;
+                if(tag == null || tag.length == 0)
+                    return;
+                var letter = tag[0];
+
+                tags.letterSelected(letter);
+            }
         }
     }
+
+    function selectNewLetter(newLetter)
+    {
+        var newLetterId = newLetter.toUpperCase().charCodeAt(0);
+
+        for(var i = 0; i != list.model.count; i++)
+        {
+            var tag = list.model.get(i).tag;
+            if(tag == null || tag.length == 0)
+                return;
+            var letter = tag.toUpperCase().charCodeAt(0);
+
+            if(letter >= newLetterId)
+            {
+                list.updatingY = true;
+                list.contentY = 31 * i;
+                list.updatingY = false;
+                break;
+            }
+        }
+    }
+
     function resetFilters()
     {
         list.contentY = 0;

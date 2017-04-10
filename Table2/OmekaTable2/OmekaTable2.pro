@@ -89,6 +89,7 @@ DISTFILES += \
     ProgressTimer.qml \
     ScrubberStyle.qml \
     NumberUtils.qml \
+    FilterAlpha.qml \
     Pairing.qml \
     StartToPair.qml \
     PairingInstruction.qml \
