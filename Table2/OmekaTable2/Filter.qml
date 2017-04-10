@@ -58,6 +58,11 @@ Item
         height: 190
         listScreenTag: tag_header.screenTag
         whichScreen: root.whichScreen
+
+        onLetterSelected:
+        {
+            alpha.selectLetterChar(letter);
+        }
     }
 
     Rectangle
@@ -81,10 +86,21 @@ Item
         maskSource: filter_footer
     }
 
+    FilterAlpha
+    {
+        id: alpha
+
+        onLetterSelected:
+        {
+            tags_view.selectNewLetter(letter);
+        }
+    }
+
     function resetFilters()
     {
         tag_header.setTagEmpty();
         tags_view.resetFilters();
+        alpha.selectLetter(-1, false);
     }
 
 }

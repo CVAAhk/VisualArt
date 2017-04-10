@@ -88,7 +88,8 @@ DISTFILES += \
     PlaybackText.qml \
     ProgressTimer.qml \
     ScrubberStyle.qml \
-    NumberUtils.qml
+    NumberUtils.qml \
+    FilterAlpha.qml
 
 RESOURCES += \
     qml.qrc
