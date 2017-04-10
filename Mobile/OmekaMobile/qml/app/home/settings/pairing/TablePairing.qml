@@ -135,9 +135,8 @@ Item {
                 pair();
             }
         }
-        //session terminated on table
-        else if(state === "paired") {
-            Foreground.showMessage("Pairing session terminated from table.", 3000, Resolution.applyScale(300))
+        //session terminated
+        else {
             unpair();
         }
     }
@@ -157,6 +156,7 @@ Item {
     */
     function unpair() {
         if(state === "paired") {
+            Foreground.showMessage("Pairing session has been terminated.", 3000, Resolution.applyScale(300))
             HeistManager.releasePairing(entry.codeString, deviceId);
             entry.resetCode();
             state = "unpaired";
