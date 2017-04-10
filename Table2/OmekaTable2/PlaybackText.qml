@@ -11,7 +11,7 @@ OmekaText {
 
     _font: Style.playbackTimeFont
     anchors.verticalCenter: parent.verticalCenter
-    anchors.margins: 30//Resolution.applyScale(30)
+    anchors.margins: 10//Resolution.applyScale(30)
 
     text: format(minutes, '0', 2)+":"+format(seconds, '0', 2)
 
