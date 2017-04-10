@@ -88,7 +88,13 @@ DISTFILES += \
     PlaybackText.qml \
     ProgressTimer.qml \
     ScrubberStyle.qml \
-    NumberUtils.qml
+    NumberUtils.qml \
+    Pairing.qml \
+    StartToPair.qml \
+    PairingInstruction.qml \
+    PairSuccess.qml \
+    DragFiles.qml \
+    SendSuccess.qml
 
 RESOURCES += \
     qml.qrc

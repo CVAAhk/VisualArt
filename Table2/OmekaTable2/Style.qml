@@ -67,7 +67,7 @@ Item {
 
     property var titleFont: ({ color:color1, size:74, weight:Font.Bold, capitalization:Font.AllUppercase, wrapMode: Text.NoWrap, textFormat: Text.AutoText, family: roboto.name })
     property var headerFont: ({ color:color1, size:11, weight:Font.Normal, capitalization:Font.AllUppercase, wrapMode: Text.NoWrap, textFormat: Text.AutoText, family: roboto.name })
-    property var settingFont: ({ color:color1, size:74, weight:Font.Normal, capitalization:Font.Capitalize, wrapMode: Text.NoWrap, textFormat: Text.AutoText, family: roboto.name })
+    property var settingFont: ({ color:color1, size:11, weight:Font.Normal, capitalization:Font.MixedCase, wrapMode: Text.Wrap, textFormat: Text.AutoText, family: roboto.name })
     property var tagFont: ({ color:color1, size:11, weight:Font.Normal, capitalization:Font.AllUppercase, wrapMode: Text.NoWrap, textFormat: Text.AutoText, family: roboto.name })
     property var metadataFont: ({ color:"black", size:15, weight:Font.Normal, capitalization:Font.MixedCase, wrapMode: Text.Wrap, textFormat: Text.AutoText, family: roboto.name})
     property var filterFont: ({ color:"white", size:11, weight:Font.Normal, capitalization:Font.AllUppercase, wrapMode: Text.Wrap, textFormat: Text.RichText, family: roboto.name})

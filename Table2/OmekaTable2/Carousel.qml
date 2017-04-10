@@ -75,6 +75,12 @@ Item
             }
         }
     }
+    Pairing
+    {
+        id: pairing
+        x: 498; y: 10
+        color: root.color
+    }
 
     Image
     {
