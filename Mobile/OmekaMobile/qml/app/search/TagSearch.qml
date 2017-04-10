@@ -52,6 +52,7 @@ Item {
             model: ListModel {}
             delegate: TagDelegate {}
             header: TagHeader {}
+            spacing: 2
             onHeightChanged: contentY = -headerItem.height
         }
     }

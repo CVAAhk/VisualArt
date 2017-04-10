@@ -19,3 +19,5 @@ var ATTRACT_LEFT_X = 750;
 var DEBUG_VIEW = false;
 
 var ATTRACT_RANDOM_TIMER = 90000;
+
+var APP_NAME　= "OMEKA";

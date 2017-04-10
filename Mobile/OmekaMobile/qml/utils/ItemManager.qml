@@ -35,13 +35,19 @@ Item {
 
     /*-------------LIKES-------------*/
 
+    //ui notifications
+    signal itemAdded(var item)
+    signal itemRemoved(var item)
+    signal clearItems()
+
     /*!
       \qmlmethod
       Add like to local database
     */
     function registerLike(item) {
         if(!isLiked(item)) {
-            Settings.addLike(item.id, itemToEntry(item))
+            Settings.addLike(String(item.id), itemToEntry(item))
+            itemAdded(item)
         }
     }
 
@@ -50,7 +56,17 @@ Item {
       Remove like from local database
     */
     function unregisterLike(item) {
-        Settings.removeLike(item.id)
+        Settings.removeLike(String(item.id))
+        itemRemoved(item)
+    }
+
+    /*!
+      \qmlmethod
+      Remove all likes from local database
+    */
+    function unregisterAllLikes() {
+        Settings.clearAllLikes()
+        clearItems()
     }
 
     /*!
@@ -89,10 +105,26 @@ Item {
 
     /*!
       \qmlmethod
+      Converts item to omeka result data format
+    */
+    function itemToData(item) {
+        return {item: String(item.id), metadata: item.metadata, file_count: String(item.fileCount)};
+    }
+
+    /*!
+      \qmlmethod
+      Converts omeka result to item data format
+    */
+    function dataToItem(data) {
+        return {id: data.item, metadata: data.metadata, fileCount: data.file_count};
+    }
+
+    /*!
+      \qmlmethod
       Returns true if the item has an entry in the database
     */
     function isLiked(item) {
-        return Settings.isLiked(item.id)
+        return Settings.isLiked(String(item.id))
     }
 
     /*!
