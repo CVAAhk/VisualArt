@@ -81,6 +81,7 @@ Item
         id: pairing
         x: 498; y: 10
         color: root.color
+        visible: false
     }
 
     Image
@@ -174,10 +175,7 @@ Item
             text: "FILTER"
             textColor: root.color
             anchors.centerIn: parent
-
         }
-
-
     }
     MultiPointTouchArea
     {
@@ -206,13 +204,40 @@ Item
         anchors.top: carousel_header_bkg.top
         anchors.right: carousel_header_bkg.right
         anchors.margins: 10
-        MultiPointTouchArea
+    }
+    Rectangle
+    {
+        id: pairing_btn
+        width: pairing_text.width + 10
+        height: 25
+        anchors.top: carousel_header_bkg.top
+        anchors.right: carousel_header_bkg.right
+        anchors.margins: 10
+        radius: 4
+        color: "white"
+        visible: false
+        OmekaText
         {
-            anchors.fill: parent
-            onPressed:
-            {
+            id: pairing_text
 
-            }
+            _font: Style.filterFont
+            text: "PAIRING"
+            textColor: root.color
+            anchors.centerIn: parent
+        }
+    }
+    MultiPointTouchArea
+    {
+        id: pairing_btn_touch_area
+        anchors.fill: pairing_btn
+        property bool active: false
+        onPressed:
+        {
+            active = !active;
+            pairing.visible = active//.source = active ? "content/POI/filter-btn-bkg.png" : "content/POI/filter-btn.png"
+            pairing_btn.visible = active;
+            send_to_mobile_btn.opacity = !active;
+            if(active) pairing.startSession();
         }
     }
 

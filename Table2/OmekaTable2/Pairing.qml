@@ -106,4 +106,9 @@ Item
         visible: false
     }
 
+    function startSession()
+    {
+        pair_code.startSession();
+    }
+
 }

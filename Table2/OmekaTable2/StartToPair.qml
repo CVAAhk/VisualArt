@@ -8,10 +8,34 @@ Item
     id: root
     width: 175
 
-    property var codes: [];
+    //property var codes: [];
     property string color: "#2b89d9"//blue
+    /*
+      Id of paired device. When null or empty, the table user is not paired with a device.
+      The value should be set to null initially to indicate a device has not yet been paired
+      and an empty value, set by the device, indicates a once paired device is now unpaired.
+    */
+    property var deviceId: null;
+
+    /*
+      Indicates whether the table user is currently paired with a device.
+    */
+    property var paired: false;
+    /*
+      The latest generated pairing code
+     */
+    property var currentCode;
+
+    /*
+      Delay time used postpone the descruction long enough to permit the table user to
+      purge all created pairing sessions from heist
+    */
+    property var cleanDelay: 2000;
 
     signal whatIsThis();
+
+    //remove sessions from heist on app exit
+    Component.onDestruction: clean();
 
     Rectangle
     {
@@ -123,21 +147,34 @@ Item
         }
     }
 
-    Component.onCompleted: generateCode();
+    /*! Listens to iterative heist data updates */
+    HeistReceiver {
+        id: receiver
+        onDeviceChanged: deviceId = device;
+        code: currentCode
+    }
 
+    function randomInt(min, max) {
+
+        return Math.floor(Math.random()*(max-min)+min);
+
+    }
+    /*! Create new heist pairing sessions */
+    function startSession() {
+        generateCode();
+        HeistManager.startPairingSession(currentCode);
+    }
+
+    /*! Generate unique pairing code. This needs to be tracked
+        at a global level and not local to the table user*/
     function generateCode() {
-
         var code;
-
         do {
-
             code = randomInt(1111,9999);
-
         }
-
-        while (codes.indexOf(code) !== -1);
-
-        codes.push(code);
+        while (HeistManager.codes.indexOf(code) !== -1);
+        currentCode = code;
+        HeistManager.codes.push(code);
         var first_digit = Math.floor(code / 1000);
         var second_digit = Math.floor(code % 1000 /100);
         var third_digit = Math.floor(code % 100 /10);
@@ -147,12 +184,82 @@ Item
         code_second_digit.text = second_digit;
         code_third_digit.text = third_digit;
         code_fourth_digit.text = fourth_digit;
-        console.log("code = ", codes[codes.length - 1])
     }
 
-    function randomInt(min, max) {
+    /*!
+      Ends the pairing session and restores initial state
+     */
+    function endSession() {
+        HeistManager.endPairingSession(currentCode);
+        HeistManager.codes.pop();
+        currentCode = HeistManager.codes[HeistManager.codes.length-1];
+        paired = false;
+    }
 
-        return Math.floor(Math.random()*(max-min)+min);
+    /*!
+      Removes all generated heist sessions and restores initial state. This is not
+      applicable to the final implementation since a table user will only be responsible
+      for one session at a time. (TEST ONLY)
+      */
+    function clearAll() {
+        paired = false;
+        currentCode = "";
+        HeistManager.codes.length = 0;
+        HeistManager.clearAllSessions();
+    }
 
+    /*!
+      Removes all items and restores initial state of items in list (TEST ONLY)
+      */
+    function resetItems() {
+        for(var i=0; i<item_list.count; i++) {
+            item_list.contentItem.children[i].reset();
+        }
+        HeistManager.removeAllItems(currentCode, null);
+    }
+
+    /*!
+      Postpones destruction long enough to permit termination of all generated
+      sessions. For actual implementation, there will only be one code.
+      */
+    function clean() {
+        HeistManager.clearAllSessions();
+        cleanDelay *= HeistManager.codes.length;
+        while(cleanDelay) {
+            cleanDelay--;
+            console.log("cleaning");
+        }
+        console.log("cleaned");
+    }
+
+    //convenience function for removing by heist record id (TEST ONLY)
+    function removeRecords(data) {
+        for(var i in data) {
+            HeistManager.removeData(data[i])
+        }
+    }
+
+    /*! On unpair clear device id and remove associated items */
+    onPairedChanged: {
+        if(!paired) {
+            deviceId = null;
+            resetItems();
+        }
+    }
+
+    /*! Update paired status based on device id value */
+    onDeviceIdChanged: {
+
+        //ignore null values
+        if(deviceId === null) return;
+
+        //unpair on empty device id
+        if(paired && deviceId.length === 0) {
+            paired = false;
+        }
+        //pair on non-empty device id
+        else if(!paired && deviceId.length > 0) {
+            paired = true;
+        }
     }
 }
