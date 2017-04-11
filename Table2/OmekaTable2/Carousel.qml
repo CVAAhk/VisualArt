@@ -82,6 +82,23 @@ Item
         x: 498; y: 10
         color: root.color
         visible: false
+        onPairedChanged:
+        {
+
+            if(paired)
+            {
+                pairing_text.text = "TAP TO UNPAIR";
+                pairing_btn_touch_area.enabled = false;
+                unpair_btn_touch_area.enabled = true;
+            }
+            else
+            {
+                pairing_text.text = "PAIRING";
+                pairing.visible = false;
+                pairing_btn.visible = false;
+                send_to_mobile_btn.opacity = true;
+            }
+        }
     }
 
     Image
@@ -238,6 +255,17 @@ Item
             pairing_btn.visible = active;
             send_to_mobile_btn.opacity = !active;
             if(active) pairing.startSession();
+        }
+    }
+    MultiPointTouchArea
+    {
+        id: unpair_btn_touch_area
+        anchors.fill: pairing_btn
+        enabled: false
+        //property bool active: false
+        onPressed:
+        {
+
         }
     }
 
