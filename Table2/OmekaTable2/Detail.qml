@@ -94,6 +94,14 @@ Item
         minimumY: 0 - root.imageHeight
         maximumY: 1080 - root.imageHeight
 
+        onDraggingChanged:
+        {
+            if(!dragging)
+            {
+                root.finishedDragging(root);
+            }
+        }
+
         onPositionUpdated:
         {
             root.x += delta_x// * (detail.topScreen ? -1.0 : 1.0);// * detail.scale;

@@ -161,8 +161,8 @@ Item
             imageItem.imageWidth = 247;
             imageItem.antialiasing = true;
 
-            //imageItem.imageDragged.connect(root.imageDragged);
-            //imageItem.finishedDragging.connect(root.imageFinishedDragging);
+            imageItem.imageDragged.connect(root.imageDragged);
+            imageItem.finishedDragging.connect(root.imageFinishedDragging);
             //imageItem.finishedRecycle.connect(root.imageFinishedRecycle);
             imageItem.whichScreen = whichScreen;
 
