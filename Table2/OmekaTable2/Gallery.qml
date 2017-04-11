@@ -75,7 +75,7 @@ Item {
         selectedParent: overlayImageTopLeftRoot
         onCreateImage:
         {
-            imageHolder.createImage(source, imageX + x, imageY + y, imageRotation, imageWidth, imageHeight, tapOpen, "top left")
+            //imageHolder.createImage(source, imageX + x, imageY + y, imageRotation, imageWidth, imageHeight, tapOpen, "top left")
         }
         onCanPaginate:
         {
@@ -95,7 +95,7 @@ Item {
         selectedParent: overlayImageTopRightRoot
         onCreateImage:
         {
-            imageHolder.createImage(source, imageX + x, imageY + y, imageRotation, imageWidth, imageHeight, tapOpen, "top right")
+            //imageHolder.createImage(source, imageX + x, imageY + y, imageRotation, imageWidth, imageHeight, tapOpen, "top right")
         }
         onCanPaginate:
         {
@@ -115,7 +115,7 @@ Item {
         selectedParent: overlayImageLowerLeftRoot
         onCreateImage:
         {
-            imageHolder.createImage(source, imageX + x, imageY + y, imageRotation, imageWidth, imageHeight, tapOpen, "lower left")
+            //imageHolder.createImage(source, imageX + x, imageY + y, imageRotation, imageWidth, imageHeight, tapOpen, "lower left")
         }
         onCanPaginate:
         {
@@ -133,7 +133,7 @@ Item {
         selectedParent: overlayImageLowerRightRoot
         onCreateImage:
         {
-            imageHolder.createImage(source, imageX + x, imageY + y, imageRotation, imageWidth, imageHeight, tapOpen, "lower right")
+            //imageHolder.createImage(source, imageX + x, imageY + y, imageRotation, imageWidth, imageHeight, tapOpen, "lower right")
         }
         onCanPaginate:
         {
@@ -141,34 +141,34 @@ Item {
         }
     }
 
-    CollectionImageHolder
-    {
-        id: imageHolder
+//    CollectionImageHolder
+//    {
+//        id: imageHolder
 
-        width: parent.width
-        height: parent.height
+//        width: parent.width
+//        height: parent.height
 
-        antialiasing: true
+//        antialiasing: true
 
-        onImageDeleted:
-        {
-            //console.log("delete filepath = ",filepath, "whichScreen = ", whichScreen)
+//        onImageDeleted:
+//        {
+//            //console.log("delete filepath = ",filepath, "whichScreen = ", whichScreen)
 
-            if(whichScreen === "lower left") lower_left_carousel.imageRemovedFromScene(filepath);
-            if(whichScreen === "lower right") lower_right_carousel.imageRemovedFromScene(filepath);
-            if(whichScreen === "top left") top_left_carousel.imageRemovedFromScene(filepath);
-            if(whichScreen === "top right") top_right_carousel.imageRemovedFromScene(filepath);
-            if(whichScreen.includes("attract")) gallery.removeAttractImage(filepath,whichScreen);
-        }
-    }
+//            if(whichScreen === "lower left") lower_left_carousel.imageRemovedFromScene(filepath);
+//            if(whichScreen === "lower right") lower_right_carousel.imageRemovedFromScene(filepath);
+//            if(whichScreen === "top left") top_left_carousel.imageRemovedFromScene(filepath);
+//            if(whichScreen === "top right") top_right_carousel.imageRemovedFromScene(filepath);
+//            if(whichScreen.includes("attract")) gallery.removeAttractImage(filepath,whichScreen);
+//        }
+//    }
 
     Item { id: overlayImageTopLeftRoot; x: top_left_carousel.x; y: top_left_carousel.y; rotation: top_left_carousel.rotation }
     Item { id: overlayImageTopRightRoot; x: top_right_carousel.x; y: top_right_carousel.y; rotation: top_right_carousel.rotation }
     Item { id: overlayImageLowerLeftRoot; x: lower_left_carousel.x; y: lower_left_carousel.y; rotation: lower_left_carousel.rotation }
     Item { id: overlayImageLowerRightRoot; x: lower_right_carousel.x; y: lower_right_carousel.y; rotation: lower_right_carousel.rotation }
 
-    function imageHolderCreateImage(filepath, startX, startY, imageRotation, imageWidth, imageHeight, tapOpen, whichScreen)
-    {
-        imageHolder.createImage(filepath, startX, startY, imageRotation, imageWidth, imageHeight, tapOpen, whichScreen)
-    }
+//    function imageHolderCreateImage(filepath, startX, startY, imageRotation, imageWidth, imageHeight, tapOpen, whichScreen)
+//    {
+//        imageHolder.createImage(filepath, startX, startY, imageRotation, imageWidth, imageHeight, tapOpen, whichScreen)
+//    }
 }

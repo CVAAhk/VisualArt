@@ -107,11 +107,11 @@ Item
                     image_pop.property = "x";
                     if(imageRotation > 0)
                     {
-                        imageItem.y = startY - root.y - imageItem.height;
+                        imageItem.y = startY - imageItem.height;
                     }
                     else
                     {
-                        imageItem.y = startY - root.y;
+                        imageItem.y = startY;
                     }
 
                     image_pop.from = Settings.ATTRACT_RIGHT_X;
@@ -123,11 +123,11 @@ Item
                     image_pop.property = "x";
                     if(imageRotation > 0)
                     {
-                        imageItem.y = startY - root.y - imageItem.height;
+                        imageItem.y = startY - imageItem.height;
                     }
                     else
                     {
-                        imageItem.y = startY - root.y;
+                        imageItem.y = startY;
                     }
 
                     image_pop.from = Settings.ATTRACT_LEFT_X;
@@ -135,18 +135,18 @@ Item
                 }
                 else
                 {
-                    imageItem.x = startX - root.x;
+                    imageItem.x = startX;
                     image_pop.property = "y";
 
                     if(imageRotation > 0)
                     {
                         image_pop.from = 315 - imageHeight;
-                        image_pop.to = startY - root.y - imageHeight;
+                        image_pop.to = startY - imageHeight;
                     }
                     else
                     {
                        image_pop.from = 765;
-                        image_pop.to = startY - root.y;
+                        image_pop.to = startY;
                     }
                 }
 
@@ -154,8 +154,8 @@ Item
             }
             else
             {
-                imageItem.x = startX - root.x;
-                imageItem.y = startY - root.y;
+                imageItem.x = startX;
+                imageItem.y = startY;
             }
 
             imageItem.imageWidth = 247;

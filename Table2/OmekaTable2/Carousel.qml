@@ -233,7 +233,7 @@ Item
             onCreateImage:
             {
                 //root.createImage(source, imageX, imageY, imageRotation, imageWidth, imageHeight, tapOpen)
-                imageHolder.createImage(source, imageX + root.x, imageY + root.y, imageRotation, imageWidth, imageHeight, tapOpen, whichScreen)
+                imageHolder.createImage(source, imageX + root.x, imageY + root.y, imageRotation, imageWidth, imageHeight, tapOpen, root.whichScreen)
             }
 
             property real contentX: layout.contentX
