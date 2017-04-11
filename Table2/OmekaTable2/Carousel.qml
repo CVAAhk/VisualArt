@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import QtGraphicalEffects 1.0
 import "."
+import "settings.js" as Settings
 
 Item
 {
@@ -231,7 +232,8 @@ Item
             topScreen: root.topScreen
             onCreateImage:
             {
-                root.createImage(source, imageX, imageY, imageRotation, imageWidth, imageHeight, tapOpen)
+                //root.createImage(source, imageX, imageY, imageRotation, imageWidth, imageHeight, tapOpen)
+                imageHolder.createImage(source, imageX + root.x, imageY + root.y, imageRotation, imageWidth, imageHeight, tapOpen, whichScreen)
             }
 
             property real contentX: layout.contentX
@@ -338,6 +340,23 @@ Item
         {
             anchors.fill: parent
             onPressed: browser.increaseCurrentItem();
+        }
+    }
+
+    CollectionImageHolder
+    {
+        id: imageHolder
+        x: -root.x; y: -root.y
+        width: Settings.SCREEN_WIDTH
+        height: Settings.SCREEN_HEIGHT
+
+        antialiasing: true
+
+        onImageDeleted:
+        {
+            //console.log("delete filepath = ",filepath, "whichScreen = ", whichScreen)
+
+            root.imageRemovedFromScene(filepath);
         }
     }
 

@@ -311,4 +311,57 @@ Item
             root.deleteImage(root);
         }
     }
+
+    SequentialAnimation
+    {
+        id: recoveryAnimation
+
+
+        PauseAnimation {
+            duration: 500
+        }
+
+        PropertyAnimation { target: root; property: 'scale'; to: 1; duration: 250 }
+
+        PropertyAction { target: root; property: "visible"; value: true }
+        onRunningChanged:
+        {
+            if(!running)
+            {
+                //finishedRecycle();
+            }
+        }
+    }
+
+    SequentialAnimation
+    {
+        id: recycleAnimation
+
+        PropertyAnimation { target: root; property: 'scale'; to: 0.01; duration: 250 }
+
+        PropertyAction { target: root; property: "visible"; value: false }
+        onRunningChanged:
+        {
+            if(!running)
+            {
+                finishedRecycle();
+                recoveryAnimation.start();
+            }
+        }
+    }
+    function recycle()
+    {
+        recycleAnimation.start();
+    }
+
+    function turnGray()
+    {
+        root.opacity = 0.5;
+    }
+
+    function turnBack()
+    {
+        root.opacity = 1.0;
+    }
+
 }

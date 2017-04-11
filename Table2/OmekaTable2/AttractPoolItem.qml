@@ -124,9 +124,29 @@ Item
         }
     }
 
+    CollectionImageHolder
+    {
+        id: imageHolder
+        x: -root.x; y: -root.y
+        width: Settings.SCREEN_WIDTH
+        height: Settings.SCREEN_HEIGHT
+
+        antialiasing: true
+
+        onImageDeleted:
+        {
+            //console.log("delete filepath = ",filepath, "whichScreen = ", whichScreen)
+
+            root.removeAttractImage(filepath, whichScreen);
+        }
+    }
+
     function removeAttractImage(filePath, whichScreen)
     {
         if(whichScreen === "attract lower left") imageItem1.imageRemovedFromScene(filePath)
+        if(whichScreen === "attract lower right") imageItem2.imageRemovedFromScene(filePath)
+        if(whichScreen === "attract top left") imageItem3.imageRemovedFromScene(filePath)
+        if(whichScreen === "attract top right") imageItem4.imageRemovedFromScene(filePath)
     }
 
     Timer
