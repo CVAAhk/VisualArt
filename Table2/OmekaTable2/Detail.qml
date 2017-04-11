@@ -354,14 +354,15 @@ Item
         recycleAnimation.start();
     }
 
-    function turnGray()
+    function turnSmall()
     {
-        root.opacity = 0.5;
+        root.scale = 0.5;
+        root.active = false;
     }
 
     function turnBack()
     {
-        root.opacity = 1.0;
+        root.scale = 1.0;
     }
 
 }

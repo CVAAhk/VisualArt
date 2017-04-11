@@ -5,6 +5,8 @@ import "."
 Item
 {
     id: root
+    width: pairing_bkg.width
+    height: pairing_bkg.height
     property string color: "#2b89d9"//blue
     /*
       Id of paired device. When null or empty, the table user is not paired with a device.
@@ -16,17 +18,20 @@ Item
     /*
       Indicates whether the table user is currently paired with a device.
     */
-    property var paired: false;
+    property bool paired: false;
+    property bool readyToUnpair: false;
     /*
       The latest generated pairing code
      */
-    property var currentCode: pair_code.currentCode
+    property var currentCode//: pair_code.currentCode
 
     /*
       Delay time used postpone the descruction long enough to permit the table user to
       purge all created pairing sessions from heist
     */
     property var cleanDelay: 2000;
+
+    signal unpairDone();
 
     Rectangle
     {
@@ -78,7 +83,7 @@ Item
     {
         id: pairing_bkg
         source: "content/POI/pairing-code-bkg.png"
-        height: root.paired?145: 225
+        height: root.paired && !root.readyToUnpair?145: 225
         anchors.top: pairing_header.bottom
         x: 12
     }
@@ -90,7 +95,9 @@ Item
         color: root.color
         x: 12
         visible: true
+        enabled: visible
         onWhatIsThis: {pairing_instruction.visible = true;pair_code.visible = false;}
+        onCurrentCodeChanged: root.currentCode = currentCode;
     }
     PairingInstruction
     {
@@ -99,6 +106,7 @@ Item
         color: root.color
         x: 12
         visible: false
+        enabled: pairing_instruction.visible
         onBackToPairing: {pairing_instruction.visible = false;pair_code.visible = true;}
     }
     PairSuccess
@@ -125,16 +133,44 @@ Item
         anchors.top: pairing_bkg.top
         visible: false
     }
+    ReadyToUnpair
+    {
+        id: ready_to_unpair
+        color: root.color
+        x:12
+        anchors.top: pairing_bkg.top
+        visible: readyToUnpair
+        enabled: ready_to_unpair.visible
+        onBackToDragFiles:
+        {
+            readyToUnpair = false;
+            drag_files.visible = true;
+
+        }
+        onUnpair: {endSession();root.unpairDone();}
+    }
 
     function startSession()
     {
         pair_code.startSession();
     }
+    function startUnpair()
+    {
+        readyToUnpair = true;
+        pair_successful.visible = false;
+        drag_files.visible = false;
+        send_success.visible = false;
+    }
+    function resetPairing()
+    {
+        pair_code.visible = true;
+        pairing_instruction.visible = false;
+    }
 
     /*! Listens to iterative heist data updates */
     HeistReceiver {
         id: receiver
-        onDeviceChanged: deviceId = device;
+        onDeviceChanged: {deviceId = device;console.log("devide id = ", deviceId);}
         code: currentCode
     }
 
@@ -143,9 +179,17 @@ Item
      */
     function endSession() {
         HeistManager.endPairingSession(currentCode);
-        HeistManager.codes.pop();
-        currentCode = HeistManager.codes[HeistManager.codes.length-1];
+        for(var i = 0; i < HeistManager.codes.length; i++)
+        {
+            if(HeistManager.codes[i] === currentCode)
+            {
+                HeistManager.codes.splice(i, 1);
+            }
+        }
+        currentCode = "";
+                //HeistManager.codes[HeistManager.codes.length-1];
         paired = false;
+        root.readyToUnpair = false;
     }
 
     /*!
@@ -164,9 +208,10 @@ Item
       Removes all items and restores initial state of items in list (TEST ONLY)
       */
     function resetItems() {
-        for(var i=0; i<item_list.count; i++) {
-            item_list.contentItem.children[i].reset();
-        }
+        //TODO
+//        for(var i=0; i<item_list.count; i++) {
+//            item_list.contentItem.children[i].reset();
+//        }
         HeistManager.removeAllItems(currentCode, null);
     }
 
@@ -179,7 +224,7 @@ Item
         cleanDelay *= HeistManager.codes.length;
         while(cleanDelay) {
             cleanDelay--;
-            console.log("cleaning");
+            //console.log("cleaning");
         }
         console.log("cleaned");
     }
@@ -203,6 +248,7 @@ Item
         }
         else
         {
+
             pair_successful.visible = true;
             pair_code.visible = false;
         }
@@ -221,6 +267,7 @@ Item
         //pair on non-empty device id
         else if(!paired && deviceId.length > 0) {
             paired = true;
+            console.log("paired = true")
         }
     }
 

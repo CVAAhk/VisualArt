@@ -84,19 +84,23 @@ Item
         visible: false
         onPairedChanged:
         {
-
             if(paired)
             {
+                console.log("paired!!")
                 pairing_text.text = "TAP TO UNPAIR";
                 pairing_btn_touch_area.enabled = false;
                 unpair_btn_touch_area.enabled = true;
             }
             else
             {
+                console.log("unpaired!!")
                 pairing_text.text = "PAIRING";
                 pairing.visible = false;
                 pairing_btn.visible = false;
-                send_to_mobile_btn.opacity = true;
+                send_to_mobile_btn.visible = true;
+                unpair_btn_touch_area.enabled = false;
+                pairing_btn_touch_area.enabled = true;
+                pairing_btn_touch_area.active = false;
             }
         }
     }
@@ -246,15 +250,23 @@ Item
     MultiPointTouchArea
     {
         id: pairing_btn_touch_area
-        anchors.fill: pairing_btn
+        anchors.fill: send_to_mobile_btn
         property bool active: false
         onPressed:
         {
             active = !active;
             pairing.visible = active//.source = active ? "content/POI/filter-btn-bkg.png" : "content/POI/filter-btn.png"
             pairing_btn.visible = active;
-            send_to_mobile_btn.opacity = !active;
-            if(active) pairing.startSession();
+            send_to_mobile_btn.visible = !active;
+            if(active) {
+                pairing.resetPairing();
+                pairing.startSession();
+            }
+        }
+        Rectangle{
+            color:"blue"
+            visible: enabled
+            anchors.fill: parent
         }
     }
     MultiPointTouchArea
@@ -265,7 +277,12 @@ Item
         //property bool active: false
         onPressed:
         {
-
+            pairing.startUnpair();
+        }
+        Rectangle{
+            color:"red"
+            visible: enabled
+            anchors.fill: parent
         }
     }
 
@@ -410,6 +427,26 @@ Item
             //console.log("delete filepath = ",filepath, "whichScreen = ", whichScreen)
 
             root.imageRemovedFromScene(filepath);
+        }
+        onImageDragged:
+        {
+            var canvasX = pairing.x;
+            var canvasY = pairing.y;
+            var canvasWidth = pairing.width;
+            var canvasHeight = pairing.height;
+
+            var middleX = image.x + image.width * 3/4;
+            var middleY = image.y + image.height * 3/4;
+
+            if(middleX > canvasX && image.x < canvasX + canvasWidth - image.width/4 &&
+                    middleY > canvasY && image.y < canvasY + canvasHeight - image.height/4)
+            {
+                image.turnSmall();
+            }
+            else
+            {
+                image.turnBack();
+            }
         }
     }
 

@@ -99,7 +99,8 @@ DISTFILES += \
     TestHeist.qml \
     HeistManager.qml \
     HeistReceiver.qml \
-    Pairings.qml
+    Pairings.qml \
+    ReadyToUnpair.qml
 
 RESOURCES += \
     qml.qrc
