@@ -15,8 +15,8 @@ Item
 
     property var selectedParent: null
 
-    property int pairingAbsoluteX: pairing.x + root.x
-    property int pairingAbsoluteY: pairing.y + root.y
+    property int pairingAbsoluteX: pairing.x + (root.topScreen?(Settings.SCREEN_WIDTH - root.x):root.x)
+    property int pairingAbsoluteY: pairing.y + (root.topScreen?(Settings.SCREEN_HEIGHT - root.y):root.y)
     property int pairingWidth: pairing.width
     property int pairingHeight: pairing.height
 

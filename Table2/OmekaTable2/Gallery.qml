@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.4
 import "."
+import "settings.js" as Settings
 
 
 /*!Media viewer*/
@@ -221,17 +222,30 @@ Item {
 
     function isImageInPairingBox(carousel,image)
     {
-        var middleX = image.x + image.width * 3/4;
-        var middleY = image.y + image.height * 3/4;
+        var middleX = image.x + image.width * 1/2;
+        var middleY = image.y + image.height * 1/2;
+        if(image.topScreen)
+        {
+            middleX = Settings.SCREEN_WIDTH - middleX;
+            middleY = Settings.SCREEN_HEIGHT - middleY;
+        }
+
 
         var pairing_width = carousel.pairingWidth;
         var pairing_height = carousel.pairingHeight;
 
         var pairing_x = carousel.pairingAbsoluteX;
         var pairing_y = carousel.pairingAbsoluteY;
+        if(carousel.topScreen)
+        {
+            pairing_x = Settings.SCREEN_WIDTH - pairing_x - pairing_width;
+            pairing_y = Settings.SCREEN_HEIGHT - pairing_y - pairing_height;
+        }
 
-        if(middleX > pairing_x && image.x < pairing_x + pairing_width - image.width/4 &&
-                middleY > pairing_y && image.y < pairing_y + pairing_height - image.height/4)
+        console.log("middleX = ", middleX, " middleY = ", middleY, "pairing_x = ", pairing_x, "pairing_y = ", pairing_y)
+
+        if(middleX > pairing_x && middleX < pairing_x + pairing_width&&
+                middleY > pairing_y && middleY < pairing_y + pairing_height)
         {
             if(carousel.paired)
             {
