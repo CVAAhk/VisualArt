@@ -175,7 +175,7 @@ Item
 
             imageItem.deleteImage.connect(deleteImage);
 
-            if(imageItems.length == 0) maxImageHeight = 0.0;
+            if(imageItems.length == 0) maxImageHeight = 10;
             maxImageHeight += 0.01;
             imageItem.z = maxImageHeight;
 

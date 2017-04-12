@@ -16,9 +16,9 @@ Item
     objectName: "detail"
     visible: false
 
-    property int imageWidth//: img.width
+    property int imageWidth
 
-    property int imageHeight : media.height//: img.height
+    property int imageHeight : media.height
 
     property string whichScreen
     property string source
@@ -34,6 +34,9 @@ Item
     property bool openedAttract: false
 
     property bool inUse: false
+
+    property int recoveryX//x after detail item is added to mobile favorites
+    property int recoveryY
 
     signal imageDragged(var image);
 
@@ -349,8 +352,10 @@ Item
             }
         }
     }
-    function recycle()
+    function recycle(recoveryX, recoveryY)
     {
+        root.recoveryX = recoveryX;
+        root.recoveryY = recoveryY;
         recycleAnimation.start();
     }
 

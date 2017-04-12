@@ -15,6 +15,16 @@ Item
 
     property var selectedParent: null
 
+    property int pairingAbsoluteX: pairing.x + root.x
+    property int pairingAbsoluteY: pairing.y + root.y
+    property int pairingWidth: pairing.width
+    property int pairingHeight: pairing.height
+
+    property bool paired: pairing.paired
+
+    property var currentCode: pairing.currentCode
+
+
     Component.onCompleted:
     {
         selected_image.parent = selectedParent;
@@ -39,6 +49,8 @@ Item
 
     signal canPaginate()
     signal createImage(string source, int imageX, int imageY, int imageRotation, int imageWidth, int imageHeight, bool tapOpen);
+    signal imageDragged(var image);
+    signal imageFinishedDragging(var image);
 
     enabled: opacity == 1.0
     Behavior on opacity {
@@ -430,23 +442,11 @@ Item
         }
         onImageDragged:
         {
-            var canvasX = pairing.x;
-            var canvasY = pairing.y;
-            var canvasWidth = pairing.width;
-            var canvasHeight = pairing.height;
-
-            var middleX = image.x + image.width * 3/4;
-            var middleY = image.y + image.height * 3/4;
-
-            if(middleX > canvasX && image.x < canvasX + canvasWidth - image.width/4 &&
-                    middleY > canvasY && image.y < canvasY + canvasHeight - image.height/4)
-            {
-                image.turnSmall();
-            }
-            else
-            {
-                image.turnBack();
-            }
+            root.imageDragged(image);
+        }
+        onImageFinishedDragging:
+        {
+            root.imageFinishedDragging(image);
         }
     }
 

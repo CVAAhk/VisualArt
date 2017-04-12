@@ -170,7 +170,7 @@ Item
     /*! Listens to iterative heist data updates */
     HeistReceiver {
         id: receiver
-        onDeviceChanged: {deviceId = device;console.log("devide id = ", deviceId);}
+        onDeviceChanged: {deviceId = device;/*console.log("devide id = ", deviceId);*/}
         code: currentCode
     }
 
