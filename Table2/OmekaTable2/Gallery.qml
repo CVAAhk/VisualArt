@@ -83,10 +83,17 @@ Item {
         }
         onImageDragged:
         {
-            gallery.isImageInPairingBox(lower_left_carousel,image);
-            gallery.isImageInPairingBox(lower_right_carousel,image);
-            gallery.isImageInPairingBox(top_left_carousel,image);
-            gallery.isImageInPairingBox(top_right_carousel,image);
+            if(gallery.isImageInPairingBox(lower_left_carousel,image)||
+            gallery.isImageInPairingBox(lower_right_carousel,image)||
+            gallery.isImageInPairingBox(top_left_carousel,image)||
+            gallery.isImageInPairingBox(top_right_carousel,image))
+            {
+                image.turnSmall();
+            }
+            else
+            {
+                image.turnBack();
+            }
         }
         onImageFinishedDragging:
         {
@@ -114,10 +121,17 @@ Item {
         }
         onImageDragged:
         {
-            gallery.isImageInPairingBox(lower_left_carousel,image);
-            gallery.isImageInPairingBox(lower_right_carousel,image);
-            gallery.isImageInPairingBox(top_left_carousel,image);
-            gallery.isImageInPairingBox(top_right_carousel,image);
+            if(gallery.isImageInPairingBox(lower_left_carousel,image)||
+            gallery.isImageInPairingBox(lower_right_carousel,image)||
+            gallery.isImageInPairingBox(top_left_carousel,image)||
+            gallery.isImageInPairingBox(top_right_carousel,image))
+            {
+                image.turnSmall();
+            }
+            else
+            {
+                image.turnBack();
+            }
         }
         onImageFinishedDragging:
         {
@@ -182,10 +196,17 @@ Item {
         }
         onImageDragged:
         {
-            if(!gallery.isImageInPairingBox(lower_left_carousel,image))
-            gallery.isImageInPairingBox(lower_right_carousel,image);
-            gallery.isImageInPairingBox(top_left_carousel,image);
-            gallery.isImageInPairingBox(top_right_carousel,image);
+            if(gallery.isImageInPairingBox(lower_left_carousel,image)||
+            gallery.isImageInPairingBox(lower_right_carousel,image)||
+            gallery.isImageInPairingBox(top_left_carousel,image)||
+            gallery.isImageInPairingBox(top_right_carousel,image))
+            {
+                image.turnSmall();
+            }
+            else
+            {
+                image.turnBack();
+            }
         }
         onImageFinishedDragging:
         {

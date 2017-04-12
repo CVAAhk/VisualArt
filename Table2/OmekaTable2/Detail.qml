@@ -35,6 +35,8 @@ Item
 
     property bool inUse: false
 
+    property bool topScreen: false
+
     property int recoveryX//x after detail item is added to mobile favorites
     property int recoveryY
 
@@ -107,9 +109,10 @@ Item
 
         onPositionUpdated:
         {
-            root.x += delta_x// * (detail.topScreen ? -1.0 : 1.0);// * detail.scale;
-            root.y += delta_y// * (detail.topScreen ? -1.0 : 1.0);// * detail.scale;
+            root.x += delta_x* (root.topScreen ? -1.0 : 1.0);// * detail.scale;
+            root.y += delta_y* (root.topScreen ? -1.0 : 1.0);// * detail.scale;
 
+            console.log("root.x = ", root.x, "root.y = ", root.y, "root.z = ", root.z)
             if(root.y + root.height/2 > Settings.BASE_SCREEN_HEIGHT / 2)
             {
                 root.rotation = 0;
@@ -137,12 +140,6 @@ Item
 
         debugView: Settings.DEBUG_VIEW
 
-        Behavior on rotation {
-            NumberAnimation
-            {
-                duration: 500
-            }
-        }
     }
     MediaViewer
     {

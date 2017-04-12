@@ -28,6 +28,7 @@ Item
     Component.onCompleted:
     {
         selected_image.parent = selectedParent;
+        imageHolder.parent = selectedParent;
     }
 
     //submit tag search
@@ -315,7 +316,9 @@ Item
             onCreateImage:
             {
                 //root.createImage(source, imageX, imageY, imageRotation, imageWidth, imageHeight, tapOpen)
-                imageHolder.createImage(source, imageX + root.x, imageY + root.y, imageRotation, imageWidth, imageHeight, tapOpen, root.whichScreen)
+                imageHolder.createImage(source, imageX + (root.topScreen?(Settings.SCREEN_WIDTH - root.x):root.x),
+                                        imageY + (root.topScreen?(Settings.SCREEN_HEIGHT - root.y):root.y),
+                                        imageRotation, imageWidth, imageHeight, tapOpen, root.whichScreen)
             }
 
             property real contentX: layout.contentX
@@ -428,7 +431,8 @@ Item
     CollectionImageHolder
     {
         id: imageHolder
-        x: -root.x; y: -root.y
+        x: root.topScreen?-(Settings.SCREEN_WIDTH - root.x):-root.x;
+        y: root.topScreen?-(Settings.SCREEN_HEIGHT - root.y):-root.y
         width: Settings.SCREEN_WIDTH
         height: Settings.SCREEN_HEIGHT
 

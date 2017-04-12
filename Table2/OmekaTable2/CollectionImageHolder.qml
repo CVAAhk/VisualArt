@@ -108,6 +108,7 @@ Item
                     if(imageRotation > 0)
                     {
                         imageItem.y = startY - imageItem.height;
+                        imageItem.rotation = imageRotation;
                     }
                     else
                     {
@@ -124,6 +125,7 @@ Item
                     if(imageRotation > 0)
                     {
                         imageItem.y = startY - imageItem.height;
+                        imageItem.rotation = imageRotation;
                     }
                     else
                     {
@@ -138,16 +140,16 @@ Item
                     imageItem.x = startX;
                     image_pop.property = "y";
 
-                    if(imageRotation > 0)
-                    {
-                        image_pop.from = 315 - imageHeight;
-                        image_pop.to = startY - imageHeight;
-                    }
-                    else
-                    {
+//                    if(imageRotation > 0)
+//                    {
+//                        image_pop.from = 315 - imageHeight;
+//                        image_pop.to = startY - imageHeight;
+//                    }
+//                    else
+//                    {
                        image_pop.from = 765;
-                        image_pop.to = startY;
-                    }
+                       image_pop.to = startY;
+//                    }
                 }
 
                 image_pop.start();
@@ -164,16 +166,18 @@ Item
             imageItem.imageDragged.connect(root.imageDragged);
             imageItem.finishedDragging.connect(root.imageFinishedDragging);
             //imageItem.finishedRecycle.connect(root.imageFinishedRecycle);
-            imageItem.whichScreen = whichScreen;
-
-
-            imageItem.rotation = imageRotation;
-            imageItem.scale = 1;
-
-
             imageItem.imagePressed.connect(imagePressed);
 
             imageItem.deleteImage.connect(deleteImage);
+            imageItem.whichScreen = whichScreen;
+
+
+            //imageItem.rotation = imageRotation;
+            imageItem.topScreen = imageRotation > 0;
+            imageItem.scale = 1;
+
+
+
 
             if(imageItems.length == 0) maxImageHeight = 10;
             maxImageHeight += 0.01;

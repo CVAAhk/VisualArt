@@ -160,19 +160,19 @@ Item {
                         var tap_x = 0;
                         var tap_y = 0;
                         var rotation = 0;
-                        if(root.topScreen)
-                        {
-                            tap_x = (root.width * 0.5) * -0.5 + -newImageWidth * 0.5;
-                        }
-                        else
-                        {
+//                        if(root.topScreen)
+//                        {
+//                            tap_x = (root.width * 0.5) * -0.5 + -newImageWidth * 0.5;
+//                        }
+//                        else
+//                        {
                             tap_x = (root.width * 0.5) * 0.5 - newImageWidth * 0.5
-                        }
+//                        }
 
                         assignItemPosition(tap_x);
                         if(root.topScreen)
                         {
-                            tap_y = -assignedPosition.y;
+                            tap_y = assignedPosition.y;
 
                             rotation = 180;
                         }
@@ -293,8 +293,8 @@ Item {
 
                 if(root.topScreen)
                 {
-                    imageCenterX = -selected_image.x - selected_image.width// + root.x + touch_area.x;//
-                    imageCenterY = -selected_image.y - selected_image.height// / 2//1080 + (selected_image.y); // selected_image.height / 2 + root.y + touch_area.y;
+                    imageCenterX = selected_image.x//-selected_image.x - selected_image.width// + root.x + touch_area.x;//
+                    imageCenterY = selected_image.y//-selected_image.y - selected_image.height// / 2//1080 + (selected_image.y); // selected_image.height / 2 + root.y + touch_area.y;
                     rotation = 180;
                 }
                 else
