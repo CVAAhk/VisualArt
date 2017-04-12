@@ -68,7 +68,7 @@ ScaleColumn
 
     //info panel
     info: OmekaText {
-        id: info
+        //id: info
         //anchors.horizontalCenter: parent.horizontalCenter
         visible: opacity > 0
         width: parent.width - 20//Resolution.applyScale(60)

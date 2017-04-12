@@ -75,11 +75,22 @@ Item {
         selectedParent: overlayImageTopLeftRoot
         onCreateImage:
         {
-            imageHolder.createImage(source, imageX + x, imageY + y, imageRotation, imageWidth, imageHeight, tapOpen, "top left")
+            //imageHolder.createImage(source, imageX + x, imageY + y, imageRotation, imageWidth, imageHeight, tapOpen, "top left")
         }
         onCanPaginate:
         {
             Omeka.getNextPage(gallery)
+        }
+        onImageDragged:
+        {
+            gallery.isImageInPairingBox(lower_left_carousel,image);
+            gallery.isImageInPairingBox(lower_right_carousel,image);
+            gallery.isImageInPairingBox(top_left_carousel,image);
+            gallery.isImageInPairingBox(top_right_carousel,image);
+        }
+        onImageFinishedDragging:
+        {
+            addImageToFavorites(image)
         }
     }
     Carousel
@@ -95,11 +106,22 @@ Item {
         selectedParent: overlayImageTopRightRoot
         onCreateImage:
         {
-            imageHolder.createImage(source, imageX + x, imageY + y, imageRotation, imageWidth, imageHeight, tapOpen, "top right")
+            //imageHolder.createImage(source, imageX + x, imageY + y, imageRotation, imageWidth, imageHeight, tapOpen, "top right")
         }
         onCanPaginate:
         {
             Omeka.getNextPage(gallery)
+        }
+        onImageDragged:
+        {
+            gallery.isImageInPairingBox(lower_left_carousel,image);
+            gallery.isImageInPairingBox(lower_right_carousel,image);
+            gallery.isImageInPairingBox(top_left_carousel,image);
+            gallery.isImageInPairingBox(top_right_carousel,image);
+        }
+        onImageFinishedDragging:
+        {
+            addImageToFavorites(image)
         }
     }
 
@@ -113,13 +135,32 @@ Item {
         color: "#2b89d9"
         whichScreen: "lower left"
         selectedParent: overlayImageLowerLeftRoot
+        //property var code
         onCreateImage:
         {
-            imageHolder.createImage(source, imageX + x, imageY + y, imageRotation, imageWidth, imageHeight, tapOpen, "lower left")
+            //imageHolder.createImage(source, imageX + x, imageY + y, imageRotation, imageWidth, imageHeight, tapOpen, "lower left")
         }
         onCanPaginate:
         {
             Omeka.getNextPage(gallery)
+        }
+        onImageDragged:
+        {
+            if(gallery.isImageInPairingBox(lower_left_carousel,image)||
+            gallery.isImageInPairingBox(lower_right_carousel,image)||
+            gallery.isImageInPairingBox(top_left_carousel,image)||
+            gallery.isImageInPairingBox(top_right_carousel,image))
+            {
+                image.turnSmall();
+            }
+            else
+            {
+                image.turnBack();
+            }
+        }
+        onImageFinishedDragging:
+        {
+            addImageToFavorites(image)
         }
     }
     Carousel
@@ -133,32 +174,22 @@ Item {
         selectedParent: overlayImageLowerRightRoot
         onCreateImage:
         {
-            imageHolder.createImage(source, imageX + x, imageY + y, imageRotation, imageWidth, imageHeight, tapOpen, "lower right")
+            //imageHolder.createImage(source, imageX + x, imageY + y, imageRotation, imageWidth, imageHeight, tapOpen, "lower right")
         }
         onCanPaginate:
         {
             Omeka.getNextPage(gallery)
         }
-    }
-
-    CollectionImageHolder
-    {
-        id: imageHolder
-
-        width: parent.width
-        height: parent.height
-
-        antialiasing: true
-
-        onImageDeleted:
+        onImageDragged:
         {
-            //console.log("delete filepath = ",filepath, "whichScreen = ", whichScreen)
-
-            if(whichScreen === "lower left") lower_left_carousel.imageRemovedFromScene(filepath);
-            if(whichScreen === "lower right") lower_right_carousel.imageRemovedFromScene(filepath);
-            if(whichScreen === "top left") top_left_carousel.imageRemovedFromScene(filepath);
-            if(whichScreen === "top right") top_right_carousel.imageRemovedFromScene(filepath);
-            if(whichScreen.includes("attract")) gallery.removeAttractImage(filepath,whichScreen);
+            if(!gallery.isImageInPairingBox(lower_left_carousel,image))
+            gallery.isImageInPairingBox(lower_right_carousel,image);
+            gallery.isImageInPairingBox(top_left_carousel,image);
+            gallery.isImageInPairingBox(top_right_carousel,image);
+        }
+        onImageFinishedDragging:
+        {
+            addImageToFavorites(image)
         }
     }
 
@@ -167,8 +198,54 @@ Item {
     Item { id: overlayImageLowerLeftRoot; x: lower_left_carousel.x; y: lower_left_carousel.y; rotation: lower_left_carousel.rotation }
     Item { id: overlayImageLowerRightRoot; x: lower_right_carousel.x; y: lower_right_carousel.y; rotation: lower_right_carousel.rotation }
 
-    function imageHolderCreateImage(filepath, startX, startY, imageRotation, imageWidth, imageHeight, tapOpen, whichScreen)
+    function isImageInPairingBox(carousel,image)
     {
-        imageHolder.createImage(filepath, startX, startY, imageRotation, imageWidth, imageHeight, tapOpen, whichScreen)
+        var middleX = image.x + image.width * 3/4;
+        var middleY = image.y + image.height * 3/4;
+
+        var pairing_width = carousel.pairingWidth;
+        var pairing_height = carousel.pairingHeight;
+
+        var pairing_x = carousel.pairingAbsoluteX;
+        var pairing_y = carousel.pairingAbsoluteY;
+
+        if(middleX > pairing_x && image.x < pairing_x + pairing_width - image.width/4 &&
+                middleY > pairing_y && image.y < pairing_y + pairing_height - image.height/4)
+        {
+            if(carousel.paired)
+            {
+                //image.turnSmall();
+                return true;
+            }
+        }
+        else
+        {
+            //image.turnBack();
+            return false;
+        }
+        return false;
+    }
+    function addImageToFavorites(image)
+    {
+        if(gallery.isImageInPairingBox(lower_left_carousel,image) && lower_left_carousel.currentCode)
+        {
+            console.log("add item = ", image.item.id)
+            HeistManager.addItem(lower_left_carousel.currentCode, image.item.id, lower_left_carousel);
+        }
+        else if(gallery.isImageInPairingBox(lower_right_carousel,image) && lower_right_carousel.currentCode)
+        {
+            console.log("add item = ", image.item.id)
+            HeistManager.addItem(lower_right_carousel.currentCode, image.item.id, lower_right_carousel);
+        }
+        else if(gallery.isImageInPairingBox(top_right_carousel,image) && top_right_carousel.currentCode)
+        {
+            console.log("add item = ", image.item.id)
+            HeistManager.addItem(top_right_carousel.currentCode, image.item.id, top_right_carousel);
+        }
+        else if(gallery.isImageInPairingBox(top_left_carousel,image) && top_left_carousel.currentCode)
+        {
+            console.log("add item = ", image.item.id)
+            HeistManager.addItem(top_left_carousel.currentCode, image.item.id, top_left_carousel);
+        }
     }
 }

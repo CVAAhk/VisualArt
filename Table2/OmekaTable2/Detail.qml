@@ -16,9 +16,9 @@ Item
     objectName: "detail"
     visible: false
 
-    property int imageWidth//: img.width
+    property int imageWidth
 
-    property int imageHeight : media.height//: img.height
+    property int imageHeight : media.height
 
     property string whichScreen
     property string source
@@ -34,6 +34,9 @@ Item
     property bool openedAttract: false
 
     property bool inUse: false
+
+    property int recoveryX//x after detail item is added to mobile favorites
+    property int recoveryY
 
     signal imageDragged(var image);
 
@@ -93,6 +96,14 @@ Item
 
         minimumY: 0 - root.imageHeight
         maximumY: 1080 - root.imageHeight
+
+        onDraggingChanged:
+        {
+            if(!dragging)
+            {
+                root.finishedDragging(root);
+            }
+        }
 
         onPositionUpdated:
         {
@@ -303,4 +314,60 @@ Item
             root.deleteImage(root);
         }
     }
+
+    SequentialAnimation
+    {
+        id: recoveryAnimation
+
+
+        PauseAnimation {
+            duration: 500
+        }
+
+        PropertyAnimation { target: root; property: 'scale'; to: 1; duration: 250 }
+
+        PropertyAction { target: root; property: "visible"; value: true }
+        onRunningChanged:
+        {
+            if(!running)
+            {
+                //finishedRecycle();
+            }
+        }
+    }
+
+    SequentialAnimation
+    {
+        id: recycleAnimation
+
+        PropertyAnimation { target: root; property: 'scale'; to: 0.01; duration: 250 }
+
+        PropertyAction { target: root; property: "visible"; value: false }
+        onRunningChanged:
+        {
+            if(!running)
+            {
+                finishedRecycle();
+                recoveryAnimation.start();
+            }
+        }
+    }
+    function recycle(recoveryX, recoveryY)
+    {
+        root.recoveryX = recoveryX;
+        root.recoveryY = recoveryY;
+        recycleAnimation.start();
+    }
+
+    function turnSmall()
+    {
+        root.scale = 0.5;
+        root.active = false;
+    }
+
+    function turnBack()
+    {
+        root.scale = 1.0;
+    }
+
 }

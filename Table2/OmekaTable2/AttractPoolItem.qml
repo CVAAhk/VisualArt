@@ -55,7 +55,7 @@ Item
         x: 750;y: 539
         onCreateImage:
         {
-            root.createImage(source,imageX + x,imageY + y,imageRotation,imageWidth,imageHeight, tapOpen, "attract lower left")
+            imageHolder.createImage(source,imageX + x,imageY + y,imageRotation,imageWidth,imageHeight, tapOpen, "attract lower left")
             var random_id1 = Math.floor(randomizeId());
             imageItem1.itemResult = allResults[random_id1]
         }
@@ -71,7 +71,7 @@ Item
         x: 970;y: 539
         onCreateImage:
         {
-            root.createImage(source,imageX + x,imageY + y,imageRotation,imageWidth,imageHeight, tapOpen, "attract lower right")
+            imageHolder.createImage(source,imageX + x,imageY + y,imageRotation,imageWidth,imageHeight, tapOpen, "attract lower right")
             var random_id2 = Math.floor(randomizeId());
             imageItem2.itemResult = allResults[random_id2]
         }
@@ -92,7 +92,7 @@ Item
         rotation: 180
         onCreateImage:
         {
-            root.createImage(source,imageX + x + 30,imageY + 509,imageRotation,imageWidth,imageHeight, tapOpen, "attract top left")
+            imageHolder.createImage(source,imageX + x + 30,imageY + 509,imageRotation,imageWidth,imageHeight, tapOpen, "attract top left")
             var random_id3 = Math.floor(randomizeId());
             imageItem3.itemResult = allResults[random_id3]
         }
@@ -113,7 +113,7 @@ Item
         rotation: 180
         onCreateImage:
         {
-            root.createImage(source,imageX + x + 30,imageY + 509,imageRotation,imageWidth,imageHeight, tapOpen, "attract top right")
+            imageHolder.createImage(source,imageX + x + 30,imageY + 509,imageRotation,imageWidth,imageHeight, tapOpen, "attract top right")
             var random_id4 = Math.floor(randomizeId());
             imageItem4.itemResult = allResults[random_id4]
         }
@@ -124,9 +124,29 @@ Item
         }
     }
 
+    CollectionImageHolder
+    {
+        id: imageHolder
+        x: -root.x; y: -root.y
+        width: Settings.SCREEN_WIDTH
+        height: Settings.SCREEN_HEIGHT
+
+        antialiasing: true
+
+        onImageDeleted:
+        {
+            //console.log("delete filepath = ",filepath, "whichScreen = ", whichScreen)
+
+            root.removeAttractImage(filepath, whichScreen);
+        }
+    }
+
     function removeAttractImage(filePath, whichScreen)
     {
         if(whichScreen === "attract lower left") imageItem1.imageRemovedFromScene(filePath)
+        if(whichScreen === "attract lower right") imageItem2.imageRemovedFromScene(filePath)
+        if(whichScreen === "attract top left") imageItem3.imageRemovedFromScene(filePath)
+        if(whichScreen === "attract top right") imageItem4.imageRemovedFromScene(filePath)
     }
 
     Timer

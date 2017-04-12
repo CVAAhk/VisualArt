@@ -2,5 +2,6 @@
 /Mobile/*.keystore
 /Mobile/scripts/files
 Table2/build-OmekaTable2-Desktop_Qt_5_7_0_MSVC2013_64bit-Debug/*
+Mobile/build-OmekaMobile-Desktop_Qt_5_8_0_MSVC2013_64bit-Debug/*
 *.qmlc
 *.jsc

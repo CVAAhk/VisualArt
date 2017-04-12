@@ -8,10 +8,17 @@ Item
     id: root
     width: 175
 
-    property var codes: [];
+    //property var codes: [];
     property string color: "#2b89d9"//blue
+    /*
+      The latest generated pairing code
+     */
+    property var currentCode;
 
     signal whatIsThis();
+
+    //remove sessions from heist on app exit
+    Component.onDestruction: clean();
 
     Rectangle
     {
@@ -123,21 +130,29 @@ Item
         }
     }
 
-    Component.onCompleted: generateCode();
 
+
+    function randomInt(min, max) {
+
+        return Math.floor(Math.random()*(max-min)+min);
+
+    }
+    /*! Create new heist pairing sessions */
+    function startSession() {
+        generateCode();
+        HeistManager.startPairingSession(currentCode);
+    }
+
+    /*! Generate unique pairing code. This needs to be tracked
+        at a global level and not local to the table user*/
     function generateCode() {
-
         var code;
-
         do {
-
             code = randomInt(1111,9999);
-
         }
-
-        while (codes.indexOf(code) !== -1);
-
-        codes.push(code);
+        while (HeistManager.codes.indexOf(code) !== -1);
+        currentCode = code;
+        HeistManager.codes.push(code);
         var first_digit = Math.floor(code / 1000);
         var second_digit = Math.floor(code % 1000 /100);
         var third_digit = Math.floor(code % 100 /10);
@@ -147,12 +162,7 @@ Item
         code_second_digit.text = second_digit;
         code_third_digit.text = third_digit;
         code_fourth_digit.text = fourth_digit;
-        console.log("code = ", codes[codes.length - 1])
     }
 
-    function randomInt(min, max) {
 
-        return Math.floor(Math.random()*(max-min)+min);
-
-    }
 }

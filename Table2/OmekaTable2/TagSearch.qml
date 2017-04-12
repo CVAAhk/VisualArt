@@ -82,11 +82,11 @@ Item {
             delegate: TagDelegate {}
             spacing: 6
 
-            Behavior on contentY { enabled: list.updatingY; NumberAnimation { duration: 300 } }
+            Behavior on contentY { enabled: list.updatingY; NumberAnimation { id: yAnimation; duration: 300 } }
 
             onContentYChanged:
             {
-                if(updatingY) return;
+                if(updatingY || yAnimation.running) return;
                 var contentIndex = Math.round((contentY + 12) / 33);
 
                 if(contentIndex < 0 || contentIndex >= list.model.count)
@@ -115,7 +115,8 @@ Item {
                 return;
             var letter = tag.toUpperCase().charCodeAt(0);
 
-            if(letter >= newLetterId)
+            if(letter >= newLetterId ||
+                    i + 1 == list.model.count)
             {
                 list.updatingY = true;
                 list.contentY = 31 * i;

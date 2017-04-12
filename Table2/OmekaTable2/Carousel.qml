@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import QtGraphicalEffects 1.0
 import "."
+import "settings.js" as Settings
 
 Item
 {
@@ -13,6 +14,16 @@ Item
     property bool searchByTag: false
 
     property var selectedParent: null
+
+    property int pairingAbsoluteX: pairing.x + root.x
+    property int pairingAbsoluteY: pairing.y + root.y
+    property int pairingWidth: pairing.width
+    property int pairingHeight: pairing.height
+
+    property bool paired: pairing.paired
+
+    property var currentCode: pairing.currentCode
+
 
     Component.onCompleted:
     {
@@ -38,6 +49,8 @@ Item
 
     signal canPaginate()
     signal createImage(string source, int imageX, int imageY, int imageRotation, int imageWidth, int imageHeight, bool tapOpen);
+    signal imageDragged(var image);
+    signal imageFinishedDragging(var image);
 
     enabled: opacity == 1.0
     Behavior on opacity {
@@ -80,6 +93,28 @@ Item
         id: pairing
         x: 498; y: 10
         color: root.color
+        visible: false
+        onPairedChanged:
+        {
+            if(paired)
+            {
+                console.log("paired!!")
+                pairing_text.text = "TAP TO UNPAIR";
+                pairing_btn_touch_area.enabled = false;
+                unpair_btn_touch_area.enabled = true;
+            }
+            else
+            {
+                console.log("unpaired!!")
+                pairing_text.text = "PAIRING";
+                pairing.visible = false;
+                pairing_btn.visible = false;
+                send_to_mobile_btn.visible = true;
+                unpair_btn_touch_area.enabled = false;
+                pairing_btn_touch_area.enabled = true;
+                pairing_btn_touch_area.active = false;
+            }
+        }
     }
 
     Image
@@ -173,10 +208,7 @@ Item
             text: "FILTER"
             textColor: root.color
             anchors.centerIn: parent
-
         }
-
-
     }
     MultiPointTouchArea
     {
@@ -205,13 +237,64 @@ Item
         anchors.top: carousel_header_bkg.top
         anchors.right: carousel_header_bkg.right
         anchors.margins: 10
-        MultiPointTouchArea
+    }
+    Rectangle
+    {
+        id: pairing_btn
+        width: pairing_text.width + 10
+        height: 25
+        anchors.top: carousel_header_bkg.top
+        anchors.right: carousel_header_bkg.right
+        anchors.margins: 10
+        radius: 4
+        color: "white"
+        visible: false
+        OmekaText
         {
-            anchors.fill: parent
-            onPressed:
-            {
+            id: pairing_text
 
+            _font: Style.filterFont
+            text: "PAIRING"
+            textColor: root.color
+            anchors.centerIn: parent
+        }
+    }
+    MultiPointTouchArea
+    {
+        id: pairing_btn_touch_area
+        anchors.fill: send_to_mobile_btn
+        property bool active: false
+        onPressed:
+        {
+            active = !active;
+            pairing.visible = active//.source = active ? "content/POI/filter-btn-bkg.png" : "content/POI/filter-btn.png"
+            pairing_btn.visible = active;
+            send_to_mobile_btn.visible = !active;
+            if(active) {
+                pairing.resetPairing();
+                pairing.startSession();
             }
+        }
+        Rectangle{
+            color:"blue"
+            visible: enabled
+            anchors.fill: parent
+        }
+    }
+    MultiPointTouchArea
+    {
+        id: unpair_btn_touch_area
+        anchors.fill: pairing_btn
+        enabled: false
+        //property bool active: false
+        onPressed:
+        {
+            pairing.startUnpair();
+        }
+        Rectangle{
+            color:"red"
+            visible: enabled
+            anchors.fill: parent
         }
     }
 
@@ -231,7 +314,8 @@ Item
             topScreen: root.topScreen
             onCreateImage:
             {
-                root.createImage(source, imageX, imageY, imageRotation, imageWidth, imageHeight, tapOpen)
+                //root.createImage(source, imageX, imageY, imageRotation, imageWidth, imageHeight, tapOpen)
+                imageHolder.createImage(source, imageX + root.x, imageY + root.y, imageRotation, imageWidth, imageHeight, tapOpen, root.whichScreen)
             }
 
             property real contentX: layout.contentX
@@ -338,6 +422,31 @@ Item
         {
             anchors.fill: parent
             onPressed: browser.increaseCurrentItem();
+        }
+    }
+
+    CollectionImageHolder
+    {
+        id: imageHolder
+        x: -root.x; y: -root.y
+        width: Settings.SCREEN_WIDTH
+        height: Settings.SCREEN_HEIGHT
+
+        antialiasing: true
+
+        onImageDeleted:
+        {
+            //console.log("delete filepath = ",filepath, "whichScreen = ", whichScreen)
+
+            root.imageRemovedFromScene(filepath);
+        }
+        onImageDragged:
+        {
+            root.imageDragged(image);
+        }
+        onImageFinishedDragging:
+        {
+            root.imageFinishedDragging(image);
         }
     }
 

@@ -95,7 +95,12 @@ DISTFILES += \
     PairingInstruction.qml \
     PairSuccess.qml \
     DragFiles.qml \
-    SendSuccess.qml
+    SendSuccess.qml \
+    TestHeist.qml \
+    HeistManager.qml \
+    HeistReceiver.qml \
+    Pairings.qml \
+    ReadyToUnpair.qml
 
 RESOURCES += \
     qml.qrc
