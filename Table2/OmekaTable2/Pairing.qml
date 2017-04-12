@@ -178,16 +178,12 @@ Item
       Ends the pairing session and restores initial state
      */
     function endSession() {
+        receiver.register = false;
         HeistManager.endPairingSession(currentCode);
-        for(var i = 0; i < HeistManager.codes.length; i++)
-        {
-            if(HeistManager.codes[i] === currentCode)
-            {
-                HeistManager.codes.splice(i, 1);
-            }
+        if(HeistManager.codes.indexOf(currentCode) !== -1) {
+            HeistManager.codes.splice(HeistManager.codes.indexOf(currentCode), 1);
         }
         currentCode = "";
-                //HeistManager.codes[HeistManager.codes.length-1];
         paired = false;
         root.readyToUnpair = false;
     }
