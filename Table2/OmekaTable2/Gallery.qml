@@ -98,7 +98,40 @@ Item {
         }
         onImageFinishedDragging:
         {
-            addImageToFavorites(image)
+            var pairing_box_coordinates;
+            var target_x;
+            var target_y;
+            if(gallery.isImageInPairingBox(lower_left_carousel,image))
+            {
+                pairing_box_coordinates = pairingBoxCoordinates(lower_left_carousel);
+                target_x = Settings.SCREEN_WIDTH - pairing_box_coordinates.x - image.width;
+                target_y = Settings.SCREEN_HEIGHT - pairing_box_coordinates.y + 50;
+            }
+            else if(gallery.isImageInPairingBox(lower_right_carousel,image))
+            {
+                pairing_box_coordinates = pairingBoxCoordinates(lower_right_carousel);
+                target_x = Settings.SCREEN_WIDTH - pairing_box_coordinates.x - image.width;
+                target_y = Settings.SCREEN_HEIGHT - pairing_box_coordinates.y + 50;
+            }
+            else if(gallery.isImageInPairingBox(top_left_carousel,image))
+            {
+                pairing_box_coordinates = pairingBoxCoordinates(top_left_carousel);
+                target_x = Settings.SCREEN_WIDTH - pairing_box_coordinates.x - image.width;
+                target_y = Settings.SCREEN_HEIGHT - pairing_box_coordinates.y- image.height - top_left_carousel.pairingHeight;
+            }
+            else if(gallery.isImageInPairingBox(top_right_carousel,image))
+            {
+                pairing_box_coordinates = pairingBoxCoordinates(top_right_carousel);
+                target_x = Settings.SCREEN_WIDTH - pairing_box_coordinates.x - image.width;
+                target_y = Settings.SCREEN_HEIGHT - pairing_box_coordinates.y- image.height - top_right_carousel.pairingHeight;
+            }
+            else
+            {
+                return;
+            }
+            addImageToFavorites(image);
+
+            image.recycle(target_x,target_y);
         }
     }
     Carousel
@@ -136,7 +169,40 @@ Item {
         }
         onImageFinishedDragging:
         {
-            addImageToFavorites(image)
+            var pairing_box_coordinates;
+            var target_x;
+            var target_y;
+            if(gallery.isImageInPairingBox(lower_left_carousel,image))
+            {
+                pairing_box_coordinates = pairingBoxCoordinates(lower_left_carousel);
+                target_x = Settings.SCREEN_WIDTH - pairing_box_coordinates.x - image.width;
+                target_y = Settings.SCREEN_HEIGHT - pairing_box_coordinates.y + 50;
+            }
+            else if(gallery.isImageInPairingBox(lower_right_carousel,image))
+            {
+                pairing_box_coordinates = pairingBoxCoordinates(lower_right_carousel);
+                target_x = Settings.SCREEN_WIDTH - pairing_box_coordinates.x - image.width;
+                target_y = Settings.SCREEN_HEIGHT - pairing_box_coordinates.y + 50;
+            }
+            else if(gallery.isImageInPairingBox(top_left_carousel,image))
+            {
+                pairing_box_coordinates = pairingBoxCoordinates(top_left_carousel);
+                target_x = Settings.SCREEN_WIDTH - pairing_box_coordinates.x - image.width;
+                target_y = Settings.SCREEN_HEIGHT - pairing_box_coordinates.y- image.height - top_left_carousel.pairingHeight;
+            }
+            else if(gallery.isImageInPairingBox(top_right_carousel,image))
+            {
+                pairing_box_coordinates = pairingBoxCoordinates(top_right_carousel);
+                target_x = Settings.SCREEN_WIDTH - pairing_box_coordinates.x - image.width;
+                target_y = Settings.SCREEN_HEIGHT - pairing_box_coordinates.y- image.height - top_right_carousel.pairingHeight;
+            }
+            else
+            {
+                return;
+            }
+            addImageToFavorites(image);
+
+            image.recycle(target_x,target_y);
         }
     }
 
@@ -175,7 +241,40 @@ Item {
         }
         onImageFinishedDragging:
         {
-            addImageToFavorites(image)
+            var pairing_box_coordinates;
+            var target_x;
+            var target_y;
+            if(gallery.isImageInPairingBox(lower_left_carousel,image))
+            {
+                pairing_box_coordinates = pairingBoxCoordinates(lower_left_carousel);
+                target_x = pairing_box_coordinates.x;
+                target_y = pairing_box_coordinates.y - image.height;
+            }
+            else if(gallery.isImageInPairingBox(lower_right_carousel,image))
+            {
+                pairing_box_coordinates = pairingBoxCoordinates(lower_right_carousel);
+                target_x = pairing_box_coordinates.x;
+                target_y = pairing_box_coordinates.y - image.height;
+            }
+            else if(gallery.isImageInPairingBox(top_left_carousel,image))
+            {
+                pairing_box_coordinates = pairingBoxCoordinates(top_left_carousel);
+                target_x = pairing_box_coordinates.x;
+                target_y = pairing_box_coordinates.y + top_left_carousel.pairingHeight + 50;
+            }
+            else if(gallery.isImageInPairingBox(top_right_carousel,image))
+            {
+                pairing_box_coordinates = pairingBoxCoordinates(top_right_carousel);
+                target_x = pairing_box_coordinates.x;
+                target_y = pairing_box_coordinates.y + top_right_carousel.pairingHeight + 50;
+            }
+            else
+            {
+                return;
+            }
+            addImageToFavorites(image);
+
+            image.recycle(target_x,target_y);
         }
     }
     Carousel
@@ -211,7 +310,40 @@ Item {
         }
         onImageFinishedDragging:
         {
-            addImageToFavorites(image)
+            var pairing_box_coordinates;
+            var target_x;
+            var target_y;
+            if(gallery.isImageInPairingBox(lower_left_carousel,image))
+            {
+                pairing_box_coordinates = pairingBoxCoordinates(lower_left_carousel);
+                target_x = pairing_box_coordinates.x;
+                target_y = pairing_box_coordinates.y - image.height;
+            }
+            else if(gallery.isImageInPairingBox(lower_right_carousel,image))
+            {
+                pairing_box_coordinates = pairingBoxCoordinates(lower_right_carousel);
+                target_x = pairing_box_coordinates.x;
+                target_y = pairing_box_coordinates.y - image.height;
+            }
+            else if(gallery.isImageInPairingBox(top_left_carousel,image))
+            {
+                pairing_box_coordinates = pairingBoxCoordinates(top_left_carousel);
+                target_x = pairing_box_coordinates.x;
+                target_y = pairing_box_coordinates.y + top_left_carousel.pairingHeight + 50;
+            }
+            else if(gallery.isImageInPairingBox(top_right_carousel,image))
+            {
+                pairing_box_coordinates = pairingBoxCoordinates(top_right_carousel);
+                target_x = pairing_box_coordinates.x;
+                target_y = pairing_box_coordinates.y + top_right_carousel.pairingHeight + 50;
+            }
+            else
+            {
+                return;
+            }
+            addImageToFavorites(image);
+
+            image.recycle(target_x,target_y);
         }
     }
 
@@ -220,17 +352,8 @@ Item {
     Item { id: overlayImageLowerLeftRoot; x: lower_left_carousel.x; y: lower_left_carousel.y; rotation: lower_left_carousel.rotation }
     Item { id: overlayImageLowerRightRoot; x: lower_right_carousel.x; y: lower_right_carousel.y; rotation: lower_right_carousel.rotation }
 
-    function isImageInPairingBox(carousel,image)
+    function pairingBoxCoordinates(carousel)
     {
-        var middleX = image.x + image.width * 1/2;
-        var middleY = image.y + image.height * 1/2;
-        if(image.topScreen)
-        {
-            middleX = Settings.SCREEN_WIDTH - middleX;
-            middleY = Settings.SCREEN_HEIGHT - middleY;
-        }
-
-
         var pairing_width = carousel.pairingWidth;
         var pairing_height = carousel.pairingHeight;
 
@@ -241,6 +364,28 @@ Item {
             pairing_x = Settings.SCREEN_WIDTH - pairing_x - pairing_width;
             pairing_y = Settings.SCREEN_HEIGHT - pairing_y - pairing_height;
         }
+
+        var pairing_box_coordinates = ({});
+        pairing_box_coordinates.x = pairing_x;
+        pairing_box_coordinates.y = pairing_y;
+        return pairing_box_coordinates;
+    }
+
+    function isImageInPairingBox(carousel,image)
+    {
+        var middleX = image.x + image.width * 1/2;
+        var middleY = image.y + image.height * 1/2;
+        if(image.topScreen)
+        {
+            middleX = Settings.SCREEN_WIDTH - middleX;
+            middleY = Settings.SCREEN_HEIGHT - middleY;
+        }
+        var pairing_box_coordinates = pairingBoxCoordinates(carousel)
+        var pairing_x = pairing_box_coordinates.x;
+        var pairing_y = pairing_box_coordinates.y;
+
+        var pairing_width = carousel.pairingWidth;
+        var pairing_height = carousel.pairingHeight;
 
         console.log("middleX = ", middleX, " middleY = ", middleY, "pairing_x = ", pairing_x, "pairing_y = ", pairing_y)
 

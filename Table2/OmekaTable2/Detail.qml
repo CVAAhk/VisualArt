@@ -321,9 +321,16 @@ Item
             duration: 500
         }
 
-        PropertyAnimation { target: root; property: 'scale'; to: 1; duration: 250 }
-
         PropertyAction { target: root; property: "visible"; value: true }
+
+        ParallelAnimation
+        {
+            PropertyAnimation { target: root; property: 'opacity'; to: 1.0; duration: 250 }
+            PropertyAnimation { target: root; property: 'scale'; to: 1; duration: 250 }
+            PropertyAnimation { target: root; property: 'x'; to: recoveryX; duration: 250 }
+            PropertyAnimation { target: root; property: 'y'; to: recoveryY; duration: 250 }
+        }
+
         onRunningChanged:
         {
             if(!running)
@@ -337,14 +344,18 @@ Item
     {
         id: recycleAnimation
 
-        PropertyAnimation { target: root; property: 'scale'; to: 0.01; duration: 250 }
-
-        PropertyAction { target: root; property: "visible"; value: false }
+        PropertyAction { target: root; property: "transformOrigin"; value: Item.Center }
+        ParallelAnimation
+        {
+            PropertyAnimation { target: root; property: 'scale'; to: 0.1; duration: 250 }
+            PropertyAnimation { target: root; property: 'opacity'; to: 0.0; duration: 250 }
+        }
+        //PropertyAction { target: root; property: "visible"; value: false }
         onRunningChanged:
         {
             if(!running)
             {
-                finishedRecycle();
+                //finishedRecycle();
                 recoveryAnimation.start();
             }
         }
