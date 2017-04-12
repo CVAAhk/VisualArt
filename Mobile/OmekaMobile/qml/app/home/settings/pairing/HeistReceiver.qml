@@ -56,7 +56,7 @@ Item {
         if(data.errors) {
             error = data.errors[0].message;
             clearFields();
-        } else {
+        } else if(register) {
             var entry = data[0];
             if(entry) {
                 device = entry.device_id;

@@ -156,6 +156,7 @@ Item {
     */
     function unpair() {
         if(state === "paired") {
+            receiver.register = false;
             Foreground.showMessage("Pairing session has been terminated.", 3000, Resolution.applyScale(300))
             HeistManager.releasePairing(entry.codeString, deviceId);
             entry.resetCode();
