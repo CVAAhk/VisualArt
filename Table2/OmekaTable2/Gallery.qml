@@ -34,7 +34,7 @@ Item {
     {
         id: top_left_begin
         x: 346; y: 30
-        color: "#faa918"//"yellow"
+        color: "yellow"
         onYellowPressed: {top_left_carousel.opacity = active ? 1.0 : 0.0; gallery.carouselActivate()}
 
     }
@@ -42,21 +42,21 @@ Item {
     {
         id: top_right_begin
         x: 1306; y: 30
-        color: "#7ac70c"//"green"
+        color: "green"
         onGreenPressed: {top_right_carousel.opacity = active ? 1.0 : 0.0; gallery.carouselActivate()}
     }
     TouchToBegin
     {
         id: lower_left_begin
         x: 346; y: 960
-        color: "#2b89d9"//"blue"
+        color: "blue"
         onBluePressed: {lower_left_carousel.opacity = active ? 1.0 : 0.0; gallery.carouselActivate()}
     }
     TouchToBegin
     {
         id: lower_right_begin
         x: 1306; y: 960
-        color: "#d33131"//"red"
+        color: "red"
         onRedPressed: {lower_right_carousel.opacity = active ? 1.0 : 0.0; gallery.carouselActivate()}
     }
 
