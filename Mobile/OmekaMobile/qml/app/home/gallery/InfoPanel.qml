@@ -24,10 +24,11 @@ Rectangle {
 
         OmekaText {
             id: title
-            _font: Style.infoTitleFont
-            elide: Text.ElideRight
             width: parent.width
-            height: parent.height * .59
+            height: parent.height * .4
+            elide: Text.ElideRight
+            verticalAlignment: Text.AlignVCenter
+            _font: Style.infoTitleFont
         }
 
         Rectangle {

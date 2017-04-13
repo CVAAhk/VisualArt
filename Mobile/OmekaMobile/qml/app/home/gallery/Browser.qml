@@ -114,7 +114,9 @@ Item {
 
     /*! Clear browser */
     function clear() {
-        layout.model.clear();
+        if(layout) {
+            layout.model.clear();
+        }
     }
 
     states: [

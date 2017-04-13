@@ -9,22 +9,14 @@ Component {
         width: parent.width
         height: 50
         text: String(item)
-        checkable: true
 
-        property var code;
-
-        onCheckedChanged: {
-            if(checked && currentCode) {
-                code = currentCode
-                HeistManager.addItem(code, object.text, object);
-            } else if(!checked && code) {
-                HeistManager.removeItem(code, object.text, object);
+        onPressedChanged: {
+            if(pressed && currentCode) {
+                if(items.indexOf(object.text) === -1) {
+                    items.push(object.text);
+                    HeistManager.addItem(currentCode, object.text, object);
+                }
             }
-        }
-
-        function reset() {
-            code = null
-            checked = false
         }
     }
 

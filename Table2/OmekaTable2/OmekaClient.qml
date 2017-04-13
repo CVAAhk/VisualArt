@@ -98,7 +98,7 @@ Item {
             else if(res.element_texts){ //item
                 requestComplete({item: res.id, context: result.context, metadata: res.element_texts, file_count: res.files.count});
             }
-            else{ //tag
+            else if(res.name){ //tag
                 requestComplete({item: res.id, context: result.context, tag: res.name});
             }
         }

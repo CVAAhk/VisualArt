@@ -5,6 +5,7 @@ Item {
     /*! \qmlproperty
         Target omeka endpoint url
     */
+    //property url endpoint: "http://oe.develop.digitalmediauconn.org/"
     property url endpoint: "http://dev.omeka.org/mallcopy/"
 
     /*! \qmlproperty
@@ -82,7 +83,7 @@ Item {
 
     /*! \internal
         Generate and send data objects to registered handlers*/
-    function processResult(result){
+    function processResult(result){       
         var count = result.length || 1;
         var res;
 
@@ -101,7 +102,7 @@ Item {
             else if(res.element_texts){ //item
                 requestComplete({item: res.id, context: result.context, metadata: res.element_texts, file_count: res.files.count});
             }
-            else{ //tag
+            else if(res.name){ //tag and search term
                 requestComplete({item: res.id, context: result.context, tag: res.name});
             }
         }
