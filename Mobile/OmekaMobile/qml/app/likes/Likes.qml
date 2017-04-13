@@ -95,6 +95,13 @@ Item {
             clip: true
             list.bottomMargin: Resolution.applyScale(150) //+ filter.height
             grid.bottomMargin: Resolution.applyScale(120) //+ filter.height
+
+            list.addDisplaced: Transition {
+                NumberAnimation { property: "y"; duration: 200 }
+            }
+            grid.addDisplaced: Transition {
+                NumberAnimation { properties: "x,y"; duration: 200 }
+            }
         }
     }
 
