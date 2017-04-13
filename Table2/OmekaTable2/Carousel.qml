@@ -467,4 +467,16 @@ Item
         if(root.whichScreen === "top left") return ItemManager.tagSearchTopLeft;
         if(root.whichScreen === "top right") return ItemManager.tagSearchTopRight;
     }
+    function checkItemsOfPairing(itemId)
+    {
+        if(pairing.items.indexOf(itemId) === -1)
+        {
+            pairing.items.push(itemId);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }
