@@ -39,7 +39,7 @@ ApplicationWindow {
 
     //sample items (TEST ONLY)
     Component.onCompleted: {
-        Omeka.getItemsByTerm("earth", window)
+        Omeka.getPage(1, window)
     }
 
     //remove sessions from heist on app exit
