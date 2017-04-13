@@ -56,6 +56,8 @@ Item
     {
         id : imageItem1
         x: 750;y: 539
+        visible: !carouselActivate
+        enabled: !carouselActivate
         onCreateImage:
         {
             imageHolder.createImage(source,imageX + x,imageY + y,imageRotation,imageWidth,imageHeight, tapOpen, "attract lower left")
@@ -72,6 +74,8 @@ Item
     {
         id: imageItem2
         x: 970;y: 539
+        visible: !carouselActivate
+        enabled: !carouselActivate
         onCreateImage:
         {
             imageHolder.createImage(source,imageX + x,imageY + y,imageRotation,imageWidth,imageHeight, tapOpen, "attract lower right")
@@ -93,6 +97,8 @@ Item
         anchors.bottomMargin: 30
         topScreen: true
         rotation: 180
+        visible: !carouselActivate
+        enabled: !carouselActivate
         onCreateImage:
         {
             imageHolder.createImage(source,imageX + x + 30,imageY + 509,imageRotation,imageWidth,imageHeight, tapOpen, "attract top left")
@@ -114,6 +120,8 @@ Item
         anchors.bottomMargin: 30
         topScreen: true
         rotation: 180
+        visible: !carouselActivate
+        enabled: !carouselActivate
         onCreateImage:
         {
             imageHolder.createImage(source,imageX + x + 30,imageY + 509,imageRotation,imageWidth,imageHeight, tapOpen, "attract top right")
