@@ -428,4 +428,55 @@ Item {
             HeistManager.addItem(top_left_carousel.currentCode, image.item.id, top_left_carousel);
         }
     }
+    function attractImageIsInPairingBox(image)
+    {
+        if(gallery.isImageInPairingBox(lower_left_carousel,image)||
+        gallery.isImageInPairingBox(lower_right_carousel,image)||
+        gallery.isImageInPairingBox(top_left_carousel,image)||
+        gallery.isImageInPairingBox(top_right_carousel,image))
+        {
+            image.turnSmall();
+        }
+        else
+        {
+            image.turnBack();
+        }
+    }
+    function attractImageReleased(image)
+    {
+        var pairing_box_coordinates;
+        var target_x;
+        var target_y;
+        if(gallery.isImageInPairingBox(lower_left_carousel,image))
+        {
+            pairing_box_coordinates = pairingBoxCoordinates(lower_left_carousel);
+            target_x = pairing_box_coordinates.x;
+            target_y = pairing_box_coordinates.y - image.height;
+        }
+        else if(gallery.isImageInPairingBox(lower_right_carousel,image))
+        {
+            pairing_box_coordinates = pairingBoxCoordinates(lower_right_carousel);
+            target_x = pairing_box_coordinates.x;
+            target_y = pairing_box_coordinates.y - image.height;
+        }
+        else if(gallery.isImageInPairingBox(top_left_carousel,image))
+        {
+            pairing_box_coordinates = pairingBoxCoordinates(top_left_carousel);
+            target_x = pairing_box_coordinates.x;
+            target_y = pairing_box_coordinates.y + top_left_carousel.pairingHeight + 50;
+        }
+        else if(gallery.isImageInPairingBox(top_right_carousel,image))
+        {
+            pairing_box_coordinates = pairingBoxCoordinates(top_right_carousel);
+            target_x = pairing_box_coordinates.x;
+            target_y = pairing_box_coordinates.y + top_right_carousel.pairingHeight + 50;
+        }
+        else
+        {
+            return;
+        }
+        addImageToFavorites(image);
+
+        image.recycle(target_x,target_y);
+    }
 }

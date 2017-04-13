@@ -47,6 +47,8 @@ Item
                 //console.log("create an image!")
                 //gallery.imageHolderCreateImage(source,imageX,imageY,imageRotation,imageWidth,imageHeight, tapOpen, whichScreen);
             }
+            onImageDragged: gallery.attractImageIsInPairingBox(image);
+            onImageFinishedDragging: gallery.attractImageReleased(image);
         }
 
         Component.onCompleted:

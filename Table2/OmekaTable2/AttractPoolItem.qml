@@ -13,6 +13,9 @@ Item
 
     signal createImage(string source, int imageX, int imageY, int imageRotation, int imageWidth, int imageHeight, bool tapOpen, string whichScreen);
 
+    signal imageDragged(var image);
+
+    signal imageFinishedDragging(var image);
 
     Component.onCompleted: {
         Omeka.getAllPages(10, root)
@@ -138,6 +141,14 @@ Item
             //console.log("delete filepath = ",filepath, "whichScreen = ", whichScreen)
 
             root.removeAttractImage(filepath, whichScreen);
+        }
+        onImageDragged:
+        {
+            root.imageDragged(image);
+        }
+        onImageFinishedDragging:
+        {
+            root.imageFinishedDragging(image);
         }
     }
 
