@@ -35,6 +35,10 @@ Item
 
     property bool inUse: false
 
+    property int oldImageHeight: controls.height
+
+    property bool inPairingBox: false
+
     property bool topScreen: false
 
     property int recoveryX//x after detail item is added to mobile favorites
@@ -50,6 +54,8 @@ Item
 
     signal finishedRecycle();
 
+    signal interactive();
+
     /*! \qmlproperty
         Currently selected item
     */
@@ -61,17 +67,7 @@ Item
         if(root.rotation === 180 && !active && whichScreen.includes("attract")&& !openedAttract )   {root.y -= root.height - controls.height;}
         else if(root.rotation === 180 && active && whichScreen.includes("attract") )   {root.y -= scroll_bkg.height;}
         else if(root.rotation === 180 && !active && whichScreen.includes("attract") ) {root.y += scroll_bkg.height;}
-
     }
-
-
-    /*
-
-    function getSelectedItem()
-    {
-        return ItemManager.selectedItems[ItemManager.selectedItems.length - 1];
-    }
-    */
 
     Image
     {
@@ -114,7 +110,7 @@ Item
             root.x += delta_x* (root.topScreen ? -1.0 : 1.0);// * detail.scale;
             root.y += delta_y* (root.topScreen ? -1.0 : 1.0);// * detail.scale;
 
-            console.log("root.x = ", root.x, "root.y = ", root.y, "root.z = ", root.z)
+            //console.log("root.x = ", root.x, "root.y = ", root.y, "root.z = ", root.z)
             if(root.y + root.height/2 > Settings.BASE_SCREEN_HEIGHT / 2)
             {
                 root.rotation = 0;
@@ -373,11 +369,18 @@ Item
     {
         root.scale = 0.5;
         root.active = false;
+        inPairingBox = true;
     }
 
     function turnBack()
     {
-        root.scale = 1.0;
+        if(inPairingBox)
+        {
+            root.scale = 1.0;
+            inPairingBox = false;
+        }
+
+
     }
 
 }

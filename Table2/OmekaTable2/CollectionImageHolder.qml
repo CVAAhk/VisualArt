@@ -107,8 +107,8 @@ Item
                     image_pop.property = "x";
                     if(imageRotation > 0)
                     {
-                        imageItem.y = startY - imageItem.height;
-                        imageItem.rotation = imageRotation;
+                        imageItem.y = startY - imageItem.oldImageHeight;
+                        //imageItem.rotation = imageRotation;
                     }
                     else
                     {
@@ -124,8 +124,8 @@ Item
                     image_pop.property = "x";
                     if(imageRotation > 0)
                     {
-                        imageItem.y = startY - imageItem.height;
-                        imageItem.rotation = imageRotation;
+                        imageItem.y = startY - imageItem.oldImageHeight;
+                        //imageItem.rotation = imageRotation;
                     }
                     else
                     {
@@ -174,16 +174,25 @@ Item
 
 
             //imageItem.rotation = imageRotation;
-            imageItem.topScreen = imageRotation > 0;
+            if(whichScreen.includes("attract"))
+            {
+                imageItem.topScreen = false;
+                imageItem.rotation = imageRotation;
+            }
+            else
+            {
+                imageItem.rotation = 0;
+                imageItem.topScreen = imageRotation > 0;
+            }
+
+
             imageItem.scale = 1;
-
-
-
 
             if(imageItems.length == 0) maxImageHeight = 10;
             maxImageHeight += 0.01;
             imageItem.z = maxImageHeight;
 
+            maxImage = imageItem;
             imageItems.push(imageItem);
             //console.log("Added!images holder number of image items: ", imageItems.length)
 
@@ -211,11 +220,13 @@ Item
 
             selectedItem.visible = false;
             selectedItem.x = -10000;
+            selectedItem.y = 0;
 
             selectedItem.inUse = false;
             selectedItem.item = null;
 
-            //selectedItem = null;
+            selectedItem.active = false;
+            selectedItem.openedAttract = false;
         }
     }
 
@@ -223,11 +234,17 @@ Item
     {
         if(selectedItem == maxImage)
             return;
-
         maxImageHeight += 0.01;
         selectedItem.z = maxImageHeight;
         maxImage = selectedItem;
-    }
+
+        var deleteIndex = imageItems.indexOf(selectedItem);
+
+        imageItems.splice(deleteIndex, 1);
+        imageItems.push(selectedItem);
+        deleteIndex = imageItems.indexOf(selectedItem);
+    }   
+
 
     function imagesCount()
     {
