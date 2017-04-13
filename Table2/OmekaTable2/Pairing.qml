@@ -244,9 +244,10 @@ Item
         }
         else
         {
-
             pair_successful.visible = true;
             pair_code.visible = false;
+            root.enabled = false;
+            switch_to_drag_files.start();
         }
     }
 
@@ -265,6 +266,42 @@ Item
             paired = true;
             console.log("paired = true")
         }
+    }
+
+    Timer
+    {
+        id: switch_to_drag_files
+        interval: 1000
+        onTriggered:
+        {
+            pair_successful.visible = false;
+            drag_files.visible = true;
+            root.enabled = true;
+        }
+    }
+    SequentialAnimation
+    {
+        id: switch_between_add_and_drag
+        ParallelAnimation
+        {
+            PropertyAction { target: drag_files; property: "visible"; value: false}
+            PropertyAction { target: send_success; property: "visible"; value: true}
+            PropertyAction { target: root; property: "enabled"; value: false}
+        }
+
+        PauseAnimation {
+            duration: 2000
+        }
+        ParallelAnimation
+        {
+            PropertyAction { target: drag_files; property: "visible"; value: true}
+            PropertyAction { target: send_success; property: "visible"; value: false}
+            PropertyAction { target: root; property: "enabled"; value: true}
+        }
+    }
+    function startAddSuccess()
+    {
+        switch_between_add_and_drag.start();
     }
 
 

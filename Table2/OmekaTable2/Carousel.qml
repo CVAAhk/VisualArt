@@ -15,12 +15,14 @@ Item
 
     property var selectedParent: null
 
-    property int pairingAbsoluteX: pairing.x + root.x
-    property int pairingAbsoluteY: pairing.y + root.y
+    property int pairingAbsoluteX: pairing.x + (root.topScreen?(Settings.SCREEN_WIDTH - root.x):root.x)
+    property int pairingAbsoluteY: pairing.y + (root.topScreen?(Settings.SCREEN_HEIGHT - root.y):root.y)
     property int pairingWidth: pairing.width
     property int pairingHeight: pairing.height
 
     property bool paired: pairing.paired
+
+    property bool pairedEnabled: pairing.enabled
 
     property var currentCode: pairing.currentCode
 
@@ -276,11 +278,6 @@ Item
                 pairing.startSession();
             }
         }
-        Rectangle{
-            color:"blue"
-            visible: enabled
-            anchors.fill: parent
-        }
     }
     MultiPointTouchArea
     {
@@ -291,11 +288,6 @@ Item
         onPressed:
         {
             pairing.startUnpair();
-        }
-        Rectangle{
-            color:"red"
-            visible: enabled
-            anchors.fill: parent
         }
     }
 
@@ -451,6 +443,10 @@ Item
         onImageFinishedDragging:
         {
             root.imageFinishedDragging(image);
+        }
+        onImageFinishedRecycle:
+        {
+            pairing.startAddSuccess();
         }
     }
 

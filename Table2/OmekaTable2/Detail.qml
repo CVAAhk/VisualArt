@@ -35,6 +35,10 @@ Item
 
     property bool inUse: false
 
+    property int oldImageHeight: controls.height
+
+    property bool inPairingBox: false
+
     property bool topScreen: false
 
     property int recoveryX//x after detail item is added to mobile favorites
@@ -48,6 +52,10 @@ Item
 
     signal imagePressed(var image);
 
+    signal finishedRecycle();
+
+    signal interactive();
+
     /*! \qmlproperty
         Currently selected item
     */
@@ -59,17 +67,7 @@ Item
         if(root.rotation === 180 && !active && whichScreen.includes("attract")&& !openedAttract )   {root.y -= root.height - controls.height;}
         else if(root.rotation === 180 && active && whichScreen.includes("attract") )   {root.y -= scroll_bkg.height;}
         else if(root.rotation === 180 && !active && whichScreen.includes("attract") ) {root.y += scroll_bkg.height;}
-
     }
-
-
-    /*
-
-    function getSelectedItem()
-    {
-        return ItemManager.selectedItems[ItemManager.selectedItems.length - 1];
-    }
-    */
 
     Image
     {
@@ -112,7 +110,7 @@ Item
             root.x += delta_x* (root.topScreen ? -1.0 : 1.0);// * detail.scale;
             root.y += delta_y* (root.topScreen ? -1.0 : 1.0);// * detail.scale;
 
-            console.log("root.x = ", root.x, "root.y = ", root.y, "root.z = ", root.z)
+            //console.log("root.x = ", root.x, "root.y = ", root.y, "root.z = ", root.z)
             if(root.y + root.height/2 > Settings.BASE_SCREEN_HEIGHT / 2)
             {
                 root.rotation = 0;
@@ -321,14 +319,21 @@ Item
             duration: 500
         }
 
-        PropertyAnimation { target: root; property: 'scale'; to: 1; duration: 250 }
-
         PropertyAction { target: root; property: "visible"; value: true }
+
+        ParallelAnimation
+        {
+            PropertyAnimation { target: root; property: 'opacity'; to: 1.0; duration: 250 }
+            PropertyAnimation { target: root; property: 'scale'; to: 1; duration: 250 }
+            PropertyAnimation { target: root; property: 'x'; to: recoveryX; duration: 250 }
+            PropertyAnimation { target: root; property: 'y'; to: recoveryY; duration: 250 }
+        }
+
         onRunningChanged:
         {
             if(!running)
             {
-                //finishedRecycle();
+                finishedRecycle();
             }
         }
     }
@@ -337,14 +342,18 @@ Item
     {
         id: recycleAnimation
 
-        PropertyAnimation { target: root; property: 'scale'; to: 0.01; duration: 250 }
-
-        PropertyAction { target: root; property: "visible"; value: false }
+        PropertyAction { target: root; property: "transformOrigin"; value: Item.Center }
+        ParallelAnimation
+        {
+            PropertyAnimation { target: root; property: 'scale'; to: 0.1; duration: 250 }
+            PropertyAnimation { target: root; property: 'opacity'; to: 0.0; duration: 250 }
+        }
+        //PropertyAction { target: root; property: "visible"; value: false }
         onRunningChanged:
         {
             if(!running)
             {
-                finishedRecycle();
+                //finishedRecycle();
                 recoveryAnimation.start();
             }
         }
@@ -360,11 +369,18 @@ Item
     {
         root.scale = 0.5;
         root.active = false;
+        inPairingBox = true;
     }
 
     function turnBack()
     {
-        root.scale = 1.0;
+        if(inPairingBox)
+        {
+            root.scale = 1.0;
+            inPairingBox = false;
+        }
+
+
     }
 
 }
