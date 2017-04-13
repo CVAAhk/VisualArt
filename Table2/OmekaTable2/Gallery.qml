@@ -387,7 +387,9 @@ Item {
         var pairing_width = carousel.pairingWidth;
         var pairing_height = carousel.pairingHeight;
 
+
         //console.log("middleX = ", middleX, " middleY = ", middleY, "pairing_x = ", pairing_x, "pairing_y = ", pairing_y)
+
 
         if(middleX > pairing_x && middleX < pairing_x + pairing_width&&
                 middleY > pairing_y && middleY < pairing_y + pairing_height)

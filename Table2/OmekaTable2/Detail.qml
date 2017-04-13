@@ -157,6 +157,18 @@ Item
         type: item ? item.mediaTypes[0] : ""
         //visible: root.visible ? true : false
         opacity: root.visible ? 1.0 : 0.0
+
+        onHeightChanged:
+        {
+            if(scale > 1)
+            {
+                anchors.topMargin = (scale * height - height) * 0.5;
+            }
+            else
+            {
+                anchors.topMargin = 0;
+            }
+        }
     }
     MediaControls { media: media }
     Image
