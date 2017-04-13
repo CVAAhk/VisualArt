@@ -23,7 +23,7 @@ Item
     property string whichScreen
     property string source
 
-    property int imageTimerDuration : 100000000 // Settings.IMAGE_TIMER_DURATION
+    property int imageTimerDuration : Settings.IMAGE_TIMER_DURATION
 
     property alias imageTimer: image_timer
 
@@ -68,6 +68,11 @@ Item
         else if(root.rotation === 180 && active && whichScreen.includes("attract") )   {root.y -= scroll_bkg.height;}
         else if(root.rotation === 180 && !active && whichScreen.includes("attract") ) {root.y += scroll_bkg.height;}
     }
+    onInUseChanged:
+    {
+        if(inUse)
+            image_timer.start();
+    }
 
     Image
     {
@@ -101,12 +106,14 @@ Item
         {
             if(!dragging)
             {
+                image_timer.restart();
                 root.finishedDragging(root);
             }
         }
 
         onPositionUpdated:
         {
+            image_timer.restart();
             root.x += delta_x* (root.topScreen ? -1.0 : 1.0);// * detail.scale;
             root.y += delta_y* (root.topScreen ? -1.0 : 1.0);// * detail.scale;
 
@@ -124,16 +131,19 @@ Item
         }
         onRotationUpdated:
         {
+            image_timer.restart();
             root.rotation += delta_rotation;
         }
         onScaleUpdated:
         {
+            image_timer.restart();
             root.scale += delta_scale * root.scaleFactor;
         }
 
         onItemPressed:
         {
             root.imagePressed(root);
+            image_timer.restart();
         }
 
         debugView: Settings.DEBUG_VIEW
@@ -191,6 +201,7 @@ Item
                 onPressed:
                 {
                     root.deleteImage(root);
+                    image_timer.stop();
                 }
             }
         }
@@ -214,6 +225,7 @@ Item
                 anchors.margins: -10
                 onPressed:
                 {
+                    image_timer.restart();
                     root.active = !root.active
                     if(!openedAttract) openedAttract=true; //todo: reset
                 }
@@ -270,6 +282,7 @@ Item
 
             flickableItem.onContentYChanged:
             {
+                image_timer.restart();
                 scroll_bar.updateBar(flickableItem.contentY / (flickableItem.contentHeight - flickableItem.height));
             }
         }
@@ -284,6 +297,7 @@ Item
 
             onScrollChanged:
             {
+                image_timer.restart();
                 scroll.flickableItem.contentY = percent * (scroll.flickableItem.contentHeight - scroll.flickableItem.height);
             }
         }
@@ -333,6 +347,7 @@ Item
         {
             if(!running)
             {
+                image_timer.restart();
                 finishedRecycle();
             }
         }
