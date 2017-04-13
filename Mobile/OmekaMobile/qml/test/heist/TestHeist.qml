@@ -21,21 +21,20 @@ ApplicationWindow {
     property var paired: false;
 
     /*
-      List of generated pairing session codes. For actual implementation, codes
-      need to be tracked on a global level.
-     */
-    property var codes: [];
-
-    /*
       The latest generated pairing code
      */
     property var currentCode;
+
+    /**
+      List of items ids added to heist
+    */
+    property var items: [];
 
     /*
       Delay time used postpone the descruction long enough to permit the table user to
       purge all created pairing sessions from heist
     */
-    property var cleanDelay: 2000;
+    property var cleanDelay: 2000;        
 
     //sample items (TEST ONLY)
     Component.onCompleted: {
@@ -59,7 +58,8 @@ ApplicationWindow {
     HeistReceiver {
         id: receiver
         onDeviceChanged: deviceId = device;
-        code: currentCode
+        onRemoveItem: window.removeItem(item)
+        code: currentCode;
     }
 
     /* Heist table operations */
@@ -83,12 +83,6 @@ ApplicationWindow {
             onSubmit: endSession()
         }
 
-        //end all sessions (TEST ONLY)
-        RequestUI {
-            operation: "Clear Sessions"
-            onSubmit: clearAll();
-        }
-
         /* Displays paired state */
         StateLabel {
             name: "Paired:"
@@ -109,52 +103,30 @@ ApplicationWindow {
 
     /*! Create new heist pairing sessions */
     function startSession() {
-        generateCode();
-        HeistManager.startPairingSession(currentCode);
-    }
-
-    /*! Generate unique pairing code. This needs to be tracked
-        at a global level and not local to the table user*/
-    function generateCode() {
-        var code;
-        do {
-            code = NumberUtils.randomInt(1111,9999);
+        if(!currentCode) {
+            currentCode = NumberUtils.randomInt(1111,9999);
+            HeistManager.startPairingSession(currentCode);
         }
-        while (codes.indexOf(code) !== -1);
-        currentCode = code;
-        codes.push(code);
     }
 
     /*!
       Ends the pairing session and restores initial state
      */
     function endSession() {
+        receiver.register = false;
         HeistManager.endPairingSession(currentCode);
-        codes.pop();
-        currentCode = codes[codes.length-1];
-        paired = false;
-    }
-
-    /*!
-      Removes all generated heist sessions and restores initial state. This is not
-      applicable to the final implementation since a table user will only be responsible
-      for one session at a time. (TEST ONLY)
-      */
-    function clearAll() {
-        paired = false;
         currentCode = "";
-        codes.length = 0;
-        HeistManager.clearAllSessions();
+        paired = false;
     }
 
     /*!
-      Removes all items and restores initial state of items in list (TEST ONLY)
-      */
-    function resetItems() {
-        for(var i=0; i<item_list.count; i++) {
-            item_list.contentItem.children[i].reset();
+     Synchronizes local items list with heist on heist item removal
+    */
+    function removeItem(item) {
+        if(items.indexOf(item) !== -1) {
+            items.splice(items.indexOf(item), 1);
+            HeistManager.removeItem(currentCode, item, window);
         }
-        HeistManager.removeAllItems(currentCode, null);
     }
 
     /*!
@@ -163,7 +135,6 @@ ApplicationWindow {
       */
     function clean() {
         HeistManager.clearAllSessions();
-        cleanDelay *= codes.length;
         while(cleanDelay) {
             cleanDelay--;
             console.log("cleaning");
@@ -182,7 +153,8 @@ ApplicationWindow {
     onPairedChanged: {
         if(!paired) {
             deviceId = null;
-            resetItems();
+            items.length = 0;
+            HeistManager.removeAllItems(currentCode, null);
         }
     }
 
