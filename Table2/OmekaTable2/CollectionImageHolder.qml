@@ -169,6 +169,7 @@ Item
             imageItem.imagePressed.connect(imagePressed);
 
             imageItem.deleteImage.connect(deleteImage);
+            imageItem.finishedRecycle.connect(imageFinishedRecycle);
             imageItem.whichScreen = whichScreen;
 
 

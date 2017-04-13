@@ -48,6 +48,8 @@ Item
 
     signal imagePressed(var image);
 
+    signal finishedRecycle();
+
     /*! \qmlproperty
         Currently selected item
     */
@@ -335,7 +337,7 @@ Item
         {
             if(!running)
             {
-                //finishedRecycle();
+                finishedRecycle();
             }
         }
     }

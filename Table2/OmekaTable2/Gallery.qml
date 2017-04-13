@@ -392,7 +392,7 @@ Item {
         if(middleX > pairing_x && middleX < pairing_x + pairing_width&&
                 middleY > pairing_y && middleY < pairing_y + pairing_height)
         {
-            if(carousel.paired)
+            if(carousel.paired && carousel.pairedEnabled)
             {
                 //image.turnSmall();
                 return true;
