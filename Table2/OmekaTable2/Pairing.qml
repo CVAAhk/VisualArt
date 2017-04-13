@@ -26,6 +26,11 @@ Item
     property var currentCode//: pair_code.currentCode
 
     /*
+      List of item ids added to heist
+     */
+    property var items: [];
+
+    /*
       Delay time used postpone the descruction long enough to permit the table user to
       purge all created pairing sessions from heist
     */
@@ -171,6 +176,7 @@ Item
     HeistReceiver {
         id: receiver
         onDeviceChanged: {deviceId = device;/*console.log("devide id = ", deviceId);*/}
+        onRemoveItem: root.removeItem(item)
         code: currentCode
     }
 
@@ -232,11 +238,22 @@ Item
         }
     }
 
+   /*
+    Synchronizes local items list with heist on heist item removal
+   */
+   function removeItem(item) {
+       if(items.indexOf(item) !== -1) {
+           items.splice(items.indexOf(item), 1);
+           HeistManager.removeItem(currentCode, item, window);
+       }
+   }
+
     /*! On unpair clear device id and remove associated items */
     onPairedChanged: {
         if(!paired) {
             deviceId = null;
             resetItems();
+            items.length = 0;
             pair_code.visible = false;
             pair_successful.visible = false;
             drag_files.visible = false;
