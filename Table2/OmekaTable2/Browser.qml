@@ -55,6 +55,8 @@ Item {
 
     signal imageDragged();
 
+    signal imageFinishedDragging();
+
     signal createImage(string source, int imageX, int imageY, int imageRotation, int imageWidth, int imageHeight, bool tapOpen);
 
     function assignItemPosition(x)
@@ -245,6 +247,7 @@ Item {
                                     (!item.inScene))
                             {
                                 creatingImage = true;
+                                selected_image.visible = true;
 
                                 layout.cancelFlick();
 
@@ -261,6 +264,7 @@ Item {
                                 selected_image.screenY = touchPoint.y + touch_area.y - root.y// + selected_image.height / 2;
 
                                 selected_image.width = 247;
+                                selected_image.item = item.itemData;
                                 //console.log("touchPoint.x = ", touchPoint.x, " touchPoint.y = ", touchPoint.y)
                                 updatedCreatedImage = true;
 
@@ -278,7 +282,8 @@ Item {
                         selected_image.screenX = touchPoint.x + touch_area.x + root.x - selected_image.width / 2;
                         selected_image.screenY = touchPoint.y + touch_area.y - root.y// + selected_image.height / 2;
                         selected_image.width = 247;
-                        updatedCreatedImage = true;                        
+                        updatedCreatedImage = true;
+                        root.imageDragged();
                     }
                 }
             }
@@ -286,6 +291,7 @@ Item {
             if(creatingImage && !updatedCreatedImage)
             {
                 creatingImage = false;
+                selected_image.visible = false;
 
                 var imageCenterX = 0;
                 var imageCenterY = 0;
@@ -303,6 +309,7 @@ Item {
                     imageCenterY = selected_image.y// - selected_image.height / 2; // selected_image.height / 2 + root.y + touch_area.y;
                     rotation = 0;
                 }
+                imageFinishedDragging();
                 //console.log("selected_image.x = ", selected_image.x, " selected_image.y = ", selected_image.y)
 
                 root.createImage(selected_image.source, imageCenterX, imageCenterY, rotation,

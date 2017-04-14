@@ -396,13 +396,11 @@ Item {
         {
             if(carousel.paired && carousel.pairedEnabled)
             {
-                //image.turnSmall();
                 return true;
             }
         }
         else
         {
-            //image.turnBack();
             return false;
         }
         return false;

@@ -246,6 +246,7 @@ Item
            items.splice(items.indexOf(item), 1);
            HeistManager.removeItem(currentCode, item, root);
        }
+
    }
 
     /*! On unpair clear device id and remove associated items */
