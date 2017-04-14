@@ -133,12 +133,83 @@ Item
         property int screenX: 0
         property int screenY: 0
 
+        property int recoveryX: 0
+        property int recoveryY: 0
+
         x: screenX
         y: screenY
         z: 10
 
         property string title: ""
         property string description: ""
+        property var item
+
+        function turnSmall()
+        {
+            selected_image.scale = 0.5;
+        }
+
+        function turnBack()
+        {
+            selected_image.scale = 1.0;
+        }
+        SequentialAnimation
+        {
+            id: recoveryAnimation
+
+
+            PauseAnimation {
+                duration: 500
+            }
+
+            PropertyAction { target: selected_image; property: "visible"; value: true }
+
+            ParallelAnimation
+            {
+                PropertyAnimation { target: selected_image; property: 'opacity'; to: 1.0; duration: 250 }
+                PropertyAnimation { target: selected_image; property: 'scale'; to: 1; duration: 250 }
+                PropertyAnimation { target: selected_image; property: 'x'; to: selected_image.recoveryX; duration: 250 }
+                PropertyAnimation { target: selected_image; property: 'y'; to: selected_image.recoveryY; duration: 250 }
+            }
+
+            onRunningChanged:
+            {
+                if(!running)
+                {
+                    console.log("recycle starts")
+                    imageHolder.createImage(selected_image.source, selected_image.recoveryX /*+ (root.topScreen?(Settings.SCREEN_WIDTH - root.x):root.x)*/,
+                                            selected_image.recoveryY /*+ (root.topScreen?(Settings.SCREEN_HEIGHT - root.y):root.y)*/,
+                                            (root.topScreen? 180: 0), selected_image.width, selected_image.height, false, root.whichScreen)
+                }
+            }
+        }
+
+        SequentialAnimation
+        {
+            id: recycleAnimation
+
+            PropertyAction { target: selected_image; property: "transformOrigin"; value: Item.Center }
+            PropertyAction { target: selected_image; property: "visible"; value: true }
+            ParallelAnimation
+            {
+                PropertyAnimation { target: selected_image; property: 'scale'; to: 0.1; duration: 250 }
+                PropertyAnimation { target: selected_image; property: 'opacity'; to: 0.0; duration: 250 }
+            }
+            onRunningChanged:
+            {
+                if(!running)
+                {
+                    //finishedRecycle();
+                    recoveryAnimation.start();
+                }
+            }
+        }
+        function recycle(recoveryX, recoveryY)
+        {
+            selected_image.recoveryX = recoveryX;
+            selected_image.recoveryY = recoveryY;
+            recycleAnimation.start();
+        }
     }
 
     //Carousel UI
@@ -307,10 +378,29 @@ Item
             topScreen: root.topScreen
             onCreateImage:
             {
-                //root.createImage(source, imageX, imageY, imageRotation, imageWidth, imageHeight, tapOpen)
+                if(root.isImageInPairingBox(root,selected_image))
+                {
+                    return;
+                }
+
                 imageHolder.createImage(source, imageX + (root.topScreen?(Settings.SCREEN_WIDTH - root.x):root.x),
                                         imageY + (root.topScreen?(Settings.SCREEN_HEIGHT - root.y):root.y),
                                         imageRotation, imageWidth, imageHeight, tapOpen, root.whichScreen)
+            }
+            onImageDragged:
+            {
+                if(root.isImageInPairingBox(root,selected_image))
+                {
+                    selected_image.turnSmall();
+                }
+                else
+                {
+                    selected_image.turnBack();
+                }
+            }
+            onImageFinishedDragging:
+            {
+                releaseSelected(root, selected_image);
             }
 
             property real contentX: layout.contentX
@@ -448,6 +538,10 @@ Item
         {
             pairing.startAddSuccess();
         }
+        onResetBrowser:
+        {
+            pairing.endSession();
+        }
     }
 
 
@@ -477,6 +571,91 @@ Item
         else
         {
             return false;
+        }
+    }
+    function pairingBoxCoordinates(carousel)
+    {
+        var pairing_width = carousel.pairingWidth;
+        var pairing_height = carousel.pairingHeight;
+
+        var pairing_x = carousel.pairingAbsoluteX;
+        var pairing_y = carousel.pairingAbsoluteY;
+        if(carousel.topScreen)
+        {
+            pairing_x = Settings.SCREEN_WIDTH - pairing_x - pairing_width;
+            pairing_y = Settings.SCREEN_HEIGHT - pairing_y - pairing_height;
+        }
+
+        var pairing_box_coordinates = ({});
+        pairing_box_coordinates.x = pairing_x;
+        pairing_box_coordinates.y = pairing_y;
+        return pairing_box_coordinates;
+    }
+
+    function isImageInPairingBox(carousel,image)
+    {
+        var middleX = image.x + image.width * 1/2 + (root.topScreen?(Settings.SCREEN_WIDTH - root.x):root.x);
+        var middleY = image.y + image.height * 1/2 + (root.topScreen?(Settings.SCREEN_HEIGHT - root.y):root.y);
+        if(root.topScreen)
+        {
+            middleX = Settings.SCREEN_WIDTH - middleX;
+            middleY = Settings.SCREEN_HEIGHT - middleY;
+        }
+        var pairing_box_coordinates = pairingBoxCoordinates(carousel)
+        var pairing_x = pairing_box_coordinates.x;
+        var pairing_y = pairing_box_coordinates.y;
+
+        var pairing_width = carousel.pairingWidth;
+        var pairing_height = carousel.pairingHeight;
+
+        //console.log("middleX = ", middleX, " middleY = ", middleY, "pairing_x = ", pairing_x, "pairing_y = ", pairing_y)
+
+        if(middleX > pairing_x && middleX < pairing_x + pairing_width&&
+                middleY > pairing_y && middleY < pairing_y + pairing_height)
+        {
+            if(carousel.paired && carousel.pairedEnabled)
+            {
+                return true;
+            }
+        }
+        else
+        {
+            return false;
+        }
+        return false;
+    }
+    function releaseSelected(carousel,image)
+    {
+        var pairing_box_coordinates;
+        var target_x;
+        var target_y;
+        if(root.isImageInPairingBox(carousel,image) && whichScreen.includes("top"))
+        {
+            pairing_box_coordinates = pairingBoxCoordinates(carousel);
+            target_x = Settings.SCREEN_WIDTH - pairing_box_coordinates.x - image.width;
+            target_y = Settings.SCREEN_HEIGHT - pairing_box_coordinates.y- image.height*2 - carousel.pairingHeight;
+        }
+        else if(root.isImageInPairingBox(carousel,image))
+        {
+            pairing_box_coordinates = pairingBoxCoordinates(carousel);
+            target_x = pairing_box_coordinates.x;
+            target_y = pairing_box_coordinates.y - image.height* 2;
+        }
+        else
+        {
+            return;
+        }
+
+        addImageToFavorites(image);
+        console.log("target_x = ", target_x)
+        image.recycle(target_x,target_y);
+    }
+    function addImageToFavorites(image)
+    {
+        if(root.isImageInPairingBox(root,image) && root.currentCode && root.checkItemsOfPairing(image.item.id))
+        {
+            console.log("add item = ", image.item.id)
+            HeistManager.addItem(root.currentCode, image.item.id, root);
         }
     }
 }
