@@ -19,14 +19,14 @@ ButtonStyle {
             Rectangle {
                 id: attention
                 anchors.fill: parent
-                color: "white"
+                color: "#000000"
                 visible: control.pulse
 
                 SequentialAnimation {
                     running: control.pulse
                     loops: Animation.Infinite
-                    NumberAnimation { target: attention; property: "opacity"; from: 0; to: 1; duration: 500 }
-                    NumberAnimation { target: attention; property: "opacity"; from: 1; to: 0; duration: 500 }
+                    NumberAnimation { target: attention; property: "opacity"; from: 0; to: .2; duration: 1000 }
+                    NumberAnimation { target: attention; property: "opacity"; from: .2; to: 0; duration: 1000 }
                 }
 
             }
