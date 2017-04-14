@@ -159,10 +159,11 @@ Item {
     function unpair() {
         if(state === "paired") {
             receiver.register = false;
-            Foreground.showMessage("Pairing session has been terminated.", 3000, Resolution.applyScale(300))
+            Foreground.showMessage("Pairing session has been terminated.", 3000, Resolution.applyScale(300));
+            Foreground.pulseLikesButton(false);
             HeistManager.releasePairing(entry.codeString, deviceId);
             entry.resetCode();
-            state = "unpaired";
+            state = "unpaired";            
         }
     }
 

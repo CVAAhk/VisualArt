@@ -35,7 +35,7 @@ Item {
         id: browser
         anchors.top: bar.bottom
         height: parent.height - bar.height
-        headerHeight: height/3
+        headerHeight: height/4
         busy: true
         onCanPaginate: {
            Omeka.getNextPage(gallery)
@@ -46,7 +46,7 @@ Item {
     Logo {
         contentY: browser.contentY
         minY: 0
-        maxY: browser.headerHeight
+        maxY: browser.headerHeight *.9
         minWidth: parent.width
         maxWidth: Resolution.applyScale(450)
         minHeight: maxY
