@@ -396,35 +396,34 @@ Item {
         {
             if(carousel.paired && carousel.pairedEnabled)
             {
-                //image.turnSmall();
                 return true;
             }
         }
         else
         {
-            //image.turnBack();
             return false;
         }
         return false;
     }
     function addImageToFavorites(image)
     {
-        if(gallery.isImageInPairingBox(lower_left_carousel,image) && lower_left_carousel.currentCode)
+
+        if(gallery.isImageInPairingBox(lower_left_carousel,image) && lower_left_carousel.currentCode && lower_left_carousel.checkItemsOfPairing(image.item.id))
         {
             console.log("add item = ", image.item.id)
             HeistManager.addItem(lower_left_carousel.currentCode, image.item.id, lower_left_carousel);
         }
-        else if(gallery.isImageInPairingBox(lower_right_carousel,image) && lower_right_carousel.currentCode)
+        else if(gallery.isImageInPairingBox(lower_right_carousel,image) && lower_right_carousel.currentCode && lower_right_carousel.checkItemsOfPairing(image.item.id))
         {
             console.log("add item = ", image.item.id)
             HeistManager.addItem(lower_right_carousel.currentCode, image.item.id, lower_right_carousel);
         }
-        else if(gallery.isImageInPairingBox(top_right_carousel,image) && top_right_carousel.currentCode)
+        else if(gallery.isImageInPairingBox(top_right_carousel,image) && top_right_carousel.currentCode && top_right_carousel.checkItemsOfPairing(image.item.id))
         {
             console.log("add item = ", image.item.id)
             HeistManager.addItem(top_right_carousel.currentCode, image.item.id, top_right_carousel);
         }
-        else if(gallery.isImageInPairingBox(top_left_carousel,image) && top_left_carousel.currentCode)
+        else if(gallery.isImageInPairingBox(top_left_carousel,image) && top_left_carousel.currentCode && top_left_carousel.checkItemsOfPairing(image.item.id))
         {
             console.log("add item = ", image.item.id)
             HeistManager.addItem(top_left_carousel.currentCode, image.item.id, top_left_carousel);

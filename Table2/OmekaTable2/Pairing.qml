@@ -244,8 +244,8 @@ Item
    function removeItem(item) {
        if(items.indexOf(item) !== -1) {
            items.splice(items.indexOf(item), 1);
-           HeistManager.removeItem(currentCode, item, window);          
-       }
+           HeistManager.removeItem(currentCode, item, root);
+
    }
 
     /*! On unpair clear device id and remove associated items */
