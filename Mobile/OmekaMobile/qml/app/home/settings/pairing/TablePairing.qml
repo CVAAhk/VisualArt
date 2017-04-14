@@ -17,6 +17,7 @@ Item {
     onVisibleChanged: {
         if(!visible) {
             Foreground.hideMessage()
+            Foreground.pulseLikesButton(false)
         }
     }
 
@@ -148,6 +149,7 @@ Item {
         if(state === "unpaired") {
             HeistManager.setPairing(entry.codeString, deviceId);
             state = "paired";
+            Foreground.pulseLikesButton(true);
         }
     }
 
