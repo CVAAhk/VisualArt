@@ -7,6 +7,7 @@ import "../home/gallery"
 /*! Display items liked by user */
 Item {
     id: likes
+    objectName: "LikesList"
     enabled: false
 
     //track item indices
@@ -29,8 +30,8 @@ Item {
     //clear removals when disabled
     onEnabledChanged: {
         if(!enabled) {
-            for(var i in removals) {
-                removeItem(indices.indexOf(removals[i]))
+            for(var i in removals) {                
+                ItemManager.unregisterLike({id: removals[i]}, false);
             }
             removals.length = 0
             //filter.close()
@@ -57,6 +58,7 @@ Item {
                     removals.push(item.id);
                 } else {   //remove immediately on disabled
                     removeItem(indices.indexOf(item.id))
+                    HeistManager.unregisterItem(item.id)
                 }
             }
         }
@@ -118,6 +120,7 @@ Item {
       Add new liked item
     */
     function addItem(item) {
+        item.context = likes
         browser.insert(0, item)
         indices.unshift(item.item)
     }
