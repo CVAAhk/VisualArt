@@ -245,6 +245,7 @@ Item
        if(items.indexOf(item) !== -1) {
            items.splice(items.indexOf(item), 1);
            HeistManager.removeItem(currentCode, item, root);
+       }
 
    }
 
