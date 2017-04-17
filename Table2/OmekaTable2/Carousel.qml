@@ -92,6 +92,7 @@ Item
                 searchByTag = tagHeaderSearchByTag;
             }
         }
+        onInteractive: filter_timeout.restart();
     }
     Pairing
     {
@@ -288,6 +289,7 @@ Item
     }
     MultiPointTouchArea
     {
+        id: filter_btn_touch_area
         anchors.fill: filter_applied_btn
         property bool active: false
         onPressed:
@@ -301,6 +303,10 @@ Item
                 filter.tagHeaderSearchByTag = false;
                 filter.resetFilters();
                 filter_text.text = "FILTER";
+            }
+            else
+            {
+                filter_timeout.start();
             }
 
         }
@@ -547,6 +553,24 @@ Item
     }
 
 
+    Timer
+    {
+        id: filter_timeout
+        interval: Settings.IMAGE_TIMER_DURATION
+        onTriggered:
+        {
+            filter_btn_touch_area.active = false;
+            filter_btn.visible = true;
+            filter_applied_btn.visible = false;
+            filter.opacity = 0.0
+            if(!active)
+            {
+                filter.tagHeaderSearchByTag = false;
+                filter.resetFilters();
+                filter_text.text = "FILTER";
+            }
+        }
+    }
 
     function appendItems(result)
     {
