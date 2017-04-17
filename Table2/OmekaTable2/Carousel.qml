@@ -26,6 +26,8 @@ Item
 
     property var currentCode: pairing.currentCode
 
+    property int maxResults: 490
+
 
     Component.onCompleted:
     {
@@ -435,7 +437,7 @@ Item
     Text
     {
         id: item_count
-        text: browser.currentIndex + 1 + " OF " + (searchByTag ? browser.listItemsCount : 490)
+        text: browser.currentIndex + 1 + " OF " + (searchByTag ? browser.listItemsCount : maxResults)
         color: "#888888"
         anchors.horizontalCenter: bkg.horizontalCenter
         y: 247
