@@ -96,7 +96,7 @@ ScaleColumn
                     if(element)
                     {
                         element.text = element.text.replace(/<[\/]{0,1}(a|A)[^><]*>/g,"")
-                        metadata += "<p><b>"+element.element.name+"</b><br/>"+element.text+"</p>"
+                        metadata += "<p><b>"+element.element.name+"</b><br/>"+element.text+"</p><br/>"
                     }
                 }
             }
@@ -108,7 +108,7 @@ ScaleColumn
                     if(element)
                     {
                         element.text = element.text.replace(/<[\/]{0,1}(a|A)[^><]*>/g,"")
-                        metadata += "<p><b>"+element.element.name+"</b><br/>"+element.text+"</p>"
+                        metadata += "<p><b>"+element.element.name+"</b><br/>"+element.text+"</p><br/>"
                     }
                 }
             }
