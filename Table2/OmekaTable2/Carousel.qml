@@ -303,6 +303,7 @@ Item
                 filter.tagHeaderSearchByTag = false;
                 filter.resetFilters();
                 filter_text.text = "FILTER";
+                filter_timeout.stop();
             }
             else
             {
@@ -563,12 +564,11 @@ Item
             filter_btn.visible = true;
             filter_applied_btn.visible = false;
             filter.opacity = 0.0
-            if(!active)
-            {
-                filter.tagHeaderSearchByTag = false;
-                filter.resetFilters();
-                filter_text.text = "FILTER";
-            }
+
+            filter.tagHeaderSearchByTag = false;
+            filter.resetFilters();
+            filter_text.text = "FILTER";
+
         }
     }
 
