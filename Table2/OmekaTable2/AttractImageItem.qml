@@ -75,7 +75,7 @@ Item
 //                if(itemData.media.length === itemData.fileCount)
 //                {
                     img.source = itemData.thumb
-                    img_id.text = itemData.id //test
+                    //img_id.text = itemData.id //test
                     console.log("random id:", itemData.id)
 //                    target = null
 //                }

@@ -129,7 +129,7 @@ Item {
             {
                 return;
             }
-            addImageToFavorites(image);
+            gallery.addImageToFavorites(image);
 
             image.recycle(target_x,target_y);
         }
@@ -200,7 +200,7 @@ Item {
             {
                 return;
             }
-            addImageToFavorites(image);
+            gallery.addImageToFavorites(image);
 
             image.recycle(target_x,target_y);
         }
@@ -272,7 +272,7 @@ Item {
             {
                 return;
             }
-            addImageToFavorites(image);
+            gallery.addImageToFavorites(image);
 
             image.recycle(target_x,target_y);
         }
@@ -341,7 +341,7 @@ Item {
             {
                 return;
             }
-            addImageToFavorites(image);
+            gallery.addImageToFavorites(image);
 
             image.recycle(target_x,target_y);
         }
@@ -476,7 +476,7 @@ Item {
         {
             return;
         }
-        addImageToFavorites(image);
+        gallery.addImageToFavorites(image);
 
         image.recycle(target_x,target_y);
     }
