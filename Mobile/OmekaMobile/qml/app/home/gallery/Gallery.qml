@@ -7,7 +7,7 @@ import "../../../utils"
 Item {
     id: gallery
 
-    property var current
+    property Settings settings: Settings {}
 
     /*!Load first page*/
     Component.onCompleted: {
@@ -27,7 +27,7 @@ Item {
     /*!Display logo and settings entry*/
     BrandBar {
         id: bar
-        onActivated: if(homeStack) homeStack.push(Qt.resolvedUrl("../settings/Settings.qml"))
+        onActivated: if(homeStack) homeStack.push(settings);
     }
 
     /*!Scroll through items*/
@@ -35,7 +35,7 @@ Item {
         id: browser
         anchors.top: bar.bottom
         height: parent.height - bar.height
-        headerHeight: height/3
+        headerHeight: height/4
         busy: true
         onCanPaginate: {
            Omeka.getNextPage(gallery)
@@ -46,7 +46,7 @@ Item {
     Logo {
         contentY: browser.contentY
         minY: 0
-        maxY: browser.headerHeight
+        maxY: browser.headerHeight *.9
         minWidth: parent.width
         maxWidth: Resolution.applyScale(450)
         minHeight: maxY

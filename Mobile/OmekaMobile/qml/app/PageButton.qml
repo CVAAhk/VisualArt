@@ -12,6 +12,8 @@ Button {
     width: parent.width / 3
     height: parent.height
 
+    property bool pulse: false
+
     /*!
       \qmlproperty url PageButton::checkedIcon
       The source path of the icon displayed when the button is checked
@@ -27,5 +29,5 @@ Button {
     //update state
     onClicked: bar.state = state
 
-    style: PageButtonStyle {}
+    style: PageButtonStyle { }
 }

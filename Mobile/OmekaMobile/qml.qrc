@@ -13,6 +13,10 @@
 		<file>qml/test/mvc/ContactModel.qml</file>			
 		<file>qml/test/providers/ImageProviderApp.qml</file>			
 		<file>qml/test/client/TestClient.qml</file>			
+		<file>qml/test/heist/TestHeist.qml</file>	
+		<file>qml/test/heist/RequestUI.qml</file>	
+		<file>qml/test/heist/StateLabel.qml</file>	
+		<file>qml/test/heist/ItemDelegate.qml</file>	
 		<file>qml/test/settings/LikesTest.qml</file>			
 		<file>qml/test/navigation/Carousel.qml</file>	
 		<file>qml/test/navigation/Ellipse.qml</file>			
@@ -30,15 +34,19 @@
 		<file>qml/utils/ResolutionManager.qml</file>			
 		<file>qml/utils/Style.qml</file>			
 		<file>qml/utils/OmekaClient.qml</file>									
+		<file>qml/utils/HeistManager.qml</file>		
 		<file>qml/utils/ItemManager.qml</file>									
 		<file>qml/utils/UserSettings.qml</file>									
 		<file>qml/utils/NumberUtils.qml</file>									
+		<file>qml/utils/Pairings.qml</file>		
+		<file>qml/utils/Foreground.qml</file>		
 		<file>qml/utils/qmldir</file>	
 							
 		<file>qml/app/PageNavigation.qml</file>					
 		<file>qml/app/PageNavigationBar.qml</file>					
 		<file>qml/app/PageButton.qml</file>								
 		<file>qml/app/PageState.qml</file>								
+		<file>qml/app/FloatMessage.qml</file>				
 		<file>qml/app/base/OmekaToolBar.qml</file>									
 		<file>qml/app/base/OmekaButton.qml</file>									
 		<file>qml/app/base/OmekaToggle.qml</file>									
@@ -78,6 +86,12 @@
 		<file>qml/app/home/settings/LayoutSetting.qml</file>																			
 		<file>qml/app/home/settings/ClearLikesSetting.qml</file>																			
 		<file>qml/app/home/settings/AboutSetting.qml</file>																			
+		<file>qml/app/home/settings/pairing/PairSetting.qml</file>
+		<file>qml/app/home/settings/pairing/TablePairing.qml</file>
+		<file>qml/app/home/settings/pairing/Keypad.qml</file>		
+		<file>qml/app/home/settings/pairing/CodeEntry.qml</file>
+		<file>qml/app/home/settings/pairing/Unpair.qml</file>
+		<file>qml/app/home/settings/pairing/HeistReceiver.qml</file>
 		<file>qml/app/home/gallery/Gallery.qml</file>																			
 		<file>qml/app/home/gallery/Browser.qml</file>																			
 		<file>qml/app/home/gallery/ItemBrowser.qml</file>																					
@@ -86,6 +100,9 @@
 		<file>qml/app/home/gallery/LikeButton.qml</file>																							
 		<file>qml/app/home/gallery/Logo.qml</file>																							
 		<file>qml/app/likes/Likes.qml</file>										
+		<file>qml/app/likes/FilterButton.qml</file>
+		<file>qml/app/likes/Filters.qml</file>
+		<file>qml/app/likes/LikesFilter.qml</file>
 		<file>qml/app/search/Search.qml</file>										
 		<file>qml/app/search/TagSearch.qml</file>										
 		<file>qml/app/search/TagDelegate.qml</file>										
@@ -125,6 +142,9 @@
 		<file>ui/index-fill.png</file>
 		<file>ui/play.png</file>
 		<file>ui/pause.png</file>
+		<file>ui/pair_icon.png</file>
+		<file>ui/linked_icon.png</file>
+		<file>ui/back_key.png</file>
 				
     </qresource>
 </RCC>

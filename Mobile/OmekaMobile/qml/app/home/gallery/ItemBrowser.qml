@@ -35,7 +35,7 @@ Browser {
                 nextCount++;
                 canPaginate();
             }
-        } else if(layout.model.count) {
+        } else if(layout.model && layout.model.count) {
             busy = false;
         }
     }

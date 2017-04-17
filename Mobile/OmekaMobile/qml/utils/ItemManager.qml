@@ -35,22 +35,42 @@ Item {
 
     /*-------------LIKES-------------*/
 
+    //ui notifications
+    signal itemAdded(var item)
+    signal itemRemoved(var item)
+    signal clearItems()
+
     /*!
       \qmlmethod
       Add like to local database
     */
     function registerLike(item) {
         if(!isLiked(item)) {
-            Settings.addLike(item.id, itemToEntry(item))
+            Settings.addLike(String(item.id), itemToEntry(item))
+            itemAdded(item)
         }
     }
 
     /*!
       \qmlmethod
       Remove like from local database
+      \a item The item to register
+      \a bypass Skip data removal and invokes signal with the assumption removal will
+                be finalized at a later time
     */
-    function unregisterLike(item) {
-        Settings.removeLike(item.id)
+    function unregisterLike(item, bypass) {
+        itemRemoved(item)
+        if(bypass) return;
+        Settings.removeLike(String(item.id))
+    }
+
+    /*!
+      \qmlmethod
+      Remove all likes from local database
+    */
+    function unregisterAllLikes() {
+        Settings.clearAllLikes()
+        clearItems()
     }
 
     /*!
@@ -89,10 +109,26 @@ Item {
 
     /*!
       \qmlmethod
+      Converts item to omeka result data format
+    */
+    function itemToData(item) {
+        return {item: String(item.id), metadata: item.metadata, file_count: String(item.fileCount)};
+    }
+
+    /*!
+      \qmlmethod
+      Converts omeka result to item data format
+    */
+    function dataToItem(data) {
+        return {id: data.item, metadata: data.metadata, fileCount: data.file_count};
+    }
+
+    /*!
+      \qmlmethod
       Returns true if the item has an entry in the database
     */
     function isLiked(item) {
-        return Settings.isLiked(item.id)
+        return Settings.isLiked(String(item.id))
     }
 
     /*!

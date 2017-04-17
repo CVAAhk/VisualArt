@@ -23,7 +23,7 @@ Setting {
     //content background
     content: Rectangle {
         color: "white"
-        height: childrenRect.height + setting.margins * 2
+        height: about.height + setting.margins * 2
 
         //text display
         OmekaText {

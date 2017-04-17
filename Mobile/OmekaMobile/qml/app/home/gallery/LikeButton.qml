@@ -9,13 +9,15 @@ OmekaToggle{
     checkedSource: Style.likeFill
     iconScale: Resolution.applyScale(.55)
 
+    property bool bypassRemoval: false
+
     //add or remove data entry based on checked state
     onClicked: {
         if(checked){
             ItemManager.registerLike(itemData)
         }
-        else{
-            ItemManager.unregisterLike(itemData)
+        else {
+            ItemManager.unregisterLike(itemData, bypassRemoval)
         }
     }
 

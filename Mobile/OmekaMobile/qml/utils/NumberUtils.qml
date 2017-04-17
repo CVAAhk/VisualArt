@@ -10,4 +10,8 @@ Item {
         return (num1 * (max2 - min2)) + min2
     }
 
+    function randomInt(min, max) {
+        return Math.floor(Math.random()*(max-min)+min);
+    }
+
 }

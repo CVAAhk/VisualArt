@@ -8,12 +8,14 @@ QTPLUGIN += qsqlite
 CONFIG += c++11
 
 SOURCES += main.cpp \
-    cpp\test\imageprovidertest.cpp \
-    shareutils.cpp
+    shareutils.cpp \
+    applicationloader.cpp \
+    sequentialguid.cpp
 
 HEADERS += \
-    imageprovidertest.h \
-    shareutils.h
+    shareutils.h \
+    applicationloader.h \
+    sequentialguid.h
 
 RESOURCES += qml.qrc
 
@@ -33,6 +35,8 @@ QML_IMPORT_PATH += \
     qml/utils/ItemManager 1.0 \
     qml/utils/User 1.0 \
     qml/utils/NumberUtils 1.0 \
+    qml/utils/HeistManager 1.0 \
+    qml/utils/Foreground 1.0 \
 
 ios {
     OBJECTIVE_SOURCES += ios/iosshareutils.mm
@@ -141,4 +145,21 @@ DISTFILES += \
     qml/app/detail/viewers/IndexIndicator.qml \
     qml/app/detail/LoadScreen.qml \
     qml/app/detail/viewers/controls/PlaybackIndicator.qml \
-    qml/test/mvc/ColorPath.qml
+    qml/test/mvc/ColorPath.qml \
+    qml/app/likes/LikesFilter.qml \
+    qml/app/likes/FilterButton.qml \
+    qml/app/likes/Filters.qml \
+    qml/app/home/settings/pairing/PairSetting.qml \
+    qml/app/home/settings/pairing/TablePairing.qml \
+    qml/app/home/settings/pairing/Keypad.qml \
+    qml/app/home/settings/pairing/CodeEntry.qml \
+    qml/app/home/settings/pairing/Unpair.qml \
+    qml/utils/HeistManager.qml \
+    qml/test/heist/TestHeist.qml \
+    qml/test/heist/RequestUI.qml \
+    qml/app/home/settings/pairing/HeistReceiver.qml \
+    qml/utils/Pairings.qml \
+    qml/test/heist/StateLabel.qml \
+    qml/test/heist/ItemDelegate.qml \
+    qml/app/FloatMessage.qml \
+    qml/utils/Foreground.qml

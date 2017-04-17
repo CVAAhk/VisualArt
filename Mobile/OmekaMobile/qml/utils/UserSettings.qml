@@ -26,10 +26,6 @@ Item {
         return Settings.getLayout()
     }
 
-    function clearAllLikes() {
-        Settings.clearAllLikes()
-    }
-
     function likesExist() {
         return Settings.getLikes().length > 0
     }

@@ -4,7 +4,7 @@ import "../../../utils"
 
 Rectangle {
     anchors.left: parent.left
-    anchors.leftMargin: 10
+    anchors.leftMargin: Resolution.applyScale(30)
     anchors.top: img.top
     width: parent.width - anchors.leftMargin*2
     height: img.height
@@ -24,10 +24,11 @@ Rectangle {
 
         OmekaText {
             id: title
-            _font: Style.infoTitleFont
-            elide: Text.ElideRight
             width: parent.width
-            height: parent.height * .59
+            height: parent.height * .4
+            elide: Text.ElideRight
+            verticalAlignment: Text.AlignVCenter
+            _font: Style.infoTitleFont
         }
 
         Rectangle {
