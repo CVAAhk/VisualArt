@@ -15,6 +15,11 @@ Row {
     anchors.bottom: parent.bottom
     z: 1
 
+    //set global reference
+    Component.onCompleted: {
+        Foreground.mainNavigationBar = bar
+    }
+
     //initial state
     state: "home"
 
@@ -27,6 +32,11 @@ Row {
        Button state names
     */
     property var buttonStates: ["home", "search", "likes"]
+
+    /*! \qmlproperty
+       Pulses likes page button to draw user's attention
+    */
+    property alias pulseLikesButton : likes.pulse
 
     /*! \qmlproperty
        Selected index

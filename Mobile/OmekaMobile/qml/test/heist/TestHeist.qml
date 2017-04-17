@@ -39,6 +39,7 @@ ApplicationWindow {
     //sample items (TEST ONLY)
     Component.onCompleted: {
         Omeka.getPage(1, window)
+        HeistManager.clearHeist(); //temporary hack; see api doc for this call
     }
 
     //remove sessions from heist on app exit

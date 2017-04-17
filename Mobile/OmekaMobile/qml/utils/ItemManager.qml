@@ -54,10 +54,14 @@ Item {
     /*!
       \qmlmethod
       Remove like from local database
+      \a item The item to register
+      \a bypass Skip data removal and invokes signal with the assumption removal will
+                be finalized at a later time
     */
-    function unregisterLike(item) {
-        Settings.removeLike(String(item.id))
+    function unregisterLike(item, bypass) {
         itemRemoved(item)
+        if(bypass) return;
+        Settings.removeLike(String(item.id))
     }
 
     /*!

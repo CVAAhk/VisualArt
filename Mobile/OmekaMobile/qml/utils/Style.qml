@@ -3,7 +3,7 @@ import QtQuick 2.5
 
 Item {
     /*-------------Color Scheme-------------*/
-    property color color1: "#2B89D9"
+    property color color1: "#666666"
     property color color2: "white"
     property color color3: "#E6E6E6"
     property color color4: "#F0F0F0"

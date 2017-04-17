@@ -16,6 +16,11 @@ Component {
         property var title
         property var source
 
+        //Used to postpone likes unregistration when the likes list is the currently displayed view. The rationale being
+        //the user having the option to relike an unliked item from the likes view and not until the view is disabled will
+        //the unlikes finalized and removed from the list.
+        property bool visibleLikesMember: context ? (context.objectName === "LikesList" && context.enabled) : false
+
         //store result and query files
         Component.onCompleted: {
 
@@ -31,6 +36,7 @@ Component {
             like.refresh(itemData)
         }
 
+        //set info panel content
         function setInfo() {
             var name
             for(var i=0; i<metadata.count; i++) {
@@ -112,6 +118,7 @@ Component {
             id: like
             anchors.top: img.top
             anchors.right: img.right
+            bypassRemoval: object.visibleLikesMember
         }
 
         states: [
