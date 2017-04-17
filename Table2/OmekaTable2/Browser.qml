@@ -115,13 +115,19 @@ Item {
     {
         list.decrementCurrentIndex();
     }
+    Timer
+    {
+        id: delayTimerSwitch
+
+        interval: 500; repeat: false
+    }
 
     MultiPointTouchArea
     {
         id: touch_area
 
         x: 21//161//root.width/2 - 200
-        //y: //list.curoot.height/2 - 200
+        enabled: !delayTimerSwitch.running
 
         width: list.width//400
         height: list.height//400
@@ -190,7 +196,7 @@ Item {
                         //console.log("assign possition x: ", assignedPosition.x , " assign position y: ", assignedPosition.y);
 
                         console.log("TAP!! createImage()");
-
+                        delayTimerSwitch.start();
                     }
                 }
             }
