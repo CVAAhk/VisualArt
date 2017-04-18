@@ -38,6 +38,8 @@ Item
 
     signal unpairDone();
 
+    signal interactive();
+
     Rectangle
     {
         id: pairing_header_bkg
@@ -101,7 +103,7 @@ Item
         x: 12
         visible: true
         enabled: visible
-        onWhatIsThis: {pairing_instruction.visible = true;pair_code.visible = false;}
+        onWhatIsThis: {pairing_instruction.visible = true;pair_code.visible = false;interactive();}
         onCurrentCodeChanged: root.currentCode = currentCode;
     }
     PairingInstruction
@@ -112,7 +114,7 @@ Item
         x: 12
         visible: false
         enabled: pairing_instruction.visible
-        onBackToPairing: {pairing_instruction.visible = false;pair_code.visible = true;}
+        onBackToPairing: {pairing_instruction.visible = false;pair_code.visible = true;interactive();}
     }
     PairSuccess
     {
@@ -150,7 +152,7 @@ Item
         {
             readyToUnpair = false;
             drag_files.visible = true;
-
+            interactive();
         }
         onUnpair: {endSession();root.unpairDone();}
     }
@@ -158,6 +160,7 @@ Item
     function startSession()
     {
         pair_code.startSession();
+        interactive();
     }
     function startUnpair()
     {
@@ -266,6 +269,7 @@ Item
             pair_code.visible = false;
             root.enabled = false;
             switch_to_drag_files.start();
+            interactive();
         }
     }
 
