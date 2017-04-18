@@ -183,6 +183,7 @@ Item
                     imageHolder.createImage(selected_image.source, selected_image.recoveryX /*+ (root.topScreen?(Settings.SCREEN_WIDTH - root.x):root.x)*/,
                                             selected_image.recoveryY /*+ (root.topScreen?(Settings.SCREEN_HEIGHT - root.y):root.y)*/,
                                             (root.topScreen? 180: 0), selected_image.width, selected_image.height, false, root.whichScreen)
+                    pairing.startAddSuccess();
                 }
             }
         }
