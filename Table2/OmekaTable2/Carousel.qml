@@ -121,6 +121,10 @@ Item
                 pairing_btn_touch_area.active = false;
             }
         }
+        onInteractive:
+        {
+            pairing_timeout.restart();
+        }
     }
 
     Image
@@ -357,6 +361,7 @@ Item
             if(active) {
                 pairing.resetPairing();
                 pairing.startSession();
+                pairing_timeout.start();
             }
         }
     }
@@ -569,6 +574,15 @@ Item
             filter.tagHeaderSearchByTag = false;
             filter.resetFilters();
             filter_text.text = "FILTER";
+
+        }
+    }
+    Timer
+    {
+        id: pairing_timeout
+        interval: Settings.IMAGE_TIMER_DURATION
+        onTriggered:
+        {
 
         }
     }
