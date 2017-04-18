@@ -51,7 +51,7 @@ Item
         y:30
         color: root.color
         whichScreen: root.whichScreen
-        onWhichScreenChanged: interactive();
+        onScreenTagChanged:  interactive();
     }
 
     TagSearch
