@@ -125,6 +125,10 @@ Item
         {
             pairing_timeout.restart();
         }
+        onUnpairDone:
+        {
+            pairing_timeout.stop();
+        }
     }
 
     Image
@@ -188,6 +192,7 @@ Item
                                             selected_image.recoveryY /*+ (root.topScreen?(Settings.SCREEN_HEIGHT - root.y):root.y)*/,
                                             (root.topScreen? 180: 0), selected_image.width, selected_image.height, false, root.whichScreen)
                     pairing.startAddSuccess();
+                    pairing_timeout.restart();
                 }
             }
         }
@@ -217,6 +222,7 @@ Item
             selected_image.recoveryX = recoveryX;
             selected_image.recoveryY = recoveryY;
             recycleAnimation.start();
+            pairing_timeout.restart();
         }
     }
 
@@ -363,6 +369,7 @@ Item
                 pairing.startSession();
                 pairing_timeout.start();
             }
+
         }
     }
     MultiPointTouchArea
@@ -551,6 +558,7 @@ Item
         }
         onImageFinishedRecycle:
         {
+            pairing_timeout.restart();
             pairing.startAddSuccess();
         }
         onResetBrowser:
@@ -583,7 +591,12 @@ Item
         interval: Settings.IMAGE_TIMER_DURATION
         onTriggered:
         {
+            pairing.timeoutPairing();
+            pairing.endSession();
 
+            pairing.visible = false;
+            pairing_btn.visible = false;
+            send_to_mobile_btn.visible = true;
         }
     }
 

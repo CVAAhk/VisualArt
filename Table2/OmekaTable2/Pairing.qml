@@ -168,6 +168,7 @@ Item
         pair_successful.visible = false;
         drag_files.visible = false;
         send_success.visible = false;
+        interactive();
     }
     function resetPairing()
     {
@@ -252,16 +253,21 @@ Item
 
    }
 
+   function timeoutPairing()
+   {
+       deviceId = null;
+       resetItems();
+       items.length = 0;
+       pair_code.visible = false;
+       pair_successful.visible = false;
+       drag_files.visible = false;
+       send_success.visible = false;
+   }
+
     /*! On unpair clear device id and remove associated items */
     onPairedChanged: {
         if(!paired) {
-            deviceId = null;
-            resetItems();
-            items.length = 0;
-            pair_code.visible = false;
-            pair_successful.visible = false;
-            drag_files.visible = false;
-            send_success.visible = false;
+            root.timeoutPairing();
         }
         else
         {
