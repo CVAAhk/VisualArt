@@ -12,6 +12,7 @@
 		<file>qml/test/mvc/GridViewTest.qml</file>
 		<file>qml/test/mvc/ContactModel.qml</file>			
 		<file>qml/test/providers/ImageProviderApp.qml</file>			
+		<file>qml/test/providers/ImageSizeTest.qml</file>	
 		<file>qml/test/client/TestClient.qml</file>			
 		<file>qml/test/heist/TestHeist.qml</file>	
 		<file>qml/test/heist/RequestUI.qml</file>	
