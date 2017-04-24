@@ -34,7 +34,6 @@ Item
             id: gallery
             width: Settings.SCREEN_WIDTH
             height: Settings.SCREEN_HEIGHT
-            //onRemoveAttractImage:
             onCarouselActivate: {/*attract_pool.opacity = 0.0;*/ attract_pool.stopAttractTimer(); attract_pool.carouselActivate = true;}
         }
 
@@ -43,11 +42,11 @@ Item
             id: attract_pool
             onCreateImage:
             {
-                //console.log("create an image!")
                 //gallery.imageHolderCreateImage(source,imageX,imageY,imageRotation,imageWidth,imageHeight, tapOpen, whichScreen);
             }
             onImageDragged: gallery.attractImageIsInPairingBox(image);
             onImageFinishedDragging: gallery.attractImageReleased(image);
+            onMaxResultsChanged: gallery.maxResults = attract_pool.maxResults;
         }
 
         Component.onCompleted:

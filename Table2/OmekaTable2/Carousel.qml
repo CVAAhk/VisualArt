@@ -26,6 +26,8 @@ Item
 
     property var currentCode: pairing.currentCode
 
+    property int maxResults: 490
+
 
     Component.onCompleted:
     {
@@ -90,6 +92,7 @@ Item
                 searchByTag = tagHeaderSearchByTag;
             }
         }
+        onInteractive: filter_timeout.restart();
     }
     Pairing
     {
@@ -117,6 +120,14 @@ Item
                 pairing_btn_touch_area.enabled = true;
                 pairing_btn_touch_area.active = false;
             }
+        }
+        onInteractive:
+        {
+            pairing_timeout.restart();
+        }
+        onUnpairDone:
+        {
+            pairing_timeout.stop();
         }
     }
 
@@ -180,6 +191,8 @@ Item
                     imageHolder.createImage(selected_image.source, selected_image.recoveryX /*+ (root.topScreen?(Settings.SCREEN_WIDTH - root.x):root.x)*/,
                                             selected_image.recoveryY /*+ (root.topScreen?(Settings.SCREEN_HEIGHT - root.y):root.y)*/,
                                             (root.topScreen? 180: 0), selected_image.width, selected_image.height, false, root.whichScreen)
+                    pairing.startAddSuccess();
+                    pairing_timeout.restart();
                 }
             }
         }
@@ -209,6 +222,7 @@ Item
             selected_image.recoveryX = recoveryX;
             selected_image.recoveryY = recoveryY;
             recycleAnimation.start();
+            pairing_timeout.restart();
         }
     }
 
@@ -286,6 +300,7 @@ Item
     }
     MultiPointTouchArea
     {
+        id: filter_btn_touch_area
         anchors.fill: filter_applied_btn
         property bool active: false
         onPressed:
@@ -299,6 +314,11 @@ Item
                 filter.tagHeaderSearchByTag = false;
                 filter.resetFilters();
                 filter_text.text = "FILTER";
+                filter_timeout.stop();
+            }
+            else
+            {
+                filter_timeout.start();
             }
 
         }
@@ -347,7 +367,9 @@ Item
             if(active) {
                 pairing.resetPairing();
                 pairing.startSession();
+                pairing_timeout.start();
             }
+
         }
     }
     MultiPointTouchArea
@@ -435,7 +457,7 @@ Item
     Text
     {
         id: item_count
-        text: browser.currentIndex + 1 + " OF " + (searchByTag ? browser.listItemsCount : 490)
+        text: browser.currentIndex + 1 + " OF " + (searchByTag ? browser.listItemsCount : maxResults)
         color: "#888888"
         anchors.horizontalCenter: bkg.horizontalCenter
         y: 247
@@ -536,6 +558,7 @@ Item
         }
         onImageFinishedRecycle:
         {
+            pairing_timeout.restart();
             pairing.startAddSuccess();
         }
         onResetBrowser:
@@ -545,6 +568,37 @@ Item
     }
 
 
+    Timer
+    {
+        id: filter_timeout
+        interval: Settings.IMAGE_TIMER_DURATION
+        onTriggered:
+        {
+            filter_btn_touch_area.active = false;
+            filter_btn.visible = true;
+            filter_applied_btn.visible = false;
+            filter.opacity = 0.0
+
+            filter.tagHeaderSearchByTag = false;
+            filter.resetFilters();
+            filter_text.text = "FILTER";
+
+        }
+    }
+    Timer
+    {
+        id: pairing_timeout
+        interval: Settings.IMAGE_TIMER_DURATION
+        onTriggered:
+        {
+            pairing.timeoutPairing();
+            pairing.endSession();
+
+            pairing.visible = false;
+            pairing_btn.visible = false;
+            send_to_mobile_btn.visible = true;
+        }
+    }
 
     function appendItems(result)
     {

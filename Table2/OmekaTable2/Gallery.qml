@@ -9,6 +9,15 @@ Item {
     id: gallery
 
     property var current
+    property int maxResults
+
+    onMaxResultsChanged:
+    {
+        top_left_carousel.maxResults = gallery.maxResults;
+        top_right_carousel.maxResults = gallery.maxResults;
+        lower_left_carousel.maxResults = gallery.maxResults;
+        lower_right_carousel.maxResults = gallery.maxResults;
+    }
 
     signal removeAttractImage(string filepath,string whichScreen)
     signal carouselActivate()
