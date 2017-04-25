@@ -1,12 +1,15 @@
 import QtQuick 2.0
 import QtGraphicalEffects 1.0
 import "."
+import "settings.js" as Settings
 Item
 {
     id: root
     property string color: "#2b89d9"//blue
     property string whichScreen: "lower left"//default
     property alias tagHeaderSearchByTag: tag_header.searchByTag
+
+    signal interactive();
     Rectangle
     {
         id: filter_header_bkg
@@ -48,6 +51,7 @@ Item
         y:30
         color: root.color
         whichScreen: root.whichScreen
+        onScreenTagChanged:  interactive();
     }
 
     TagSearch
@@ -62,6 +66,7 @@ Item
         onLetterSelected:
         {
             alpha.selectLetterChar(letter);
+            interactive();
         }
     }
 
@@ -93,8 +98,10 @@ Item
         onLetterSelected:
         {
             tags_view.selectNewLetter(letter);
+            interactive();
         }
     }
+
 
     function resetFilters()
     {

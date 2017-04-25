@@ -162,4 +162,5 @@ DISTFILES += \
     qml/test/heist/StateLabel.qml \
     qml/test/heist/ItemDelegate.qml \
     qml/app/FloatMessage.qml \
-    qml/utils/Foreground.qml
+    qml/utils/Foreground.qml \
+    qml/test/providers/ImageSizeTest.qml

@@ -7,7 +7,7 @@ Item
     property int randomCount: 4
 
     property var allResults:[]
-    property int maxResults: 490
+    property int maxResults
     property bool carouselActivate: false
 
 
@@ -18,7 +18,7 @@ Item
     signal imageFinishedDragging(var image);
 
     Component.onCompleted: {
-        Omeka.getAllPages(10, root)
+        Omeka.getAllPages(3, root)
         //Omeka.getPage(1, root)
     }
 
@@ -28,8 +28,9 @@ Item
         onRequestComplete:{
             if(result.context === root){
                 allResults.push(result)
-                if(allResults.length == maxResults)
+                if(allResults.length == 124)
                 {
+                    maxResults = 124//result.file_count;
                     var random_id1 = Math.floor(randomizeId());
                     var random_id2 = Math.floor(randomizeId());
                     var random_id3 = Math.floor(randomizeId());

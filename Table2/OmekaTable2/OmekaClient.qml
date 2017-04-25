@@ -94,7 +94,17 @@ Item {
         for(var i=0; i<count; i++){
             res = result[i] || result;
             if(res.item){  //file
-                requestComplete({item: res.item.id, context: result.context, media: res.file_urls.original, thumb: res.file_urls.thumbnail, media_type: mediaType(res.file_urls.original)});
+
+                //determine media type
+                var media = res.file_urls.original
+                var mType = mediaType(media)
+
+                //for optimized loading, swith to fullsize derivative on image types
+                if(mType === "image") {
+                    media = res.file_urls.fullsize
+                }
+
+                requestComplete({item: res.item.id, context: result.context, media: media, thumb: res.file_urls.thumbnail, media_type: mType});
             }
             else if(res.element_texts){ //item
                 requestComplete({item: res.id, context: result.context, metadata: res.element_texts, file_count: res.files.count});
