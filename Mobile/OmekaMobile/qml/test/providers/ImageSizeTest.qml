@@ -37,7 +37,7 @@ ApplicationWindow {
                 else {
                     for(var i=0; i< result.length; i++) {
                         var item = result[i];
-                        var source = item.file_urls.original
+                        var source = item.file_urls.fullsize
                         if(imageExt.test(source)) {
                             loadCount++
                             repeater.model.append({itemId: item.item.id, src: source})
