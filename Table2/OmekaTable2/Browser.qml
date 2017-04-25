@@ -59,6 +59,8 @@ Item {
 
     signal createImage(string source, int imageX, int imageY, int imageRotation, int imageWidth, int imageHeight, bool tapOpen);
 
+    signal interactive();
+
     function assignItemPosition(x)
     {
         assignedPosition = itemsPositions.pop();
@@ -103,17 +105,17 @@ Item {
 
         focus: true
         enabled: false
-
-
     }
 
     function increaseCurrentItem()
     {
         list.incrementCurrentIndex();
+        interactive();
     }
     function decreaseCurrentItem()
     {
         list.decrementCurrentIndex();
+        interactive();
     }
     Timer
     {
@@ -197,6 +199,7 @@ Item {
 
                         console.log("TAP!! createImage()");
                         delayTimerSwitch.start();
+                        interactive();
                     }
                 }
             }
@@ -221,6 +224,7 @@ Item {
                         {
                             list.flick((touchPoint.x - touchPoint.previousX) * 100, 0);
                             touch_area.flick = true;
+                            interactive();
                         }
                         else
                         {
@@ -320,6 +324,7 @@ Item {
 
                 root.createImage(selected_image.source, imageCenterX, imageCenterY, rotation,
                                  selected_image.width, selected_image.height, false);
+                interactive();
             }
 
             var dragEntries = Object.getOwnPropertyNames(dragAmounts);

@@ -92,7 +92,7 @@ Item
                 searchByTag = tagHeaderSearchByTag;
             }
         }
-        onInteractive: filter_timeout.restart();
+        onInteractive: if(filter_timeout.running) filter_timeout.restart();
     }
     Pairing
     {
@@ -123,7 +123,8 @@ Item
         }
         onInteractive:
         {
-            pairing_timeout.restart();
+            if(pairing_timeout.running)
+                pairing_timeout.restart();
         }
         onUnpairDone:
         {
@@ -398,6 +399,7 @@ Item
             width: 960
             headerHeight: height/3
             topScreen: root.topScreen
+            onInteractive: if(filter_timeout.running) filter_timeout.restart();
             onCreateImage:
             {
                 if(root.isImageInPairingBox(root,selected_image))
@@ -443,7 +445,7 @@ Item
                     busy = (layout.currentIndex === layout.count -4)//layout.atXEnd
                     if(busy){
                         nextCount++;
-                        //console.log("can paginate!!")
+                        console.log("can paginate!!")
                         root.canPaginate();
                     }
                 }else if(layout.model && layout.model.count)
@@ -582,7 +584,7 @@ Item
             filter.tagHeaderSearchByTag = false;
             filter.resetFilters();
             filter_text.text = "FILTER";
-
+            console.log("filter times out");
         }
     }
     Timer
