@@ -88,6 +88,7 @@ Item
             if(!tagHeaderSearchByTag)
             {
                 browser.clear();
+                browser.nextCount = 1;
                 Omeka.getPage(1, root);
                 searchByTag = tagHeaderSearchByTag;
             }
