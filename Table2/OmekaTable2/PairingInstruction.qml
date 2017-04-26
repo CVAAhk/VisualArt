@@ -42,8 +42,7 @@ Item
     OmekaText
     {
         id: pairing_text
-        text: "By using the app " + Settings.APP_NAME +
-              ", you can take your favorite discoveries with you.<br><br>Ask a docent how to download the app or search on your app store."
+        text: "Thank you for exploring the beta version of our software. The mobile app is not yet available for download."
         _font: Style.settingFont
         width: 143
         anchors.horizontalCenter: root.horizontalCenter
