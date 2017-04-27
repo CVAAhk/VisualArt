@@ -57,10 +57,11 @@ Item
     OmekaText
     {
         id: pairing_text
-        text: "To send to your device download and launch the " + Settings.APP_NAME +
-              ", go to Settings, and enter the code:"
+        text: "Thank you for exploring the beta version of our software. The mobile app is not yet available for download."
+        /*"To send to your device download and launch the " + Settings.APP_NAME +
+              ", go to Settings, and enter the code:"*/
         _font: Style.settingFont
-        width: 123
+        width: 143
         anchors.horizontalCenter: root.horizontalCenter
         horizontalAlignment: Text.AlignHCenter
         y: 65
