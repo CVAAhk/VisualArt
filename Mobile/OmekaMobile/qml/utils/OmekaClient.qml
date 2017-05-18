@@ -5,8 +5,8 @@ Item {
     /*! \qmlproperty
         Target omeka endpoint url
     */
-    property url endpoint: "http://oe.develop.digitalmediauconn.org/"
-    //property url endpoint: "http://dev.omeka.org/mallcopy/"
+    //property url endpoint: "http://oe.develop.digitalmediauconn.org/"
+    property url endpoint: "http://dev.omeka.org/mallcopy/"
 
     /*! \qmlproperty
         Target omeka rest api
@@ -44,6 +44,10 @@ Item {
     /*! \qmlsignal
         Invoked on query result*/
     signal requestComplete(var result)
+
+    /*! \qmlsignal
+        Invoked when query produces empty result*/
+    signal emptyResult(var context)
 
     /* Initialize heist*/
    // Component.onCompleted: heist.initialize(rest+"heist?pairing_id=1245");
@@ -115,6 +119,9 @@ Item {
             else if(res.name){ //tag and search term
                 requestComplete({item: res.id, context: result.context, tag: res.name});
             }
+            else {
+                emptyResult(result.context)
+            }
         }
     }        
 
@@ -172,7 +179,7 @@ Item {
         Return media type of original file*/
     function mediaType(source) {
         if(imageExt.test(source))
-            return "image";
+            return "image"
         if(audioExt.test(source))
             return "audio"
         if(videoExt.test(source))
