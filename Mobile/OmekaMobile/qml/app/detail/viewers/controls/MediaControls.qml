@@ -46,9 +46,10 @@ Item {
         height: width
     }
 
-    //full screen mode toggle control
+    //toggles fullscreen state for playback viewers
     OmekaToggle {
        id: toggle
+       visible: scrubber.visible
        anchors.top: parent.top
        anchors.right: parent.right
        anchors.margins: 10
