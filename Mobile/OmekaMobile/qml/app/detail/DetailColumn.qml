@@ -38,12 +38,14 @@ ScaleColumn {
         liked: item ? ItemManager.isLiked(item) : false
         itemId: item ? item.id : -1
         onLikedChanged: {
-            if(liked) {
+            if(liked) {                
                 ItemManager.registerLike(item)
+                Foreground.showMessage("Item added to likes", 2000, Resolution.applyScale(300))
             }
             else {
                 ItemManager.unregisterLike(item)
                 HeistManager.unregisterItem(item.id)
+                Foreground.showMessage("Item removed from likes", 2000, Resolution.applyScale(300))
             }
         }
     }
