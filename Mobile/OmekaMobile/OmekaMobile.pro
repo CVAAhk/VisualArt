@@ -163,4 +163,5 @@ DISTFILES += \
     qml/test/heist/ItemDelegate.qml \
     qml/app/FloatMessage.qml \
     qml/utils/Foreground.qml \
-    qml/test/providers/ImageSizeTest.qml
+    qml/test/providers/ImageSizeTest.qml \
+    qml/app/likes/NumberTag.qml

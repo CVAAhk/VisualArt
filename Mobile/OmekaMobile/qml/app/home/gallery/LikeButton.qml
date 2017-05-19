@@ -15,11 +15,9 @@ OmekaToggle{
     onClicked: {
         if(checked){            
             ItemManager.registerLike(itemData)
-            Foreground.showMessage("Item added to likes", 2000, Resolution.applyScale(300))
         }
         else {
             ItemManager.unregisterLike(itemData, bypassRemoval)
-            Foreground.showMessage("Item removed from likes", 2000, Resolution.applyScale(300))
         }
     }
 

@@ -40,6 +40,12 @@ Item {
     signal itemRemoved(var item)
     signal clearItems()
 
+    //items liked since the last view
+    property var recentlyLiked: []
+
+    //tracks number of likes since last view
+    property int newLikes: 0
+
     /*!
       \qmlmethod
       Add like to local database
@@ -48,6 +54,7 @@ Item {
         if(!isLiked(item)) {
             Settings.addLike(String(item.id), itemToEntry(item))
             itemAdded(item)
+            addRecentLike(item.id)
         }
     }
 
@@ -60,6 +67,7 @@ Item {
     */
     function unregisterLike(item, bypass) {
         itemRemoved(item)
+        removeRecentLiked(item.id)
         if(bypass) return;
         Settings.removeLike(String(item.id))
     }
@@ -71,6 +79,7 @@ Item {
     function unregisterAllLikes() {
         Settings.clearAllLikes()
         clearItems()
+        clearRecentLiked()
     }
 
     /*!
@@ -142,5 +151,36 @@ Item {
              likes.push(entryToItem(entries[i].setting, entries[i].value))
         }
         return likes
+    }
+
+    /*!
+      \qmlmethod
+      Add item to list of recently liked items
+    */
+    function addRecentLike(id) {
+        if(recentlyLiked.indexOf(id) === -1) {
+            recentlyLiked.push(id)
+            newLikes = recentlyLiked.length
+        }
+    }
+
+    /*!
+      \qmlmethod
+      Remove item from list of recently liked items
+    */
+    function removeRecentLiked(id) {
+        if(recentlyLiked.indexOf(id) !== -1) {
+            recentlyLiked.splice(recentlyLiked.indexOf(id), 1)
+            newLikes = recentlyLiked.length
+        }
+    }
+
+    /*!
+      \qmlmethod
+      Clear all recently liked items
+    */
+    function clearRecentLiked() {
+        recentlyLiked.length = 0
+        newLikes = 0
     }
 }

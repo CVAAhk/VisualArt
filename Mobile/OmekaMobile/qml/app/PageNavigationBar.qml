@@ -1,6 +1,7 @@
 import QtQuick 2.5
 import QtQuick.Controls 1.4
 import "../utils"
+import "../app/likes"
 
 /*!
   \qmltype PageNavigationBar
@@ -61,7 +62,19 @@ Row {
         state: buttonStates[2]
         checkedIcon: "../../ui/likes-on.png"
         uncheckedIcon: "../../ui/likes-off.png"
-    }
+
+        //notify number of likes added since last view
+        NumberTag {
+            id: likesTag
+
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.verticalCenterOffset: Resolution.applyScale(-45)
+            anchors.horizontalCenterOffset: Resolution.applyScale(90)
+
+            number: ItemManager.newLikes
+        }
+    }       
 
     //nav state
     states: [

@@ -29,7 +29,10 @@ Item {
 
     //clear removals when disabled
     onEnabledChanged: {
-        if(!enabled) {
+        if(enabled) {
+            ItemManager.clearRecentLiked()
+        }
+        else {
             for(var i in removals) {                
                 ItemManager.unregisterLike({id: removals[i]}, false);
             }
