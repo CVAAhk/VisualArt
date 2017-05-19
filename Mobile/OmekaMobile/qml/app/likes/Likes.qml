@@ -39,6 +39,7 @@ Item {
             removals.length = 0
             //filter.close()
         }
+        ItemManager.onLikesView = enabled
     }
 
     //update ui on item add/remove

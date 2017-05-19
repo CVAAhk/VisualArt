@@ -46,6 +46,9 @@ Item {
     //tracks number of likes since last view
     property int newLikes: 0
 
+    //likes view is current
+    property bool onLikesView: false
+
     /*!
       \qmlmethod
       Add like to local database
@@ -158,6 +161,7 @@ Item {
       Add item to list of recently liked items
     */
     function addRecentLike(id) {
+        if(onLikesView) return
         if(recentlyLiked.indexOf(id) === -1) {
             recentlyLiked.push(id)
             newLikes = recentlyLiked.length
