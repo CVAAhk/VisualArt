@@ -27,6 +27,11 @@ Item {
                 browser.append(result)
             }
         }
+        onEmptyResult: {
+            if(context === results) {
+                Foreground.showMessage("NO RESULTS", 3000, Resolution.applyScale(300))
+            }
+        }
     }
 
     //result browser

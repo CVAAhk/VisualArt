@@ -16,11 +16,10 @@ OmekaToolBar {
         id: textField
         anchors.fill: parent
         anchors.margins: Resolution.applyScale(15)
-        horizontalAlignment: TextInput.AlignHCenter
         verticalAlignment: TextInput.AlignVCenter
         font.bold: true
         font.pixelSize: Resolution.applyScale(80)
-        placeholderText: "SEARCH"
+        placeholderText: "SEARCH..."
         style: SearchBarStyle {}
     }
 
