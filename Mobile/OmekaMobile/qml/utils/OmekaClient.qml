@@ -49,9 +49,6 @@ Item {
         Invoked when query produces empty result*/
     signal emptyResult(var context)
 
-    /* Initialize heist*/
-   // Component.onCompleted: heist.initialize(rest+"heist?pairing_id=1245");
-
 
     /*! \internal
       Sends http request and links response handler

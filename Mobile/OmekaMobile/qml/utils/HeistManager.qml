@@ -41,6 +41,34 @@ Item {
     /*List of registered receivers of iterative polling results*/
     property var receivers: [];
 
+    /*Returns whether the heist plugin is installed for this omeka instance*/
+    property bool heistIsSupported: false
+
+    ///////////////////////////////////////////////////////////
+    //          PLUGIN CHECK
+    ///////////////////////////////////////////////////////////
+
+    //Check for heist support
+    Component.onCompleted: pingPlugin()
+
+    /*! \internal
+     Ping the hesit plugin to see if it is installed for this omeka instance and
+     set the heistIsSupported flag based on the result
+    */
+    function pingPlugin() {
+        var request = new XMLHttpRequest();
+        request.onreadystatechange = function() {
+            if(request.readyState === XMLHttpRequest.DONE) {
+                if(request.responseText) {
+                    var result = JSON.parse(request.responseText)
+                    heist_manager.heistIsSupported = result.message === undefined
+                }
+            }
+        }
+        request.open(get, baseUrl);
+        request.send();
+    }
+
 
     ///////////////////////////////////////////////////////////
     //          PAIR TRACKING
