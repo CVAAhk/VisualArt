@@ -16,11 +16,6 @@ Row {
     anchors.bottom: parent.bottom
     z: 1
 
-    //set global reference
-    Component.onCompleted: {
-        Foreground.mainNavigationBar = bar
-    }
-
     //initial state
     state: "home"
 

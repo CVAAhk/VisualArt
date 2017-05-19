@@ -15,22 +15,6 @@ ButtonStyle {
             implicitWidth: control.width
             implicitHeight: control.height
 
-            //pulsating background to draw attention
-            Rectangle {
-                id: attention
-                anchors.fill: parent
-                color: "#000000"
-                visible: control.pulse
-
-                SequentialAnimation {
-                    running: control.pulse
-                    loops: Animation.Infinite
-                    NumberAnimation { target: attention; property: "opacity"; from: 0; to: .2; duration: 1000 }
-                    NumberAnimation { target: attention; property: "opacity"; from: .2; to: 0; duration: 1000 }
-                }
-
-            }
-
             //icons
             Item {
                 anchors.centerIn: parent

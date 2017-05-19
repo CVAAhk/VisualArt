@@ -4,20 +4,6 @@ import QtQuick 2.5
 Item {
 
     /*!
-      Global reference to main page navigation bar
-     */
-    property var mainNavigationBar
-
-    /*!
-      Navigate to likes page
-      \a pulse  Pulse when true, stop when false
-    */
-    function pulseLikesButton(pulse) {
-        if(!mainNavigationBar) return;
-        mainNavigationBar.pulseLikesButton = pulse;
-    }
-
-    /*!
       Global instance of a float message for displaying notifications and errors
      */
     property var floatMessage
