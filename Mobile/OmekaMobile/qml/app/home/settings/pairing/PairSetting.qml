@@ -1,43 +1,63 @@
 import QtQuick 2.5
-import QtQuick.Controls 1.4
-import QtQuick.Controls.Styles 1.4
 import "../../../base"
 import "../../../../utils"
+import "../../settings"
 
-Item {
+/*!
+  \qmltype PairSetting
+
+  PairSetting navigates to the heist connection feature for table to mobile content sharing.
+  If heist is not supported, an instructional drop down will be displayed describing the plugin
+  and how add support to the omeka instance.
+*/
+Setting {
     id: setting
-    width: parent.width
-    height: childrenRect.height
+    enableArrow: !hasHeist
 
-    /*! \qml property string Setting::title
-      Setting name
+    /*! \internal
+      Determines if there is heist support for this omeka instance
     */
-    property alias title: category.text
+    property bool hasHeist: HeistManager.heistIsSupported
 
-    /*! \qml property string Setting::checked
-      Invoked on select
+    /*! \internal
+      Padding around text
     */
-    signal select();
+    property real margins: Resolution.applyScale(60)
 
-    //toggles the expanded state of setting
-    Button{
-        id: category
-        width: parent.width
-        height: Resolution.applyScale(150)
-        z: 1
-        checkable: true
-        exclusiveGroup: settingsGroup
+    /*! \qml property string PairSettings::text
+      Textual content instructing user how to install heist
+    */
+    property alias text: instructions.text
 
-        //cutom style
-        style: ButtonStyle {
-            background: Rectangle { color: "white" }
-            label: OmekaText {
-                text: control.text
-                _font: Style.settingFont
-                center: true
-            }
+    /*! \qml property string Setting::activate
+      Invoked on device pairing activation if heist is supported
+    */
+    signal activate();
+
+    //only show content when heist is not supported
+    content: Rectangle {
+        color: "white"
+        height: hasHeist ? -2 : instructions.height + setting.margins * 2
+
+        //text display
+        OmekaText {
+            id: instructions
+
+            //anchoring
+            anchors.right: parent.right
+            anchors.left: parent.left
+            anchors.top: parent.top
+            anchors.margins: setting.margins
+
+            _font: Style.metadataFont
         }
-
-        onClicked: select()
     }
+
+    //only activate when heist is supported
+    onStateChanged: {
+        if(hasHeist && state === "expand") {
+            activate()
+        }
+    }
+
 }

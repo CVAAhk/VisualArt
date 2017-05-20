@@ -36,6 +36,11 @@ Item {
     */
     property alias checked: category.checked
 
+    /*! \qml property bool Setting::enableArrow
+      Enables/disables rendering of arrow
+    */
+    property alias enableArrow: arrow.visible
+
     //change state on check
     onCheckedChanged: {
         state = checked ? "expand" : "collapse"
@@ -87,10 +92,8 @@ Item {
         onPressedChanged: {
             if(pressed) {
                 uncheck = exclusiveGroup.current === category
-                //setting.state = "expand"
             } else if(uncheck) {
                 exclusiveGroup.current = null
-                //setting.state = "collapse"
             }
         }
     }
