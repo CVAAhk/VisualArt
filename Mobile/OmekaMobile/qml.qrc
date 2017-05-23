@@ -104,6 +104,7 @@
 		<file>qml/app/likes/FilterButton.qml</file>
 		<file>qml/app/likes/Filters.qml</file>
 		<file>qml/app/likes/LikesFilter.qml</file>
+		<file>qml/app/likes/NumberTag.qml</file>
 		<file>qml/app/search/Search.qml</file>										
 		<file>qml/app/search/TagSearch.qml</file>										
 		<file>qml/app/search/TagDelegate.qml</file>										
@@ -119,7 +120,7 @@
 		<file>ui/back.png</file>
 		<file>ui/logo.png</file>
 		<file>ui/logo-test.png</file>
-		<file>ui/more.png</file>
+		<file>ui/share.png</file>
 		<file>ui/like-indicator.png</file>
 		<file>ui/like-fill.png</file>
 		<file>ui/detail-like-indicator.png</file>

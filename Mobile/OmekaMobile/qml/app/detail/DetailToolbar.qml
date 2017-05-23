@@ -32,7 +32,8 @@ OmekaToolBar {
         id: share
         anchors.right: like.left
         anchors.margins: Resolution.applyScale(30)
-        icon: Style.more
+        icon: Style.share
+        iconScale: .75
         onClicked: shareUtils.share("Ignore Test", Omeka.link+itemId)
     }
 

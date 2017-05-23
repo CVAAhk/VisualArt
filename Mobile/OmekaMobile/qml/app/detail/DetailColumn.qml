@@ -38,7 +38,7 @@ ScaleColumn {
         liked: item ? ItemManager.isLiked(item) : false
         itemId: item ? item.id : -1
         onLikedChanged: {
-            if(liked) {
+            if(liked) {                
                 ItemManager.registerLike(item)
             }
             else {

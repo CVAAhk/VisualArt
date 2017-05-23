@@ -30,7 +30,7 @@ Item {
     /*! \qmlproperty graphic indicating return to previous page */
     property url back: rootPath+"back.png"
     /*! \qmlproperty graphic for menu options */
-    property url more: rootPath+"more.png"
+    property url share: rootPath+"share.png"
     /*! \qmlproperty thumbnail placeholder for image media */
     property url imageIcon: rootPath+"image.png"
     /*! \qmlproperty thumbnail placeholder for audio media */
@@ -63,6 +63,18 @@ Item {
     property url linked: rootPath+"linked_icon.png"
     /*! \qmlproperty pairing icon */
     property url backKey: rootPath+"back_key.png"
+    /*! \qmlproperty active state of home navigation button */
+    property url homeButtonOn: rootPath+"home-on.png"
+    /*! \qmlproperty inactive state of home navigation button */
+    property url homeButtonOff: rootPath+"home-off.png"
+    /*! \qmlproperty active state of search navigation button */
+    property url searchButtonOn: rootPath+"search-on.png"
+    /*! \qmlproperty inactive state of search navigation button */
+    property url searchButtonOff: rootPath+"search-off.png"
+    /*! \qmlproperty active state of likes navigation button */
+    property url likesButtonOn: rootPath+"likes-on.png"
+    /*! \qmlproperty inactive state of likes navigation button */
+    property url likesButtonOff: rootPath+"likes-off.png"
 
     /*! \qmlproperty default thumbnail icons to display when an item does not provide one */
     property var thumbs: ({"image": imageIcon, "audio": audioIcon, "video": videoIcon, "document": documentIcon})

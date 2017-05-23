@@ -57,11 +57,12 @@ Item {
                 LayoutSetting { title: "Layout" }
                 PairSetting {
                     title: "Pair with Collection Viewer Table"
-                    onSelect: {
+                    onActivate: {
                         if(homeStack) {
                             homeStack.push(tablePairing);
                         }
                     }
+                    text: User.heistUnsupported
                 }
                 ClearLikesSetting { title: "Clear All Likes" }
                 AboutSetting {
