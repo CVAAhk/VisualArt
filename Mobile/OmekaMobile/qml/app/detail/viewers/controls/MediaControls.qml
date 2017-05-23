@@ -52,7 +52,6 @@ Item {
        visible: scrubber.visible
        anchors.top: parent.top
        anchors.right: parent.right
-       anchors.margins: 10
        defaultSource: Style.maximize
        checkedSource: Style.minimize
        iconScale: Resolution.scaleRatio
