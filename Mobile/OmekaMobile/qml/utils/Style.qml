@@ -30,7 +30,7 @@ Item {
     /*! \qmlproperty graphic indicating return to previous page */
     property url back: rootPath+"back.png"
     /*! \qmlproperty graphic for menu options */
-    property url more: rootPath+"more.png"
+    property url share: rootPath+"share.png"
     /*! \qmlproperty thumbnail placeholder for image media */
     property url imageIcon: rootPath+"image.png"
     /*! \qmlproperty thumbnail placeholder for audio media */
