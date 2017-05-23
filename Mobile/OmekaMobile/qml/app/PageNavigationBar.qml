@@ -43,20 +43,20 @@ Row {
     //queue home page
     PageButton { id: home
         state: buttonStates[0]
-        checkedIcon: "../../ui/home-on.png"
-        uncheckedIcon: "../../ui/home-off.png"
+        checkedIcon: Style.homeButtonOn
+        uncheckedIcon: Style.homeButtonOff
     }
     //queue search page
     PageButton { id: search
         state: buttonStates[1]
-        checkedIcon: "../../ui/search-on.png"
-        uncheckedIcon: "../../ui/search-off.png"
+        checkedIcon: Style.searchButtonOn
+        uncheckedIcon: Style.searchButtonOff
     }
     //queue likes page
     PageButton { id: likes
         state: buttonStates[2]
-        checkedIcon: "../../ui/likes-on.png"
-        uncheckedIcon: "../../ui/likes-off.png"
+        checkedIcon: Style.likesButtonOn
+        uncheckedIcon: Style.likesButtonOff
 
         //notify number of likes added since last view
         NumberTag {
