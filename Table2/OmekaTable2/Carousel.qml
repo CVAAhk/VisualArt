@@ -15,8 +15,8 @@ Item
 
     property var selectedParent: null
 
-    property int pairingAbsoluteX: pairing.x + (root.topScreen?(Settings.SCREEN_WIDTH - root.x):root.x)
-    property int pairingAbsoluteY: pairing.y + (root.topScreen?(Settings.SCREEN_HEIGHT - root.y):root.y)
+    property int pairingAbsoluteX: whichScreen.includes("middle") ? pairing.y + root.x : (pairing.x + (root.topScreen?(Settings.SCREEN_WIDTH - root.x):root.x))
+    property int pairingAbsoluteY: pairBoxY()//whichScreen.includes("middle") ? Settings.SCREEN_HEIGHT - (pairing.x + Settings.SCREEN_HEIGHT - root.y + pairing.width) :(pairing.y + (root.topScreen?(Settings.SCREEN_HEIGHT - root.y):root.y))
     property int pairingWidth: pairing.width
     property int pairingHeight: pairing.height
 
@@ -28,6 +28,50 @@ Item
 
     property int maxResults: 490
 
+    function pairBoxX()
+    {
+        if(whichScreen == "middle right")
+        {
+            return pairing.y + root.x;
+        }
+        else if(whichScreen == "middle left")
+        {
+            return pairing.y + root.x;
+        }
+        else
+        {
+            if(root.topScreen)
+            {
+                return pairing.x +Settings.SCREEN_WIDTH - root.x;
+            }
+            else
+            {
+                return pairing.x + root.x;
+            }
+        }
+    }
+    function pairBoxY()
+    {
+        if(whichScreen == "middle right")
+        {
+            return Settings.SCREEN_HEIGHT - (pairing.x + Settings.SCREEN_HEIGHT - root.y + pairing.width);
+        }
+        else if(whichScreen == "middle left")
+        {
+            return pairing.x + root.y;
+        }
+        else
+        {
+            if(root.topScreen)
+            {
+                return pairing.y + Settings.SCREEN_HEIGHT - root.y
+            }
+            else
+            {
+                return pairing.y + root.y;
+            }
+        }
+    }
 
     Component.onCompleted:
     {
@@ -105,7 +149,7 @@ Item
         {
             if(paired)
             {
-                console.log("paired!!")
+                console.log("paired!! ", whichScreen)
                 pairing_text.text = "TAP TO UNPAIR";
                 pairing_btn_touch_area.enabled = false;
                 unpair_btn_touch_area.enabled = true;
@@ -172,18 +216,19 @@ Item
 
 
             PauseAnimation {
-                duration: 500
+                duration: 5000
             }
 
-            PropertyAction { target: selected_image; property: "visible"; value: true }
+            PropertyAction { target: selected_image; property: "scale"; value: 1 }
 
             ParallelAnimation
             {
-                PropertyAnimation { target: selected_image; property: 'opacity'; to: 1.0; duration: 250 }
-                PropertyAnimation { target: selected_image; property: 'scale'; to: 1; duration: 250 }
+                //PropertyAnimation { target: selected_image; property: 'opacity'; to: 1.0; duration: 250 }
                 PropertyAnimation { target: selected_image; property: 'x'; to: selected_image.recoveryX; duration: 250 }
                 PropertyAnimation { target: selected_image; property: 'y'; to: selected_image.recoveryY; duration: 250 }
             }
+            PropertyAction { target: selected_image; property: "visible"; value: true }
+            PropertyAction { target: root; property: "opacity"; value: 1.0 }
 
             onRunningChanged:
             {
@@ -193,7 +238,7 @@ Item
                     imageHolder.createImage(selected_image.source, selected_image.recoveryX /*+ (root.topScreen?(Settings.SCREEN_WIDTH - root.x):root.x)*/,
                                             selected_image.recoveryY /*+ (root.topScreen?(Settings.SCREEN_HEIGHT - root.y):root.y)*/,
                                             (root.topScreen? 180: 0), selected_image.width, selected_image.height, false, root.whichScreen)
-                    pairing.startAddSuccess();
+
                     pairing_timeout.restart();
                 }
             }
@@ -216,6 +261,7 @@ Item
                 {
                     //finishedRecycle();
                     recoveryAnimation.start();
+                    pairing.startAddSuccess();
                 }
             }
         }
@@ -408,8 +454,8 @@ Item
                     return;
                 }
 
-                imageHolder.createImage(source, imageX + (root.topScreen?(Settings.SCREEN_WIDTH - root.x):root.x),
-                                        imageY + (root.topScreen?(Settings.SCREEN_HEIGHT - root.y):root.y),
+                imageHolder.createImage(source, imageX + -root.holderX(),
+                                        imageY + -root.holderY(),
                                         imageRotation, imageWidth, imageHeight, tapOpen, root.whichScreen)
             }
             onImageDragged:
@@ -425,7 +471,7 @@ Item
             }
             onImageFinishedDragging:
             {
-                releaseSelected(root, selected_image);
+                root.releaseSelected(root, selected_image);
             }
 
             property real contentX: layout.contentX
@@ -538,10 +584,10 @@ Item
     CollectionImageHolder
     {
         id: imageHolder
-        x: root.topScreen?-(Settings.SCREEN_WIDTH - root.x):-root.x;
-        y: root.topScreen?-(Settings.SCREEN_HEIGHT - root.y):-root.y
-        width: Settings.SCREEN_WIDTH
-        height: Settings.SCREEN_HEIGHT
+        x: holderX()
+        y: holderY()
+        width: whichScreen.includes("middle")? Settings.SCREEN_HEIGHT : Settings.SCREEN_WIDTH
+        height: whichScreen.includes("middle")? Settings.SCREEN_WIDTH : Settings.SCREEN_HEIGHT
 
         antialiasing: true
 
@@ -574,7 +620,7 @@ Item
     Timer
     {
         id: filter_timeout
-        interval: Settings.IMAGE_TIMER_DURATION
+        interval: Settings.PAIR_TIMER_DURATION
         onTriggered:
         {
             filter_btn_touch_area.active = false;
@@ -591,7 +637,7 @@ Item
     Timer
     {
         id: pairing_timeout
-        interval: Settings.IMAGE_TIMER_DURATION
+        interval: Settings.PAIR_TIMER_DURATION
         onTriggered:
         {
             pairing.timeoutPairing();
@@ -617,6 +663,8 @@ Item
         if(root.whichScreen === "lower right") return ItemManager.tagSearchLowerRight;
         if(root.whichScreen === "top left") return ItemManager.tagSearchTopLeft;
         if(root.whichScreen === "top right") return ItemManager.tagSearchTopRight;
+        if(root.whichScreen === "middle right") return ItemManager.tagSearchMiddleRight;
+        if(root.whichScreen === "middle left") return ItemManager.tagSearchMiddleLeft;
     }
     function checkItemsOfPairing(itemId)
     {
@@ -651,21 +699,34 @@ Item
 
     function isImageInPairingBox(carousel,image)
     {
-        var middleX = image.x + image.width * 1/2 + (root.topScreen?(Settings.SCREEN_WIDTH - root.x):root.x);
-        var middleY = image.y + image.height * 1/2 + (root.topScreen?(Settings.SCREEN_HEIGHT - root.y):root.y);
+        var middleX = image.x + image.width * 1/2 - holderX();
+        var middleY = image.y + image.height * 1/2 - holderY();
         if(root.topScreen)
         {
             middleX = Settings.SCREEN_WIDTH - middleX;
             middleY = Settings.SCREEN_HEIGHT - middleY;
         }
+        if(carousel.whichScreen === "middle right")
+        {
+            var temp = middleX
+            middleX = middleY;
+            middleY = Settings.SCREEN_HEIGHT - temp;
+        }
+        if(carousel.whichScreen === "middle left")
+        {
+            var temp2 = middleY;
+            middleY = middleX;
+            middleX = Settings.SCREEN_WIDTH - temp2 + carousel.pairingHeight;
+        }
+
         var pairing_box_coordinates = pairingBoxCoordinates(carousel)
         var pairing_x = pairing_box_coordinates.x;
         var pairing_y = pairing_box_coordinates.y;
 
-        var pairing_width = carousel.pairingWidth;
-        var pairing_height = carousel.pairingHeight;
+        var pairing_width = carousel.whichScreen.includes("middle") ? carousel.pairingHeight :carousel.pairingWidth;
+        var pairing_height = carousel.whichScreen.includes("middle") ? carousel.pairingWidth :carousel.pairingHeight;
 
-        //console.log("middleX = ", middleX, " middleY = ", middleY, "pairing_x = ", pairing_x, "pairing_y = ", pairing_y)
+        console.log("middleX = ", middleX, " middleY = ", middleY, "pairing_x = ", pairing_x, "pairing_y = ", pairing_y)
 
         if(middleX > pairing_x && middleX < pairing_x + pairing_width&&
                 middleY > pairing_y && middleY < pairing_y + pairing_height)
@@ -692,6 +753,20 @@ Item
             target_x = Settings.SCREEN_WIDTH - pairing_box_coordinates.x - image.width;
             target_y = Settings.SCREEN_HEIGHT - pairing_box_coordinates.y- image.height*2 - carousel.pairingHeight;
         }
+        else if(root.isImageInPairingBox(carousel,image) && whichScreen == "middle right")
+        {
+            pairing_box_coordinates = pairingBoxCoordinates(carousel);
+            target_x = Settings.SCREEN_HEIGHT - pairing_box_coordinates.y - image.width;
+            target_y = pairing_box_coordinates.x - image.height - 100;
+            console.log("target x = ", target_x, " target_y = ", target_y)
+        }
+        else if(root.isImageInPairingBox(carousel,image) && whichScreen == "middle left")
+        {
+            pairing_box_coordinates = pairingBoxCoordinates(carousel);
+            target_x = pairing_box_coordinates.y;
+            target_y = Settings.SCREEN_WIDTH - pairing_box_coordinates.x -image.height - 100;
+            console.log("target x = ", target_x, " target_y = ", target_y)
+        }
         else if(root.isImageInPairingBox(carousel,image))
         {
             pairing_box_coordinates = pairingBoxCoordinates(carousel);
@@ -715,4 +790,49 @@ Item
             HeistManager.addItem(root.currentCode, image.item.id, root);
         }
     }
+    function holderX()
+    {
+        if(whichScreen == "middle right")
+        {
+            return -(Settings.SCREEN_HEIGHT - root.y);
+        }
+        else if(whichScreen == "middle left")
+        {
+            return -root.y
+        }
+        else
+        {
+            if(root.topScreen)
+            {
+                return -(Settings.SCREEN_WIDTH - root.x);
+            }
+            else
+            {
+                return -root.x;
+            }
+        }
+    }
+    function holderY()
+    {
+        if(whichScreen == "middle right")
+        {
+            return -root.x;
+        }
+        else if(whichScreen == "middle left")
+        {
+            return -(Settings.SCREEN_WIDTH - root.x);
+        }
+        else
+        {
+            if(root.topScreen)
+            {
+                return -(Settings.SCREEN_HEIGHT - root.y);
+            }
+            else
+            {
+                return -root.y;
+            }
+        }
+    }
+
 }
