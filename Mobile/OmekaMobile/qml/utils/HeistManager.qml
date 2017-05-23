@@ -55,17 +55,21 @@ Item {
      Ping the hesit plugin to see if it is installed for this omeka instance and
      set the heistIsSupported flag based on the result
     */
-    function pingPlugin() {
+    function pingPlugin() {        
         var request = new XMLHttpRequest();
         request.onreadystatechange = function() {
             if(request.readyState === XMLHttpRequest.DONE) {
                 if(request.responseText) {
-                    var result = JSON.parse(request.responseText)
-                    heist_manager.heistIsSupported = result.message === undefined
+                    try {
+                        var result = JSON.parse(request.responseText)
+                        heist_manager.heistIsSupported = result.message === undefined
+                    } catch(e) {
+                        heist_manager.heistIsSupported = false
+                    }
                 }
             }
         }
-        request.open(get, baseUrl);
+        request.open(get, baseUrl, true);
         request.send();
     }
 
@@ -219,7 +223,7 @@ Item {
         request.type = type;
         request.context = context;
         request.onreadystatechange = onResponse(request);
-        request.open(type, url);
+        request.open(type, url, true);
         request.setRequestHeader('Content-type','application/json');
         request.send(body);
     }
@@ -368,7 +372,7 @@ Item {
                 }
             }
         }
-        request.open(get, baseUrl);
+        request.open(get, baseUrl, true);
         request.send();
     }
 

@@ -7,7 +7,8 @@ Item {
     */
     //property url endpoint: "http://oe.develop.digitalmediauconn.org/"
     property url endpoint: "http://dev.omeka.org/mallcopy/"
-    //property url endpoint: "http://www.huapala.net/"
+    //property url endpoint: "http://www.huapala.net/"  //no heist support test
+   // property url endpoint: "http://marb.kennesaw.edu/identities/"  //no enabled api test
 
     /*! \qmlproperty
         Target omeka rest api
@@ -23,6 +24,21 @@ Item {
         Current page number
     */
     property int currentPage: 0
+
+    /*! \qmlproperty
+        Returns whether or not the REST API is enabled for this omeka instance
+    */
+    property bool apiIsEnabled: true
+
+    /*! \qmlproperty
+        Returns the total number of items in the repository
+    */
+    property int totalItemCount: 0
+
+    /*! \qmlproperty
+        Returns the maximum number of results per request
+    */
+    property int resultsPerPage: 20
 
     /*!
       \internal
@@ -48,8 +64,36 @@ Item {
 
     /*! \qmlsignal
         Invoked when query produces empty result*/
-    signal emptyResult(var context)
+    signal emptyResult(var context)    
 
+    //Check api on complete
+    Component.onCompleted: pingAPI()
+
+    /*! \internal
+     Ping the REST API to verify it is enabled for this omeka instance. If it is, parse header
+     for properties and if it isn't, set apiIsEnabled flag to false.
+    */
+    function pingAPI() {
+        var request = new XMLHttpRequest();
+        request.onreadystatechange = function() {
+            if(request.readyState === XMLHttpRequest.DONE) {
+                if(request.responseText) {
+                    try {
+                        var result = JSON.parse(request.responseText)
+                        totalItemCount = request.getResponseHeader("omeka-total-results")
+
+                        var strlink = request.getResponseHeader("link")
+                        var re = /.*per_page=(.*)>.*/;
+                        resultsPerPage = strlink.replace(re, "$1")
+                    } catch(e) {
+                        apiIsEnabled = false
+                    }
+                }
+            }
+        }
+        request.open("GET", rest+"items", true);
+        request.send();
+    }
 
     /*! \internal
       Sends http request and links response handler
@@ -58,6 +102,7 @@ Item {
       \a count - flags the query as a simple count request
     */
     function submitRequest(url, context, count){
+        if(!apiIsEnabled) return;
         var request = new XMLHttpRequest();
         request.context = context;
         request.count = count
@@ -70,14 +115,18 @@ Item {
     function onResponse(request) {
         return function(){
             if(request.readyState === XMLHttpRequest.DONE){
-                var result = JSON.parse(request.responseText);
-                if(result.errors !== undefined){
-                    print("Request Error: "+result.errors[0].message);
-                }
-                else{
-                    result.context = request.context;
-                    result.count = request.count;
-                    processResult(result);
+                try {
+                    var result = JSON.parse(request.responseText);
+                    if(result.errors !== undefined){
+                        print("Request Error: "+result.errors[0].message);
+                    }
+                    else{
+                        result.context = request.context;
+                        result.count = request.count;
+                        processResult(result);
+                    }
+                } catch(e) {
+                    print("Result Parse Error: "+e);
                 }
             }
         }
@@ -146,7 +195,7 @@ Item {
     /*! \qmlmethod
         Query repository tags*/
     function getTags(context){
-        submitRequest(rest+"tags", context)
+        //submitRequest(rest+"tags", context)
     }
 
     /*! \qmlmethod
