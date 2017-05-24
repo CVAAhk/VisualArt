@@ -8,7 +8,7 @@ Item {
     //property url endpoint: "http://oe.develop.digitalmediauconn.org/"
     property url endpoint: "http://dev.omeka.org/mallcopy/"
     //property url endpoint: "http://www.huapala.net/"  //no heist support test
-   // property url endpoint: "http://marb.kennesaw.edu/identities/"  //no enabled api test
+    //property url endpoint: "http://marb.kennesaw.edu/identities/"  //no enabled api test
 
     /*! \qmlproperty
         Target omeka rest api
@@ -38,7 +38,7 @@ Item {
     /*! \qmlproperty
         Returns the maximum number of results per request
     */
-    property int resultsPerPage: 20
+    property int resultsPerPage: 50
 
     /*!
       \internal
@@ -126,7 +126,7 @@ Item {
                         processResult(result);
                     }
                 } catch(e) {
-                    print("Result Parse Error: "+e);
+                    print(e);
                 }
             }
         }
@@ -195,7 +195,7 @@ Item {
     /*! \qmlmethod
         Query repository tags*/
     function getTags(context){
-        //submitRequest(rest+"tags", context)
+        submitRequest(rest+"tags", context)
     }
 
     /*! \qmlmethod
