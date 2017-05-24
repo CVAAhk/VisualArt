@@ -6,7 +6,7 @@ Item {
         Target omeka endpoint url
     */
     //property url endpoint: "http://oe.develop.digitalmediauconn.org/"
-    //property url endpoint: "http://dev.omeka.org/mallcopy/"
+    property url endpoint: "http://dev.omeka.org/mallcopy/"
     //property url endpoint: "http://www.huapala.net/"  //no heist support test
     //property url endpoint: "http://marb.kennesaw.edu/identities/"  //no enabled api test
 

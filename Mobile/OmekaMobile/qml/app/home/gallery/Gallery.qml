@@ -28,7 +28,10 @@ Item {
     /*!Display logo and settings entry*/
     BrandBar {
         id: bar
-        onActivated: if(homeStack) homeStack.push(settings);
+        onActivated: if(homeStack) {
+                         settings.enabled = true;
+                         homeStack.push(settings);
+                     }
     }
 
     /*!Scroll through items*/
