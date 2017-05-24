@@ -24,6 +24,8 @@ Item
         if(root.whichScreen === "lower right") return ItemManager.tagSearchLowerRight;
         if(root.whichScreen === "top left") return ItemManager.tagSearchTopLeft;
         if(root.whichScreen === "top right") return ItemManager.tagSearchTopRight;
+        if(root.whichScreen === "middle right") return ItemManager.tagSearchMiddleRight;
+        if(root.whichScreen === "middle left") return ItemManager.tagSearchMiddleLeft;
     }
     function setTagEmpty()
     {
@@ -31,6 +33,8 @@ Item
         if(root.whichScreen === "lower right") ItemManager.tagSearchLowerRight = "";
         if(root.whichScreen === "top left") ItemManager.tagSearchTopLeft = "";
         if(root.whichScreen === "top right") ItemManager.tagSearchTopRight = "";
+        if(root.whichScreen === "middle right") return ItemManager.tagSearchMiddleRight = "";
+        if(root.whichScreen === "middle left") return ItemManager.tagSearchMiddleLeft = "";
         searchByTag = false;
     }
 

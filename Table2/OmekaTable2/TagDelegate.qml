@@ -24,6 +24,8 @@ Image {
         if(list.whichScreen === "lower right") return ItemManager.tagSearchLowerRight;
         if(list.whichScreen === "top left") return ItemManager.tagSearchTopLeft;
         if(list.whichScreen === "top right") return ItemManager.tagSearchTopRight;
+        if(list.whichScreen === "middle right") return ItemManager.tagSearchMiddleRight;
+        if(list.whichScreen === "middle left") return ItemManager.tagSearchMiddleLeft;
     }
     //text display
     OmekaText {
@@ -42,6 +44,8 @@ Image {
             if(list.whichScreen === "lower right") ItemManager.tagSearchLowerRight = tag;
             if(list.whichScreen === "top left") ItemManager.tagSearchTopLeft = tag;
             if(list.whichScreen === "top right") ItemManager.tagSearchTopRight = tag;
+            if(list.whichScreen === "middle right") return ItemManager.tagSearchMiddleRight;
+            if(list.whichScreen === "middle left") return ItemManager.tagSearchMiddleLeft;
         }
     }
 }

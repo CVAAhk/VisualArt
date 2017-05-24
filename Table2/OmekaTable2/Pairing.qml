@@ -318,7 +318,7 @@ Item
         }
 
         PauseAnimation {
-            duration: 2000
+            duration: 5000
         }
         ParallelAnimation
         {

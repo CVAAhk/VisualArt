@@ -88,7 +88,7 @@ Item
         anchors.fill: root
 
         dragOnPinch: true
-        listenForRotation: false//true
+        listenForRotation: true
         listenForScale: true
 
         maximumScale: 2
@@ -96,11 +96,11 @@ Item
 
         mouseEnabled: true
 
-        minimumX: 0 - root.imageWidth
-        maximumX: 1920 - root.imageWidth
+        //minimumX: 0 - root.imageWidth
+        //maximumX: 1920 - root.imageWidth
 
-        minimumY: 0 - root.imageHeight
-        maximumY: 1080 - root.imageHeight
+        //minimumY: 0 - root.imageHeight
+        //maximumY: 1080 - root.imageHeight
 
         onDraggingChanged:
         {
@@ -114,17 +114,21 @@ Item
         onPositionUpdated:
         {
             image_timer.restart();
-            root.x += delta_x* (root.topScreen ? -1.0 : 1.0);// * detail.scale;
-            root.y += delta_y* (root.topScreen ? -1.0 : 1.0);// * detail.scale;
-
-            //console.log("root.x = ", root.x, "root.y = ", root.y, "root.z = ", root.z)
-            if(root.y + root.height/2 > Settings.BASE_SCREEN_HEIGHT / 2)
+            if(whichScreen == "middle right")
             {
-                root.rotation = 0;
+                root.y += delta_x;
+                root.x += -delta_y;
+            }
+            else if(whichScreen == "middle left")
+            {
+                root.y += -delta_x;
+                root.x += delta_y;
             }
             else
             {
-                root.rotation = 180;
+
+            root.x += delta_x* (root.topScreen ? -1.0 : 1.0);//delta_x* (root.topScreen ? -1.0 : 1.0)//// * detail.scale;
+            root.y += delta_y* (root.topScreen ? -1.0 : 1.0);// * detail.scale;
             }
 
             root.imageDragged(root);
@@ -342,25 +346,26 @@ Item
 
 
         PauseAnimation {
-            duration: 500
+            duration: 5000
         }
 
-        PropertyAction { target: root; property: "visible"; value: true }
+        PropertyAction { target: root; property: "scale"; value: 1 }
 
         ParallelAnimation
         {
-            PropertyAnimation { target: root; property: 'opacity'; to: 1.0; duration: 250 }
-            PropertyAnimation { target: root; property: 'scale'; to: 1; duration: 250 }
+            //PropertyAnimation { target: root; property: 'opacity'; to: 1.0; duration: 250 }
             PropertyAnimation { target: root; property: 'x'; to: recoveryX; duration: 250 }
             PropertyAnimation { target: root; property: 'y'; to: recoveryY; duration: 250 }
         }
+        PropertyAction { target: root; property: "visible"; value: true }
+        PropertyAction { target: root; property: "opacity"; value: 1.0 }
 
         onRunningChanged:
         {
             if(!running)
             {
                 image_timer.restart();
-                finishedRecycle();
+                //finishedRecycle();
             }
         }
     }
@@ -380,7 +385,7 @@ Item
         {
             if(!running)
             {
-                //finishedRecycle();
+                finishedRecycle();
                 recoveryAnimation.start();
             }
         }

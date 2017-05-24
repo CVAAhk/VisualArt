@@ -4,10 +4,9 @@ import "./TouchHelpers"
 Image
 {
     id: root
-
-    source: "content/POI/scroll-bar.png"
-
     property double scrollLength: 133 - 45
+    source: "content/POI/scroll-bar.png"
+    height: scrollLength + 45
 
     signal scrollChanged(double percent);
 
@@ -31,7 +30,7 @@ Image
                 Rectangle
                 {
                     anchors.fill: parent
-                    visible: false // parent.enabled
+                    visible: true // parent.enabled
                     opacity: 0.7
                     color: 'red'
                 }

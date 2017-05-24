@@ -33,6 +33,8 @@ Item {
     property string tagSearchLowerRight
     property string tagSearchTopLeft
     property string tagSearchTopRight
+    property string tagSearchMiddleRight
+    property string tagSearchMiddleLeft
 
     /*!
       \qmlproperty
