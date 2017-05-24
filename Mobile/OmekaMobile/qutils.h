@@ -12,6 +12,7 @@ class QUtils: public QObject
         ~QUtils();
 
     Q_INVOKABLE QString getHost(const QString &url);
+    Q_INVOKABLE QString getPath(const QString &url);
 };
 
 #endif // QUTILS_H

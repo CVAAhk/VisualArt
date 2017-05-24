@@ -6,7 +6,7 @@ Item {
         Target omeka endpoint url
     */
     //property url endpoint: "http://oe.develop.digitalmediauconn.org/"
-    property url endpoint: "http://dev.omeka.org/mallcopy/"
+    //property url endpoint: "http://dev.omeka.org/mallcopy/"
     //property url endpoint: "http://www.huapala.net/"  //no heist support test
     //property url endpoint: "http://marb.kennesaw.edu/identities/"  //no enabled api test
 
@@ -39,6 +39,11 @@ Item {
         Returns the maximum number of results per request
     */
     property int resultsPerPage: 50
+
+    /*! \qmlproperty
+        Returns a formatted name derived from the endpoint url
+    */
+    property var omekaID: ""
 
     /*!
       \internal
@@ -80,11 +85,18 @@ Item {
                 if(request.responseText) {
                     try {
                         var result = JSON.parse(request.responseText)
+
+                        //extract item count
                         totalItemCount = request.getResponseHeader("omeka-total-results")
 
+                        //parse results per page
                         var strlink = request.getResponseHeader("link")
                         var re = /.*per_page=(.*)>.*/;
                         resultsPerPage = strlink.replace(re, "$1")
+
+                        //assign readable omeka id
+                        omekaID = prettyName()
+
                     } catch(e) {
                         apiIsEnabled = false
                     }
@@ -232,5 +244,19 @@ Item {
         if(videoExt.test(source))
             return "video"
         return "image"
+    }
+
+    /*! \qmlmethod
+        Returns formatted name derived from enpoint url*/
+    function prettyName() {
+        var host = qutils.getHost(endpoint)
+        host = host.substring(host.indexOf(".")+1, host.lastIndexOf("."))
+        host = host.replace(".", "_")
+
+        var path = qutils.getPath(endpoint)
+        path = path.replace(/\//g,'')
+
+        var id = path ? host+"_"+path : host
+        return id
     }
 }
