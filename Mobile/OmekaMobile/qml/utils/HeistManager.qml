@@ -62,9 +62,9 @@ Item {
                 if(request.responseText) {
                     try {
                         var result = JSON.parse(request.responseText)
-                        heist_manager.heistIsSupported = result.message === undefined
+                        heistIsSupported = result.message === undefined
                     } catch(e) {
-                        heist_manager.heistIsSupported = false
+                        heistIsSupported = false
                     }
                 }
             }

@@ -49,6 +49,11 @@ Item {
     //likes view is current
     property bool onLikesView: false
 
+    //upgrade schema for previous installations
+    Component.onCompleted: {
+        upgradeLikes()
+    }
+
     /*!
       \qmlmethod
       Add like to local database
@@ -186,5 +191,22 @@ Item {
     function clearRecentLiked() {
         recentlyLiked.length = 0
         newLikes = 0
+    }
+
+    /*!
+      \qmlmethod
+      The LIKES table is being repurposed for storage of items from multiple omeka instances.
+      This call removes all records of the previous schema. Since the previous schema is pre-deployment,
+      this will be irrelevant in most cases but test cases need to be handled to not conflict with previous
+      installations.
+    */
+    function upgradeLikes() {
+        var entries = Settings.getLikes()
+        //search for and remove records of old schema
+        for(var i=0; i<entries.length; i++) {
+            if(entries[i].value.indexOf("^Title|") !== -1) {
+                Settings.removeLike(entries[i].setting)
+            }
+        }
     }
 }
