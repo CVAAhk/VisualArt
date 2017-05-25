@@ -202,10 +202,12 @@ Item {
     */
     function upgradeLikes() {
         var entries = Settings.getLikes()
-        //search for and remove records of old schema
+
+        //if old schema, drop likes table
         for(var i=0; i<entries.length; i++) {
             if(entries[i].value.indexOf("^Title|") !== -1) {
-                Settings.removeLike(entries[i].setting)
+                Settings.drop(Settings.LIKES);
+                return;
             }
         }
     }
