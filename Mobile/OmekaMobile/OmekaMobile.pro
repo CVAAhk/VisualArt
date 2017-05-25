@@ -10,12 +10,14 @@ CONFIG += c++11
 SOURCES += main.cpp \
     shareutils.cpp \
     applicationloader.cpp \
-    sequentialguid.cpp
+    sequentialguid.cpp \
+    qutils.cpp
 
 HEADERS += \
     shareutils.h \
     applicationloader.h \
-    sequentialguid.h
+    sequentialguid.h \
+    qutils.h
 
 RESOURCES += qml.qrc
 

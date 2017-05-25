@@ -2,6 +2,7 @@ import QtQuick 2.0
 import QtQuick.Controls 1.4
 import "../settings"
 import "../../../utils"
+import "../../base"
 
 /*!Media viewer*/
 Item {
@@ -27,7 +28,10 @@ Item {
     /*!Display logo and settings entry*/
     BrandBar {
         id: bar
-        onActivated: if(homeStack) homeStack.push(settings);
+        onActivated: if(homeStack) {
+                         settings.enabled = true;
+                         homeStack.push(settings);
+                     }
     }
 
     /*!Scroll through items*/
@@ -36,13 +40,24 @@ Item {
         anchors.top: bar.bottom
         height: parent.height - bar.height
         headerHeight: height/4
-        busy: true
+        busy: Omeka.apiIsEnabled
         onCanPaginate: {
            Omeka.getNextPage(gallery)
         }
     }
 
-    //endpoint logo
+    /*!API disabled notification*/
+    OmekaText {
+        id: api_disabled
+        visible: !Omeka.apiIsEnabled
+        anchors.centerIn: parent
+        width: parent.width * 0.8
+        text: User.restAPIDisabled
+        _font: Style.apiInstructionFont
+        onLinkActivated: Qt.openUrlExternally(link)
+    }
+
+    /*!Omeka Logo*/
     Logo {
         contentY: browser.contentY
         minY: 0

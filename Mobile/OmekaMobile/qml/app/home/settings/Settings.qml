@@ -8,7 +8,8 @@ import "pairing"
 
 /*!User settings*/
 Item {
-
+    id: root
+    enabled: false
     property TablePairing tablePairing: TablePairing {}
 
     Column {
@@ -31,7 +32,10 @@ Item {
                 id: back
                 icon: Style.back
                 iconScale: .7
-                onClicked: if(homeStack) homeStack.pop()
+                onClicked: if(homeStack) {
+                    root.enabled = false
+                    homeStack.pop()
+                }
             }
         }
 

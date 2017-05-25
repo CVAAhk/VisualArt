@@ -9,7 +9,8 @@ import "../../../utils"
 
   ClearLikesSetting is a user setting permitting the local removal of all likes collected by the user
 */
-Setting {
+Setting {    
+    onEnabledChanged: confirm.enabled = User.likesExist()
 
     //container
     content: Rectangle {
@@ -32,9 +33,7 @@ Setting {
 
             //confirmation button
             Button {
-
                 id: confirm
-                enabled: User.likesExist()
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: parent.width * .5
                 height: Resolution.applyScale(150)
@@ -56,19 +55,11 @@ Setting {
                     }
                 }
 
-                Component.onCompleted: {
-                    enabled = User.likesExist()
-                }
-
-                onVisibleChanged: {
-                    enabled = visible && User.likesExist()
-                }
-
                 onClicked: {
                     ItemManager.unregisterAllLikes()
                     HeistManager.unregisterAllItems()
                     enabled = false
-                }
+                }                
             }
         }
     }
