@@ -174,7 +174,11 @@ Item
             }
         }
     }
-    MediaControls { media: media }
+    MediaControls
+    {
+        media: media
+        onInterative: image_timer.restart();
+    }
     Image
     {
         id: controls

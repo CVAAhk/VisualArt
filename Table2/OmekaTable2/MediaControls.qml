@@ -16,6 +16,8 @@ Item {
     property real scalar
     property Rectangle size
 
+    signal interative();
+
     //media bindings
     Binding on player { value: media && media.current ? media.current.player : null }
     Binding on size { value: media && media.current ? media.current.background : null }
@@ -27,13 +29,16 @@ Item {
     MouseArea {
         enabled: scrubber.visible && !scrubber.pressed
         anchors.fill: parent
+        anchors.margins: 50
         onClicked: {
             if(player.playbackState === MediaPlayer.PlayingState){
                 indicator.play = false
                 player.pause()
+                interative();
             } else {
                 indicator.play = true
                 player.play()
+                interative();
             }
         }
      }
@@ -61,5 +66,7 @@ Item {
     //playback scrubbing
     Scrubber {
        id: scrubber
+       onScrubberInterative: root.interative();
+
     }
 }
