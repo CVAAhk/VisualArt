@@ -18,6 +18,8 @@ Item {
     anchors.bottom: parent.bottom
     anchors.margins: 10//Resolution.applyScale(36)
 
+    signal scrubberInterative();
+
     property alias player: scrubber.player
 
     property alias pressed: area.pressed
@@ -76,7 +78,7 @@ Item {
                 timer.player = scrubber.player
             }
             else {
-                reset()
+                //reset()//at start of video, this will make the scrubber doesn't work
             }
         }
 
@@ -90,13 +92,15 @@ Item {
             onPressed: {
                 scrubber.scrubPause = player.playbackState !== MediaPlayer.PausedState
                 scrubber.scrub(mouseX)
+                scrubberInterative()
             }
             onReleased: {
                 if(scrubber.scrubPause){
                     player.play()
+                    scrubberInterative()
                 }
             }
-            onPositionChanged: scrubber.scrub(mouseX)
+            onPositionChanged: {scrubber.scrub(mouseX); scrubberInterative();}
 
         }
 
