@@ -8,13 +8,13 @@ Component {
         id: object
         width: parent.width
         height: 50
-        text: String(item)
+        text: item
 
         onPressedChanged: {
             if(pressed && currentCode) {
-                if(items.indexOf(object.text) === -1) {
-                    items.push(object.text);
-                    HeistManager.addItem(currentCode, object.text, object);
+                if(items.indexOf(item) === -1) {
+                    items.push(item);
+                    HeistManager.addItem(currentCode, item, object);
                 }
             }
         }
