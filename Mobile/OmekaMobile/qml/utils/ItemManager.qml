@@ -205,7 +205,8 @@ Item {
 
         //if old schema, drop likes table
         for(var i=0; i<entries.length; i++) {
-            if(entries[i].value.indexOf("^Title|") !== -1) {
+            var data = entries[i].value
+            if(data && data.indexOf("^Title|") !== -1) {
                 Settings.drop(Settings.LIKES);
                 return;
             }
