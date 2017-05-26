@@ -19,11 +19,27 @@ Item {
     //used to normalize data types
     property var normalizer: ListModel{}
 
-    //load likes from local storage on init
+    //maintains saved order
+    property var ordered_likes: []
+
+    //for initial ordering
+    property var loadedLikes: ({})
+
+    //initialize loading likes from local storage
     Component.onCompleted: {
-        var likes = ItemManager.getLikes()
-        for(var i=0; i<likes.length; i++) {
-            normalizeAndAddItem(likes[i])
+        ordered_likes = ItemManager.getLikes()
+        for(var i=0; i<ordered_likes.length; i++) {
+            Omeka.getItemById(ordered_likes[i], likes)
+        }
+    }
+
+    //process item results
+    Connections {
+        target: Omeka
+        onRequestComplete: {
+            if(result.context === likes) {
+                loadFromStorage(result)
+            }
         }
     }
 
@@ -49,7 +65,6 @@ Item {
         onItemAdded: {
             if(indices.indexOf(item.id) === -1) { //add item
                 addItem(ItemManager.itemToData(item));
-
             }
             if(removals.indexOf(item.id) !== -1) { //update removals
                 removals.splice(removals.indexOf(item.id), 1);
@@ -107,6 +122,21 @@ Item {
             }
             grid.addDisplaced: Transition {
                 NumberAnimation { properties: "x,y"; duration: 200 }
+            }
+        }
+    }
+
+    /*
+      Load likes from local database
+    */
+    function loadFromStorage(item) {
+        loadedLikes[item.item] = item
+        var loadCount = Object.keys(loadedLikes).length
+
+        //load complete
+        if(loadCount === ordered_likes.length) {
+            for(var i in ordered_likes) {
+                normalizeAndAddItem(loadedLikes[ordered_likes[i]])
             }
         }
     }

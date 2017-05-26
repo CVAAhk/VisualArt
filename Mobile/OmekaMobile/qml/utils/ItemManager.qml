@@ -60,7 +60,7 @@ Item {
     */
     function registerLike(item) {
         if(!isLiked(item)) {
-            Settings.addLike(String(item.id), itemToEntry(item))
+            Settings.addLike(String(item.id), "")
             itemAdded(item)
             addRecentLike(item.id)
         }
@@ -92,44 +92,10 @@ Item {
 
     /*!
       \qmlmethod
-      Format data object to semi-colon delimited entry
-    */
-    function itemToEntry(item) {
-        var entry = item.fileCount;
-        var element;
-        for(var i=0; i<item.metadata.count; i++) {
-            element = item.metadata.get(i);
-            entry += "^"+element.element.name+"|"+element.text;
-        }
-        return entry;
-    }
-
-    /*!
-      \qmlmethod
-      Convert data entry to object
-    */
-    function entryToItem(setting, value) {
-        var item = {item: setting}
-        var values = value.split("^")
-        item.file_count = values[0]
-
-        item.metadata = []
-        var mdmap
-
-        for(var i=1; i<values.length; i++) {
-            mdmap = values[i].split("|")
-            item.metadata.push({ element: {name: mdmap[0]} ,text:mdmap[1]})
-        }
-
-        return item
-    }
-
-    /*!
-      \qmlmethod
       Converts item to omeka result data format
     */
     function itemToData(item) {
-        return {item: String(item.id), metadata: item.metadata, file_count: String(item.fileCount)};
+        return {item: item.id, metadata: item.metadata, file_count: item.fileCount};
     }
 
     /*!
@@ -156,7 +122,7 @@ Item {
         var entries = Settings.getLikes()
         var likes = []
         for(var i=0; i<entries.length; i++) {
-             likes.push(entryToItem(entries[i].setting, entries[i].value))
+             likes.push(entries[i].setting)
         }
         return likes
     }

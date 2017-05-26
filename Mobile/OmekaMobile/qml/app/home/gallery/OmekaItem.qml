@@ -24,7 +24,7 @@ Component {
         //store result and query files
         Component.onCompleted: {
 
-            itemData.id = String(item)
+            itemData.id = item
             itemData.fileCount = parseInt(file_count)
             itemData.metadata = metadata
             itemData.media = []
