@@ -41,6 +41,11 @@ Item {
                 loadFromStorage(result)
             }
         }
+        onEmptyResult: {
+            if(result.context === likes) {
+                handleInvalidRecord(result)
+            }
+        }
     }
 
     //clear removals when disabled
@@ -130,15 +135,29 @@ Item {
       Load likes from local database
     */
     function loadFromStorage(item) {
-        loadedLikes[item.item] = item
-        var loadCount = Object.keys(loadedLikes).length
+        if(item) {
+            loadedLikes[item.item] = item
+        }
 
         //load complete
+        var loadCount = Object.keys(loadedLikes).length
         if(loadCount === ordered_likes.length) {
             for(var i in ordered_likes) {
                 normalizeAndAddItem(loadedLikes[ordered_likes[i]])
             }
         }
+    }
+
+    /*
+      Handle invalid item requests for cases where a liked item has been removed
+      from the omeka repository
+     */
+    function handleInvalidRecord(result) {
+        var id = result.url
+        id = Number(id.substring(id.lastIndexOf("/")+1))
+        ordered_likes.splice(ordered_likes.indexOf(id), 1)
+        ItemManager.unregisterLike({id:id})
+        loadFromStorage()
     }
 
     /*

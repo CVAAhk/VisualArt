@@ -28,7 +28,7 @@ Item {
             }
         }
         onEmptyResult: {
-            if(context === results) {
+            if(result.context === results) {
                 Foreground.showMessage("NO RESULTS", 3000, Resolution.applyScale(300))
             }
         }

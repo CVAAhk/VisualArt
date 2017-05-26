@@ -69,7 +69,7 @@ Item {
 
     /*! \qmlsignal
         Invoked when query produces empty result*/
-    signal emptyResult(var context)    
+    signal emptyResult(var result)
 
     //Check api on complete
     Component.onCompleted: pingAPI()
@@ -116,8 +116,9 @@ Item {
     function submitRequest(url, context, count){
         if(!apiIsEnabled) return;
         var request = new XMLHttpRequest();
+        request.url = url;
         request.context = context;
-        request.count = count
+        request.count = count;
         request.onreadystatechange = onResponse(request);
         request.open("GET", url, true);
         request.send();
@@ -133,6 +134,7 @@ Item {
                         print("Request Error: "+result.errors[0].message);
                     }
                     else{
+                        result.url = request.url;
                         result.context = request.context;
                         result.count = request.count;
                         processResult(result);
@@ -179,7 +181,7 @@ Item {
                 requestComplete({item: res.id, context: result.context, tag: res.name});
             }
             else {
-                emptyResult(result.context)
+                emptyResult(result)
             }
         }
     }        
