@@ -32,6 +32,6 @@ Item {
     }
 
     function likesExist() {
-        return Settings.getLikes().length > 0
+        return Settings.getAllLikes().length > 0
     }
 }

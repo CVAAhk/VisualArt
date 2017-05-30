@@ -145,6 +145,8 @@ Item {
             for(var i in ordered_likes) {
                 normalizeAndAddItem(loadedLikes[ordered_likes[i]])
             }
+            loadedLikes = null
+            ordered_likes.length = 0
         }
     }
 

@@ -3,7 +3,33 @@ import QtQuick 2.5
 import QtQuick.LocalStorage 2.0
 import "../js/storage.js" as Settings
 
+
 Item {
+    id: item_manager
+
+    ///////////temporary properties until cyclical singleton import issue is resolved
+    property url endpoint: "http://dev.omeka.org/mallcopy/"
+
+    property var omekaID: prettyName()
+
+
+    /*! \qmlmethod
+        Returns formatted name derived from enpoint url*/
+    function prettyName() {
+        var host = qutils.getHost(endpoint)
+        host = host.substring(host.indexOf(".")+1, host.lastIndexOf("."))
+        host = host.replace(".", "_")
+
+        var path = qutils.getPath(endpoint)
+        path = path.replace(/\//g,'')
+
+        var id = path ? host+"_"+path : host
+        return id
+    }
+    //////////////////////////////////////////////
+
+
+
 
     /*-------------DETAIL-------------*/
     /*!
@@ -50,9 +76,7 @@ Item {
     property bool onLikesView: false
 
     //upgrade schema for previous installations
-    Component.onCompleted: {
-        upgradeLikes()
-    }
+    Component.onCompleted: upgradeLikes()
 
     /*!
       \qmlmethod
@@ -60,10 +84,10 @@ Item {
     */
     function registerLike(item) {
         if(!isLiked(item)) {
-            Settings.addLike(String(item.id), "")
-            itemAdded(item)
-            addRecentLike(item.id)
+            Settings.addLike(omekaID, endpoint, String(item.id))
         }
+        itemAdded(item)
+        addRecentLike(item.id)
     }
 
     /*!
@@ -77,7 +101,7 @@ Item {
         itemRemoved(item)
         removeRecentLiked(item.id)
         if(bypass) return;
-        Settings.removeLike(String(item.id))
+        Settings.removeLike(omekaID, String(item.id))
     }
 
     /*!
@@ -111,7 +135,7 @@ Item {
       Returns true if the item has an entry in the database
     */
     function isLiked(item) {
-        return Settings.isLiked(String(item.id))
+        return Settings.isLiked(omekaID, String(item.id))
     }
 
     /*!
@@ -119,7 +143,7 @@ Item {
       Returns all registered likes
     */
     function getLikes() {
-        var entries = Settings.getLikes()
+        var entries = Settings.getLikes(omekaID)
         var likes = []
         for(var i=0; i<entries.length; i++) {
              likes.push(entries[i].setting)
@@ -167,7 +191,7 @@ Item {
       installations.
     */
     function upgradeLikes() {
-        var entries = Settings.getLikes()
+        var entries = Settings.getLikedTables()
 
         //if old schema, drop likes table
         for(var i=0; i<entries.length; i++) {

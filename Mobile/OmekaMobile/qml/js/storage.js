@@ -85,6 +85,7 @@ function clear(table) {
 }
 
 function drop(table) {
+    gc() //workaround for locked table bug
     var db = getDatabase();
     var res = ""
     db.transaction(function(tx) {
@@ -101,23 +102,86 @@ function drop(table) {
 
 /*--------LIKES table operations--------*/
 
-function addLike(id, value) {
-    set(LIKES, id, value);
+/*
+  Register omeka instance id with main LIKES table and register the
+  liked item with the omeka table
+  \a id   The omeka_id corresponding to the omeka instance
+  \a url  The omeka endpoint
+  \a item The liked item
+*/
+function addLike(id, url, item) {
+    set(LIKES, id, url);
+    set(id, item, "");
 }
 
-function removeLike(id) {
-    remove(LIKES, id);
+/*
+  Remove liked item from the specified table
+  \a id    The table name
+  \a item  The item to remove
+*/
+function removeLike(id, item) {
+    remove(id, item);
+
+    //if table is empty after removal, unregister the table
+    if(rows(id).length === 0) {
+        drop(id)
+        remove(LIKES, id)
+    }
 }
 
-function isLiked(id) {
-    return get(LIKES, id) !== 0;
+/*
+  Returns true if item is registered with the specified table, false otherwise
+  \a id   The table name
+  \a item The item to search for
+ */
+function isLiked(id, item) {
+    return get(id, item) !== 0;
 }
 
-function getLikes() {
-    return rows(LIKES);
+/*
+  Returns endpoint registered to omeka_id
+  \a  The omeka_id
+ */
+function getUrl(id) {
+    var entry = get(LIKES, id)
+    return entry
 }
 
+/*
+  Returns all likes of specified table
+  \a  The name of the table
+*/
+function getLikes(id) {
+    return rows(id);
+}
+
+/*
+  Returns likes of all tables
+*/
+function getAllLikes() {
+    var likes = []
+    var tables = rows(LIKES)
+    for(var i=0; i<tables.length; i++) {
+        likes = likes.concat(rows(tables[i].setting))
+    }
+    return likes;
+}
+
+/*
+  Returns tables with registered likes
+ */
+function getLikedTables() {
+    return rows(LIKES)
+}
+
+/*
+  Clears all tables
+*/
 function clearAllLikes() {
+    var tables = rows(LIKES)
+    for(var i=0; i<tables.length; i++) {
+        drop(tables[i].setting)
+    }
     return clear(LIKES);
 }
 
