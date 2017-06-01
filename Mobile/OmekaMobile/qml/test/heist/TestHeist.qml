@@ -1,6 +1,7 @@
 import QtQuick 2.5
 import QtQuick.Controls 1.4
 import "../../utils"
+import "../../utils/client"
 import "../../app/home/settings/pairing"
 
 ApplicationWindow {
@@ -39,7 +40,7 @@ ApplicationWindow {
     //sample items (TEST ONLY)
     Component.onCompleted: {
         Omeka.getPage(1, window)
-        HeistManager.clearHeist(); //temporary hack; see api doc for this call
+        Heist.clearHeist(); //temporary hack; see api doc for this call
     }
 
     //remove sessions from heist on app exit
@@ -106,7 +107,7 @@ ApplicationWindow {
     function startSession() {
         if(!currentCode) {
             currentCode = NumberUtils.randomInt(1111,9999);
-            HeistManager.startPairingSession(currentCode);
+            Heist.startPairingSession(currentCode);
         }
     }
 
@@ -115,7 +116,7 @@ ApplicationWindow {
      */
     function endSession() {
         receiver.register = false;
-        HeistManager.endPairingSession(currentCode);
+        Heist.endPairingSession(currentCode);
         currentCode = "";
         paired = false;
     }
@@ -126,7 +127,7 @@ ApplicationWindow {
     function removeItem(item) {
         if(items.indexOf(item) !== -1) {
             items.splice(items.indexOf(item), 1);
-            HeistManager.removeItem(currentCode, item, window);
+            Heist.removeItem(currentCode, item, window);
         }
     }
 
@@ -135,7 +136,7 @@ ApplicationWindow {
       sessions. For actual implementation, there will only be one code.
       */
     function clean() {
-        HeistManager.clearAllSessions();
+        Heist.clearAllSessions();
         while(cleanDelay) {
             cleanDelay--;
             console.log("cleaning");
@@ -146,7 +147,7 @@ ApplicationWindow {
     //convenience function for removing by heist record id (TEST ONLY)
     function removeRecords(data) {
         for(var i in data) {
-            HeistManager.removeData(data[i])
+            Heist.removeData(data[i])
         }
     }
 
@@ -155,7 +156,7 @@ ApplicationWindow {
         if(!paired) {
             deviceId = null;
             items.length = 0;
-            HeistManager.removeAllItems(currentCode, null);
+            Heist.removeAllItems(currentCode, null);
         }
     }
 

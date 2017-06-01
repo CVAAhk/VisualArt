@@ -2,6 +2,7 @@ import QtQuick 2.5
 import com.lasconic 1.0
 import "../base"
 import "../../utils"
+import "../../utils/client"
 
 /*
   \qmltype DetailToolbar

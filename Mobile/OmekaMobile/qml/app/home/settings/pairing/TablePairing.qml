@@ -1,6 +1,7 @@
 import QtQuick 2.5
 import "../../../base"
 import "../../../../utils"
+import "../../../../utils/client"
 
 Item {
 
@@ -10,7 +11,7 @@ Item {
     /*
      Unique device id for pairing with heist table user
     */
-    property var deviceId: HeistManager.uid;
+    property var deviceId: Heist.uid;
 
 
     //clear float message when invisible
@@ -116,7 +117,7 @@ Item {
     HeistReceiver {
         id: receiver
         onSessionChanged: validateSession();
-        onAddItem: HeistManager.registerItem(item, entry.codeString);
+        onAddItem: Heist.registerItem(item, entry.codeString);
         onErrorChanged: pairingError(error);
     }
 
@@ -146,7 +147,7 @@ Item {
     */
     function pair() {
         if(state === "unpaired") {
-            HeistManager.setPairing(entry.codeString, deviceId);
+            Heist.setPairing(entry.codeString, deviceId);
             state = "paired";
         }
     }
@@ -158,7 +159,7 @@ Item {
         if(state === "paired") {
             receiver.register = false;
             Foreground.showMessage("Pairing session has been terminated.", 3000, Resolution.applyScale(300));
-            HeistManager.releasePairing(entry.codeString, deviceId);
+            Heist.releasePairing(entry.codeString, deviceId);
             entry.resetCode();
             state = "unpaired";            
         }

@@ -3,6 +3,7 @@ import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import "../../base"
 import "../../../utils"
+import "../../../utils/client"
 
 /*!
   \qmltype ClearLikesSetting
@@ -57,7 +58,7 @@ Setting {
 
                 onClicked: {
                     ItemManager.unregisterAllLikes()
-                    HeistManager.unregisterAllItems()
+                    Heist.unregisterAllItems()
                     enabled = false
                 }                
             }

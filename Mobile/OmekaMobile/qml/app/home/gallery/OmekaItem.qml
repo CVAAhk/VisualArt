@@ -4,6 +4,7 @@ import QtQuick.Controls.Styles 1.4
 import QtGraphicalEffects 1.0
 import "../gallery"
 import "../../../utils"
+import "../../../utils/client"
 import "../../base"
 
 /*! Omeka media item preview */

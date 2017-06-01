@@ -2,6 +2,7 @@ import QtQuick 2.0
 import QtQuick.Controls 1.4
 import "../settings"
 import "../../../utils"
+import "../../../utils/client"
 import "../../base"
 
 /*!Media viewer*/

@@ -1,6 +1,7 @@
 import QtQuick 2.5
 import "../../../base"
 import "../../../../utils"
+import "../../../../utils/client"
 import "../../settings"
 
 /*!
@@ -17,7 +18,7 @@ Setting {
     /*! \internal
       Determines if there is heist support for this omeka instance
     */
-    property bool hasHeist: HeistManager.heistIsSupported
+    property bool hasHeist: Heist.heistIsSupported
 
     /*! \internal
       Padding around text

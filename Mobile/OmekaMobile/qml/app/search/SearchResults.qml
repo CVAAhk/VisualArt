@@ -1,5 +1,6 @@
 import QtQuick 2.5
 import "../../utils"
+import "../../utils/client"
 import "../home/gallery"
 
 Item {

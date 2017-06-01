@@ -1,5 +1,5 @@
 import QtQuick 2.5
-import "../../../../utils"
+import "../../../../utils/client"
 
 /*!
   \qmltype HeistReceiver
@@ -45,9 +45,9 @@ Item {
     */
     onRegisterChanged: {
         if(register) {
-            HeistManager.registerReceiver(receiver);
-        } else if(HeistManager.registered(receiver)) {
-            HeistManager.unregisterReceiver(receiver);
+            Heist.registerReceiver(receiver);
+        } else if(Heist.registered(receiver)) {
+            Heist.unregisterReceiver(receiver);
             clearFields()
         }
     }

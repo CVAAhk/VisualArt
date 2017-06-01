@@ -1,6 +1,6 @@
 import QtQuick 2.5
 import QtQuick.Controls 1.4
-import "../../utils"
+import "../../utils/client"
 
 Component {
 
@@ -14,7 +14,7 @@ Component {
             if(pressed && currentCode) {
                 if(items.indexOf(item) === -1) {
                     items.push(item);
-                    HeistManager.addItem(currentCode, item, object);
+                    Heist.addItem(currentCode, item, object);
                 }
             }
         }

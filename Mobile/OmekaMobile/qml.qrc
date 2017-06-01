@@ -33,15 +33,16 @@
 		<file>qml/test/sharing/ShareTest.qml</file>			
 		
 		<file>qml/utils/ResolutionManager.qml</file>			
-		<file>qml/utils/Style.qml</file>			
-		<file>qml/utils/OmekaClient.qml</file>									
-		<file>qml/utils/HeistManager.qml</file>		
+		<file>qml/utils/Style.qml</file>				
 		<file>qml/utils/ItemManager.qml</file>									
 		<file>qml/utils/UserSettings.qml</file>									
-		<file>qml/utils/NumberUtils.qml</file>									
-		<file>qml/utils/Pairings.qml</file>		
+		<file>qml/utils/NumberUtils.qml</file>										
 		<file>qml/utils/Foreground.qml</file>		
-		<file>qml/utils/qmldir</file>	
+		<file>qml/utils/qmldir</file>			
+		<file>qml/utils/client/OmekaClient.qml</file>									
+		<file>qml/utils/client/HeistManager.qml</file>			
+		<file>qml/utils/client/Pairings.qml</file>			
+		<file>qml/utils/client/qmldir</file>
 							
 		<file>qml/app/PageNavigation.qml</file>					
 		<file>qml/app/PageNavigationBar.qml</file>					

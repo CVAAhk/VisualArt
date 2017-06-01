@@ -3,7 +3,6 @@ import QtQuick 2.5
 import QtQuick.LocalStorage 2.0
 import "../js/storage.js" as Settings
 
-
 Item {
     id: item_manager
 
@@ -191,6 +190,7 @@ Item {
       installations.
     */
     function upgradeLikes() {
+
         var entries = Settings.getLikedTables()
 
         //if old schema, drop likes table

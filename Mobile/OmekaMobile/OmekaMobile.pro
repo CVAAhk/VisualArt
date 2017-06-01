@@ -88,7 +88,7 @@ DISTFILES += \
     qml/app/detail/Detail.qml \
     qml/app/home/gallery/Gallery.qml \
     qml/app/home/settings/BrandBar.qml \
-    qml/utils/OmekaClient.qml \
+    qml/utils/client/OmekaClient.qml \
     qml/app/home/gallery/OmekaItem.qml \
     qml/app/home/settings/Settings.qml \
     qml/app/likes/Likes.qml \
@@ -156,11 +156,11 @@ DISTFILES += \
     qml/app/home/settings/pairing/Keypad.qml \
     qml/app/home/settings/pairing/CodeEntry.qml \
     qml/app/home/settings/pairing/Unpair.qml \
-    qml/utils/HeistManager.qml \
+    qml/utils/client/HeistManager.qml \
     qml/test/heist/TestHeist.qml \
     qml/test/heist/RequestUI.qml \
     qml/app/home/settings/pairing/HeistReceiver.qml \
-    qml/utils/Pairings.qml \
+    qml/utils/client/Pairings.qml \
     qml/test/heist/StateLabel.qml \
     qml/test/heist/ItemDelegate.qml \
     qml/app/FloatMessage.qml \

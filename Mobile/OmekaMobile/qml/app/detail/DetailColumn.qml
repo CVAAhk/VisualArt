@@ -3,6 +3,7 @@ import "viewers"
 import "viewers/controls"
 import "../base"
 import "../../utils"
+import "../../utils/client"
 
 /*!
     \qmltype DetailColumn
@@ -43,7 +44,7 @@ ScaleColumn {
             }
             else {
                 ItemManager.unregisterLike(item)
-                HeistManager.unregisterItem(item.id)
+                Heist.unregisterItem(item.id)
             }
         }
     }

@@ -1,6 +1,7 @@
 pragma Singleton
 import QtQuick 2.5
-import "../utils"
+import "../client"
+import "../../utils"
 
 Item {
     id: heist_manager

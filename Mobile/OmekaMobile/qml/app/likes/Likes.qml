@@ -2,6 +2,7 @@ import QtQuick 2.0
 import QtQuick.Controls 1.4
 import "../base"
 import "../../utils"
+import "../../utils/client"
 import "../home/gallery"
 
 /*! Display items liked by user */
@@ -82,7 +83,7 @@ Item {
                     removals.push(item.id);
                 } else {   //remove immediately on disabled
                     removeItem(indices.indexOf(item.id))
-                    HeistManager.unregisterItem(item.id)
+                    Heist.unregisterItem(item.id)
                 }
             }
         }
