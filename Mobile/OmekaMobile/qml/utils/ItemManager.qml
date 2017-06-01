@@ -54,6 +54,14 @@ Item {
     //upgrade schema for previous installations
     Component.onCompleted: upgradeLikes()
 
+    //listen to likes registered through heist
+    Connections {
+        target: Heist
+        onHeistLike: {
+            registerLike(item)
+        }
+    }
+
     /*!
       \qmlmethod
       Add like to local database

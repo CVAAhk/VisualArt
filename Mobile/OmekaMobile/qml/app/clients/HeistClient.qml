@@ -44,6 +44,9 @@ Item {
     /*Returns whether the heist plugin is installed for this omeka instance*/
     property bool heistIsSupported: false
 
+    /*Invoked when item is liked through heist plugin*/
+    signal heistLike(var item)
+
     ///////////////////////////////////////////////////////////
     //          PLUGIN CHECK
     ///////////////////////////////////////////////////////////
@@ -388,9 +391,9 @@ Item {
         target: Omeka
         onRequestComplete: {
             if(result.context === heist_manager) {
-                normalizer.append(ItemManager.dataToItem(result));
+                normalizer.append({id: result.item, metadata: result.metadata, fileCount: result.file_count});
                 var item = normalizer.get(normalizer.count -1);
-                ItemManager.registerLike(item);
+                heistLike(item);
             }
         }
     }
