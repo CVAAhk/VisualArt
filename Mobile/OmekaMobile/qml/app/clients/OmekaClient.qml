@@ -72,14 +72,17 @@ Item {
     signal emptyResult(var result)
 
     //Check api on complete
-    Component.onCompleted: pingAPI()
+    Component.onCompleted: {
+        omekaID = prettyName()
+        pingAPI()
+    }
 
     /*! \internal
      Ping the REST API to verify it is enabled for this omeka instance. If it is, parse header
      for properties and if it isn't, set apiIsEnabled flag to false.
     */
     function pingAPI() {
-        var request = new XMLHttpRequest();
+        var request = new XMLHttpRequest();        
         request.onreadystatechange = function() {
             if(request.readyState === XMLHttpRequest.DONE) {
                 if(request.responseText) {
@@ -93,9 +96,6 @@ Item {
                         var strlink = request.getResponseHeader("link")
                         var re = /.*per_page=(.*)>.*/;
                         resultsPerPage = strlink.replace(re, "$1")
-
-                        //assign readable omeka id
-                        omekaID = prettyName()
 
                     } catch(e) {
                         apiIsEnabled = false

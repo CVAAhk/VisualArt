@@ -3,7 +3,7 @@ import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import "../../base"
 import "../../../utils"
-import "../../../utils/client"
+import "../../clients"
 
 /*!
   \qmltype ClearLikesSetting

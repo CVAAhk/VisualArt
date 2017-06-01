@@ -2,7 +2,7 @@ import QtQuick 2.0
 import QtQuick.Controls 1.4
 import "../base"
 import "../../utils"
-import "../../utils/client"
+import "../clients"
 import "../home/gallery"
 
 /*! Display items liked by user */

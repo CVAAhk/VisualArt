@@ -1,0 +1,2 @@
+singleton Omeka 1.0 OmekaClient.qml
+singleton Heist 1.0 HeistClient.qml

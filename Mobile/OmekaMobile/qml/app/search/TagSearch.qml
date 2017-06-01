@@ -2,7 +2,7 @@ import QtQuick 2.5
 import QtQuick.Controls 1.4
 import "../base"
 import "../styles"
-import "../../utils/client"
+import "../clients"
 
 Item {
     id: tags

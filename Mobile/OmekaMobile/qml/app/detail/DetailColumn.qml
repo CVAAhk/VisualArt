@@ -3,7 +3,7 @@ import "viewers"
 import "viewers/controls"
 import "../base"
 import "../../utils"
-import "../../utils/client"
+import "../clients"
 
 /*!
     \qmltype DetailColumn

@@ -2,33 +2,10 @@ pragma Singleton
 import QtQuick 2.5
 import QtQuick.LocalStorage 2.0
 import "../js/storage.js" as Settings
+import "../app/clients"
 
 Item {
     id: item_manager
-
-    ///////////temporary properties until cyclical singleton import issue is resolved
-    property url endpoint: "http://dev.omeka.org/mallcopy/"
-
-    property var omekaID: prettyName()
-
-
-    /*! \qmlmethod
-        Returns formatted name derived from enpoint url*/
-    function prettyName() {
-        var host = qutils.getHost(endpoint)
-        host = host.substring(host.indexOf(".")+1, host.lastIndexOf("."))
-        host = host.replace(".", "_")
-
-        var path = qutils.getPath(endpoint)
-        path = path.replace(/\//g,'')
-
-        var id = path ? host+"_"+path : host
-        return id
-    }
-    //////////////////////////////////////////////
-
-
-
 
     /*-------------DETAIL-------------*/
     /*!
@@ -83,7 +60,7 @@ Item {
     */
     function registerLike(item) {
         if(!isLiked(item)) {
-            Settings.addLike(omekaID, endpoint, String(item.id))
+            Settings.addLike(Omeka.omekaID, Omeka.endpoint, String(item.id))
         }
         itemAdded(item)
         addRecentLike(item.id)
@@ -100,7 +77,7 @@ Item {
         itemRemoved(item)
         removeRecentLiked(item.id)
         if(bypass) return;
-        Settings.removeLike(omekaID, String(item.id))
+        Settings.removeLike(Omeka.omekaID, String(item.id))
     }
 
     /*!
@@ -134,7 +111,7 @@ Item {
       Returns true if the item has an entry in the database
     */
     function isLiked(item) {
-        return Settings.isLiked(omekaID, String(item.id))
+        return Settings.isLiked(Omeka.omekaID, String(item.id))
     }
 
     /*!
@@ -142,7 +119,7 @@ Item {
       Returns all registered likes
     */
     function getLikes() {
-        var entries = Settings.getLikes(omekaID)
+        var entries = Settings.getLikes(Omeka.omekaID)
         var likes = []
         for(var i=0; i<entries.length; i++) {
              likes.push(entries[i].setting)

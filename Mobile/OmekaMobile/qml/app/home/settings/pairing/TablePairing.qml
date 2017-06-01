@@ -1,7 +1,7 @@
 import QtQuick 2.5
 import "../../../base"
 import "../../../../utils"
-import "../../../../utils/client"
+import "../../../clients"
 
 Item {
 

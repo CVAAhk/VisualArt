@@ -31,13 +31,13 @@ OTHER_FILES += \
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH += \
     qml/test/styling/Style 1.0 \
+    qml/utils/Omeka 1.0 \
+    qml/utils/Heist 1.0 \
     qml/utils/Resolution 1.0 \
     qml/utils/Style 1.0 \
-    qml/utils/Omeka 1.0 \
     qml/utils/ItemManager 1.0 \
     qml/utils/User 1.0 \
     qml/utils/NumberUtils 1.0 \
-    qml/utils/HeistManager 1.0 \
     qml/utils/Foreground 1.0 \
 
 ios {
@@ -88,7 +88,7 @@ DISTFILES += \
     qml/app/detail/Detail.qml \
     qml/app/home/gallery/Gallery.qml \
     qml/app/home/settings/BrandBar.qml \
-    qml/utils/client/OmekaClient.qml \
+    qml/app/clients/OmekaClient.qml \
     qml/app/home/gallery/OmekaItem.qml \
     qml/app/home/settings/Settings.qml \
     qml/app/likes/Likes.qml \
@@ -156,11 +156,11 @@ DISTFILES += \
     qml/app/home/settings/pairing/Keypad.qml \
     qml/app/home/settings/pairing/CodeEntry.qml \
     qml/app/home/settings/pairing/Unpair.qml \
-    qml/utils/client/HeistManager.qml \
+    qml/app/clients/HeistClient.qml \
     qml/test/heist/TestHeist.qml \
     qml/test/heist/RequestUI.qml \
     qml/app/home/settings/pairing/HeistReceiver.qml \
-    qml/utils/client/Pairings.qml \
+    qml/app/clients/Pairings.qml \
     qml/test/heist/StateLabel.qml \
     qml/test/heist/ItemDelegate.qml \
     qml/app/FloatMessage.qml \
