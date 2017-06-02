@@ -31,19 +31,24 @@ Item {
     property bool apiIsEnabled: true
 
     /*! \qmlproperty
-        Returns the total number of items in the repository
+        The total number of items in the repository
     */
     property int totalItemCount: 0
 
     /*! \qmlproperty
-        Returns the maximum number of results per request
+        The maximum number of results per request
     */
     property int resultsPerPage: 50
 
     /*! \qmlproperty
-        Returns a formatted name derived from the endpoint url
+        A formatted name derived from the endpoint url
     */
     property var omekaID: ""
+
+    /*! \qmlproperty
+        The site title
+    */
+    property var title: ""
 
     /*!
       \internal
@@ -74,6 +79,7 @@ Item {
     //Check api on complete
     Component.onCompleted: {
         omekaID = prettyName()
+        querySiteInfo()
         pingAPI()
     }
 
@@ -105,6 +111,23 @@ Item {
         }
         request.open("GET", rest+"items", true);
         request.send();
+    }
+
+    /*! \internal
+     Pull site information mainly to acquire title to provide context
+    */
+    function querySiteInfo() {
+        var request = new XMLHttpRequest();
+        request.onreadystatechange = function() {
+            if(request.readyState === XMLHttpRequest.DONE) {
+                try {
+                    var result = JSON.parse(request.responseText)
+                    title = result.title || omekaID
+                } catch(e) {}
+            }
+        }
+        request.open("GET", rest+"site", true);
+        request.send()
     }
 
     /*! \internal
