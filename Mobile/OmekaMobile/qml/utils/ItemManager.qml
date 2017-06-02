@@ -127,7 +127,7 @@ Item {
       Returns all registered likes
     */
     function getLikes() {
-        var entries = Settings.getLikes(Omeka.omekaID)
+        var entries = Settings.getAllLikes()
         var likes = []
         for(var i=0; i<entries.length; i++) {
              likes.push(entries[i].setting)

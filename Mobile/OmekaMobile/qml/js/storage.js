@@ -162,7 +162,10 @@ function getAllLikes() {
     var likes = []
     var tables = rows(LIKES)
     for(var i=0; i<tables.length; i++) {
-        likes = likes.concat(rows(tables[i].setting))
+        var r = rows(tables[i].setting)
+        for(var j=0; j<r.length; j++) {
+            likes.push(r[j])
+        }
     }
     return likes;
 }
