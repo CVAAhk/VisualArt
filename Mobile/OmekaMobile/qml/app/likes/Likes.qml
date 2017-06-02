@@ -28,9 +28,17 @@ Item {
 
     //initialize loading likes from local storage
     Component.onCompleted: {
-        ordered_likes = ItemManager.getLikes()
-        for(var i=0; i<ordered_likes.length; i++) {
-            Omeka.getItemById(ordered_likes[i], likes)
+        var entry
+        var item_id
+        var key
+
+        var _likes = ItemManager.getLikes()
+        for(var i=0; i<_likes.length; i++) {
+            entry = _likes[i]
+            key = entry.setting
+            item_id = key.substring(key.lastIndexOf("-")+1)
+            ordered_likes.push(key)
+            Omeka.getItemById(item_id, likes, entry.value+"api/")
         }
     }
 
@@ -43,9 +51,9 @@ Item {
             }
         }
         onEmptyResult: {
-            if(result.context === likes) {
+            /*if(result.context === likes) {
                 handleInvalidRecord(result)
-            }
+            }*/
         }
     }
 
@@ -137,10 +145,12 @@ Item {
     */
     function loadFromStorage(item) {
         if(item) {
-            loadedLikes[item.item] = item
+            var omekaID = Omeka.prettyName(item.request.substring(0, item.request.lastIndexOf("api")))
+            var key = omekaID+"-"+item.item
+            loadedLikes[key] = item
         }
 
-        //load complete
+        //load in stored order
         var loadCount = Object.keys(loadedLikes).length
         if(loadCount === ordered_likes.length) {
             for(var i in ordered_likes) {

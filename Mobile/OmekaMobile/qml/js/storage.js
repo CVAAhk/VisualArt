@@ -110,8 +110,7 @@ function drop(table) {
   \a item The liked item
 */
 function addLike(id, url, item) {
-    set(LIKES, id, url);
-    set(id, item, "");
+    set(LIKES, likeKey(id,item), url);
 }
 
 /*
@@ -120,13 +119,7 @@ function addLike(id, url, item) {
   \a item  The item to remove
 */
 function removeLike(id, item) {
-    remove(id, item);
-
-    //if table is empty after removal, unregister the table
-    if(rows(id).length === 0) {
-        drop(id)
-        remove(LIKES, id)
-    }
+    remove(LIKES, likeKey(id,item));
 }
 
 /*
@@ -135,59 +128,34 @@ function removeLike(id, item) {
   \a item The item to search for
  */
 function isLiked(id, item) {
-    return get(id, item) !== 0;
+    return get(LIKES, likeKey(id,item)) !== 0;
 }
 
 /*
-  Returns endpoint registered to omeka_id
-  \a  The omeka_id
- */
-function getUrl(id) {
-    var entry = get(LIKES, id)
-    return entry
-}
-
-/*
-  Returns all likes of specified table
-  \a  The name of the table
+  Returns all registered likes
 */
-function getLikes(id) {
-    return rows(id);
-}
-
-/*
-  Returns likes of all tables
-*/
-function getAllLikes() {
+function getLikes() {
     var likes = []
-    var tables = rows(LIKES)
-    for(var i=0; i<tables.length; i++) {
-        var r = rows(tables[i].setting)
-        for(var j=0; j<r.length; j++) {
-            likes.push(r[j])
-        }
+    var entries = rows(LIKES)
+    for(var i=0; i<entries.length; i++) {
+        likes.push(entries[i])
     }
     return likes;
-}
-
-/*
-  Returns tables with registered likes
- */
-function getLikedTables() {
-    return rows(LIKES)
 }
 
 /*
   Clears all tables
 */
 function clearAllLikes() {
-    var tables = rows(LIKES)
-    for(var i=0; i<tables.length; i++) {
-        drop(tables[i].setting)
-    }
     return clear(LIKES);
 }
 
+/*
+  Links item id to corresponding omeka instance
+ */
+function likeKey(id, item) {
+    return id+"-"+item
+}
 
 /*--------USER table operations--------*/
 function setLayout(layout) {

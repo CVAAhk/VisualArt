@@ -68,7 +68,7 @@ Item {
     */
     function registerLike(item) {
         if(!isLiked(item)) {
-            Settings.addLike(Omeka.omekaID, Omeka.endpoint, String(item.id))
+            Settings.addLike(Omeka.omekaID, Omeka.endpoint, item.id)
         }
         itemAdded(item)
         addRecentLike(item.id)
@@ -85,7 +85,7 @@ Item {
         itemRemoved(item)
         removeRecentLiked(item.id)
         if(bypass) return;
-        Settings.removeLike(Omeka.omekaID, String(item.id))
+        Settings.removeLike(Omeka.omekaID, item.id)
     }
 
     /*!
@@ -127,17 +127,13 @@ Item {
       Returns all registered likes
     */
     function getLikes() {
-        var entries = Settings.getAllLikes()
-        var likes = []
-        for(var i=0; i<entries.length; i++) {
-             likes.push(entries[i].setting)
-        }
-        return likes
+        return Settings.getLikes()
     }
 
     /*!
       \qmlmethod
-      Add item to list of recently liked items
+      Add item to list of recently liked items. This is used to assign a count
+      to the likes number tag notification.
     */
     function addRecentLike(id) {
         if(onLikesView) return
@@ -176,7 +172,7 @@ Item {
     */
     function upgradeLikes() {
 
-        var entries = Settings.getLikedTables()
+        var entries = Settings.getLikes()
 
         //if old schema, drop likes table
         for(var i=0; i<entries.length; i++) {

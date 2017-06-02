@@ -78,7 +78,7 @@ Item {
 
     //Check api on complete
     Component.onCompleted: {
-        omekaID = prettyName()
+        omekaID = prettyName(endpoint)
         querySiteInfo()
         pingAPI()
     }
@@ -198,7 +198,7 @@ Item {
                 requestComplete({item: res.item.id, context: result.context, media: media, thumb: res.file_urls.thumbnail, media_type: mType});
             }
             else if(res.element_texts){ //item
-                requestComplete({item: res.id, context: result.context, metadata: res.element_texts, file_count: res.files.count});
+                requestComplete({item: res.id, context: result.context, metadata: res.element_texts, file_count: res.files.count, request: res.url});
             }
             else if(res.name){ //tag and search term
                 requestComplete({item: res.id, context: result.context, tag: res.name});
@@ -249,8 +249,9 @@ Item {
 
     /*! \qmlmethod
         Query items by id*/
-    function getItemById(id, context) {
-        submitRequest(rest+"items/"+id, context)
+    function getItemById(id, context, api) {
+        var url = api || rest
+        submitRequest(url+"items/"+id, context)
     }    
 
     /*! \qmlmethod
@@ -272,13 +273,13 @@ Item {
     }
 
     /*! \qmlmethod
-        Returns formatted name derived from enpoint url*/
-    function prettyName() {
-        var host = qutils.getHost(endpoint)
+        Returns formatted name derived from provided url*/
+    function prettyName(url) {
+        var host = qutils.getHost(url)
         host = host.substring(host.indexOf(".")+1, host.lastIndexOf("."))
         host = host.replace(".", "_")
 
-        var path = qutils.getPath(endpoint)
+        var path = qutils.getPath(url)
         path = path.replace(/\//g,'')
 
         var id = path ? host+"_"+path : host
