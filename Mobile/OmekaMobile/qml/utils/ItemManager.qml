@@ -85,7 +85,8 @@ Item {
         itemRemoved(item)
         removeRecentLiked(item.id)
         if(bypass) return;
-        Settings.removeLike(Omeka.omekaID, item.id)
+        print("remove: "+item.omekaID)
+        Settings.removeLike(item.omekaID, item.id)
     }
 
     /*!
@@ -119,7 +120,7 @@ Item {
       Returns true if the item has an entry in the database
     */
     function isLiked(item) {
-        return Settings.isLiked(Omeka.omekaID, String(item.id))
+        return Settings.isLiked(item.omekaID, String(item.id))
     }
 
     /*!
@@ -128,6 +129,22 @@ Item {
     */
     function getLikes() {
         return Settings.getLikes()
+    }
+
+    /*!
+      \qmlmethod
+      Returns omeka id from likes table key
+    */
+    function getOmekaIDFromKey(key) {
+        return Settings.getOmekaIDFromKey(key)
+    }
+
+    /*!
+      \qmlmethod
+      Returns id id from likes table key
+    */
+    function getItemIDFromKey(key) {
+        return Settings.getItemIDFromKey(key)
     }
 
     /*!

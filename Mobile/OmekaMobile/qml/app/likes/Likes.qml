@@ -36,7 +36,7 @@ Item {
         for(var i=0; i<_likes.length; i++) {
             entry = _likes[i]
             key = entry.setting
-            item_id = key.substring(key.lastIndexOf("-")+1)
+            item_id = ItemManager.getItemIDFromKey(key)
             ordered_likes.push(key)
             Omeka.getItemById(item_id, likes, entry.value+"api/")
         }
@@ -51,9 +51,9 @@ Item {
             }
         }
         onEmptyResult: {
-            /*if(result.context === likes) {
+            if(result.context === likes) {
                 handleInvalidRecord(result)
-            }*/
+            }
         }
     }
 
@@ -63,7 +63,7 @@ Item {
             ItemManager.clearRecentLiked()
         }
         else {
-            for(var i in removals) {                
+            for(var i in removals) {
                 ItemManager.unregisterLike({id: removals[i]}, false);
             }
             removals.length = 0
@@ -145,7 +145,7 @@ Item {
     */
     function loadFromStorage(item) {
         if(item) {
-            var omekaID = Omeka.prettyName(item.request.substring(0, item.request.lastIndexOf("api")))
+            var omekaID = Omeka.prettyName(item.url.substring(0, item.url.lastIndexOf("api")))
             var key = omekaID+"-"+item.item
             loadedLikes[key] = item
         }

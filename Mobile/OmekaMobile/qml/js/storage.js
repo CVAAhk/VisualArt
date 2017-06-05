@@ -157,6 +157,20 @@ function likeKey(id, item) {
     return id+"-"+item
 }
 
+/*
+  Parse omeka id from omeka/item combination
+ */
+function getOmekaIDFromKey(key) {
+    return key.substring(0, key.lastIndexOf("-"))
+}
+
+/*
+  Parse item id from omeka/item combination
+ */
+function getItemIDFromKey(key) {
+    return key.substring(key.lastIndexOf("-")+1)
+}
+
 /*--------USER table operations--------*/
 function setLayout(layout) {
     set(USER, "layout", layout);

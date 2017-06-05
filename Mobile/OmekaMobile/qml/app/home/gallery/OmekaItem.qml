@@ -30,10 +30,13 @@ Component {
             itemData.metadata = metadata
             itemData.media = []
             itemData.mediaTypes = []
+            itemData.url = url
+            itemData.omekaID = Omeka.prettyName(url.substring(0, url.lastIndexOf("api")))
 
             setInfo();
 
-            Omeka.getFiles(itemData.id, object)
+            var api = url.substring(0, url.lastIndexOf("items"))
+            Omeka.getFiles(itemData.id, object, api)
             like.refresh(itemData)
         }
 

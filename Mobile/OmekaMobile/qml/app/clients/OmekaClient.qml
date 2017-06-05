@@ -5,8 +5,8 @@ Item {
     /*! \qmlproperty
         Target omeka endpoint url
     */
-    //property url endpoint: "http://oe.develop.digitalmediauconn.org/"
-    property url endpoint: "http://dev.omeka.org/mallcopy/"
+    property url endpoint: "http://oe.develop.digitalmediauconn.org/"
+    //property url endpoint: "http://dev.omeka.org/mallcopy/"
     //property url endpoint: "http://www.huapala.net/"  //no heist support test
     //property url endpoint: "http://marb.kennesaw.edu/identities/"  //no enabled api test
 
@@ -198,7 +198,7 @@ Item {
                 requestComplete({item: res.item.id, context: result.context, media: media, thumb: res.file_urls.thumbnail, media_type: mType});
             }
             else if(res.element_texts){ //item
-                requestComplete({item: res.id, context: result.context, metadata: res.element_texts, file_count: res.files.count, request: res.url});
+                requestComplete({item: res.id, context: result.context, metadata: res.element_texts, file_count: res.files.count, url: res.url});
             }
             else if(res.name){ //tag and search term
                 requestComplete({item: res.id, context: result.context, tag: res.name});
@@ -225,8 +225,9 @@ Item {
 
     /*! \qmlmethod
         Query files of specified item*/
-    function getFiles(id, context){
-        submitRequest(rest+"files?item="+id, context);
+    function getFiles(id, context, api){
+        var url = api || rest
+        submitRequest(url+"files?item="+id, context);
     }
 
     /*! \qmlmethod
