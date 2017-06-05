@@ -391,7 +391,16 @@ Item {
         target: Omeka
         onRequestComplete: {
             if(result.context === heist_manager) {
-                normalizer.append({id: result.item, metadata: result.metadata, fileCount: result.file_count});
+
+                var itemData = {id: result.item,
+                    metadata: result.metadata,
+                    fileCount: result.file_count,
+                    url: result.url,
+                    omekaID: Omeka.prettyName(result.url.substring(0, result.url.lastIndexOf("api"))),
+                    endpoint: result.url.substring(0, result.url.lastIndexOf("api"))
+                }
+
+                normalizer.append(itemData);
                 var item = normalizer.get(normalizer.count -1);
                 heistLike(item);
             }
