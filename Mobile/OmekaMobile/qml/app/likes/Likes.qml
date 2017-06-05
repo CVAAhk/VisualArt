@@ -15,7 +15,7 @@ Item {
     property var indices: []
 
     //items tagged for removal
-    property var removals: []
+    property var removals: ({})
 
     //used to normalize data types
     property var normalizer: ListModel{}
@@ -64,9 +64,9 @@ Item {
         }
         else {
             for(var i in removals) {
-                ItemManager.unregisterLike({id: removals[i]}, false);
+                ItemManager.unregisterLike(removals[i], false);
             }
-            removals.length = 0
+            removals = ({})
             //filter.close()
         }
         ItemManager.onLikesView = enabled
@@ -80,15 +80,15 @@ Item {
             if(indices.indexOf(item.id) === -1) { //add item
                 addItem(ItemManager.itemToData(item));
             }
-            if(removals.indexOf(item.id) !== -1) { //update removals
-                removals.splice(removals.indexOf(item.id), 1);
+            if(removals[item.id]) { //update removals
+                removals.splice(removals[item.id], 1);
             }
         }
 
         onItemRemoved: {
             if(indices.indexOf(item.id) !== -1) {
                 if(enabled) { //postpone removals for disabled state
-                    removals.push(item.id);
+                    removals[item.id] = item
                 } else {   //remove immediately on disabled
                     removeItem(indices.indexOf(item.id))
                     Heist.unregisterItem(item.id)
@@ -99,7 +99,7 @@ Item {
         onClearItems: {
             browser.clear()
             indices.length = 0
-            removals.length = 0
+            removals = ({})
         }
     }
 

@@ -85,7 +85,6 @@ Item {
         itemRemoved(item)
         removeRecentLiked(item.id)
         if(bypass) return;
-        print("remove: "+item.omekaID)
         Settings.removeLike(item.omekaID, item.id)
     }
 
