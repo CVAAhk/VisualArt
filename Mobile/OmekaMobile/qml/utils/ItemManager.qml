@@ -68,7 +68,7 @@ Item {
     */
     function registerLike(item) {
         if(!isLiked(item)) {
-            Settings.addLike(Omeka.omekaID, Omeka.endpoint, item.id)
+            Settings.addLike(item.omekaID, item.endpoint, item.id)
         }
         itemAdded(item)
         addRecentLike(item.id)
@@ -104,15 +104,7 @@ Item {
       Converts item to omeka result data format
     */
     function itemToData(item) {
-        return {item: item.id, metadata: item.metadata, file_count: item.fileCount};
-    }
-
-    /*!
-      \qmlmethod
-      Converts omeka result to item data format
-    */
-    function dataToItem(data) {
-        return {id: data.item, metadata: data.metadata, fileCount: data.file_count};
+        return {item: item.id, metadata: item.metadata, file_count: item.fileCount, url: item.url, omekaID: item.omekaID, endpoint: item.endpoint};
     }
 
     /*!

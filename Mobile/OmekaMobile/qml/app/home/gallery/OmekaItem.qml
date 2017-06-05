@@ -32,11 +32,11 @@ Component {
             itemData.mediaTypes = []
             itemData.url = url
             itemData.omekaID = Omeka.prettyName(url.substring(0, url.lastIndexOf("api")))
+            itemData.endpoint = url.substring(0, url.lastIndexOf("api"))
 
             setInfo();
 
-            var api = url.substring(0, url.lastIndexOf("items"))
-            Omeka.getFiles(itemData.id, object, api)
+            Omeka.getFiles(itemData.id, object, itemData.endpoint+"api/")
             like.refresh(itemData)
         }
 
