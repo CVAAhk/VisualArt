@@ -81,7 +81,7 @@ Item {
                 addItem(ItemManager.itemToData(item));
             }
             if(removals[item.id]) { //update removals
-                removals.splice(removals[item.id], 1);
+                delete removals[item.id];
             }
         }
 
