@@ -12,7 +12,7 @@ Item {
     enabled: false
 
     //track item indices
-    property var indices: []
+    property var indices: []    
 
     //items tagged for removal
     property var removals: ({})
@@ -26,6 +26,15 @@ Item {
     //for initial ordering
     property var loadedLikes: ({})
 
+    //reference to all registered likes for filtering
+    property var all: ({})
+
+    //links item indices to their host omeka instance
+    property var filters: ({})
+
+    //maps site titles to the omeka ID
+    property var titleToID: ({})
+
     //initialize loading likes from local storage
     Component.onCompleted: {
         var entry
@@ -36,7 +45,7 @@ Item {
         for(var i=0; i<_likes.length; i++) {
             entry = _likes[i]
             key = entry.setting
-            item_id = ItemManager.getItemIDFromKey(key)
+            item_id = ItemManager.getItemIDFromKey(key)            
             orderedLikes.push(key)
             Omeka.getItemById(item_id, likes, entry.value+"api/")
         }
@@ -47,6 +56,7 @@ Item {
         target: Omeka
         onRequestComplete: {
             if(result.context === likes) {
+                result.omekaID = Omeka.prettyName(result.url.substring(0, result.url.lastIndexOf("api")))
                 loadFromStorage(result)
             }
         }
@@ -90,7 +100,7 @@ Item {
                 if(enabled) { //postpone removals for disabled state
                     removals[item.id] = item
                 } else {   //remove immediately on disabled
-                    removeItem(indices.indexOf(item.id))
+                    removeItem(item)
                     Heist.unregisterItem(item.id)
                 }
             }
@@ -136,6 +146,13 @@ Item {
             }
             grid.addDisplaced: Transition {
                 NumberAnimation { properties: "x,y"; duration: 200 }
+            }
+
+            list.removeDisplaced: Transition {
+                NumberAnimation { property: "y"; duration: 200 }
+            }
+            grid.removeDisplaced: Transition {
+                NumberAnimation { property: "y"; duration: 200 }
             }
         }
     }
@@ -194,7 +211,8 @@ Item {
     /*
       Remove liked item by index
     */
-    function removeItem(index) {
+    function removeItem(item) {
+        var index = indices.indexOf(item.id)
         browser.remove(index)
         indices.splice(index, 1)
     }
