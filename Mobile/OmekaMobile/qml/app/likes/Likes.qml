@@ -29,11 +29,8 @@ Item {
     //reference to all registered likes for filtering
     property var all: ({})
 
-    //links item indices to their host omeka instance
+    //links items to their host omeka instance
     property var filters: ({})
-
-    //maps site titles to the omeka ID
-    property var titleToID: ({})
 
     //initialize loading likes from local storage
     Component.onCompleted: {
@@ -76,7 +73,7 @@ Item {
                 ItemManager.unregisterLike(removals[i], false);
             }
             removals = ({})
-            //filter.close()
+            filter.close()
         }
         ItemManager.onLikesView = enabled
     }
@@ -109,6 +106,9 @@ Item {
             browser.clear()
             indices.length = 0
             removals = ({})
+            all = ({})
+            filters = ({})
+            filter.clear()
         }
     }
 
@@ -129,16 +129,16 @@ Item {
             }
         }
 
-        /*LikesFilter{
+        LikesFilter{
             id: filter
-        }*/
+        }
 
         Browser {
             id: browser
             height: parent.height - bar.height
             clip: true
-            list.bottomMargin: Resolution.applyScale(150) //+ filter.height
-            grid.bottomMargin: Resolution.applyScale(120) //+ filter.height
+            list.bottomMargin: Resolution.applyScale(150) + filter.height
+            grid.bottomMargin: Resolution.applyScale(120) + filter.height
 
             list.addDisplaced: Transition {
                 NumberAnimation { property: "y"; duration: 200 }
@@ -205,6 +205,7 @@ Item {
         item.context = likes
         browser.insert(0, item)
         indices.unshift(item.uid)
+        addItemToFilter(item)
     }
 
     /*
@@ -214,5 +215,39 @@ Item {
         var index = indices.indexOf(item.uid)
         browser.remove(index)
         indices.splice(index, 1)
+        removeItemFromFilter(item)
+    }
+
+    /*
+      Assign item to filter
+     */
+    function addItemToFilter(item) {
+
+        //register with master
+        all[item.uid] = item
+
+        //assign to filter based on omeka id
+        if(!filters[item.omekaID]) {
+            filters[item.omekaID] = []
+            filter.addFilter(item.omekaID, item.endpoint)
+        }
+        filters[item.omekaID].unshift(item.uid)
+    }
+
+    /*
+      Remove item from filter
+     */
+    function removeItemFromFilter(item) {
+
+        //unregister from master
+        delete all[item.uid]
+
+        //remove filter
+        var index = filters[item.omekaID].indexOf(item.uid)
+        filters[item.omekaID].splice(index, 1)
+        if(filters[item.omekaID].length === 0) {
+            delete filters[item.omekaID]
+            filter.removeFilter(item.omekaID)
+        }
     }
 }

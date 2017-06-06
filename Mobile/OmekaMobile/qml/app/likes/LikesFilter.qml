@@ -1,12 +1,32 @@
 import QtQuick 2.5
+import "../clients"
 import "../../utils"
 
 Item {
+    id: root
+
     anchors.left: parent.left
     anchors.right: parent.right
     anchors.margins: Resolution.applyScale(30)
     height: border.height
     clip: true
+
+    property var omekaIDS: []
+    property var omekaTitles: []
+
+    Connections {
+        target: Omeka
+        onSiteInfo: {
+            //add site title as filter
+            if(result.context === root) {
+                var index = omekaIDS.indexOf(result.omekaID)
+                if(index !== -1) {
+                    omekaTitles.splice(index, 0, result.title)
+                    filters.addFilter(result.title)
+                }
+            }
+        }
+    }
 
     //border rectangle
     Rectangle {
@@ -43,5 +63,36 @@ Item {
     //close filters
     function close() {
         button.checked = false
+    }
+
+    /*
+      Register new omeka id and retreive site title and assign as filter value
+     */
+    function addFilter(omekaID, endpoint) {
+        if(omekaIDS.indexOf(omekaID) === -1) {
+            omekaIDS.push(omekaID)
+            Omeka.getSiteInfo(root, endpoint+"api/")
+        }
+    }
+
+    /*
+      Remove filter by id
+     */
+    function removeFilter(omekaID) {
+        var index = omekaIDS.indexOf(omekaID)
+        if(index !== -1) {
+            filters.removeFilter(index)
+            omekaIDS.splice(index, 1)
+            omekaTitles.splice(index, 1)
+        }
+    }
+
+    /*
+      Clar all filters
+    */
+    function clear() {
+        omekaIDS.length = 0
+        omekaTitles.length = 0
+        filters.clear()
     }
 }
