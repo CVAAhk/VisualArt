@@ -45,7 +45,7 @@ Item {
         for(var i=0; i<_likes.length; i++) {
             entry = _likes[i]
             uid = entry.setting
-            item_id =  uid.substring(uid.lastIndexOf("-")+1)
+            item_id = uid.substring(uid.lastIndexOf("-")+1)
             orderedLikes.push(uid)
             Omeka.getItemById(item_id, likes, entry.value+"api/")
         }
@@ -180,11 +180,12 @@ Item {
       from the omeka repository
      */
     function handleInvalidRecord(result) {
-        //update to new key tracking
-       /* var id = result.url
-        id = Number(id.substring(id.lastIndexOf("/")+1))
-        orderedLikes.splice(orderedLikes.indexOf(id), 1)
-        ItemManager.unregisterLike({id:id})*/
+        var _endpoint = result.url.substring(0, result.url.lastIndexOf("api"))
+        var _omekaID = Omeka.prettyName(_endpoint)
+        var _itemID = result.url.substring(result.url.lastIndexOf("/")+1)
+        var _uid = _omekaID+"-"+_itemID
+        orderedLikes.splice(orderedLikes.indexOf(_uid), 1)
+        ItemManager.unregisterLike({uid: _uid})
         loadFromStorage()
     }
 
