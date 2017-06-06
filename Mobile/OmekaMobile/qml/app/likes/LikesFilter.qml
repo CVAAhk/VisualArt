@@ -13,6 +13,7 @@ Item {
 
     property var omekaIDS: []
     property var omekaTitles: []
+    property var filterID
 
     Connections {
         target: Omeka
@@ -57,6 +58,9 @@ Item {
             id: filters
             width: parent.width
             state: button.state
+            onCurrentChanged: {
+                filterID = current.text === "all" ? "all" : omekaIDS[omekaTitles.indexOf(current.text)]
+            }
         }
     }
 

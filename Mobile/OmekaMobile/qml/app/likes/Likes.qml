@@ -131,6 +131,9 @@ Item {
 
         LikesFilter{
             id: filter
+            onFilterIDChanged: {
+                print(filterID)
+            }
         }
 
         Browser {
