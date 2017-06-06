@@ -103,23 +103,19 @@ function drop(table) {
 /*--------LIKES table operations--------*/
 
 /*
-  Register omeka instance id with main LIKES table and register the
-  liked item with the omeka table
-  \a id   The omeka_id corresponding to the omeka instance
-  \a url  The omeka endpoint
+  Register the item with the LIKES table
   \a item The liked item
 */
-function addLike(id, url, item) {
-    set(LIKES, likeKey(id,item), url);
+function addLike(item) {
+    set(LIKES, item.uid, item.endpoint);
 }
 
 /*
-  Remove liked item from the specified table
-  \a id    The table name
+  Unregister the item from the LIKES table
   \a item  The item to remove
 */
-function removeLike(id, item) {
-    remove(LIKES, likeKey(id,item));
+function removeLike(item) {
+    remove(LIKES, item.uid);
 }
 
 /*
@@ -127,8 +123,8 @@ function removeLike(id, item) {
   \a id   The table name
   \a item The item to search for
  */
-function isLiked(id, item) {
-    return get(LIKES, likeKey(id,item)) !== 0;
+function isLiked(item) {
+    return get(LIKES, item.uid) !== 0;
 }
 
 /*
@@ -148,27 +144,6 @@ function getLikes() {
 */
 function clearAllLikes() {
     return clear(LIKES);
-}
-
-/*
-  Links item id to corresponding omeka instance
- */
-function likeKey(id, item) {
-    return id+"-"+item
-}
-
-/*
-  Parse omeka id from omeka/item combination
- */
-function getOmekaIDFromKey(key) {
-    return key.substring(0, key.lastIndexOf("-"))
-}
-
-/*
-  Parse item id from omeka/item combination
- */
-function getItemIDFromKey(key) {
-    return key.substring(key.lastIndexOf("-")+1)
 }
 
 /*--------USER table operations--------*/

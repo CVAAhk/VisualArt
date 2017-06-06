@@ -65,27 +65,28 @@ Item {
     /*!
       \qmlmethod
       Add like to local database
+      \a item The item to register
     */
     function registerLike(item) {
         if(!isLiked(item)) {
-            Settings.addLike(item.omekaID, item.endpoint, item.id)
+            Settings.addLike(item)
         }
         itemAdded(item)
-        addRecentLike(item.id)
+        addRecentLike(item)
     }
 
     /*!
       \qmlmethod
       Remove like from local database
-      \a item The item to register
+      \a item The item to unregister
       \a bypass Skip data removal and invokes signal with the assumption removal will
                 be finalized at a later time
     */
     function unregisterLike(item, bypass) {
         itemRemoved(item)
-        removeRecentLiked(item.id)
+        removeRecentLiked(item)
         if(bypass) return;
-        Settings.removeLike(item.omekaID, item.id)
+        Settings.removeLike(item)
     }
 
     /*!
@@ -103,15 +104,22 @@ Item {
       Converts item to omeka result data format
     */
     function itemToData(item) {
-        return {item: item.id, metadata: item.metadata, file_count: item.fileCount, url: item.url, omekaID: item.omekaID, endpoint: item.endpoint};
+        return {
+            item: item.id,
+            metadata: item.metadata,
+            file_count: item.fileCount,
+            uid: item.uid,
+            omekaID: item.omekaID,
+            endpoint: item.endpoint
+        };
     }
 
     /*!
       \qmlmethod
       Returns true if the item has an entry in the database
     */
-    function isLiked(item) {
-        return Settings.isLiked(item.omekaID, String(item.id))
+    function isLiked(item) {        
+        return Settings.isLiked(item)
     }
 
     /*!
@@ -124,37 +132,13 @@ Item {
 
     /*!
       \qmlmethod
-      Joins omeka id with item id to form likes table key
-    */
-    function likeKey(id, item) {
-        return Settings.likeKey(id, item)
-    }
-
-    /*!
-      \qmlmethod
-      Returns omeka id from likes table key
-    */
-    function getOmekaIDFromKey(key) {
-        return Settings.getOmekaIDFromKey(key)
-    }
-
-    /*!
-      \qmlmethod
-      Returns id id from likes table key
-    */
-    function getItemIDFromKey(key) {
-        return Settings.getItemIDFromKey(key)
-    }
-
-    /*!
-      \qmlmethod
       Add item to list of recently liked items. This is used to assign a count
       to the likes number tag notification.
     */
-    function addRecentLike(id) {
+    function addRecentLike(item) {
         if(onLikesView) return
-        if(recentlyLiked.indexOf(id) === -1) {
-            recentlyLiked.push(id)
+        if(recentlyLiked.indexOf(item.uid) === -1) {
+            recentlyLiked.push(item.uid)
             newLikes = recentlyLiked.length
         }
     }
@@ -163,9 +147,9 @@ Item {
       \qmlmethod
       Remove item from list of recently liked items
     */
-    function removeRecentLiked(id) {
-        if(recentlyLiked.indexOf(id) !== -1) {
-            recentlyLiked.splice(recentlyLiked.indexOf(id), 1)
+    function removeRecentLiked(item) {
+        if(recentlyLiked.indexOf(item.uid) !== -1) {
+            recentlyLiked.splice(recentlyLiked.indexOf(item.uid), 1)
             newLikes = recentlyLiked.length
         }
     }

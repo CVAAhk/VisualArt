@@ -213,7 +213,16 @@ Item {
                 requestComplete({item: res.item.id, context: result.context, media: media, thumb: res.file_urls.thumbnail, media_type: mType});
             }
             else if(res.element_texts){ //item
-                requestComplete({item: res.id, context: result.context, metadata: res.element_texts, file_count: res.files.count, url: res.url});
+                var _endpoint = result.url.substring(0, result.url.lastIndexOf("api"))
+                var _omekaID = prettyName(_endpoint)
+                requestComplete(
+                            {item: res.id,
+                            context: result.context,
+                            metadata: res.element_texts,
+                            file_count: res.files.count,
+                            uid: _omekaID+"-"+res.id,
+                            omekaID: _omekaID,
+                            endpoint: _endpoint});
             }
             else if(res.name){ //tag and search term
                 requestComplete({item: res.id, context: result.context, tag: res.name});

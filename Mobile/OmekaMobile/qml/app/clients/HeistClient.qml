@@ -392,12 +392,13 @@ Item {
         onRequestComplete: {
             if(result.context === heist_manager) {
 
-                var itemData = {id: result.item,
-                    metadata: result.metadata,
+                var itemData = {
+                    id: result.item,
                     fileCount: result.file_count,
-                    url: result.url,
-                    omekaID: Omeka.prettyName(result.url.substring(0, result.url.lastIndexOf("api"))),
-                    endpoint: result.url.substring(0, result.url.lastIndexOf("api"))
+                    metadata: result.metadata,
+                    uid: result.uid,
+                    omekaID: result.omekaID,
+                    endpoint: result.endpoint
                 }
 
                 normalizer.append(itemData);

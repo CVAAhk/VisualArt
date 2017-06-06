@@ -39,14 +39,14 @@ Item {
     Component.onCompleted: {
         var entry
         var item_id
-        var key
+        var uid
 
         var _likes = ItemManager.getLikes()
         for(var i=0; i<_likes.length; i++) {
             entry = _likes[i]
-            key = entry.setting
-            item_id = ItemManager.getItemIDFromKey(key)            
-            orderedLikes.push(key)
+            uid = entry.setting
+            item_id =  uid.substring(uid.lastIndexOf("-")+1)
+            orderedLikes.push(uid)
             Omeka.getItemById(item_id, likes, entry.value+"api/")
         }
     }
@@ -56,7 +56,6 @@ Item {
         target: Omeka
         onRequestComplete: {
             if(result.context === likes) {
-                result.omekaID = Omeka.prettyName(result.url.substring(0, result.url.lastIndexOf("api")))
                 loadFromStorage(result)
             }
         }
@@ -87,23 +86,21 @@ Item {
         target: ItemManager
 
         onItemAdded: {
-            var key = ItemManager.likeKey(item.omekaID, item.id)
-            if(indices.indexOf(key) === -1) { //add item
+            if(indices.indexOf(item.uid) === -1) { //add item
                 addItem(ItemManager.itemToData(item));
             }
-            if(removals[key]) { //update removals
-                delete removals[key];
+            if(removals[item.uid]) { //update removals
+                delete removals[item.uid];
             }
         }
 
         onItemRemoved: {
-            var key = ItemManager.likeKey(item.omekaID, item.id)
-            if(indices.indexOf(key) !== -1) {
+            if(indices.indexOf(item.uid) !== -1) {
                 if(enabled) { //postpone removals for disabled state
-                    removals[key] = item
+                    removals[item.uid] = item
                 } else {   //remove immediately on disabled
                     removeItem(item)
-                    //Heist.unregisterItem(item.id)
+                    //Heist.unregisterItem(item.id) //update to new id system
                 }
             }
         }
@@ -164,9 +161,7 @@ Item {
     */
     function loadFromStorage(item) {
         if(item) {
-            var omekaID = Omeka.prettyName(item.url.substring(0, item.url.lastIndexOf("api")))
-            var key = omekaID+"-"+item.item
-            loadedLikes[key] = item
+            loadedLikes[item.uid] = item
         }
 
         //load in stored order
@@ -206,18 +201,16 @@ Item {
       Add new liked item
     */
     function addItem(item) {
-        var key = ItemManager.likeKey(item.omekaID, item.item)
         item.context = likes
         browser.insert(0, item)
-        indices.unshift(key)
+        indices.unshift(item.uid)
     }
 
     /*
       Remove liked item by index
     */
     function removeItem(item) {
-        var key = ItemManager.likeKey(item.omekaID, item.id)
-        var index = indices.indexOf(key)
+        var index = indices.indexOf(item.uid)
         browser.remove(index)
         indices.splice(index, 1)
     }
