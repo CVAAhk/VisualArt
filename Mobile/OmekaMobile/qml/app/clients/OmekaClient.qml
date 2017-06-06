@@ -2,6 +2,9 @@ pragma Singleton
 import QtQuick 2.5
 
 Item {
+
+    id: omeka_client
+
     /*! \qmlproperty
         Target omeka endpoint url
     */
@@ -76,10 +79,14 @@ Item {
         Invoked when query produces empty result*/
     signal emptyResult(var result)
 
+    /*! \qmlsignal
+        Invoked on site info results*/
+    signal siteInfo(var result)
+
     //Check api on complete
     Component.onCompleted: {
         omekaID = prettyName(endpoint)
-        querySiteInfo()
+        getSiteInfo(omeka_client)
         pingAPI()
     }
 
@@ -116,17 +123,25 @@ Item {
     /*! \internal
      Pull site information mainly to acquire title to provide context
     */
-    function querySiteInfo() {
+    function getSiteInfo(context, url) {
         var request = new XMLHttpRequest();
         request.onreadystatechange = function() {
             if(request.readyState === XMLHttpRequest.DONE) {
                 try {
                     var result = JSON.parse(request.responseText)
-                    title = result.title || omekaID
+                    if(context === omeka_client) {
+                        title = result.title || omekaID
+                    } else {
+                        result.context = context
+                        result.omekaID = prettyName(url.substring(0, url.lastIndexOf("api")))
+                        result.title = result.title || result.omekaID
+                        siteInfo(result)
+                    }
                 } catch(e) {}
             }
         }
-        request.open("GET", rest+"site", true);
+        var api = url || rest
+        request.open("GET", api+"site", true);
         request.send()
     }
 

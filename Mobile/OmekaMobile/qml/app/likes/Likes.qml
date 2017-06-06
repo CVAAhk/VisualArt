@@ -21,7 +21,7 @@ Item {
     property var normalizer: ListModel{}
 
     //maintains saved order
-    property var ordered_likes: []
+    property var orderedLikes: []
 
     //for initial ordering
     property var loadedLikes: ({})
@@ -37,7 +37,7 @@ Item {
             entry = _likes[i]
             key = entry.setting
             item_id = ItemManager.getItemIDFromKey(key)
-            ordered_likes.push(key)
+            orderedLikes.push(key)
             Omeka.getItemById(item_id, likes, entry.value+"api/")
         }
     }
@@ -152,12 +152,12 @@ Item {
 
         //load in stored order
         var loadCount = Object.keys(loadedLikes).length
-        if(loadCount === ordered_likes.length) {
-            for(var i in ordered_likes) {
-                normalizeAndAddItem(loadedLikes[ordered_likes[i]])
+        if(loadCount === orderedLikes.length) {
+            for(var i in orderedLikes) {
+                normalizeAndAddItem(loadedLikes[orderedLikes[i]])
             }
             loadedLikes = null
-            ordered_likes.length = 0
+            orderedLikes.length = 0
         }
     }
 
@@ -168,7 +168,7 @@ Item {
     function handleInvalidRecord(result) {
         var id = result.url
         id = Number(id.substring(id.lastIndexOf("/")+1))
-        ordered_likes.splice(ordered_likes.indexOf(id), 1)
+        orderedLikes.splice(orderedLikes.indexOf(id), 1)
         ItemManager.unregisterLike({id:id})
         loadFromStorage()
     }

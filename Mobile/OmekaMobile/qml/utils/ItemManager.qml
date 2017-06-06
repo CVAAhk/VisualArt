@@ -124,6 +124,14 @@ Item {
 
     /*!
       \qmlmethod
+      Joins omeka id with item id to form likes table key
+    */
+    function likeKey(id, item) {
+        return Settings.likeKey(id, item)
+    }
+
+    /*!
+      \qmlmethod
       Returns omeka id from likes table key
     */
     function getOmekaIDFromKey(key) {
