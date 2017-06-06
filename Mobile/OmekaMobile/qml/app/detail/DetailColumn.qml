@@ -44,7 +44,7 @@ ScaleColumn {
             }
             else {
                 ItemManager.unregisterLike(item)
-                Heist.unregisterItem(item.id)
+                //Heist.unregisterItem(item.id)
             }
         }
     }

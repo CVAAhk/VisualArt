@@ -87,21 +87,23 @@ Item {
         target: ItemManager
 
         onItemAdded: {
-            if(indices.indexOf(item.id) === -1) { //add item
+            var key = ItemManager.likeKey(item.omekaID, item.id)
+            if(indices.indexOf(key) === -1) { //add item
                 addItem(ItemManager.itemToData(item));
             }
-            if(removals[item.id]) { //update removals
-                delete removals[item.id];
+            if(removals[key]) { //update removals
+                delete removals[key];
             }
         }
 
         onItemRemoved: {
-            if(indices.indexOf(item.id) !== -1) {
+            var key = ItemManager.likeKey(item.omekaID, item.id)
+            if(indices.indexOf(key) !== -1) {
                 if(enabled) { //postpone removals for disabled state
-                    removals[item.id] = item
+                    removals[key] = item
                 } else {   //remove immediately on disabled
                     removeItem(item)
-                    Heist.unregisterItem(item.id)
+                    //Heist.unregisterItem(item.id)
                 }
             }
         }
@@ -183,10 +185,11 @@ Item {
       from the omeka repository
      */
     function handleInvalidRecord(result) {
-        var id = result.url
+        //update to new key tracking
+       /* var id = result.url
         id = Number(id.substring(id.lastIndexOf("/")+1))
         orderedLikes.splice(orderedLikes.indexOf(id), 1)
-        ItemManager.unregisterLike({id:id})
+        ItemManager.unregisterLike({id:id})*/
         loadFromStorage()
     }
 
@@ -203,16 +206,18 @@ Item {
       Add new liked item
     */
     function addItem(item) {
+        var key = ItemManager.likeKey(item.omekaID, item.item)
         item.context = likes
         browser.insert(0, item)
-        indices.unshift(item.item)
+        indices.unshift(key)
     }
 
     /*
       Remove liked item by index
     */
     function removeItem(item) {
-        var index = indices.indexOf(item.id)
+        var key = ItemManager.likeKey(item.omekaID, item.id)
+        var index = indices.indexOf(key)
         browser.remove(index)
         indices.splice(index, 1)
     }
