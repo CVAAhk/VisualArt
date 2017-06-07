@@ -9,10 +9,7 @@ import "../home/gallery"
 Item {
     id: likes
     objectName: "LikesList"
-    enabled: false
-
-    //track item indices to prevent duplicate entries
-    property var indices: []    
+    enabled: false  
 
     //items tagged for removal
     property var removals: ({})
@@ -148,13 +145,6 @@ Item {
             grid.addDisplaced: Transition {
                 NumberAnimation { properties: "x,y"; duration: 200 }
             }
-
-            list.removeDisplaced: Transition {
-                NumberAnimation { property: "y"; duration: 200 }
-            }
-            grid.removeDisplaced: Transition {
-                NumberAnimation { property: "y"; duration: 200 }
-            }
         }
     }
 
@@ -258,6 +248,12 @@ Item {
     }
 
     function applyFilter() {
-        print(currentFilter)
+        if(filters[currentFilter]) {
+            browser.clear()
+            for(var filter in filters[currentFilter]) {
+                var uid = filters[currentFilter][filter]
+                browser.append(registry[uid])
+            }
+        }
     }
 }

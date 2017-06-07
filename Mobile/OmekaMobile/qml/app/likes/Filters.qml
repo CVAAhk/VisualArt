@@ -60,7 +60,8 @@ Item {
                     text: control.text
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
-                    _font: Style.headerFont
+                    _font: Style.headerFont                    
+                    font.pixelSize: Resolution.applyScale(40)
                 }
             }
         }
