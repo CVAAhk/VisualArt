@@ -5,6 +5,7 @@ import "../../utils"
 Item {
     id: root
 
+    visible: false
     anchors.left: parent.left
     anchors.right: parent.right
     anchors.margins: Resolution.applyScale(30)
@@ -25,6 +26,7 @@ Item {
                     omekaTitles.splice(index, 0, result.title)
                     filters.addFilter(result.title)
                 }
+                updateVisibility()
             }
         }
     }
@@ -67,6 +69,7 @@ Item {
     //close filters
     function close() {
         button.checked = false
+        filters.reset()
     }
 
     /*
@@ -87,8 +90,9 @@ Item {
         if(index !== -1) {
             filters.removeFilter(index)
             omekaIDS.splice(index, 1)
-            omekaTitles.splice(index, 1)
+            omekaTitles.splice(index, 1)            
         }
+        updateVisibility()
     }
 
     /*
@@ -98,5 +102,13 @@ Item {
         omekaIDS.length = 0
         omekaTitles.length = 0
         filters.clear()
+        updateVisibility()
+    }
+
+    /*
+      Only display filters when there is more than one to switch between
+    */
+    function updateVisibility() {
+        root.visible = omekaTitles.length > 1
     }
 }

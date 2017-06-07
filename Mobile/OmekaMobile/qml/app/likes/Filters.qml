@@ -109,4 +109,11 @@ Item {
             list.model.remove(1)
         }
     }
+
+    /*
+      Reset selection to default
+    */
+    function reset() {
+        current = list.contentItem.children[0]
+    }
 }
