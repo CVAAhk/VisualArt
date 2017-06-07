@@ -11,7 +11,7 @@ Item {
     objectName: "LikesList"
     enabled: false
 
-    //track item indices
+    //track item indices to prevent duplicate entries
     property var indices: []    
 
     //items tagged for removal
@@ -26,11 +26,14 @@ Item {
     //for initial ordering
     property var loadedLikes: ({})
 
-    //reference to all registered likes for filtering
-    property var all: ({})
+    //uid to item mapping of all registered likes
+    property var registry: ({})
 
     //links items to their host omeka instance
     property var filters: ({})
+
+    //currently selected filter
+    property var currentFilter: filter.filterID
 
     //initialize loading likes from local storage
     Component.onCompleted: {
@@ -106,7 +109,7 @@ Item {
             browser.clear()
             indices.length = 0
             removals = ({})
-            all = ({})
+            registry = ({})
             filters = ({})
             filter.clear()
         }
@@ -131,9 +134,6 @@ Item {
 
         LikesFilter{
             id: filter
-            onFilterIDChanged: {
-                print(filterID)
-            }
         }
 
         Browser {
@@ -158,6 +158,9 @@ Item {
             }
         }
     }
+
+    //update filter
+    onCurrentFilterChanged: applyFilter()
 
     /*
       Load likes from local database
@@ -206,28 +209,10 @@ Item {
     */
     function addItem(item) {
         item.context = likes
-        browser.insert(0, item)
         indices.unshift(item.uid)
-        addItemToFilter(item)
-    }
-
-    /*
-      Remove liked item by index
-    */
-    function removeItem(item) {
-        var index = indices.indexOf(item.uid)
-        browser.remove(index)
-        indices.splice(index, 1)
-        removeItemFromFilter(item)
-    }
-
-    /*
-      Assign item to filter
-     */
-    function addItemToFilter(item) {
 
         //register with master
-        all[item.uid] = item
+        registry[item.uid] = item
 
         //assign to filter based on omeka id
         if(!filters[item.omekaID]) {
@@ -235,22 +220,43 @@ Item {
             filter.addFilter(item.omekaID, item.endpoint)
         }
         filters[item.omekaID].unshift(item.uid)
+
+        //add to browser if it belongs to current filter
+        if(currentFilter === "all" || currentFilter === item.omekaID) {
+            browser.insert(0, item)
+        }
     }
 
     /*
-      Remove item from filter
-     */
-    function removeItemFromFilter(item) {
-
+      Remove liked item by index
+    */
+    function removeItem(item) {
         //unregister from master
-        delete all[item.uid]
+        delete registry[item.uid]
 
-        //remove filter
-        var index = filters[item.omekaID].indexOf(item.uid)
-        filters[item.omekaID].splice(index, 1)
+        //remove item from filter
+        var f_index = filters[item.omekaID].indexOf(item.uid)
+        filters[item.omekaID].splice(f_index, 1)
+
+        //remove filter if it has no items
         if(filters[item.omekaID].length === 0) {
             delete filters[item.omekaID]
             filter.removeFilter(item.omekaID)
         }
+
+        //update index tracker
+        var a_index = indices.indexOf(item.uid)
+        indices.splice(a_index, 1)
+
+        //remove item from browser if it belongs to current filter
+        if(currentFilter === "all"){
+            browser.remove(a_index)
+        } else if(currentFilter === item.omekaID) {
+            browser.remove(f_index)
+        }
+    }
+
+    function applyFilter() {
+        print(currentFilter)
     }
 }
