@@ -124,7 +124,7 @@ Item {
     /*
       Once a valid session is determined, established pairing. Once a session
       becomes invalid, terminate the pairing. A valid session is one that has
-      an heist entry corresponding with the pairing code and does not have an
+      a heist entry corresponding with the pairing code and does not have an
       assigned device.
     */
     function validateSession() {

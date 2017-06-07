@@ -87,6 +87,7 @@ Item {
         removeRecentLiked(item)
         if(bypass) return;
         Settings.removeLike(item)
+        Heist.unregisterItem(item)
     }
 
     /*!

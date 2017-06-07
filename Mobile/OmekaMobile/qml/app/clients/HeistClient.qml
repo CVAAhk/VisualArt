@@ -12,9 +12,19 @@ Item {
     readonly property var del: "DELETE";        
 
     /*
+      Target omeka instance
+    */
+    property url endpoint: "http://dev.omeka.org/mallcopy/"
+
+    /*
+      Omeka site identifier
+    */
+    property var omekaID: Omeka.prettyName(endpoint)
+
+    /*
      Url to heist plugin
     */
-    readonly property var baseUrl: Omeka.rest+"heist/"
+    property var heistURL: endpoint+"api/heist/"
 
     /*
      Map session codes to heist record id
@@ -72,7 +82,7 @@ Item {
                 }
             }
         }
-        request.open(get, baseUrl, true);
+        request.open(get, heistURL, true);
         request.send();
     }
 
@@ -175,7 +185,7 @@ Item {
     */
     function pollData() {
         for(var i=0; i<receivers.length; i++) {
-            getData(baseUrl+"?pairing_id="+receivers[i].code, receivers[i]);
+            getData(heistURL+"?pairing_id="+receivers[i].code, receivers[i]);
         }
     }
 
@@ -269,7 +279,7 @@ Item {
     */
     function addData(data, context) {
         var json = JSON.stringify(data);
-        submitRequest(baseUrl, post, json, context);
+        submitRequest(heistURL, post, json, context);
     }
 
     /*! \internal
@@ -278,7 +288,7 @@ Item {
       \a context - calling object
     */
     function removeData(id, context) {
-        var url = baseUrl+id;
+        var url = heistURL+id;
         submitRequest(url, del, null, context);
     }
 
@@ -343,7 +353,7 @@ Item {
             items[code] = [];
         }
         items[code].push(item);
-        updateData(baseUrl+sessions[code], {item_ids: items[code]}, context);
+        updateData(heistURL+sessions[code], {item_ids: items[code]}, context);
     }
 
     /*Clear item list
@@ -354,7 +364,7 @@ Item {
     function removeAllItems(code, context) {        
         if(code in sessions && code in items) {
             items[code].length = 0;
-            updateData(baseUrl+sessions[code], {item_ids: items[code]}, context);
+            updateData(heistURL+sessions[code], {item_ids: items[code]}, context);
         }
     }
 
@@ -375,7 +385,7 @@ Item {
                 }
             }
         }
-        request.open(get, baseUrl, true);
+        request.open(get, heistURL, true);
         request.send();
     }
 
@@ -416,7 +426,7 @@ Item {
     */
     function setDevice(code, device) {
         if(code in sessions) {
-            updateData(baseUrl+sessions[code], {device_id: device}, "");
+            updateData(heistURL+sessions[code], {device_id: device}, "");
         }
     }
 
@@ -436,11 +446,12 @@ Item {
 
     /*
       Unregister item submitted through heist
-      /a item_id - heist item id
-      /a code - pairing code
+      /a item - heist item to unregister
     */
-    function unregisterItem(item_id) {
-        removeItem(pairingCode, item_id, null);
+    function unregisterItem(item) {
+        if(item.omekaID === omekaID) {
+            removeItem(pairingCode, item.id, null);
+        }
     }
 
     /*Remove item from list
@@ -453,7 +464,7 @@ Item {
         if(code in items && items[code].indexOf(item) > -1) {
             var index = items[code].indexOf(item);
             items[code].splice(index, 1);
-            updateData(baseUrl+sessions[code], {item_ids: items[code]}, context);
+            updateData(heistURL+sessions[code], {item_ids: items[code]}, context);
         }
     }
 

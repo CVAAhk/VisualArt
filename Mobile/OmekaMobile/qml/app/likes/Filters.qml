@@ -98,7 +98,9 @@ Item {
       Remove item by index
     */
     function removeFilter(index) {
-        list.model.remove(index+1)
+        if(list.model.count > 1) {
+            list.model.remove(index+1)
+        }
     }
 
     /*

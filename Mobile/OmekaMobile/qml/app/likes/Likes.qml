@@ -97,7 +97,6 @@ Item {
                     removals[item.uid] = item
                 } else {   //remove immediately on disabled
                     removeItem(item)
-                    //Heist.unregisterItem(item.id) //update to new id system
                 }
             }
         }

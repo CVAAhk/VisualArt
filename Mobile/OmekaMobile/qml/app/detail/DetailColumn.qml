@@ -44,7 +44,6 @@ ScaleColumn {
             }
             else {
                 ItemManager.unregisterLike(item)
-                //Heist.unregisterItem(item.id)
             }
         }
     }
