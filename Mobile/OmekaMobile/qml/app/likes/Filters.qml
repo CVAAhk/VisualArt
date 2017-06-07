@@ -104,8 +104,8 @@ Item {
       Remove all but default list item
     */
     function clear() {
-        for(var i=1; i<list.model.count; i++) {
-            list.model.remove(i)
+        while(list.model.count > 1) {
+            list.model.remove(1)
         }
     }
 }
