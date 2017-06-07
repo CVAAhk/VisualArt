@@ -30,7 +30,7 @@ Item {
     property var registry: ({})
 
     //links items to their host omeka instance
-    property var filters: ({})
+    property var filters: {"all": []}
 
     //currently selected filter
     property var currentFilter: filter.filterID
@@ -86,7 +86,7 @@ Item {
         target: ItemManager
 
         onItemAdded: {
-            if(indices.indexOf(item.uid) === -1) { //add item
+            if(filters["all"].indexOf(item.uid) === -1) { //add item
                 addItem(ItemManager.itemToData(item));
             }
             if(removals[item.uid]) { //update removals
@@ -95,7 +95,7 @@ Item {
         }
 
         onItemRemoved: {
-            if(indices.indexOf(item.uid) !== -1) {
+            if(filters["all"].indexOf(item.uid) !== -1) {
                 if(enabled) { //postpone removals for disabled state
                     removals[item.uid] = item
                 } else {   //remove immediately on disabled
@@ -107,10 +107,9 @@ Item {
 
         onClearItems: {
             browser.clear()
-            indices.length = 0
             removals = ({})
             registry = ({})
-            filters = ({})
+            filters = {"all": []}
             filter.clear()
         }
     }
@@ -209,10 +208,12 @@ Item {
     */
     function addItem(item) {
         item.context = likes
-        indices.unshift(item.uid)
 
         //register with master
         registry[item.uid] = item
+
+        //add to global filter
+        filters["all"].unshift(item.uid)
 
         //assign to filter based on omeka id
         if(!filters[item.omekaID]) {
@@ -228,11 +229,15 @@ Item {
     }
 
     /*
-      Remove liked item by index
+      Remove liked item
     */
     function removeItem(item) {
         //unregister from master
         delete registry[item.uid]
+
+        //update global filter
+        var a_index = filters["all"].indexOf(item.uid)
+        filters["all"].splice(a_index, 1)
 
         //remove item from filter
         var f_index = filters[item.omekaID].indexOf(item.uid)
@@ -243,10 +248,6 @@ Item {
             delete filters[item.omekaID]
             filter.removeFilter(item.omekaID)
         }
-
-        //update index tracker
-        var a_index = indices.indexOf(item.uid)
-        indices.splice(a_index, 1)
 
         //remove item from browser if it belongs to current filter
         if(currentFilter === "all"){
