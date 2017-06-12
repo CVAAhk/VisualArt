@@ -31,6 +31,7 @@
 		<file>qml/test/styling/TitleText.qml</file>	
 		<file>qml/test/styling/qmldir</file>	
 		<file>qml/test/sharing/ShareTest.qml</file>			
+		<file>qml/test/qr/QRTest.qml</file>		
 		
 		<file>qml/app/clients/OmekaClient.qml</file>									
 		<file>qml/app/clients/HeistClient.qml</file>			
@@ -148,7 +149,7 @@
 		<file>ui/pause.png</file>
 		<file>ui/pair_icon.png</file>
 		<file>ui/linked_icon.png</file>
-		<file>ui/back_key.png</file>
+		<file>ui/back_key.png</file>		
 				
     </qresource>
 </RCC>

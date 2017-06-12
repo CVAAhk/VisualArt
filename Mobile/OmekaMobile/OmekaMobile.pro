@@ -5,7 +5,9 @@ QT += qml quick\
 
 QTPLUGIN += qsqlite
 
-CONFIG += c++11
+CONFIG += c++11 \
+    qzxing_qml \
+    qzxing_multimedia
 
 SOURCES += main.cpp \
     shareutils.cpp \
@@ -59,6 +61,7 @@ android {
 
 # Default rules for deployment.
 include(deployment.pri)
+include(qzxing/QZXing.pri)
 
 DISTFILES += \
     qml/test/scalability/HomePage.qml \
@@ -166,4 +169,7 @@ DISTFILES += \
     qml/app/FloatMessage.qml \
     qml/utils/Foreground.qml \
     qml/test/providers/ImageSizeTest.qml \
-    qml/app/likes/NumberTag.qml
+    qml/app/likes/NumberTag.qml \
+    qml/test/qr/QRTest.qml \
+    qml/app/home/settings/pairing/QRCode.qml \
+    qml/test/qr/QRGeneratorTest.qml

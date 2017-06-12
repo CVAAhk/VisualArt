@@ -1,6 +1,7 @@
 #include <QQmlApplicationEngine>
 #include <QSurfaceFormat>
 #include <QGuiApplication>
+#include <QZXing.h>
 #include "shareutils.h"
 #include "applicationloader.h"
 
@@ -12,6 +13,7 @@ int main(int argc, char *argv[])
     app.setApplicationName("OmekaMobile");
 
     qmlRegisterType<ShareUtils> ("com.lasconic", 1, 0, "ShareUtils");
+    QZXing::registerQMLTypes();
 
     if (QCoreApplication::arguments().contains(QLatin1String("--coreprofile"))) {
         QSurfaceFormat fmt;
