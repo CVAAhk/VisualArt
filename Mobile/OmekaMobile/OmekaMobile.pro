@@ -75,6 +75,7 @@ DISTFILES += \
     qml/test/client/TestClient.qml \
     qml/test/settings/LikesTest.qml \
     qml/js/storage.js \
+    qml/js/qqr.js \
     qml/test/navigation/Carousel.qml \
     qml/test/navigation/Ellipse.qml \
     qml/test/mvc/ListViewTest.qml \
@@ -171,5 +172,7 @@ DISTFILES += \
     qml/test/providers/ImageSizeTest.qml \
     qml/app/likes/NumberTag.qml \
     qml/test/qr/QRTest.qml \
+    qml/app/home/settings/pairing/QRCode.qml \
+    qml/test/qr/QRGeneratorTest.qml \
     qml/app/home/settings/pairing/QRCode.qml \
     qml/test/qr/QRGeneratorTest.qml

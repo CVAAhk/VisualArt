@@ -2,6 +2,7 @@ pragma Singleton
 import QtQuick 2.5
 import QtQuick.LocalStorage 2.0
 import "../js/storage.js" as Settings
+import "../js/qqr.js" as QRCodeBackend
 import "../app/clients"
 
 Item {

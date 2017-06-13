@@ -32,6 +32,7 @@
 		<file>qml/test/styling/qmldir</file>	
 		<file>qml/test/sharing/ShareTest.qml</file>			
 		<file>qml/test/qr/QRTest.qml</file>		
+		<file>qml/test/qr/QRGeneratorTest.qml</file>	
 		
 		<file>qml/app/clients/OmekaClient.qml</file>									
 		<file>qml/app/clients/HeistClient.qml</file>			
@@ -96,6 +97,7 @@
 		<file>qml/app/home/settings/pairing/CodeEntry.qml</file>
 		<file>qml/app/home/settings/pairing/Unpair.qml</file>
 		<file>qml/app/home/settings/pairing/HeistReceiver.qml</file>
+		<file>qml/app/home/settings/pairing/QRCode.qml</file>
 		<file>qml/app/home/gallery/Gallery.qml</file>																			
 		<file>qml/app/home/gallery/Browser.qml</file>																			
 		<file>qml/app/home/gallery/ItemBrowser.qml</file>																					
@@ -115,6 +117,7 @@
 		<file>qml/app/search/SearchResults.qml</file>										
 		
 		<file>qml/js/storage.js</file>
+		<file>qml/js/qqr.js</file>
 		<file>qml/js/UI.js</file>
 		<file>qml/js/+android/UI.js</file>
 		<file>qml/js/+ios/UI.js</file>
