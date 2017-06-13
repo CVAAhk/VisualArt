@@ -441,7 +441,7 @@ Item {
             items[code] = [];
         }
         items[code].push(item_id);
-        Omeka.getItemById(item_id, heist_manager);
+        Omeka.getItemById(item_id, heist_manager, endpoint+"api/");
     }
 
     /*
