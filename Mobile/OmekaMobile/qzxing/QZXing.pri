@@ -87,12 +87,6 @@ HEADERS += $$PWD/QZXing_global.h \
     $$PWD/zxing/zxing/qrcode/detector/Detector.h \
     $$PWD/zxing/zxing/qrcode/detector/AlignmentPatternFinder.h \
     $$PWD/zxing/zxing/qrcode/detector/AlignmentPattern.h \
-    $$PWD/zxing/zxing/multi/MultipleBarcodeReader.h \
-    $$PWD/zxing/zxing/multi/GenericMultipleBarcodeReader.h \
-    $$PWD/zxing/zxing/multi/ByQuadrantReader.h \
-    $$PWD/zxing/zxing/multi/qrcode/QRCodeMultiReader.h \
-    $$PWD/zxing/zxing/multi/qrcode/detector/MultiFinderPatternFinder.h \
-    $$PWD/zxing/zxing/multi/qrcode/detector/MultiDetector.h \
     $$PWD/zxing/bigint/NumberlikeArray.hh \
     $$PWD/zxing/bigint/BigUnsignedInABase.hh \
     $$PWD/zxing/bigint/BigUnsigned.hh \
@@ -153,12 +147,6 @@ SOURCES += $$PWD/CameraImageWrapper.cpp \
     $$PWD/zxing/zxing/common/reedsolomon/GenericGFPoly.cpp \
     $$PWD/zxing/zxing/common/reedsolomon/GenericGF.cpp \
     $$PWD/zxing/zxing/qrcode/QRCodeReader.cpp \
-    $$PWD/zxing/zxing/multi/MultipleBarcodeReader.cpp \
-    $$PWD/zxing/zxing/multi/GenericMultipleBarcodeReader.cpp \
-    $$PWD/zxing/zxing/multi/ByQuadrantReader.cpp \
-    $$PWD/zxing/zxing/multi/qrcode/QRCodeMultiReader.cpp \
-    $$PWD/zxing/zxing/multi/qrcode/detector/MultiFinderPatternFinder.cpp \
-    $$PWD/zxing/zxing/multi/qrcode/detector/MultiDetector.cpp \
     $$PWD/zxing/zxing/qrcode/decoder/QRBitMatrixParser.cpp \
     $$PWD/zxing/zxing/qrcode/decoder/QRDataBlock.cpp \
     $$PWD/zxing/zxing/qrcode/decoder/QRDataMask.cpp \
