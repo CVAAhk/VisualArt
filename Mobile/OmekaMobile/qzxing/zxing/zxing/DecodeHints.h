@@ -35,7 +35,6 @@ class DecodeHints {
   Ref<ResultPointCallback> callback;
 
  public:
-  static const DecodeHintType AZTEC_HINT = 1 << BarcodeFormat::AZTEC;
   static const DecodeHintType CODABAR_HINT = 1 << BarcodeFormat::CODABAR;
   static const DecodeHintType CODE_39_HINT = 1 << BarcodeFormat::CODE_39;
   static const DecodeHintType CODE_93_HINT = 1 << BarcodeFormat::CODE_93;
@@ -45,7 +44,6 @@ class DecodeHints {
   static const DecodeHintType EAN_13_HINT = 1 << BarcodeFormat::EAN_13;
   static const DecodeHintType ITF_HINT = 1 << BarcodeFormat::ITF;
   static const DecodeHintType MAXICODE_HINT = 1 << BarcodeFormat::MAXICODE;
-  static const DecodeHintType PDF_417_HINT = 1 << BarcodeFormat::PDF_417;
   static const DecodeHintType QR_CODE_HINT = 1 << BarcodeFormat::QR_CODE;
   static const DecodeHintType RSS_14_HINT = 1 << BarcodeFormat::RSS_14;
   static const DecodeHintType RSS_EXPANDED_HINT = 1 << BarcodeFormat::RSS_EXPANDED;
@@ -61,7 +59,6 @@ class DecodeHints {
   // static const DecodeHintType NEED_RESULT_POINT_CALLBACK = 1 << 26;
   
   static const DecodeHints PRODUCT_HINT;
-  static const DecodeHints ONED_HINT;
   static const DecodeHints DEFAULT_HINT;
 
   DecodeHints();

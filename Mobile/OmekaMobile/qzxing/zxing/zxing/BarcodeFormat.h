@@ -29,7 +29,6 @@ public:
 
   enum Value {
     NONE,
-    AZTEC,
     CODABAR,
     CODE_39,
     CODE_93,
@@ -39,7 +38,6 @@ public:
     EAN_13,
     ITF,
     MAXICODE,
-    PDF_417,
     QR_CODE,
     RSS_14,
     RSS_EXPANDED,

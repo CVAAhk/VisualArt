@@ -58,7 +58,6 @@ public:
      */
     enum DecoderFormat {
         DecoderFormat_None = 0,
-        DecoderFormat_Aztec = 1 << 1,
         DecoderFormat_CODABAR = 1 << 2,
         DecoderFormat_CODE_39 = 1 << 3,
         DecoderFormat_CODE_93 = 1 << 4,
@@ -68,7 +67,6 @@ public:
         DecoderFormat_EAN_13 = 1 << 8,
         DecoderFormat_ITF = 1 << 9,
         DecoderFormat_MAXICODE = 1 << 10,
-        DecoderFormat_PDF_417 = 1 << 11,
         DecoderFormat_QR_CODE = 1 << 12,
         DecoderFormat_RSS_14 = 1 << 13,
         DecoderFormat_RSS_EXPANDED = 1 << 14,

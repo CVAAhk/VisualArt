@@ -28,14 +28,8 @@ using zxing::GenericGF;
 using zxing::GenericGFPoly;
 using zxing::Ref;
 
-Ref<GenericGF> GenericGF::AZTEC_DATA_12(new GenericGF(0x1069, 4096, 1));
-Ref<GenericGF> GenericGF::AZTEC_DATA_10(new GenericGF(0x409, 1024, 1));
-Ref<GenericGF> GenericGF::AZTEC_DATA_6(new GenericGF(0x43, 64, 1));
-Ref<GenericGF> GenericGF::AZTEC_PARAM(new GenericGF(0x13, 16, 1));
 Ref<GenericGF> GenericGF::QR_CODE_FIELD_256(new GenericGF(0x011D, 256, 0));
 Ref<GenericGF> GenericGF::DATA_MATRIX_FIELD_256(new GenericGF(0x012D, 256, 1));
-Ref<GenericGF> GenericGF::AZTEC_DATA_8 = DATA_MATRIX_FIELD_256;
-Ref<GenericGF> GenericGF::MAXICODE_FIELD_64 = AZTEC_DATA_6;
   
 namespace {
   int INITIALIZATION_THRESHOLD = 0;

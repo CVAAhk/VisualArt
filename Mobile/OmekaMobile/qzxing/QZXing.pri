@@ -45,10 +45,6 @@ HEADERS += $$PWD/QZXing_global.h \
     $$PWD/zxing/zxing/BinaryBitmap.h \
     $$PWD/zxing/zxing/Binarizer.h \
     $$PWD/zxing/zxing/BarcodeFormat.h \
-    $$PWD/zxing/zxing/aztec/AztecReader.h \
-    $$PWD/zxing/zxing/aztec/AztecDetectorResult.h \
-    $$PWD/zxing/zxing/aztec/decoder/Decoder.h \
-    $$PWD/zxing/zxing/aztec/detector/Detector.h \
     $$PWD/zxing/zxing/common/StringUtils.h \
     $$PWD/zxing/zxing/common/Str.h \
     $$PWD/zxing/zxing/common/Point.h \
@@ -84,20 +80,6 @@ HEADERS += $$PWD/QZXing_global.h \
     $$PWD/zxing/zxing/datamatrix/detector/DetectorException.h \
     $$PWD/zxing/zxing/datamatrix/detector/Detector.h \
     $$PWD/zxing/zxing/datamatrix/detector/CornerPoint.h \
-    $$PWD/zxing/zxing/oned/UPCEReader.h \
-    $$PWD/zxing/zxing/oned/UPCEANReader.h \
-    $$PWD/zxing/zxing/oned/UPCAReader.h \
-    $$PWD/zxing/zxing/oned/OneDResultPoint.h \
-    $$PWD/zxing/zxing/oned/OneDReader.h \
-    $$PWD/zxing/zxing/oned/MultiFormatUPCEANReader.h \
-    $$PWD/zxing/zxing/oned/MultiFormatOneDReader.h \
-    $$PWD/zxing/zxing/oned/ITFReader.h \
-    $$PWD/zxing/zxing/oned/EAN13Reader.h \
-    $$PWD/zxing/zxing/oned/EAN8Reader.h \
-    $$PWD/zxing/zxing/oned/Code128Reader.h \
-    $$PWD/zxing/zxing/oned/Code39Reader.h \
-    $$PWD/zxing/zxing/oned/CodaBarReader.h \
-    $$PWD/zxing/zxing/oned/Code93Reader.h \
     $$PWD/zxing/zxing/qrcode/Version.h \
     $$PWD/zxing/zxing/qrcode/QRCodeReader.h \
     $$PWD/zxing/zxing/qrcode/FormatInformation.h \
@@ -120,15 +102,6 @@ HEADERS += $$PWD/QZXing_global.h \
     $$PWD/zxing/zxing/multi/qrcode/QRCodeMultiReader.h \
     $$PWD/zxing/zxing/multi/qrcode/detector/MultiFinderPatternFinder.h \
     $$PWD/zxing/zxing/multi/qrcode/detector/MultiDetector.h \
-    $$PWD/zxing/zxing/pdf417/decoder/ec/ErrorCorrection.h \
-    $$PWD/zxing/zxing/pdf417/decoder/ec/ModulusGF.h \
-    $$PWD/zxing/zxing/pdf417/decoder/ec/ModulusPoly.h \
-    $$PWD/zxing/zxing/pdf417/decoder/BitMatrixParser.h \
-    $$PWD/zxing/zxing/pdf417/decoder/DecodedBitStreamParser.h \
-    $$PWD/zxing/zxing/pdf417/decoder/Decoder.h \
-    $$PWD/zxing/zxing/pdf417/detector/Detector.h \
-    $$PWD/zxing/zxing/pdf417/detector/LinesSampler.h \
-    $$PWD/zxing/zxing/pdf417/PDF417Reader.h \
     $$PWD/zxing/bigint/NumberlikeArray.hh \
     $$PWD/zxing/bigint/BigUnsignedInABase.hh \
     $$PWD/zxing/bigint/BigUnsigned.hh \
@@ -166,8 +139,6 @@ SOURCES += $$PWD/CameraImageWrapper.cpp \
     $$PWD/zxing/zxing/BinaryBitmap.cpp \
     $$PWD/zxing/zxing/Binarizer.cpp \
     $$PWD/zxing/zxing/BarcodeFormat.cpp \
-    $$PWD/zxing/zxing/aztec/AztecReader.cpp \
-    $$PWD/zxing/zxing/aztec/AztecDetectorResult.cpp \
     $$PWD/zxing/zxing/common/StringUtils.cpp \
     $$PWD/zxing/zxing/common/Str.cpp \
     $$PWD/zxing/zxing/common/PerspectiveTransform.cpp \
@@ -191,20 +162,6 @@ SOURCES += $$PWD/CameraImageWrapper.cpp \
     $$PWD/zxing/zxing/common/reedsolomon/GenericGFPoly.cpp \
     $$PWD/zxing/zxing/common/reedsolomon/GenericGF.cpp \
     $$PWD/zxing/zxing/datamatrix/DataMatrixReader.cpp \
-    $$PWD/zxing/zxing/oned/UPCEReader.cpp \
-    $$PWD/zxing/zxing/oned/UPCEANReader.cpp \
-    $$PWD/zxing/zxing/oned/UPCAReader.cpp \
-    $$PWD/zxing/zxing/oned/OneDResultPoint.cpp \
-    $$PWD/zxing/zxing/oned/OneDReader.cpp \
-    $$PWD/zxing/zxing/oned/MultiFormatUPCEANReader.cpp \
-    $$PWD/zxing/zxing/oned/MultiFormatOneDReader.cpp \
-    $$PWD/zxing/zxing/oned/ITFReader.cpp \
-    $$PWD/zxing/zxing/oned/EAN13Reader.cpp \
-    $$PWD/zxing/zxing/oned/EAN8Reader.cpp \
-    $$PWD/zxing/zxing/oned/Code128Reader.cpp \
-    $$PWD/zxing/zxing/oned/Code39Reader.cpp \
-    $$PWD/zxing/zxing/oned/CodaBarReader.cpp \
-    $$PWD/zxing/zxing/oned/Code93Reader.cpp \
     $$PWD/zxing/zxing/qrcode/QRCodeReader.cpp \
     $$PWD/zxing/zxing/multi/MultipleBarcodeReader.cpp \
     $$PWD/zxing/zxing/multi/GenericMultipleBarcodeReader.cpp \
@@ -212,8 +169,6 @@ SOURCES += $$PWD/CameraImageWrapper.cpp \
     $$PWD/zxing/zxing/multi/qrcode/QRCodeMultiReader.cpp \
     $$PWD/zxing/zxing/multi/qrcode/detector/MultiFinderPatternFinder.cpp \
     $$PWD/zxing/zxing/multi/qrcode/detector/MultiDetector.cpp \
-    $$PWD/zxing/zxing/aztec/decoder/AztecDecoder.cpp \
-    $$PWD/zxing/zxing/aztec/detector/AztecDetector.cpp \
     $$PWD/zxing/zxing/datamatrix/DataMatrixVersion.cpp \
     $$PWD/zxing/zxing/datamatrix/decoder/DataMatrixDecoder.cpp \
     $$PWD/zxing/zxing/datamatrix/decoder/DataMatrixBitMatrixParser.cpp \
@@ -237,15 +192,6 @@ SOURCES += $$PWD/CameraImageWrapper.cpp \
     $$PWD/zxing/zxing/qrcode/QRVersion.cpp \
     $$PWD/zxing/zxing/qrcode/QRFormatInformation.cpp \
     $$PWD/zxing/zxing/qrcode/QRErrorCorrectionLevel.cpp \
-    $$PWD/zxing/zxing/pdf417/decoder/ec/ErrorCorrection.cpp \
-    $$PWD/zxing/zxing/pdf417/decoder/ec/ModulusGF.cpp \
-    $$PWD/zxing/zxing/pdf417/decoder/ec/ModulusPoly.cpp \
-    $$PWD/zxing/zxing/pdf417/decoder/PDF417BitMatrixParser.cpp \
-    $$PWD/zxing/zxing/pdf417/decoder/PDF417DecodedBitStreamParser.cpp \
-    $$PWD/zxing/zxing/pdf417/decoder/PDF417Decoder.cpp \
-    $$PWD/zxing/zxing/pdf417/detector/PDF417Detector.cpp \
-    $$PWD/zxing/zxing/pdf417/detector/LinesSampler.cpp \
-    $$PWD/zxing/zxing/pdf417/PDF417Reader.cpp \
     $$PWD/zxing/bigint/BigUnsignedInABase.cc \
     $$PWD/zxing/bigint/BigUnsigned.cc \
     $$PWD/zxing/bigint/BigIntegerUtils.cc \

@@ -45,7 +45,6 @@ QZXing::QZXing(QObject *parent) : QObject(parent), tryHarder_(false)
                DecoderFormat_UPC_EAN_EXTENSION |
                DecoderFormat_RSS_14 |
                DecoderFormat_RSS_EXPANDED |
-               DecoderFormat_PDF_417 |
                DecoderFormat_MAXICODE |
                DecoderFormat_EAN_8 |
                DecoderFormat_EAN_13 |
@@ -53,8 +52,7 @@ QZXing::QZXing(QObject *parent) : QObject(parent), tryHarder_(false)
                DecoderFormat_CODE_93 |
                DecoderFormat_CODE_39 |
                DecoderFormat_CODABAR |
-               DecoderFormat_ITF |
-               DecoderFormat_Aztec);
+               DecoderFormat_ITF );
     imageHandler = new ImageHandler();
 }
 
@@ -111,8 +109,6 @@ bool QZXing::getTryHarder()
 QString QZXing::decoderFormatToString(int fmt)
 {
     switch (fmt) {
-    case DecoderFormat_Aztec:
-        return "AZTEC";
 
     case DecoderFormat_CODABAR:
         return "CODABAR";
@@ -140,9 +136,6 @@ QString QZXing::decoderFormatToString(int fmt)
 
     case DecoderFormat_MAXICODE:
         return "MAXICODE";
-
-    case DecoderFormat_PDF_417:
-        return "PDF_417";
 
     case DecoderFormat_QR_CODE:
         return "QR_CODE";
@@ -179,9 +172,6 @@ void QZXing::setDecoder(const uint &hint)
 {
     unsigned int newHints = 0;
 
-    if(hint & DecoderFormat_Aztec)
-        newHints |= DecodeHints::AZTEC_HINT;
-
     if(hint & DecoderFormat_CODABAR)
         newHints |= DecodeHints::CODABAR_HINT;
 
@@ -208,9 +198,6 @@ void QZXing::setDecoder(const uint &hint)
 
     if(hint & DecoderFormat_MAXICODE)
         newHints |= DecodeHints::MAXICODE_HINT;
-
-    if(hint & DecoderFormat_PDF_417)
-        newHints |= DecodeHints::PDF_417_HINT;
 
     if(hint & DecoderFormat_QR_CODE)
         newHints |= DecodeHints::QR_CODE_HINT;

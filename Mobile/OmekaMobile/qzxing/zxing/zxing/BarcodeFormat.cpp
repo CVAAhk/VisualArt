@@ -20,7 +20,6 @@
 
 const char* zxing::BarcodeFormat::barcodeFormatNames[] = {
   0,
-  "AZTEC",
   "CODABAR",
   "CODE_39",
   "CODE_93",
@@ -30,7 +29,6 @@ const char* zxing::BarcodeFormat::barcodeFormatNames[] = {
   "EAN_13",
   "ITF",
   "MAXICODE",
-  "PDF_417",
   "QR_CODE",
   "RSS_14",
   "RSS_EXPANDED",

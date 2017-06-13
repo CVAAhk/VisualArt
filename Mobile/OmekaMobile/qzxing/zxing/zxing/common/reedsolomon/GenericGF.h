@@ -44,11 +44,6 @@ namespace zxing {
     void checkInit();
     
   public:
-    static Ref<GenericGF> AZTEC_DATA_12;
-    static Ref<GenericGF> AZTEC_DATA_10;
-    static Ref<GenericGF> AZTEC_DATA_8;
-    static Ref<GenericGF> AZTEC_DATA_6;
-    static Ref<GenericGF> AZTEC_PARAM;
     static Ref<GenericGF> QR_CODE_FIELD_256;
     static Ref<GenericGF> DATA_MATRIX_FIELD_256;
     static Ref<GenericGF> MAXICODE_FIELD_64;

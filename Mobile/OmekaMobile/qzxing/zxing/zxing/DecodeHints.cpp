@@ -43,21 +43,9 @@ const zxing::DecodeHints DecodeHints::PRODUCT_HINT(
   RSS_14_HINT
   );
 
-const zxing::DecodeHints DecodeHints::ONED_HINT(
-  CODE_39_HINT |
-  CODE_93_HINT |
-  CODE_128_HINT |
-  ITF_HINT |
-  CODABAR_HINT |
-  DecodeHints::PRODUCT_HINT
-  );
-
 const zxing::DecodeHints DecodeHints::DEFAULT_HINT(
-  ONED_HINT |
   QR_CODE_HINT |
-  DATA_MATRIX_HINT |
-  AZTEC_HINT |
-  PDF_417_HINT
+  DATA_MATRIX_HINT
   );
 
 DecodeHints::DecodeHints() {
@@ -70,7 +58,6 @@ DecodeHints::DecodeHints(DecodeHintType init) {
 
 void DecodeHints::addFormat(BarcodeFormat toadd) {
   switch (toadd) {
-  case BarcodeFormat::AZTEC: hints |= AZTEC_HINT; break;
   case BarcodeFormat::CODABAR: hints |= CODABAR_HINT; break;
   case BarcodeFormat::CODE_39: hints |= CODE_39_HINT; break;
   case BarcodeFormat::CODE_93: hints |= CODE_93_HINT; break;
@@ -80,7 +67,6 @@ void DecodeHints::addFormat(BarcodeFormat toadd) {
   case BarcodeFormat::EAN_13: hints |= EAN_13_HINT; break;
   case BarcodeFormat::ITF: hints |= ITF_HINT; break;
   case BarcodeFormat::MAXICODE: hints |= MAXICODE_HINT; break;
-  case BarcodeFormat::PDF_417: hints |= PDF_417_HINT; break;
   case BarcodeFormat::QR_CODE: hints |= QR_CODE_HINT; break;
   case BarcodeFormat::RSS_14: hints |= RSS_14_HINT; break;
   case BarcodeFormat::RSS_EXPANDED: hints |= RSS_EXPANDED_HINT; break;
@@ -94,7 +80,6 @@ void DecodeHints::addFormat(BarcodeFormat toadd) {
 bool DecodeHints::containsFormat(BarcodeFormat tocheck) const {
   DecodeHintType checkAgainst = 0;
   switch (tocheck) {
-  case BarcodeFormat::AZTEC: checkAgainst |= AZTEC_HINT; break;
   case BarcodeFormat::CODABAR: checkAgainst |= CODABAR_HINT; break;
   case BarcodeFormat::CODE_39: checkAgainst |= CODE_39_HINT; break;
   case BarcodeFormat::CODE_93: checkAgainst |= CODE_93_HINT; break;
@@ -104,7 +89,6 @@ bool DecodeHints::containsFormat(BarcodeFormat tocheck) const {
   case BarcodeFormat::EAN_13: checkAgainst |= EAN_13_HINT; break;
   case BarcodeFormat::ITF: checkAgainst |= ITF_HINT; break;
   case BarcodeFormat::MAXICODE: checkAgainst |= MAXICODE_HINT; break;
-  case BarcodeFormat::PDF_417: checkAgainst |= PDF_417_HINT; break;
   case BarcodeFormat::QR_CODE: checkAgainst |= QR_CODE_HINT; break;
   case BarcodeFormat::RSS_14: checkAgainst |= RSS_14_HINT; break;
   case BarcodeFormat::RSS_EXPANDED: checkAgainst |= RSS_EXPANDED_HINT; break;
