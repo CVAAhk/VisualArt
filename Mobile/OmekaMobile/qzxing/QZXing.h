@@ -38,7 +38,7 @@ class ImageHandler;
   * Anyone interested in using more technical stuff
   * from the ZXing library is welcomed to add/edit on free will.
   *
-  * Regarding DecoderFormat, by default all of those are enabled (except DataMatrix will is still not supported)
+  * Regarding DecoderFormat, by default all of those are enabled
   */
 class
         #ifndef DISABLE_LIBRARY_FEATURES

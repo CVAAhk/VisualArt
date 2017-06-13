@@ -18,7 +18,6 @@
 #include <zxing/ZXing.h>
 #include <zxing/MultiFormatReader.h>
 #include <zxing/qrcode/QRCodeReader.h>
-#include <zxing/datamatrix/DataMatrixReader.h>
 #include <zxing/ReaderException.h>
 
 using zxing::Ref;
@@ -52,17 +51,12 @@ Ref<Result> MultiFormatReader::decodeWithState(Ref<BinaryBitmap> image) {
 void MultiFormatReader::setHints(DecodeHints hints) {
   hints_ = hints;
   readers_.clear();
-  bool tryHarder = hints.getTryHarder();
 
   if (hints.containsFormat(BarcodeFormat::QR_CODE)) {
     readers_.push_back(Ref<Reader>(new zxing::qrcode::QRCodeReader()));
   }
-  if (hints.containsFormat(BarcodeFormat::DATA_MATRIX)) {
-    readers_.push_back(Ref<Reader>(new zxing::datamatrix::DataMatrixReader()));
-  }
   if (readers_.size() == 0) {
     readers_.push_back(Ref<Reader>(new zxing::qrcode::QRCodeReader()));
-    readers_.push_back(Ref<Reader>(new zxing::datamatrix::DataMatrixReader()));
   }
 }
 

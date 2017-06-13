@@ -71,15 +71,6 @@ HEADERS += $$PWD/QZXing_global.h \
     $$PWD/zxing/zxing/common/reedsolomon/ReedSolomonDecoder.h \
     $$PWD/zxing/zxing/common/reedsolomon/GenericGFPoly.h \
     $$PWD/zxing/zxing/common/reedsolomon/GenericGF.h \
-    $$PWD/zxing/zxing/datamatrix/Version.h \
-    $$PWD/zxing/zxing/datamatrix/DataMatrixReader.h \
-    $$PWD/zxing/zxing/datamatrix/decoder/Decoder.h \
-    $$PWD/zxing/zxing/datamatrix/decoder/DecodedBitStreamParser.h \
-    $$PWD/zxing/zxing/datamatrix/decoder/DataBlock.h \
-    $$PWD/zxing/zxing/datamatrix/decoder/BitMatrixParser.h \
-    $$PWD/zxing/zxing/datamatrix/detector/DetectorException.h \
-    $$PWD/zxing/zxing/datamatrix/detector/Detector.h \
-    $$PWD/zxing/zxing/datamatrix/detector/CornerPoint.h \
     $$PWD/zxing/zxing/qrcode/Version.h \
     $$PWD/zxing/zxing/qrcode/QRCodeReader.h \
     $$PWD/zxing/zxing/qrcode/FormatInformation.h \
@@ -161,7 +152,6 @@ SOURCES += $$PWD/CameraImageWrapper.cpp \
     $$PWD/zxing/zxing/common/reedsolomon/ReedSolomonDecoder.cpp \
     $$PWD/zxing/zxing/common/reedsolomon/GenericGFPoly.cpp \
     $$PWD/zxing/zxing/common/reedsolomon/GenericGF.cpp \
-    $$PWD/zxing/zxing/datamatrix/DataMatrixReader.cpp \
     $$PWD/zxing/zxing/qrcode/QRCodeReader.cpp \
     $$PWD/zxing/zxing/multi/MultipleBarcodeReader.cpp \
     $$PWD/zxing/zxing/multi/GenericMultipleBarcodeReader.cpp \
@@ -169,14 +159,6 @@ SOURCES += $$PWD/CameraImageWrapper.cpp \
     $$PWD/zxing/zxing/multi/qrcode/QRCodeMultiReader.cpp \
     $$PWD/zxing/zxing/multi/qrcode/detector/MultiFinderPatternFinder.cpp \
     $$PWD/zxing/zxing/multi/qrcode/detector/MultiDetector.cpp \
-    $$PWD/zxing/zxing/datamatrix/DataMatrixVersion.cpp \
-    $$PWD/zxing/zxing/datamatrix/decoder/DataMatrixDecoder.cpp \
-    $$PWD/zxing/zxing/datamatrix/decoder/DataMatrixBitMatrixParser.cpp \
-    $$PWD/zxing/zxing/datamatrix/decoder/DataMatrixDataBlock.cpp \
-    $$PWD/zxing/zxing/datamatrix/decoder/DataMatrixDecodedBitStreamParser.cpp \
-    $$PWD/zxing/zxing/datamatrix/detector/DataMatrixCornerPoint.cpp \
-    $$PWD/zxing/zxing/datamatrix/detector/DataMatrixDetector.cpp \
-    $$PWD/zxing/zxing/datamatrix/detector/DataMatrixDetectorException.cpp \
     $$PWD/zxing/zxing/qrcode/decoder/QRBitMatrixParser.cpp \
     $$PWD/zxing/zxing/qrcode/decoder/QRDataBlock.cpp \
     $$PWD/zxing/zxing/qrcode/decoder/QRDataMask.cpp \
