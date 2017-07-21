@@ -175,4 +175,7 @@ DISTFILES += \
     qml/app/home/settings/pairing/QRCode.qml \
     qml/test/qr/QRGeneratorTest.qml \
     qml/app/home/settings/pairing/QRCode.qml \
-    qml/test/qr/QRGeneratorTest.qml
+    qml/test/qr/QRGeneratorTest.qml \
+    qml/test/navigation/PageNavTest.qml \
+    qml/test/navigation/FirstPage.qml \
+    qml/test/navigation/SecondPage.qml
