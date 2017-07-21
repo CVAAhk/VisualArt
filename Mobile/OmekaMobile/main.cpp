@@ -1,5 +1,4 @@
 #include <QQmlApplicationEngine>
-#include <QSurfaceFormat>
 #include <QGuiApplication>
 #include <QZXing.h>
 #include "shareutils.h"
@@ -14,13 +13,6 @@ int main(int argc, char *argv[])
 
     qmlRegisterType<ShareUtils> ("com.lasconic", 1, 0, "ShareUtils");
     QZXing::registerQMLTypes();
-
-    if (QCoreApplication::arguments().contains(QLatin1String("--coreprofile"))) {
-        QSurfaceFormat fmt;
-        fmt.setVersion(4, 4);
-        fmt.setProfile(QSurfaceFormat::CoreProfile);
-        QSurfaceFormat::setDefaultFormat(fmt);
-    }
 
     ApplicationLoader app_loader;
     app_loader.load();
