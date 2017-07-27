@@ -20,6 +20,7 @@ ScaleColumn {
     //assign column to detail for delayed loading
     Component.onCompleted: {
         detail.column = column
+        info.text = metadata()
     }
 
     /*! \qmlproperty
@@ -66,7 +67,6 @@ ScaleColumn {
         width: parent.width - Resolution.applyScale(60)
         height: contentHeight
         _font: Style.metadataFont
-        text: metadata()
         onLinkActivated: Qt.openUrlExternally(link)
     }
 
