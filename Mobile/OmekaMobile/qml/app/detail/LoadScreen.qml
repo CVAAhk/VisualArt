@@ -15,7 +15,7 @@ Rectangle {
 
     //update progress bar
     onProgressChanged: {
-        if(enabled) {
+        if(load.enabled) {
             bar.value = progress
         }
     }

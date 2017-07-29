@@ -9,7 +9,7 @@ import "../home/gallery"
 Item {
     id: likes
     objectName: "LikesList"
-    enabled: false  
+    enabled: false
 
     //items tagged for removal
     property var removals: ({})
@@ -65,7 +65,7 @@ Item {
 
     //clear removals when disabled
     onEnabledChanged: {
-        if(enabled) {
+        if(likes.enabled) {
             ItemManager.clearRecentLiked()
         }
         else {
@@ -75,7 +75,7 @@ Item {
             removals = ({})
             filter.close()
         }
-        ItemManager.onLikesView = enabled
+        ItemManager.onLikesView = likes.enabled
     }
 
     //update ui on item add/remove
@@ -93,7 +93,7 @@ Item {
 
         onItemRemoved: {
             if(filters["all"].indexOf(item.uid) !== -1) {
-                if(enabled) { //postpone removals for disabled state
+                if(likes.enabled) { //postpone removals for disabled state
                     removals[item.uid] = item
                 } else {   //remove immediately on disabled
                     removeItem(item)

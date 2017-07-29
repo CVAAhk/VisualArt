@@ -154,7 +154,7 @@ Item {
     onSourceChanged: orientationStates()
     onPortraitChanged: orientationStates()
     function orientationStates() {
-        if(!enabled) return;
+        if(!root.enabled) return;
         if(fullScreen) {
             screenStates()
         }
@@ -168,7 +168,7 @@ Item {
     //full screen state change
     onFullScreenChanged: screenStates()
     function screenStates() {
-        if(!enabled) return;
+        if(!root.enabled) return;
         if(fullScreen) {
             if(display) {
                 state = portrait ? "portrait_fullscreen_display" : "landscape_fullscreen_display"
