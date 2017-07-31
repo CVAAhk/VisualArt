@@ -39,12 +39,6 @@ OmekaViewer {
        }
     }
 
-    //toggle fullscreen
-    MouseArea {
-        anchors.fill: parent
-        onClicked: ItemManager.fullScreen = !ItemManager.fullScreen
-    }
-
     onPortraitChanged: updateZoom()
     onFullScreenChanged: updateZoom()
     onStateChanged: nav.size()
