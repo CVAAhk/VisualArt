@@ -1,6 +1,8 @@
 QT += qml quick widgets network
 
-CONFIG += c++11
+CONFIG += c++11 \
+    qzxing_qml \
+    qzxing_multimedia
 
 SOURCES += main.cpp \
     applicationloader.cpp \
@@ -44,6 +46,8 @@ HEADERS += \
     collectionset.h \
     sequentialguid.h \
     qutils.h
+
+include(qzxing/QZXing.pri)
 
 DISTFILES += \
     main.qml \
