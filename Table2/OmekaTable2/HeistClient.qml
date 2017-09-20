@@ -51,6 +51,12 @@ Item {
     /*List of registered receivers of iterative polling results*/
     property var receivers: [];
 
+    /*
+      List of generated pairing session codes. For actual implementation, codes
+      need to be tracked on a global level.
+     */
+    property var codes: [];
+
     /*Returns whether the heist plugin is installed for this omeka instance*/
     property bool heistIsSupported: false
 
