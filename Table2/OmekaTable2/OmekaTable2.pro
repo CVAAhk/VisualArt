@@ -1,6 +1,8 @@
 QT += qml quick widgets network
 
-CONFIG += c++11
+CONFIG += c++11 \
+    qzxing_qml \
+    qzxing_multimedia
 
 SOURCES += main.cpp \
     applicationloader.cpp \
@@ -8,7 +10,9 @@ SOURCES += main.cpp \
     artcollection.cpp \
     collectionentryinfo.cpp \
     collections.cpp \
-    collectionset.cpp
+    collectionset.cpp \
+    sequentialguid.cpp \
+    qutils.cpp
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH += \
@@ -39,7 +43,11 @@ HEADERS += \
     artcollection.h \
     collectionentryinfo.h \
     collections.h \
-    collectionset.h
+    collectionset.h \
+    sequentialguid.h \
+    qutils.h
+
+include(qzxing/QZXing.pri)
 
 DISTFILES += \
     main.qml \
@@ -97,10 +105,10 @@ DISTFILES += \
     DragFiles.qml \
     SendSuccess.qml \
     TestHeist.qml \
-    HeistManager.qml \
     HeistReceiver.qml \
     Pairings.qml \
-    ReadyToUnpair.qml
+    ReadyToUnpair.qml \
+    HeistClient.qml
 
 RESOURCES += \
     qml.qrc

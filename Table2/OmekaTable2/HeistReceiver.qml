@@ -44,9 +44,9 @@ Item {
     */
     onRegisterChanged: {
         if(register) {
-            HeistManager.registerReceiver(receiver);
-        } else if(HeistManager.registered(receiver)) {
-            HeistManager.unregisterReceiver(receiver);
+            HeistClient.registerReceiver(receiver);
+        } else if(HeistClient.registered(receiver)) {
+            HeistClient.unregisterReceiver(receiver);
             clearFields()
         }
     }

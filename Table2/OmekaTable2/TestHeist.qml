@@ -110,7 +110,7 @@ ApplicationWindow {
     /*! Create new heist pairing sessions */
     function startSession() {
         generateCode();
-        HeistManager.startPairingSession(currentCode);
+        HeistClient.startPairingSession(currentCode);
     }
 
     /*! Generate unique pairing code. This needs to be tracked
@@ -129,7 +129,7 @@ ApplicationWindow {
       Ends the pairing session and restores initial state
      */
     function endSession() {
-        HeistManager.endPairingSession(currentCode);
+        HeistClient.endPairingSession(currentCode);
         codes.pop();
         currentCode = codes[codes.length-1];
         paired = false;
@@ -144,7 +144,7 @@ ApplicationWindow {
         paired = false;
         currentCode = "";
         codes.length = 0;
-        HeistManager.clearAllSessions();
+        HeistClient.clearAllSessions();
     }
 
     /*!
@@ -154,7 +154,7 @@ ApplicationWindow {
         for(var i=0; i<item_list.count; i++) {
             item_list.contentItem.children[i].reset();
         }
-        HeistManager.removeAllItems(currentCode, null);
+        HeistClient.removeAllItems(currentCode, null);
     }
 
     /*!
@@ -162,7 +162,7 @@ ApplicationWindow {
       sessions. For actual implementation, there will only be one code.
       */
     function clean() {
-        HeistManager.clearAllSessions();
+        HeistClient.clearAllSessions();
         cleanDelay *= codes.length;
         while(cleanDelay) {
             cleanDelay--;
@@ -174,7 +174,7 @@ ApplicationWindow {
     //convenience function for removing by heist record id (TEST ONLY)
     function removeRecords(data) {
         for(var i in data) {
-            HeistManager.removeData(data[i])
+            HeistClient.removeData(data[i])
         }
     }
 

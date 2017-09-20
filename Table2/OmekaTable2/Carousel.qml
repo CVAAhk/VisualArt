@@ -787,7 +787,7 @@ Item
         if(root.isImageInPairingBox(root,image) && root.currentCode && root.checkItemsOfPairing(image.item.id))
         {
             console.log("add item = ", image.item.id)
-            HeistManager.addItem(root.currentCode, image.item.id, root);
+            HeistClient.addItem(root.currentCode, image.item.id, root);
         }
     }
     function holderX()
