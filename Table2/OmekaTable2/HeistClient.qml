@@ -3,7 +3,7 @@ import QtQuick 2.5
 import "."
 
 Item {
-    id: heist_manager
+    id: heist_client
 
     //request types
     readonly property var get: "GET";
@@ -360,7 +360,7 @@ Item {
     Connections {
         target: Omeka
         onRequestComplete: {
-            if(result.context === heist_manager) {
+            if(result.context === heist_client) {
                 normalizer.append(ItemManager.dataToItem(result));
                 var item = normalizer.get(normalizer.count -1);
                 ItemManager.registerLike(item);
@@ -391,7 +391,7 @@ Item {
             items[code] = [];
         }
         items[code].push(item_id);
-        Omeka.getItemById(item_id, heist_manager);
+        Omeka.getItemById(item_id, heist_client);
     }
 
     /*

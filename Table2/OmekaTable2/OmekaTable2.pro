@@ -105,10 +105,10 @@ DISTFILES += \
     DragFiles.qml \
     SendSuccess.qml \
     TestHeist.qml \
-    HeistManager.qml \
     HeistReceiver.qml \
     Pairings.qml \
-    ReadyToUnpair.qml
+    ReadyToUnpair.qml \
+    HeistClient.qml
 
 RESOURCES += \
     qml.qrc

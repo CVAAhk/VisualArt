@@ -652,32 +652,32 @@ Item {
         if(gallery.isImageInPairingBox(lower_left_carousel,image) && lower_left_carousel.currentCode && lower_left_carousel.checkItemsOfPairing(image.item.id))
         {
             console.log("add item = ", image.item.id)
-            HeistManager.addItem(lower_left_carousel.currentCode, image.item.id, lower_left_carousel);
+            HeistClient.addItem(lower_left_carousel.currentCode, image.item.id, lower_left_carousel);
         }
         else if(gallery.isImageInPairingBox(lower_right_carousel,image) && lower_right_carousel.currentCode && lower_right_carousel.checkItemsOfPairing(image.item.id))
         {
             console.log("add item = ", image.item.id)
-            HeistManager.addItem(lower_right_carousel.currentCode, image.item.id, lower_right_carousel);
+            HeistClient.addItem(lower_right_carousel.currentCode, image.item.id, lower_right_carousel);
         }
         else if(gallery.isImageInPairingBox(top_right_carousel,image) && top_right_carousel.currentCode && top_right_carousel.checkItemsOfPairing(image.item.id))
         {
             console.log("add item = ", image.item.id)
-            HeistManager.addItem(top_right_carousel.currentCode, image.item.id, top_right_carousel);
+            HeistClient.addItem(top_right_carousel.currentCode, image.item.id, top_right_carousel);
         }
         else if(gallery.isImageInPairingBox(top_left_carousel,image) && top_left_carousel.currentCode && top_left_carousel.checkItemsOfPairing(image.item.id))
         {
             console.log("add item = ", image.item.id)
-            HeistManager.addItem(top_left_carousel.currentCode, image.item.id, top_left_carousel);
+            HeistClient.addItem(top_left_carousel.currentCode, image.item.id, top_left_carousel);
         }
         else if(gallery.isImageInPairingBox(middle_right_carousel,image) && middle_right_carousel.currentCode && middle_right_carousel.checkItemsOfPairing(image.item.id))
         {
             console.log("add item = ", image.item.id)
-            HeistManager.addItem(middle_right_carousel.currentCode, image.item.id, middle_right_carousel);
+            HeistClient.addItem(middle_right_carousel.currentCode, image.item.id, middle_right_carousel);
         }
         else if(gallery.isImageInPairingBox(middle_left_carousel,image) && middle_left_carousel.currentCode && middle_left_carousel.checkItemsOfPairing(image.item.id))
         {
             console.log("add item = ", image.item.id)
-            HeistManager.addItem(middle_left_carousel.currentCode, image.item.id, middle_left_carousel);
+            HeistClient.addItem(middle_left_carousel.currentCode, image.item.id, middle_left_carousel);
         }
     }
     function attractImageIsInPairingBox(image)

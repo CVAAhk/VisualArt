@@ -17,7 +17,7 @@ Item
 
     signal whatIsThis();
 
-    Component.onCompleted: HeistManager.clearHeist(); //temporary hack; see api doc for this call
+    Component.onCompleted: HeistClient.clearHeist(); //temporary hack; see api doc for this call
 
     //remove sessions from heist on app exit
     Component.onDestruction: clean();
@@ -143,7 +143,7 @@ Item
     /*! Create new heist pairing sessions */
     function startSession() {
         generateCode();
-        HeistManager.startPairingSession(currentCode);
+        HeistClient.startPairingSession(currentCode);
     }
 
     /*! Generate unique pairing code. This needs to be tracked
@@ -153,9 +153,9 @@ Item
         do {
             code = randomInt(1111,9999);
         }
-        while (HeistManager.codes.indexOf(code) !== -1);
+        while (HeistClient.codes.indexOf(code) !== -1);
         currentCode = code;
-        HeistManager.codes.push(code);
+        HeistClient.codes.push(code);
         var first_digit = Math.floor(code / 1000);
         var second_digit = Math.floor(code % 1000 /100);
         var third_digit = Math.floor(code % 100 /10);

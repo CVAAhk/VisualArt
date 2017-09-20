@@ -189,9 +189,9 @@ Item
      */
     function endSession() {
         receiver.register = false;
-        HeistManager.endPairingSession(currentCode);
-        if(HeistManager.codes.indexOf(currentCode) !== -1) {
-            HeistManager.codes.splice(HeistManager.codes.indexOf(currentCode), 1);
+        HeistClient.endPairingSession(currentCode);
+        if(HeistClient.codes.indexOf(currentCode) !== -1) {
+            HeistClient.codes.splice(HeistClient.codes.indexOf(currentCode), 1);
         }
         currentCode = "";
         paired = false;
@@ -206,8 +206,8 @@ Item
     function clearAll() {
         paired = false;
         currentCode = "";
-        HeistManager.codes.length = 0;
-        HeistManager.clearAllSessions();
+        HeistClient.codes.length = 0;
+        HeistClient.clearAllSessions();
     }
 
     /*!
@@ -218,7 +218,7 @@ Item
 //        for(var i=0; i<item_list.count; i++) {
 //            item_list.contentItem.children[i].reset();
 //        }
-        HeistManager.removeAllItems(currentCode, null);
+        HeistClient.removeAllItems(currentCode, null);
     }
 
     /*!
@@ -226,8 +226,8 @@ Item
       sessions. For actual implementation, there will only be one code.
       */
     function clean() {
-        HeistManager.clearAllSessions();
-        cleanDelay *= HeistManager.codes.length;
+        HeistClient.clearAllSessions();
+        cleanDelay *= HeistClient.codes.length;
         while(cleanDelay) {
             cleanDelay--;
             //console.log("cleaning");
@@ -238,7 +238,7 @@ Item
     //convenience function for removing by heist record id (TEST ONLY)
     function removeRecords(data) {
         for(var i in data) {
-            HeistManager.removeData(data[i])
+            HeistClient.removeData(data[i])
         }
     }
 
@@ -248,7 +248,7 @@ Item
    function removeItem(item) {
        if(items.indexOf(item) !== -1) {
            items.splice(items.indexOf(item), 1);
-           HeistManager.removeItem(currentCode, item, root);
+           HeistClient.removeItem(currentCode, item, root);
        }
 
    }
