@@ -9,9 +9,9 @@ Item {
     state: "unpaired"
 
     /*
-     Unique device id for pairing with heist table user
+      Universally unique identifier to tag the device.
     */
-    property var deviceId: Heist.uid;
+    property var deviceId: User.getGUID()
 
 
     //clear float message when invisible

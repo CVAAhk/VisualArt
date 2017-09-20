@@ -154,3 +154,11 @@ function setLayout(layout) {
 function getLayout() {
     return get(USER, "layout");
 }
+
+function setGUID(guid) {
+    set(USER, "guid", guid);
+}
+
+function getGUID() {
+    return get(USER, "guid");
+}

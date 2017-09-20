@@ -20,6 +20,12 @@ Item {
 
     function init() {
         root.layout = getLayout()
+        var uid = Settings.getGUID() || guid.getSequentialGUID()
+        Settings.setGUID(uid)
+    }
+
+    function getGUID() {
+        return Settings.getGUID()
     }
 
     function setLayout(layout) {

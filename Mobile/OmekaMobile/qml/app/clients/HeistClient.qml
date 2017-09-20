@@ -41,13 +41,6 @@ Item {
     */
     property var pairingCode: ""
 
-    /*
-      Universally unique identifier to tag the Heist instance. Currently only
-      applicable to mobile devices but can eventually be leveraged for multiple
-      table instances targeting the same omeka endpoint.
-    */
-    property var uid: guid.getSequentialGUID();
-
     /*List of registered receivers of iterative polling results*/
     property var receivers: [];
 
