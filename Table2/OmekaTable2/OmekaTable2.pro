@@ -108,7 +108,8 @@ DISTFILES += \
     HeistReceiver.qml \
     Pairings.qml \
     ReadyToUnpair.qml \
-    HeistClient.qml
+    HeistClient.qml \
+    storage.js
 
 RESOURCES += \
     qml.qrc

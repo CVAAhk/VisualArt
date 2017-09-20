@@ -1,6 +1,8 @@
 pragma Singleton
 import QtQuick 2.5
+import QtQuick.LocalStorage 2.0
 import "."
+import "storage.js" as Storage
 
 Item {
     id: heist_manager
@@ -46,7 +48,7 @@ Item {
       applicable to mobile devices but can eventually be leveraged for multiple
       table instances targeting the same omeka endpoint.
     */
-    property var uid: guid.getSequentialGUID();
+    property var uid;
 
     /*List of registered receivers of iterative polling results*/
     property var receivers: [];
@@ -67,8 +69,15 @@ Item {
     //          PLUGIN CHECK
     ///////////////////////////////////////////////////////////
 
-    //Check for heist support
-    Component.onCompleted: pingPlugin()
+    //initialize
+    Component.onCompleted: init()
+
+    function init() {
+        uid = Storage.getGUID() || guid.getSequentialGUID()
+        Storage.setGUID(uid)
+        console.log("INIT: "+uid)
+        pingPlugin()
+    }
 
     /*! \internal
      Ping the hesit plugin to see if it is installed for this omeka instance and
