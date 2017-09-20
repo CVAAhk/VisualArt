@@ -8,7 +8,9 @@ SOURCES += main.cpp \
     artcollection.cpp \
     collectionentryinfo.cpp \
     collections.cpp \
-    collectionset.cpp
+    collectionset.cpp \
+    sequentialguid.cpp \
+    qutils.cpp
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH += \
@@ -39,7 +41,9 @@ HEADERS += \
     artcollection.h \
     collectionentryinfo.h \
     collections.h \
-    collectionset.h
+    collectionset.h \
+    sequentialguid.h \
+    qutils.h
 
 DISTFILES += \
     main.qml \

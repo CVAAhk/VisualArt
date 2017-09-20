@@ -51,6 +51,9 @@ void ApplicationLoader::load()
         QMessageBox::warning(nullptr, "Could not find main.qml", "Could not find main.qml");
     }
 
+    m_engine.rootContext()->setContextProperty("guid", &m_guid);
+    m_engine.rootContext()->setContextProperty("qutils", &m_utils);
+
     m_engine.setSource(QUrl::fromLocalFile(main_qml));
 
     if(FULLSCREEN)
