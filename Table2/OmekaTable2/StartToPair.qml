@@ -136,14 +136,13 @@ Item
 
 
     function randomInt(min, max) {
-
         return Math.floor(Math.random()*(max-min)+min);
-
     }
+
     /*! Create new heist pairing sessions */
     function startSession() {
         generateCode();
-        HeistClient.startPairingSession(currentCode);
+        HeistClient.startPairingSession(currentCode, HeistClient.uid);
     }
 
     /*! Generate unique pairing code. This needs to be tracked

@@ -26,7 +26,7 @@ Item {
     /*
      Url to heist plugin
     */
-    property var heistURL: endpoint+"api/heist/"
+    property var heistURL: endpoint+"api/heist/"   
 
     /*
      Map session codes to heist record id
@@ -48,7 +48,16 @@ Item {
       applicable to mobile devices but can eventually be leveraged for multiple
       table instances targeting the same omeka endpoint.
     */
-    property var uid;
+    property var uid
+
+    /*
+      Table id to target for heist queries. Only referenced to deconflict the unlikely
+      chance that multiple tables with the same omeka endpoint, have entries that share
+      the same auto-generated pairing code. It is easy to keep these codes unique in a
+      single instance but this approach avoids an exponentially slow process of preventing
+      pairing code duplication across simultaneous heist sessions.
+    */
+    property var tableID: uid
 
     /*List of registered receivers of iterative polling results*/
     property var receivers: [];
@@ -341,9 +350,10 @@ Item {
 
     /*Start session by adding a new record with provided code
       /a code - pairing code
+      /a table - guid of table running the app
     */
-    function startPairingSession(code) {
-        var data = {pairing_id: code};
+    function startPairingSession(code, table) {
+        var data = {pairing_id: code, table_id: table};
         addData(data, "");
     }
 
