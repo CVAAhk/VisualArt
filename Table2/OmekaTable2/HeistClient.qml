@@ -51,11 +51,11 @@ Item {
     property var uid
 
     /*
-      Table id to target for heist queries. Only referenced to deconflict the unlikely
-      chance that multiple tables with the same omeka endpoint, have entries that share
-      the same auto-generated pairing code. It is easy to keep these codes unique in a
-      single instance but this approach avoids an exponentially slow process of preventing
-      pairing code duplication across simultaneous heist sessions.
+      Table id to target for heist queries. All results wituout a matching table id will be ignored.
+      This is necessary to deconflict the unlikely chance that multiple tables with the same omeka
+      endpoint, have entries that share the same auto-generated pairing code. It is easy to keep these
+      codes unique in a single instance but this approach avoids an exponentially slow process of
+      preventing duplication across simultaneous table instances. Defaults to device GUID.
     */
     property var tableID: uid
 
@@ -175,10 +175,11 @@ Item {
      \a result - query result
     */
     function addSession(result) {
-        if(!result) return;
+        if(!result || result.table_id !== tableID) return false;
         if(!(result.pairing_id in sessions)) {
             sessions[result.pairing_id] = result.id;
         }
+        return true;
     }
 
     /*! \internal
@@ -279,9 +280,8 @@ Item {
                         request.context.data = result;
                         break;
                     case post:
-                        var result = JSON.parse(request.responseText);
-                        addSession(result);
-                        if(request.status === 201) {
+                        var result = JSON.parse(request.responseText);                        
+                        if(addSession(result) && request.status === 201) {
                             console.log("record ADDED");
                         }
                         break;
