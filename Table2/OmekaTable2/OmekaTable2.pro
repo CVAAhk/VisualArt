@@ -109,7 +109,8 @@ DISTFILES += \
     Pairings.qml \
     ReadyToUnpair.qml \
     HeistClient.qml \
-    storage.js
+    storage.js \
+    QRCode.qml
 
 RESOURCES += \
     qml.qrc

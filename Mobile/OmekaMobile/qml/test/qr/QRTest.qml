@@ -42,8 +42,14 @@ ApplicationWindow {
             enabledDecoders: QZXing.DecoderFormat_QR_CODE
             onTagFound: {
                 count++
-                print("QR Result "+count+": "+tag);
+                text.text = "QR Result "+count+": "+tag;
             }
         }
+    }
+
+    Text {
+        id: text
+        color: "yellow"
+        anchors.centerIn: parent
     }
 }

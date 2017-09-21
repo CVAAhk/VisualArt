@@ -83,8 +83,7 @@ Item {
 
     function init() {
         uid = Storage.getGUID() || guid.getSequentialGUID()
-        Storage.setGUID(uid)
-        console.log("INIT: "+uid)
+        Storage.setGUID(uid)        
         pingPlugin()
     }
 
