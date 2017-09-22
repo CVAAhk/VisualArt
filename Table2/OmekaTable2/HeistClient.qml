@@ -26,7 +26,7 @@ Item {
     /*
      Url to heist plugin
     */
-    property var heistURL: endpoint+"api/heist/"   
+    property var heistURL: endpoint+"api/heist/"
 
     /*
      Map session codes to heist record id

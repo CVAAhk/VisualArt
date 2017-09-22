@@ -41,8 +41,23 @@ Item {
     */
     property var pairingCode: ""
 
+    /*
+      Table id to target for heist queries. All results wituout a matching table id will be ignored.
+      This is necessary to deconflict the unlikely chance that multiple tables with the same omeka
+      endpoint, have entries that share the same auto-generated pairing code. It is easy to keep these
+      codes unique in a single instance but this approach avoids an exponentially slow process of
+      preventing duplication across simultaneous table instances.
+    */
+    property var tableID: null
+
     /*List of registered receivers of iterative polling results*/
     property var receivers: [];
+
+    /*
+      List of generated pairing session codes. For actual implementation, codes
+      need to be tracked on a global level.
+     */
+    property var codes: [];
 
     /*Returns whether the heist plugin is installed for this omeka instance*/
     property bool heistIsSupported: false
@@ -54,8 +69,15 @@ Item {
     //          PLUGIN CHECK
     ///////////////////////////////////////////////////////////
 
-    //Check for heist support
-    Component.onCompleted: pingPlugin()
+    //initialize
+    Component.onCompleted: init()
+
+    /*
+      Initialization function
+    */
+    function init() {
+        pingPlugin()
+    }
 
     /*! \internal
      Ping the hesit plugin to see if it is installed for this omeka instance and
@@ -144,10 +166,11 @@ Item {
      \a result - query result
     */
     function addSession(result) {
-        if(!result) return;
+        if(!result || result.table_id !== tableID) return false;
         if(!(result.pairing_id in sessions)) {
             sessions[result.pairing_id] = result.id;
         }
+        return true;
     }
 
     /*! \internal
@@ -248,9 +271,8 @@ Item {
                         request.context.data = result;
                         break;
                     case post:
-                        var result = JSON.parse(request.responseText);
-                        addSession(result);
-                        if(request.status === 201) {
+                        var result = JSON.parse(request.responseText);                        
+                        if(addSession(result) && request.status === 201) {
                             console.log("record ADDED");
                         }
                         break;
@@ -319,9 +341,10 @@ Item {
 
     /*Start session by adding a new record with provided code
       /a code - pairing code
+      /a table - guid of table running the app
     */
-    function startPairingSession(code) {
-        var data = {pairing_id: code};
+    function startPairingSession(code, table) {
+        var data = {pairing_id: code, table_id: table};
         addData(data, "");
     }
 
