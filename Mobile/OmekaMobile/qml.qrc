@@ -35,7 +35,6 @@
 		<file>qml/test/styling/qmldir</file>	
 		<file>qml/test/sharing/ShareTest.qml</file>			
 		<file>qml/test/qr/QRTest.qml</file>		
-		<file>qml/test/qr/QRGeneratorTest.qml</file>	
 		
 		<file>qml/app/clients/OmekaClient.qml</file>									
 		<file>qml/app/clients/HeistClient.qml</file>			
@@ -96,11 +95,8 @@
 		<file>qml/app/home/settings/AboutSetting.qml</file>																			
 		<file>qml/app/home/settings/pairing/PairSetting.qml</file>
 		<file>qml/app/home/settings/pairing/TablePairing.qml</file>
-		<file>qml/app/home/settings/pairing/Keypad.qml</file>		
-		<file>qml/app/home/settings/pairing/CodeEntry.qml</file>
 		<file>qml/app/home/settings/pairing/Unpair.qml</file>
 		<file>qml/app/home/settings/pairing/HeistReceiver.qml</file>
-		<file>qml/app/home/settings/pairing/QRCode.qml</file>
 		<file>qml/app/home/gallery/Gallery.qml</file>																			
 		<file>qml/app/home/gallery/Browser.qml</file>																			
 		<file>qml/app/home/gallery/ItemBrowser.qml</file>																					

@@ -157,8 +157,6 @@ DISTFILES += \
     qml/app/likes/Filters.qml \
     qml/app/home/settings/pairing/PairSetting.qml \
     qml/app/home/settings/pairing/TablePairing.qml \
-    qml/app/home/settings/pairing/Keypad.qml \
-    qml/app/home/settings/pairing/CodeEntry.qml \
     qml/app/home/settings/pairing/Unpair.qml \
     qml/app/clients/HeistClient.qml \
     qml/test/heist/TestHeist.qml \
@@ -172,10 +170,6 @@ DISTFILES += \
     qml/test/providers/ImageSizeTest.qml \
     qml/app/likes/NumberTag.qml \
     qml/test/qr/QRTest.qml \
-    qml/app/home/settings/pairing/QRCode.qml \
-    qml/test/qr/QRGeneratorTest.qml \
-    qml/app/home/settings/pairing/QRCode.qml \
-    qml/test/qr/QRGeneratorTest.qml \
     qml/test/navigation/PageNavTest.qml \
     qml/test/navigation/FirstPage.qml \
     qml/test/navigation/SecondPage.qml

@@ -46,29 +46,45 @@ Item {
         }
     }
 
-    /*!Code display*/
-    CodeEntry {
-        id: entry
-        width: Resolution.applyScale(546)
-        anchors.top: parent.top
-        anchors.topMargin: Resolution.applyScale(438)
-        anchors.horizontalCenter: parent.horizontalCenter
-        onCodeStringChanged: receiver.code = codeString
-    }
+    /*!QR Scanning View*/
+    Column {
+        id: scan_view
 
-    /*!Keypad for code entry*/
-    Keypad {
-        id: keypad
-        anchors.bottom: parent.bottom
-        onKeyPressed: {
-            //clear message if displayed
-            if(key === "back")   {
-                Foreground.hideMessage();
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.top: bar.bottom
+        height: parent.height - bar.height
+
+        Rectangle {
+            id: scanner
+            color: "black"
+            width: parent.width
+            height: parent.height * 0.6
+
+            Rectangle {
+                color: "red"
+                opacity: 0.2
+                width: parent.width/4
+                height: parent.width/4
+                anchors.centerIn: parent
             }
 
-            //submit entry
-            entry.submitEntry(key)
         }
+
+        Item {
+            id: scan_instructions
+            width: parent.width
+            height: parent.height * 0.4
+
+            OmekaText {
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.top: parent.top
+                anchors.topMargin: parent.height * 0.2
+                _font: Style.pairingInstructions
+                text: "scan the qr code to pair with the table"
+            }
+        }
+
     }
 
     /*!Control to terminate pairing session*/
@@ -85,19 +101,11 @@ Item {
     states: [
         State {
             name: "unpaired"
-            AnchorChanges { target: keypad; anchors.bottom: parent.bottom; anchors.top: undefined }
-            PropertyChanges { target: keypad; opacity: 1 }
-            AnchorChanges { target: entry; anchors.top: parent.top; anchors.bottom: undefined }
-            PropertyChanges { target: entry; opacity: 1 }
             AnchorChanges { target: unpair_view; anchors.left: parent.right }
             PropertyChanges { target: unpair_view; opacity: 0 }
         },
         State {
             name: "paired"
-            AnchorChanges { target: keypad; anchors.bottom: undefined; anchors.top: parent.bottom }
-            PropertyChanges { target: keypad; opacity: 0 }
-            AnchorChanges { target: entry; anchors.top: undefined; anchors.bottom: parent.top }
-            PropertyChanges { target: entry; opacity: 0 }
             AnchorChanges { target: unpair_view; anchors.left: parent.left }
             PropertyChanges { target: unpair_view; opacity: 1 }
         }
@@ -106,7 +114,7 @@ Item {
     //state animations
     transitions: Transition {
         AnchorAnimation { duration: 400; easing.type: Easing.OutQuad }
-        PropertyAnimation { targets: [keypad, entry, unpair_view]; duration: 200; property: "opacity"; easing.type: Easing.OutQuad }
+        PropertyAnimation { target: unpair_view; duration: 200; property: "opacity"; easing.type: Easing.OutQuad }
     }
 
     ///////////////////////////////////////////////////////////
@@ -117,7 +125,7 @@ Item {
     HeistReceiver {
         id: receiver
         onSessionChanged: validateSession();
-        onAddItem: Heist.registerItem(item, entry.codeString);
+       // onAddItem: Heist.registerItem(item, entry.codeString);
         onErrorChanged: pairingError(error);
     }
 
@@ -147,7 +155,7 @@ Item {
     */
     function pair() {
         if(state === "unpaired") {
-            Heist.setPairing(entry.codeString, deviceId);
+            //Heist.setPairing(entry.codeString, deviceId);
             state = "paired";
         }
     }
@@ -159,8 +167,7 @@ Item {
         if(state === "paired") {
             receiver.register = false;
             Foreground.showMessage("Pairing session has been terminated.", 3000, Resolution.applyScale(300));
-            Heist.releasePairing(entry.codeString, deviceId);
-            entry.resetCode();
+            //Heist.releasePairing(entry.codeString, deviceId);
             state = "unpaired";            
         }
     }
