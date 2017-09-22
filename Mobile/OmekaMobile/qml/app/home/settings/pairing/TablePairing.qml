@@ -13,6 +13,12 @@ Item {
     */
     property var deviceId: User.getGUID()
 
+    property bool portrait: Resolution.portrait
+
+    onPortraitChanged: {
+        scanner.cameraOrientation = portrait ? -90 : 0
+    }
+
 
     //clear float message when invisible
     onVisibleChanged: {
@@ -55,9 +61,8 @@ Item {
         anchors.top: bar.bottom
         height: parent.height - bar.height
 
-        Rectangle {
+        QRScanner {
             id: scanner
-            color: "black"
             width: parent.width
             height: parent.height * 0.6
 

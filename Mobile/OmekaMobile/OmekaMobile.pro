@@ -172,4 +172,5 @@ DISTFILES += \
     qml/test/qr/QRTest.qml \
     qml/test/navigation/PageNavTest.qml \
     qml/test/navigation/FirstPage.qml \
-    qml/test/navigation/SecondPage.qml
+    qml/test/navigation/SecondPage.qml \
+    qml/app/home/settings/pairing/QRScanner.qml

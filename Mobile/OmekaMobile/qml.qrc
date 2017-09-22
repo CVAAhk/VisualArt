@@ -97,6 +97,7 @@
 		<file>qml/app/home/settings/pairing/TablePairing.qml</file>
 		<file>qml/app/home/settings/pairing/Unpair.qml</file>
 		<file>qml/app/home/settings/pairing/HeistReceiver.qml</file>
+		<file>qml/app/home/settings/pairing/QRScanner.qml</file>
 		<file>qml/app/home/gallery/Gallery.qml</file>																			
 		<file>qml/app/home/gallery/Browser.qml</file>																			
 		<file>qml/app/home/gallery/ItemBrowser.qml</file>																					
