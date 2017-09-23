@@ -5,7 +5,10 @@ import QtMultimedia 5.5
 
 Item {
 
-    property alias cameraOrientation: videoOutput.orientation
+    property var endpoint
+    property var table
+    property var code
+    property var result
 
     Camera {
         id: camera
@@ -21,7 +24,7 @@ Item {
         anchors.fill: parent
         fillMode: VideoOutput.PreserveAspectCrop
         filters: [zxingFilter]
-        orientation: -90
+        orientation: 90
 
         Rectangle {
             id: captureZone
@@ -38,11 +41,32 @@ Item {
 
         decoder {
             enabledDecoders: QZXing.DecoderFormat_QR_CODE
-            onTagFound: {
-                count++
-                text.text = "QR Result "+tag;
-            }
+            onTagFound: result = tag
         }
+    }
+
+    onResultChanged: {
+        var data = result.split(';')
+        if(data.length !== 3)
+            return qrError()
+
+        var endpointKV = data[0].split(',')
+        var tableKV = data[1].split(',')
+        var codeKV = data[2].split(',')
+
+        if(endpointKV[0] !== 'endpoint' || tableKV[0] !== 'table' || codeKV[0] !== 'code')
+            return qrError()
+
+        endpoint = endpointKV[1]
+        table = tableKV[1]
+        code = codeKV[1]
+
+        text.text = endpoint+"\n"+table+"\n"+code
+    }
+
+    function qrError() {
+        text.text = "INVALID QR CODE FORMAT: "+result
+        console.error("INVALID QR CODE FORMAT: "+result)
     }
 
     Text {
@@ -50,5 +74,4 @@ Item {
         color: "yellow"
         anchors.centerIn: parent
     }
-
 }

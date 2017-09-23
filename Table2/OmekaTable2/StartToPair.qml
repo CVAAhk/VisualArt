@@ -111,7 +111,9 @@ Item
         currentCode = code;
         HeistClient.codes.push(code);
 
-        qr_code.value = Omeka.endpoint+","+HeistClient.uid+","+currentCode
+        qr_code.value = "endpoint,"+Omeka.endpoint
+                        +";table,"+HeistClient.uid
+                        +";code,"+currentCode
     }
 
 

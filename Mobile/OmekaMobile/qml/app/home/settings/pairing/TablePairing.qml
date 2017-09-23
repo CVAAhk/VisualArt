@@ -13,13 +13,6 @@ Item {
     */
     property var deviceId: User.getGUID()
 
-    property bool portrait: Resolution.portrait
-
-    onPortraitChanged: {
-        scanner.cameraOrientation = portrait ? -90 : 0
-    }
-
-
     //clear float message when invisible
     onVisibleChanged: {
         if(!visible) {
