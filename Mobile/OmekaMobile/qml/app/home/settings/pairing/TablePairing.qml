@@ -67,6 +67,10 @@ Item {
                 anchors.centerIn: parent
             }
 
+            onEndpointChanged: HeistClient.endpoint = endpoint
+            onTableChanged: HeistClient.tableID = table
+            onCodeChanged: receiver.code = code
+
         }
 
         Item {
@@ -123,7 +127,7 @@ Item {
     HeistReceiver {
         id: receiver
         onSessionChanged: validateSession();
-       // onAddItem: Heist.registerItem(item, entry.codeString);
+        onAddItem: Heist.registerItem(item, scanner.code);
         onErrorChanged: pairingError(error);
     }
 
@@ -153,7 +157,7 @@ Item {
     */
     function pair() {
         if(state === "unpaired") {
-            //Heist.setPairing(entry.codeString, deviceId);
+            Heist.setPairing(scanner.code, deviceId);
             state = "paired";
         }
     }
@@ -165,7 +169,7 @@ Item {
         if(state === "paired") {
             receiver.register = false;
             Foreground.showMessage("Pairing session has been terminated.", 3000, Resolution.applyScale(300));
-            //Heist.releasePairing(entry.codeString, deviceId);
+            Heist.releasePairing(scanner.code, deviceId);
             state = "unpaired";            
         }
     }

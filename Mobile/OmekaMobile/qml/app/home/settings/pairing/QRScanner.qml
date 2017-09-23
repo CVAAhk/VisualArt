@@ -61,7 +61,7 @@ Item {
         table = tableKV[1]
         code = codeKV[1]
 
-        text.text = endpoint+"\n"+table+"\n"+code
+        text.text = "SUCCESS: "+code
     }
 
     function qrError() {
