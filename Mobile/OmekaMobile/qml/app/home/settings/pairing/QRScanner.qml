@@ -9,6 +9,18 @@ Item {
     property var table
     property var code
     property var result
+    property bool start
+
+    Component.onCompleted: start = false
+    onVisibleChanged: start = visible
+
+    onStartChanged: {
+        if(start) {
+            camera.start()
+        } else {
+            camera.stop()
+        }
+    }
 
     Camera {
         id: camera
@@ -60,18 +72,16 @@ Item {
         endpoint = endpointKV[1]
         table = tableKV[1]
         code = codeKV[1]
-
-        text.text = "SUCCESS: "+code
-    }
-
-    function qrError() {
-        text.text = "INVALID QR CODE FORMAT: "+result
-        console.error("INVALID QR CODE FORMAT: "+result)
     }
 
     Text {
         id: text
         color: "yellow"
         anchors.centerIn: parent
+    }
+
+    function qrError() {
+        text.text = "INVALID QR CODE FORMAT: "+result
+        console.error("INVALID QR CODE FORMAT: "+result)
     }
 }

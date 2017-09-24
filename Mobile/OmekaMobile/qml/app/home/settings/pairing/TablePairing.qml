@@ -20,7 +20,6 @@ Item {
         }
     }
 
-
     ///////////////////////////////////////////////////////////
     //          UI
     ///////////////////////////////////////////////////////////
@@ -49,9 +48,9 @@ Item {
     Column {
         id: scan_view
 
-        anchors.left: parent.left
         anchors.right: parent.right
         anchors.top: bar.bottom
+        width: parent.width
         height: parent.height - bar.height
 
         QRScanner {
@@ -67,8 +66,8 @@ Item {
                 anchors.centerIn: parent
             }
 
-            onEndpointChanged: HeistClient.endpoint = endpoint
-            onTableChanged: HeistClient.tableID = table
+            onEndpointChanged: Heist.endpoint = endpoint
+            onTableChanged: Heist.tableID = table
             onCodeChanged: receiver.code = code
 
         }
@@ -103,11 +102,15 @@ Item {
     states: [
         State {
             name: "unpaired"
+            AnchorChanges { target: scan_view; anchors.right: parent.right }
+            PropertyChanges { target: scan_view; opacity: 1 }
             AnchorChanges { target: unpair_view; anchors.left: parent.right }
             PropertyChanges { target: unpair_view; opacity: 0 }
         },
         State {
             name: "paired"
+            AnchorChanges { target: scan_view; anchors.right: parent.left }
+            PropertyChanges { target: scan_view; opacity: 0 }
             AnchorChanges { target: unpair_view; anchors.left: parent.left }
             PropertyChanges { target: unpair_view; opacity: 1 }
         }
@@ -156,7 +159,8 @@ Item {
       Create the pairing in the manager and update the ui state
     */
     function pair() {
-        if(state === "unpaired") {
+        if(state === "unpaired") {            
+            scanner.start = false
             Heist.setPairing(scanner.code, deviceId);
             state = "paired";
         }
@@ -167,6 +171,7 @@ Item {
     */
     function unpair() {
         if(state === "paired") {
+            scanner.start = true
             receiver.register = false;
             Foreground.showMessage("Pairing session has been terminated.", 3000, Resolution.applyScale(300));
             Heist.releasePairing(scanner.code, deviceId);
