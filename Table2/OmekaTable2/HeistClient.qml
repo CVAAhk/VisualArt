@@ -3,6 +3,7 @@ import QtQuick 2.5
 import QtQuick.LocalStorage 2.0
 import "."
 import "storage.js" as Storage
+import "settings.js" as Settings
 
 Item {
     id: heist_manager
@@ -16,7 +17,7 @@ Item {
     /*
       Target omeka instance
     */
-    property url endpoint: "http://dev.omeka.org/mallcopy/"
+    property url endpoint: Settings.OMEKA_ENDPOINT
 
     /*
       Omeka site identifier
