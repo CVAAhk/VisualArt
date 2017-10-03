@@ -10,9 +10,12 @@ Item {
     id: gallery
 
     property Settings settings: Settings {}
+    property url endpoint: Omeka.endpoint
 
-    /*!Load first page*/
-    Component.onCompleted: {
+    /*!Load first page of omeka instance*/
+    onEndpointChanged: {
+        browser.clear()
+        browser.nextCount = 1
         Omeka.getPage(1, gallery)
     }
 
@@ -69,4 +72,5 @@ Item {
         maxHeight: bar.height
         source: Style.omekaLogo
     }
+
 }

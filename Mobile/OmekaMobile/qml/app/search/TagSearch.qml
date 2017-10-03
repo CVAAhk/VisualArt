@@ -11,13 +11,18 @@ Item {
 
     property var tagData: ({})
     property int tagCount: 0
+    property url endpoint: Omeka.endpoint
 
     //refresh tags
-    Component.onCompleted: Omeka.getTags(tags)
+    onEndpointChanged: {
+        connection.target = Omeka
+        list.model.clear()
+        Omeka.getTags(tags)
+    }
 
     //update list on completion of tag query
     Connections {
-        target: Omeka
+        id: connection
         onRequestComplete: {
             if(result.context === tags) {
                 tagCount++
