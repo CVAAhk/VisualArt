@@ -59,6 +59,7 @@ Item {
                 title: "UCONN"
                 url: "http://oe.develop.digitalmediauconn.org/"
                 enableArrow: true
+                checked: true
                 onCheckedChanged:
                 {
                     if(checked) Omeka.endpoint = url;
@@ -69,6 +70,7 @@ Item {
                 title: "Mall Copy"
                 url: "http://dev.omeka.org/mallcopy/"
                 enableArrow: false
+                checked: false
                 onCheckedChanged:
                 {
                     if(checked) Omeka.endpoint = url;

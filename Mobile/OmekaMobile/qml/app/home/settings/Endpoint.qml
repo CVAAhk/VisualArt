@@ -47,9 +47,10 @@ Item {
     property alias endpointCategory: category
 
     //change state on check
-//    onCheckedChanged: {
-//        //state = checked ? "expand" : "collapse"
-//    }
+    onCheckedChanged: {
+        console.log("endpoint ", title, " check is ", checked)
+        arrow.visible = checked;
+    }
 
     //set initial state after dimensions
     onWidthChanged: {
@@ -71,27 +72,28 @@ Item {
         height: Resolution.applyScale(150)
         z: 1
         checkable: true
+        checked: true
         exclusiveGroup: endpointsGroup
 
         //cutom style
         style: ButtonStyle {
             background: Rectangle { color: "white" }
             label: OmekaText {
-                _font: Style.settingFont
+                _font: Style.endpointsTitleFont
                 text: control.text
 
                 //center: true
                 anchors.left: parent.left
                 anchors.top: parent.top
                 anchors.leftMargin: Resolution.applyScale(60)
-                anchors.topMargin: Resolution.applyScale(20)
+                anchors.topMargin: Resolution.applyScale(10)
             }
         }
 
         OmekaText
         {
             id: url
-            _font: Style.settingFont
+            _font: Style.endpointsUrlFont
             text: ""
             anchors.left: parent.left
             anchors.top: parent.top
@@ -108,19 +110,15 @@ Item {
             anchors.right: parent.right
             anchors.rightMargin: Resolution.applyScale(30)
             source: Style.checkMark
-            visible: exclusiveGroup.current === category
+            //visible: exclusiveGroup.current === category
         }
 
-        //uncheck current selection
+        //check current selection
         onPressedChanged: {
-            if(pressed) {
-                //arrow.visible = true;
+            if(pressed&&!checked) {
                 uncheck = exclusiveGroup.current === category
-                console.log("endpoint ", title, " uncheck is ", uncheck)
-            } /*else if(uncheck) {
-                arrow.visible = false;
-                exclusiveGroup.current = null
-            }*/
+
+            }
         }
     }
 
