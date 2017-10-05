@@ -11,6 +11,7 @@ Item {
     id: root
     enabled: false
     property TablePairing tablePairing: TablePairing {}
+    property EndpointsEditing endpointsEditing: EndpointsEditing {}
 
     Column {
         anchors.fill: parent
@@ -59,6 +60,17 @@ Item {
 
                 //settings
                 LayoutSetting { title: "Layout" }
+                EndpointsSetting
+                {
+                    title: "Endpoints"
+                    onActivate: {
+                        if(homeStack) {
+                            homeStack.push(endpointsEditing);
+                        }
+                    }
+                    text: User.heistUnsupported
+                }
+
                 PairSetting {
                     title: "Pair with Collection Viewer Table"
                     onActivate: {

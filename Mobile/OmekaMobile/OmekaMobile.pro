@@ -173,4 +173,7 @@ DISTFILES += \
     qml/test/navigation/PageNavTest.qml \
     qml/test/navigation/FirstPage.qml \
     qml/test/navigation/SecondPage.qml \
-    qml/app/home/settings/pairing/QRScanner.qml
+    qml/app/home/settings/pairing/QRScanner.qml \
+    qml/app/home/settings/EndpointsSetting.qml \
+    qml/app/home/settings/EndpointsEditing.qml \
+    qml/app/home/settings/Endpoint.qml

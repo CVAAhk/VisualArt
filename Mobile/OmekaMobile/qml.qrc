@@ -92,6 +92,9 @@
 		<file>qml/app/home/settings/Setting.qml</file>										
 		<file>qml/app/home/settings/LayoutSetting.qml</file>																			
 		<file>qml/app/home/settings/ClearLikesSetting.qml</file>																			
+		<file>qml/app/home/settings/Endpoint.qml</file>																			
+		<file>qml/app/home/settings/EndpointsSetting.qml</file>																			
+		<file>qml/app/home/settings/EndpointsEditing.qml</file>																			
 		<file>qml/app/home/settings/AboutSetting.qml</file>																			
 		<file>qml/app/home/settings/pairing/PairSetting.qml</file>
 		<file>qml/app/home/settings/pairing/TablePairing.qml</file>
