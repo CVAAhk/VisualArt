@@ -107,7 +107,7 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
             anchors.right: parent.right
             anchors.rightMargin: Resolution.applyScale(30)
-            source: Style.likesButtonOn
+            source: Style.checkMark
             visible: exclusiveGroup.current === category
         }
 

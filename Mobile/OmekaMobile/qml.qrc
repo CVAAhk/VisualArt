@@ -155,7 +155,8 @@
 		<file>ui/pause.png</file>
 		<file>ui/pair_icon.png</file>
 		<file>ui/linked_icon.png</file>
-		<file>ui/back_key.png</file>		
+		<file>ui/back_key.png</file>
+		<file>ui/check.png</file>		
 				
     </qresource>
 </RCC>
