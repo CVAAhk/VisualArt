@@ -69,6 +69,63 @@ Item {
         }
     }
 
+    //Add new endpoint
+    OmekaText
+    {
+        id: add_endpoint
+        anchors.top: bar.bottom
+        anchors.topMargin: Resolution.applyScale(714)
+        anchors.left: parent.left
+        anchors.leftMargin: Resolution.applyScale(60)
+        text: "Add new endpoint"
+        _font: Style.addEndpointFont
+
+    }
+
+    Rectangle
+    {
+        width: parent.width
+        height: Resolution.applyScale(150)
+        anchors.top: add_endpoint.bottom
+        anchors.topMargin: Resolution.applyScale(18)
+        color: "white"
+        TextInput
+        {
+            font.capitalization: Font.MixedCase
+            font.pixelSize: Resolution.applyScale(68)
+            color: "#666666"
+            focus: true
+            validator: RegExpValidator { regExp: /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/ }
+            x: Resolution.applyScale(60)
+            anchors.verticalCenter: parent.verticalCenter
+            verticalAlignment: Text.AlignVCenter
+            width: 1122
+            //height: 26
+            selectByMouse: true
+            text: qsTr("http://www...")
+            z: 1
+            selectionColor: "#ffffff"
+            onTextChanged:
+            {
+                var re = new RegExp('^(https?:\\/\\/)?'+ // protocol
+                                    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|'+ // domain name
+                                    '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+                                    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
+                                    '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+                                    '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+                var domain = text//.replace("http://", "");
+                if(!domain.match(re))
+                {
+                    color = "red"
+                }
+                else
+                {
+                    color = "green"
+                }
+            }
+        }
+    }
+
     Rectangle
     {
         id: disable_all_buttons
