@@ -71,6 +71,12 @@ Item {
     */
     property var videoExt: /\.(avi|mpe?g|mp4|qt|swf|wmv|mov)$/i
 
+    /*!
+      \internal
+      Loaded state of omeka instance
+    */
+    property bool loaded: false
+
     /*! \qmlsignal
         Invoked on query result*/
     signal requestComplete(var result)
@@ -83,8 +89,13 @@ Item {
         Invoked on site info results*/
     signal siteInfo(var result)
 
+    /*! \qmlsignal
+        Invoked initial page load*/
+    signal loadComplete()
+
     //Check api on complete
-    Component.onCompleted: {
+    onEndpointChanged: {
+        loaded = false
         omekaID = prettyName(endpoint)
         getSiteInfo(omeka_client)
         pingAPI()
@@ -230,6 +241,12 @@ Item {
             else {
                 emptyResult(result)
             }
+        }
+
+        //update loaded state
+        if(!loaded) {
+            loadComplete()
+            loaded = true
         }
     }        
 

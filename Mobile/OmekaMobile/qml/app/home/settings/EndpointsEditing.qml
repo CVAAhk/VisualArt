@@ -11,6 +11,11 @@ Item {
     //          UI
     ///////////////////////////////////////////////////////////
 
+    Connections {
+        target: Omeka
+        onLoadComplete: console.log("ENDPOINT LOADED: "+Omeka.endpoint)
+    }
+
     /*!Pairing header and back button*/
     OmekaToolBar {
         id: bar
