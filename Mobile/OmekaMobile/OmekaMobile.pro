@@ -176,4 +176,4 @@ DISTFILES += \
     qml/app/home/settings/pairing/QRScanner.qml \
     qml/app/home/settings/EndpointsSetting.qml \
     qml/app/home/settings/EndpointsEditing.qml \
-    qml/app/home/settings/Endpoint.qml
+    qml/app/home/settings/Endpoints.qml
