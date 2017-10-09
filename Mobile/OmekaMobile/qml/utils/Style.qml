@@ -29,6 +29,8 @@ Item {
     property url detailLikeFill: rootPath+"detail-like-fill.png"
     /*! \qmlproperty graphic indicating return to previous page */
     property url back: rootPath+"back.png"
+    /*! \qmlproperty add a new endpoint button */
+    property url addEndpointBtn: rootPath+"add endpoint_btn.png"
     /*! \qmlproperty graphic for menu options */
     property url share: rootPath+"share.png"
     /*! \qmlproperty thumbnail placeholder for image media */
@@ -98,6 +100,7 @@ Item {
     property var pairingInstructions: ({ color:color5, size:42, weight:Font.Normal, capitalization:Font.AllUppercase, wrapMode: Text.Wrap, textFormat: Text.AutoText })
     property var unpairText: ({ color:color5, size:80, weight:Font.Normal, capitalization:Font.AllUppercase, wrapMode: Text.NoWrap, textFormat: Text.AutoText })
     property var floatMessageFont: ({ color:"white", size:42, weight:Font.Normal, capitalization:Font.MixedCase, wrapMode: Text.Wrap, textFormat: Text.AutoText })
+    property var addEndpointBtnFont: ({ color:"white", size:48, weight:Font.Normal, capitalization:Font.AllUppercase, wrapMode: Text.Wrap, textFormat: Text.AutoText })
     property var apiInstructionFont: ({ color:"black", size:40, weight:Font.Normal, capitalization:Font.MixedCase, wrapMode: Text.Wrap, textFormat: Text.RichText })
 
 }

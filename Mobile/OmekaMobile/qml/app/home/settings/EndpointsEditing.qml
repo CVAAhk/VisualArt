@@ -6,6 +6,14 @@ import "../../../utils"
 import "../../clients"
 
 Item {
+    id: root
+
+    property string endpoint_url: url_input.text
+
+    //default endpoint title and url
+    property var omekaIDs: ["develop_digitalmediauconn"]
+    property var omekaTitles: ["OMEKA EVERYWHERE"]
+    property var omekaUrls: ["http://oe.develop.digitalmediauconn.org/"]
 
     ///////////////////////////////////////////////////////////
     //          UI
@@ -14,6 +22,37 @@ Item {
     Connections {
         target: Omeka
         onLoadComplete: {console.log("ENDPOINT LOADED: "+Omeka.endpoint);indicator.running = false;disable_all_buttons.visible = false;}
+        onSiteInfo: {
+
+            //add site title as endpoint
+            if(result.context === root) {
+                console.log("Add a new endpoint!!!!")
+                for(var i = 0; i < omekaIDs.length; i++)
+                {
+                    if(result.omekaID === omekaIDs[i])
+                    {
+                        return;
+                    }
+                }
+
+                omekaTitles.push(result.title)
+                omekaUrls.push(root.endpoint_url)
+
+                var revised_title
+                if(result.title.length > 40)
+                {
+                    revised_title = result.title.slice(0, 40);
+                    revised_title += "..."
+                }
+                else
+                {
+                    revised_title = result.title;
+                }
+
+                endpoints.addEndpoint(revised_title, root.endpoint_url)
+                resetAddNewEndpointArea();
+            }
+        }
     }
 
     /*!Pairing header and back button*/
@@ -84,6 +123,7 @@ Item {
 
     Rectangle
     {
+        id: edit_url_area
         width: parent.width
         height: Resolution.applyScale(150)
         anchors.top: add_endpoint.bottom
@@ -91,6 +131,7 @@ Item {
         color: "white"
         TextInput
         {
+            id: url_input
             font.capitalization: Font.MixedCase
             font.pixelSize: Resolution.applyScale(68)
             color: "#666666"
@@ -104,24 +145,50 @@ Item {
             selectByMouse: true
             text: qsTr("http://www...")
             z: 1
-            selectionColor: "#ffffff"
+            selectionColor: Style.color1
             onTextChanged:
             {
+
                 var re = new RegExp('^(https?:\\/\\/)?'+ // protocol
                                     '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|'+ // domain name
                                     '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
                                     '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
                                     '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
                                     '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
-                var domain = text//.replace("http://", "");
+                var domain = text
                 if(!domain.match(re))
                 {
                     color = "red"
+                    add_endpoint_btn.visible = false;
                 }
                 else
                 {
                     color = "green"
+
+                    add_endpoint_btn.visible = true;
                 }
+            }
+        }
+    }
+
+    Button {
+        id: add_endpoint_btn
+        height: Resolution.applyScale(122)
+        anchors.horizontalCenter: root.horizontalCenter
+        anchors.top: edit_url_area.bottom
+        anchors.topMargin: Resolution.applyScale(38)
+        onClicked: {Omeka.getSiteInfo(root, root.endpoint_url + "api/"); console.log("add endpoint btn clicked!", root.endpoint_url + "/api/")}
+        visible: false
+
+        style: ButtonStyle {
+            background: Rectangle {
+                color: Style.color1
+                radius: Resolution.applyScale(30)
+            }
+            label: OmekaText {
+                center: true
+                text: "ADD ENDPOINT"
+                _font: Style.addEndpointBtnFont
             }
         }
     }
@@ -148,5 +215,11 @@ Item {
         }
     }
 
+    function resetAddNewEndpointArea()
+    {
+        url_input.text = qsTr("http://www...");
+        url_input.color = "#666666"
+        add_endpoint_btn.visible = false;
+    }
 
 }

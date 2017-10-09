@@ -42,7 +42,7 @@ Item {
 
         model: ListModel {
             ListElement {
-                name: "UCONN"
+                name: "OMEKA EVERYWHERE"
                 urlText: "http://oe.develop.digitalmediauconn.org/"
                 checked: true
             }
@@ -58,7 +58,7 @@ Item {
             text: name
             checkable: true
             exclusiveGroup: group
-            property alias urlText: url.text
+            //property alias urlText: url.text
 
             style: ButtonStyle {
                 background: Rectangle {
@@ -81,7 +81,7 @@ Item {
             {
                 id: url
                 _font: Style.endpointsUrlFont
-                text: "http://oe.develop.digitalmediauconn.org/"
+                text: urlText
                 anchors.left: parent.left
                 anchors.top: parent.top
                 anchors.leftMargin: Resolution.applyScale(60)
@@ -97,26 +97,6 @@ Item {
             }
         }
     }
-
-    //open/close states
-//    states: [
-//        State {
-//            name: "open"
-//            AnchorChanges { target: list; anchors.bottom: root.bottom }
-//            PropertyChanges { target: root; opacity: 1 }
-//        },
-//        State {
-//            name: "close"
-//            AnchorChanges { target: list; anchors.bottom: root.top }
-//            PropertyChanges { target: root; opacity: 0 }
-//        }
-//    ]
-
-//    //animations
-//    transitions: Transition {
-//        AnchorAnimation { duration: 250; easing.type: Easing.OutQuad }
-//        PropertyAnimation { target: root; property: "opacity"; duration:500; easing.type: Easing.OutQuad }
-//    }
 
     /*
       Add item to list
