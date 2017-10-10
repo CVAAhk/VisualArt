@@ -8,10 +8,11 @@ Item {
     /*! \qmlproperty
         Target omeka endpoint url
     */
-    property url endpoint: "http://oe.develop.digitalmediauconn.org/"
-    //property url endpoint: "http://dev.omeka.org/mallcopy/"
+    //property url endpoint: "http://oe.develop.digitalmediauconn.org/"
+    property url endpoint: "http://dev.omeka.org/mallcopy/"
     //property url endpoint: "http://www.huapala.net/"  //no heist support test
     //property url endpoint: "http://marb.kennesaw.edu/identities/"  //no enabled api test
+    //property url endpoint
 
     /*! \qmlproperty
         Target omeka rest api
@@ -88,6 +89,9 @@ Item {
     /*! \qmlsignal
         Invoked on site info results*/
     signal siteInfo(var result)
+    /*! \qmlsignal
+        Invoked on site info results*/
+    signal disabledAPI()
 
     /*! \qmlsignal
         Invoked initial page load*/
@@ -129,7 +133,7 @@ Item {
         }
         request.open("GET", rest+"items", true);
         request.send();
-    }
+    }    
 
     /*! \internal
      Pull site information mainly to acquire title to provide context
@@ -146,9 +150,10 @@ Item {
                         result.context = context
                         result.omekaID = prettyName(url.substring(0, url.lastIndexOf("api")))
                         result.title = result.title || result.omekaID
+                        result.url = url
                         siteInfo(result)
                     }
-                } catch(e) {}
+                } catch(e) {disabledAPI()}
             }
         }
         var api = url || rest

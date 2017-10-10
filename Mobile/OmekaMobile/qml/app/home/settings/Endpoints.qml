@@ -25,10 +25,10 @@ Item {
     //prevent multiple selections
     ExclusiveGroup {
         id: group
-        current: list.contentItem.children[0]
+        //current: list.contentItem.children[0]
     }
 
-    //filter list
+    //endpoints list
     ListView {
         id: list
         width: parent.width
@@ -41,11 +41,11 @@ Item {
         bottomMargin: height - verticalOffset
 
         model: ListModel {
-            ListElement {
-                name: "UCONN"
-                urlText: "http://oe.develop.digitalmediauconn.org/"
-                checked: true
-            }
+//            ListElement {
+//                name: "OMEKA EVERYWHERE"
+//                urlText: "http://oe.develop.digitalmediauconn.org/"
+//                checked: true
+//            }
         }
     }
 
@@ -57,8 +57,9 @@ Item {
             height: Resolution.applyScale(150)
             text: name
             checkable: true
+            checked: check
             exclusiveGroup: group
-            property alias urlText: url.text
+            //property alias urlText: url.text
 
             style: ButtonStyle {
                 background: Rectangle {
@@ -81,7 +82,7 @@ Item {
             {
                 id: url
                 _font: Style.endpointsUrlFont
-                text: "http://oe.develop.digitalmediauconn.org/"
+                text: urlText
                 anchors.left: parent.left
                 anchors.top: parent.top
                 anchors.leftMargin: Resolution.applyScale(60)
@@ -91,38 +92,23 @@ Item {
             {
                 if(checked)
                 {
-                    Omeka.endpoint = urlText;
-                    root.endpointChecked();
+
+                    if(Omeka.endpoint != urlText)
+                    {
+                        console
+                        Omeka.endpoint = urlText;
+                        root.endpointChecked();
+                    }
                 }
             }
         }
     }
 
-    //open/close states
-//    states: [
-//        State {
-//            name: "open"
-//            AnchorChanges { target: list; anchors.bottom: root.bottom }
-//            PropertyChanges { target: root; opacity: 1 }
-//        },
-//        State {
-//            name: "close"
-//            AnchorChanges { target: list; anchors.bottom: root.top }
-//            PropertyChanges { target: root; opacity: 0 }
-//        }
-//    ]
-
-//    //animations
-//    transitions: Transition {
-//        AnchorAnimation { duration: 250; easing.type: Easing.OutQuad }
-//        PropertyAnimation { target: root; property: "opacity"; duration:500; easing.type: Easing.OutQuad }
-//    }
-
     /*
       Add item to list
     */
-    function addEndpoint(title, url) {
-        list.model.append({name: title, urlText: url})
+    function addEndpoint(title, url, check) {
+        list.model.append({name: title, urlText: url, check: check})
     }
 
     /*
