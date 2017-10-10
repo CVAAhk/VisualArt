@@ -1,5 +1,6 @@
 var LIKES = "likes"
 var USER = "user"
+var ENDPOINTS = "endpoints"
 
 function getDatabase() {
      return LocalStorage.openDatabaseSync("omekamobile", "0.1", "settings", 1000000);
@@ -162,3 +163,35 @@ function setGUID(guid) {
 function getGUID() {
     return get(USER, "guid");
 }
+
+/*--------ENDPOINTS table operations--------*/
+
+/*
+  Register the endpoint with the ENDPOINTS table
+*/
+function addEndpoint(endpoint) {
+    set(ENDPOINTS, endpoint.omekaID, endpoint.url);
+}
+
+/*
+  Unregister the endpoint from the ENDPOINTS table
+*/
+function removeEndpoint(endpoint) {
+    remove(ENDPOINTS, endpoint.omekaID);
+}
+function isRegistered(endpoint) {
+    return get(ENDPOINTS, endpoint.omekaID) !== 0;
+}
+/*
+  Returns all registered endpoints
+*/
+function getEndpoints() {
+    var endpoints = []
+    var entries = rows(ENDPOINTS)
+    for(var i=0; i<entries.length; i++) {
+        endpoints.push(entries[i])
+    }
+    return endpoints;
+}
+
+

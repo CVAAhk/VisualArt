@@ -25,10 +25,10 @@ Item {
     //prevent multiple selections
     ExclusiveGroup {
         id: group
-        current: list.contentItem.children[0]
+        //current: list.contentItem.children[0]
     }
 
-    //filter list
+    //endpoints list
     ListView {
         id: list
         width: parent.width
@@ -41,11 +41,11 @@ Item {
         bottomMargin: height - verticalOffset
 
         model: ListModel {
-            ListElement {
-                name: "OMEKA EVERYWHERE"
-                urlText: "http://oe.develop.digitalmediauconn.org/"
-                checked: true
-            }
+//            ListElement {
+//                name: "OMEKA EVERYWHERE"
+//                urlText: "http://oe.develop.digitalmediauconn.org/"
+//                checked: true
+//            }
         }
     }
 
@@ -57,6 +57,7 @@ Item {
             height: Resolution.applyScale(150)
             text: name
             checkable: true
+            checked: check
             exclusiveGroup: group
             //property alias urlText: url.text
 
@@ -91,8 +92,13 @@ Item {
             {
                 if(checked)
                 {
-                    Omeka.endpoint = urlText;
-                    root.endpointChecked();
+
+                    if(Omeka.endpoint != urlText)
+                    {
+                        console
+                        Omeka.endpoint = urlText;
+                        root.endpointChecked();
+                    }
                 }
             }
         }
@@ -101,8 +107,8 @@ Item {
     /*
       Add item to list
     */
-    function addEndpoint(title, url) {
-        list.model.append({name: title, urlText: url})
+    function addEndpoint(title, url, check) {
+        list.model.append({name: title, urlText: url, check: check})
     }
 
     /*

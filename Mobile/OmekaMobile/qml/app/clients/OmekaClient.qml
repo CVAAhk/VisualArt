@@ -9,10 +9,10 @@ Item {
         Target omeka endpoint url
     */
     //property url endpoint: "http://oe.develop.digitalmediauconn.org/"
-    //property url endpoint: "http://dev.omeka.org/mallcopy/"
+    property url endpoint: "http://dev.omeka.org/mallcopy/"
     //property url endpoint: "http://www.huapala.net/"  //no heist support test
     //property url endpoint: "http://marb.kennesaw.edu/identities/"  //no enabled api test
-    property url endpoint
+    //property url endpoint
 
     /*! \qmlproperty
         Target omeka rest api
@@ -150,6 +150,7 @@ Item {
                         result.context = context
                         result.omekaID = prettyName(url.substring(0, url.lastIndexOf("api")))
                         result.title = result.title || result.omekaID
+                        result.url = url
                         siteInfo(result)
                     }
                 } catch(e) {disabledAPI()}

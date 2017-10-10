@@ -11,22 +11,74 @@ Item {
     property string endpoint_url: url_input.text
 
     //default endpoint title and url
-    property var omekaIDs: ["develop_digitalmediauconn"]
-    property var omekaTitles: ["OMEKA EVERYWHERE"]
-    property var omekaUrls: ["http://oe.develop.digitalmediauconn.org/"]
+    property var omekaIDs: []//["develop_digitalmediauconn"]
+    property var omekaTitles: []//["OMEKA EVERYWHERE"]
+    property var omekaUrls: []//["http://oe.develop.digitalmediauconn.org/"]
 
     ///////////////////////////////////////////////////////////
     //          UI
     ///////////////////////////////////////////////////////////
 
+    //initialize loading endpoints from local storage
+    Component.onCompleted: {
+        var entry
+        var url
+        var omekaID
+
+        var _endpoints = ItemManager.getEndpoints()
+        for(var i=0; i<_endpoints.length; i++) {
+            entry = _endpoints[i]
+            omekaID = entry.setting
+            url = entry.value
+            console.log("omekaID = ", omekaID, " url = ", url)
+            Omeka.getSiteInfo(root, url + "api/");
+        }
+    }
+
     Connections {
         target: Omeka
         onLoadComplete: {console.log("ENDPOINT LOADED: "+Omeka.endpoint);indicator.running = false;disable_all_buttons.visible = false;}
         onSiteInfo: {
+            if(result.context === root) {
+                for(var i = 0; i < omekaIDs.length; i++)
+                {
+                    if(result.omekaID === omekaIDs[i])
+                    {
+                        return;
+                    }
+                }
+
+                omekaTitles.push(result.title)
+                omekaUrls.push(result.url)
+
+                var revised_title
+                if(result.title.length > 40)
+                {
+                    revised_title = result.title.slice(0, 40);
+                    revised_title += "..."
+                }
+                else
+                {
+                    revised_title = result.title;
+                }
+
+
+                var url_length = result.url.length
+                var revised_url = result.url.slice(0, (result.url.length - 4));
+                if(omekaTitles.length == 1)
+                {
+                    endpoints.addEndpoint(revised_title, revised_url, true)
+                }
+                else
+                {
+                    endpoints.addEndpoint(revised_title, revised_url, false)
+                }
+
+
+            }
 
             //add site title as endpoint
-            if(result.context === root) {
-                console.log("Add a new endpoint!!!!")
+            if(result.context === add_endpoint_btn) {
                 for(var i = 0; i < omekaIDs.length; i++)
                 {
                     if(result.omekaID === omekaIDs[i])
@@ -49,10 +101,18 @@ Item {
                     revised_title = result.title;
                 }
 
-                endpoints.addEndpoint(revised_title, root.endpoint_url)
+                endpoints.addEndpoint(revised_title, root.endpoint_url, false)
+
+                var endpoint = ({});
+                endpoint.omekaID = result.omekaID;
+                endpoint.url = root.endpoint_url;
+                endpoint.title = result.title;
+
+                ItemManager.registerEndpoint(endpoint);
                 resetAddNewEndpointArea();
             }
         }
+
     }
 
     /*!Pairing header and back button*/
@@ -177,7 +237,7 @@ Item {
         anchors.horizontalCenter: root.horizontalCenter
         anchors.top: edit_url_area.bottom
         anchors.topMargin: Resolution.applyScale(38)
-        onClicked: {Omeka.getSiteInfo(root, root.endpoint_url + "api/"); console.log("add endpoint btn clicked!", root.endpoint_url + "/api/")}
+        onClicked: {Omeka.getSiteInfo(add_endpoint_btn, root.endpoint_url + "api/"); console.log("add endpoint btn clicked!", root.endpoint_url + "/api/")}
         visible: false
 
         style: ButtonStyle {

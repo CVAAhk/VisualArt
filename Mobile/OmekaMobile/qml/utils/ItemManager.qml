@@ -185,4 +185,90 @@ Item {
             }
         }
     }
+    /*-------------ENDPOINTS-------------*/
+    //ui notifications
+    signal endpointAdded(var endpoint)
+    signal endpointRemoved(var endpoint)
+    signal clearEnpoints()//always by default having mallcopy endpoint
+
+    //endpoints added since the last view
+    property var recentlyEndpoints: []
+
+    //tracks number of endpoints since last view
+    property int newEndpoints: 0
+
+    /*!
+      \qmlmethod
+      Add endpoint to local database
+    */
+    function registerEndpoint(endpoint) {
+        if(!isRegistered(endpoint)) {
+            Settings.addEndpoint(endpoint)
+        }
+        endpointAdded(endpoint)
+        addRecentEndpoint(endpoint)
+    }
+    /*!
+      \qmlmethod
+      Remove endpoint from local database
+    */
+    function unregisterEndpoint(endpoint) {
+        endpointRemoved(endpoint)
+        removeRecentEndpoint(endpoint)
+        Settings.removeEndpoint(endpoint)
+    }
+//    /*!
+//      \qmlmethod
+//      Converts item to omeka result data format
+//    */
+//    function itemToData(item) {
+//        return {
+//            item: item.id,
+//            metadata: item.metadata,
+//            file_count: item.fileCount,
+//            uid: item.uid,
+//            omekaID: item.omekaID,
+//            endpoint: item.endpoint
+//        };
+//    }
+
+    /*!
+      \qmlmethod
+      Returns true if the item has an entry in the database
+    */
+    function isRegistered(endpoint) {
+        return Settings.isRegistered(endpoint)
+    }
+
+    /*!
+      \qmlmethod
+      Returns all registered Endpoints
+    */
+    function getEndpoints() {
+        return Settings.getEndpoints()
+    }
+
+    /*!
+      \qmlmethod
+      Add endpoint to list of recently added endpoints.
+    */
+    function addRecentEndpoint(endpoint) {
+        if(recentlyEndpoints.indexOf(endpoint.omekaID) === -1) {
+            recentlyEndpoints.push(endpoint.OmekaID)
+            newEndpoints = recentlyEndpoints.length
+        }
+    }
+
+    /*!
+      \qmlmethod
+      Remove item from list of recently added endpoints.
+    */
+    function removeRecentEndpoints(endpoint) {
+        if(recentlyEndpoints.indexOf(endpoint.omekaID) !== -1) {
+            recentlyEndpoints.splice(recentlyEndpoints.indexOf(endpoint.omekaID), 1)
+            newEndpoints = recentlyEndpoints.length
+        }
+    }
+
+
 }
