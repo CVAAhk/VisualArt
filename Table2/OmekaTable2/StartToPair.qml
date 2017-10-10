@@ -17,11 +17,6 @@ Item
 
     signal whatIsThis();
 
-    Component.onCompleted: HeistClient.clearHeist(); //temporary hack; see api doc for this call
-
-    //remove sessions from heist on app exit
-    Component.onDestruction: clean();
-
     Rectangle
     {
         id: start_to_pair_icon_bkg

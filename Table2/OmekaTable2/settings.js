@@ -30,7 +30,7 @@ var CAROUSEL_COLOR = "#2b89d9"//blue hex color code
 
 var USERS = 6;
 
-var OMEKA_ENDPOINT = "http://oe.develop.digitalmediauconn.org/"
-//var OMEKA_ENDPOINT = "http://dev.omeka.org/mallcopy/"
+//var OMEKA_ENDPOINT = "http://oe.develop.digitalmediauconn.org/"
+var OMEKA_ENDPOINT = "http://dev.omeka.org/mallcopy/"
 //var OMEKA_ENDPOINT = "http://www.huapala.net/"  //no heist support test
 //var OMEKA_ENDPOINT = "http://marb.kennesaw.edu/identities/"  //no enabled api test

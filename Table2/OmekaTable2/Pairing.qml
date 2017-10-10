@@ -30,12 +30,6 @@ Item
      */
     property var items: [];
 
-    /*
-      Delay time used postpone the descruction long enough to permit the table user to
-      purge all created pairing sessions from heist
-    */
-    property var cleanDelay: 2000;
-
     signal unpairDone();
 
     signal interactive();
@@ -196,43 +190,6 @@ Item
         currentCode = "";
         paired = false;
         root.readyToUnpair = false;
-    }
-
-    /*!
-      Removes all generated heist sessions and restores initial state. This is not
-      applicable to the final implementation since a table user will only be responsible
-      for one session at a time. (TEST ONLY)
-      */
-    function clearAll() {
-        paired = false;
-        currentCode = "";
-        HeistClient.codes.length = 0;
-        HeistClient.clearAllSessions();
-    }
-
-    /*!
-      Removes all items and restores initial state of items in list (TEST ONLY)
-      */
-    function resetItems() {
-        //TODO
-//        for(var i=0; i<item_list.count; i++) {
-//            item_list.contentItem.children[i].reset();
-//        }
-        HeistClient.removeAllItems(currentCode, null);
-    }
-
-    /*!
-      Postpones destruction long enough to permit termination of all generated
-      sessions. For actual implementation, there will only be one code.
-      */
-    function clean() {
-        HeistClient.clearAllSessions();
-        cleanDelay *= HeistClient.codes.length;
-        while(cleanDelay) {
-            cleanDelay--;
-            //console.log("cleaning");
-        }
-        console.log("cleaned");
     }
 
     //convenience function for removing by heist record id (TEST ONLY)

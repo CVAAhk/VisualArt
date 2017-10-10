@@ -394,18 +394,18 @@ Item {
     }
 
     /*
-      Removes all records in heist regardless of generating instance. This is just a temporary solution
-      to ensure records are cleaned up until a more reliable deconstruction cleansing is implemented. This
-      approach does not account for multiple table instances and therefore is not a long-term solution.
+      Removes all records associated with unique table id.
      */
-    function clearHeist() {
+    function clearDeviceRecords() {
         var request = new XMLHttpRequest();
         request.onreadystatechange = function() {
             if(request.readyState === XMLHttpRequest.DONE) {
                 if(request.responseText) {
-                    var result = JSON.parse(request.responseText)
+                    var result = JSON.parse(request.responseText)                    
                     for(var i in result) {
-                        removeData(result[i].id)
+                        if(result[i].table_id === tableID) {
+                            removeData(result[i].id)
+                        }
                     }
                 }
             }
