@@ -4,6 +4,7 @@ import QtQuick.Layouts 1.0
 import QtQuick.Window 2.2
 
 import "settings.js" as Settings
+import "."
 
 Item
 {
@@ -53,6 +54,7 @@ Item
         {
             Settings.SCREEN_SCALE_X = 1.0 / root.screenScaleX;
             Settings.SCREEN_SCALE_Y = 1.0 / root.screenScaleY;
+            HeistClient.clearDeviceRecords();
         }
     }
 }
