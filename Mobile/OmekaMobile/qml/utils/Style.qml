@@ -100,6 +100,7 @@ Item {
     property var pairingInstructions: ({ color:color5, size:42, weight:Font.Normal, capitalization:Font.AllUppercase, wrapMode: Text.Wrap, textFormat: Text.AutoText })
     property var unpairText: ({ color:color5, size:80, weight:Font.Normal, capitalization:Font.AllUppercase, wrapMode: Text.NoWrap, textFormat: Text.AutoText })
     property var floatMessageFont: ({ color:"white", size:42, weight:Font.Normal, capitalization:Font.MixedCase, wrapMode: Text.Wrap, textFormat: Text.AutoText })
+    property var deleteFont: ({ color:color5, size:74, weight:Font.Normal, capitalization:Font.AllUppercase, wrapMode: Text.Wrap, textFormat: Text.AutoText })
     property var addEndpointBtnFont: ({ color:"white", size:48, weight:Font.Normal, capitalization:Font.AllUppercase, wrapMode: Text.Wrap, textFormat: Text.AutoText })
     property var apiInstructionFont: ({ color:"black", size:40, weight:Font.Normal, capitalization:Font.MixedCase, wrapMode: Text.Wrap, textFormat: Text.RichText })
 

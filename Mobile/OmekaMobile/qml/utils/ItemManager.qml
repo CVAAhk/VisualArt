@@ -214,7 +214,7 @@ Item {
     */
     function unregisterEndpoint(endpoint) {
         endpointRemoved(endpoint)
-        removeRecentEndpoint(endpoint)
+        removeRecentEndpoints(endpoint)
         Settings.removeEndpoint(endpoint)
     }
 //    /*!

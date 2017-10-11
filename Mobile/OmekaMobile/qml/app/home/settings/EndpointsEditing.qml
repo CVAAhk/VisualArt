@@ -15,6 +15,8 @@ Item {
     property var omekaTitles: []//["OMEKA EVERYWHERE"]
     property var omekaUrls: []//["http://oe.develop.digitalmediauconn.org/"]
 
+    property int currentDeletingIndex: -1
+
     ///////////////////////////////////////////////////////////
     //          UI
     ///////////////////////////////////////////////////////////
@@ -47,9 +49,10 @@ Item {
                         return;
                     }
                 }
-
+                var revised_url = result.url.slice(0, (result.url.length - 4));
+                omekaIDs.push(result.omekaID)
                 omekaTitles.push(result.title)
-                omekaUrls.push(result.url)
+                omekaUrls.push(revised_url)
 
                 var revised_title
                 if(result.title.length > 40)
@@ -64,7 +67,7 @@ Item {
 
 
                 var url_length = result.url.length
-                var revised_url = result.url.slice(0, (result.url.length - 4));
+
                 if(omekaTitles.length == 1)
                 {
                     endpoints.addEndpoint(revised_title, revised_url, true)
@@ -87,6 +90,7 @@ Item {
                     }
                 }
 
+                omekaIDs.push(result.omekaID)
                 omekaTitles.push(result.title)
                 omekaUrls.push(root.endpoint_url)
 
@@ -119,7 +123,7 @@ Item {
     OmekaToolBar {
         id: bar
         backgroundColor: Style.color3
-        z: 1
+        z: 0
 
         OmekaText {
             anchors.centerIn: parent
@@ -162,6 +166,26 @@ Item {
                 {
                     disable_all_buttons.visible = true;
                     indicator.running = true;
+                }
+                onEndpointPressAndHold:
+                {
+                    console.log("url = ", url)
+                    for(var i = 0; i < omekaUrls.length; i++)
+                    {
+                        console.log("omekaUrls = ", omekaUrls[i])
+                        if(url == omekaUrls[i])
+                        {
+                            root.currentDeletingIndex = i
+
+                            console.log("root.currentDeletingIndex = ", root.currentDeletingIndex)
+                            if(root.currentDeletingIndex === 0)
+                            {
+                                return;
+                            }
+                        }
+                    }
+                    confirm_delete_endpoint.visible = true;
+
                 }
             }
 
@@ -256,7 +280,7 @@ Item {
     Rectangle
     {
         id: disable_all_buttons
-        color: "red"
+        color: "white"
         opacity: 0.8
         visible: false
         anchors.fill: parent
@@ -272,6 +296,89 @@ Item {
             anchors.centerIn: parent
             //running: parent.visible
             scale: Resolution.applyScale(1.5)
+        }
+    }
+    //confirm delete an endpoint
+    Rectangle
+    {
+        id: confirm_delete_endpoint
+        color: "white"
+        opacity: 0.8
+        visible: false
+        anchors.fill: parent
+        enabled: visible
+
+        MultiPointTouchArea
+        {
+            anchors.fill: parent
+
+        }
+        OmekaText
+        {
+            width: root.width
+            anchors.top: parent.top
+            anchors.topMargin: Resolution.applyScale(200)
+            anchors.horizontalCenter: parent.horizontalCenter
+            center: true
+            text: "ARE YOU SURE TO DELETE THE ENDPOINT?"
+            _font: Style.deleteFont
+        }
+
+        Button {
+            id: delete_btn
+            height: Resolution.applyScale(122)
+            x: Resolution.applyScale(100)
+            anchors.top: parent.top
+            anchors.topMargin: Resolution.applyScale(300)
+            onClicked:
+            {
+                var endpoint = ({});
+                endpoint.omekaID = omekaIDs[root.currentDeletingIndex]
+                endpoint.url = omekaUrls[root.currentDeletingIndex];
+                endpoint.title = omekaTitles[root.currentDeletingIndex];
+                ItemManager.unregisterEndpoint(endpoint);
+
+                endpoints.removeEndpoint(root.currentDeletingIndex);
+
+                confirm_delete_endpoint.visible = false;
+            }
+
+            style: ButtonStyle {
+                background: Rectangle {
+                    color: Style.color1
+                    radius: Resolution.applyScale(30)
+                }
+                label: OmekaText {
+                    center: true
+                    text: "DELETE"
+                    _font: Style.addEndpointBtnFont
+                }
+            }
+        }
+
+        Button {
+            id: cancel_btn
+            height: Resolution.applyScale(122)
+            x: Resolution.applyScale(900)
+            anchors.top: parent.top
+            anchors.topMargin: Resolution.applyScale(300)
+            onClicked:
+            {
+                root.currentDeletingIndex = -1;
+                confirm_delete_endpoint.visible = false;
+            }
+
+            style: ButtonStyle {
+                background: Rectangle {
+                    color: Style.color1
+                    radius: Resolution.applyScale(30)
+                }
+                label: OmekaText {
+                    center: true
+                    text: "CANCEL"
+                    _font: Style.addEndpointBtnFont
+                }
+            }
         }
     }
 

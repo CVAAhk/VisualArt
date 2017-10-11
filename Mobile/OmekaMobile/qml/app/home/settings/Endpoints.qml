@@ -22,6 +22,8 @@ Item {
 
     signal endpointChecked();
 
+    signal endpointPressAndHold(var url);
+
     //prevent multiple selections
     ExclusiveGroup {
         id: group
@@ -53,6 +55,7 @@ Item {
     Component {
         id: delegate
         Button {
+            id: button
             width: parent.width
             height: Resolution.applyScale(150)
             text: name
@@ -95,12 +98,38 @@ Item {
 
                     if(Omeka.endpoint != urlText)
                     {
-                        console
                         Omeka.endpoint = urlText;
                         root.endpointChecked();
                     }
                 }
             }
+
+
+               Timer {
+                   id: longPressTimer
+
+                   interval: 500 //your press-and-hold interval here
+                   repeat: false
+                   running: false
+
+                   onTriggered: {
+                       checkable = false;
+                       console.log("delete dialogue shows up!!")
+                       root.endpointPressAndHold(urlText);
+                       if(button.checked)
+                       {
+                           list.model.get(0).check = true;
+                       }
+                   }
+               }
+
+               onPressedChanged: {
+                   if ( pressed ) {
+                       longPressTimer.running = true;
+                   } else {
+                       longPressTimer.running = false;
+                   }
+               }
         }
     }
 
@@ -116,7 +145,7 @@ Item {
     */
     function removeEndpoint(index) {
         if(list.model.count > 1) {
-            list.model.remove(index+1)
+            list.model.remove(index)
         }
     }
 
