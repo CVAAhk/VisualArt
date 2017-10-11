@@ -114,11 +114,12 @@ Item {
 
                    onTriggered: {
                        checkable = false;
-                       console.log("delete dialogue shows up!!")
+
                        root.endpointPressAndHold(urlText);
                        if(button.checked)
                        {
-                           list.model.get(0).check = true;
+                           console.log("todo: switch to the first endpoint!!")
+                           //list.model.get(0).check = true;
                        }
                    }
                }
