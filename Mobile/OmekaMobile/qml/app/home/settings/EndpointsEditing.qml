@@ -11,11 +11,13 @@ Item {
     property string endpoint_url: url_input.text
 
     //default endpoint title and url
-    property var omekaIDs: []//["develop_digitalmediauconn"]
-    property var omekaTitles: []//["OMEKA EVERYWHERE"]
-    property var omekaUrls: []//["http://oe.develop.digitalmediauconn.org/"]
+    property var omekaIDs: ["omeka_mallcopy"]//["develop_digitalmediauconn"]
+    property var omekaTitles: ["MALL HISTORY COPY"]//["OMEKA EVERYWHERE"]
+    property var omekaUrls: ["http://dev.omeka.org/mallcopy/"]//["http://oe.develop.digitalmediauconn.org/"]
 
     property int currentDeletingIndex: -1
+
+    property int currentCheckedIndex: 0
 
     ///////////////////////////////////////////////////////////
     //          UI
@@ -71,6 +73,7 @@ Item {
                 if(omekaTitles.length == 1)
                 {
                     endpoints.addEndpoint(revised_title, revised_url, true)
+                    Omeka.endpoint = revised_url;
                 }
                 else
                 {
@@ -166,22 +169,31 @@ Item {
                 {
                     disable_all_buttons.visible = true;
                     indicator.running = true;
+                    for(var i = 0; i < omekaUrls.length; i++)
+                    {
+                        if(url == omekaUrls[i])
+                        {
+                            root.currentCheckedIndex = i
+
+                            console.log("root.currentCheckedIndex = ", root.currentCheckedIndex)
+
+                        }
+                    }
                 }
                 onEndpointPressAndHold:
                 {
-                    console.log("url = ", url)
+                    if(omekaUrls.length === 1)
+                    {
+                        return;
+                    }
                     for(var i = 0; i < omekaUrls.length; i++)
                     {
-                        console.log("omekaUrls = ", omekaUrls[i])
                         if(url == omekaUrls[i])
                         {
                             root.currentDeletingIndex = i
 
                             console.log("root.currentDeletingIndex = ", root.currentDeletingIndex)
-                            if(root.currentDeletingIndex === 0)
-                            {
-                                return;
-                            }
+
                         }
                     }
                     confirm_delete_endpoint.visible = true;
@@ -332,13 +344,25 @@ Item {
             anchors.topMargin: Resolution.applyScale(300)
             onClicked:
             {
+                if(root.currentDeletingIndex == -1 || root.currentDeletingIndex >= omekaIDs.length)
+                {
+                    return;
+                }
+                var endpointIsChecked = root.currentCheckedIndex === root.currentDeletingIndex;
+                console.log("endpointIsChecked = ", endpointIsChecked)
+
                 var endpoint = ({});
                 endpoint.omekaID = omekaIDs[root.currentDeletingIndex]
                 endpoint.url = omekaUrls[root.currentDeletingIndex];
                 endpoint.title = omekaTitles[root.currentDeletingIndex];
                 ItemManager.unregisterEndpoint(endpoint);
 
+                omekaIDs.splice(root.currentDeletingIndex, 1)
+                omekaUrls.splice(root.currentDeletingIndex, 1)
+                omekaTitles.splice(root.currentDeletingIndex, 1)
+
                 endpoints.removeEndpoint(root.currentDeletingIndex);
+
 
                 confirm_delete_endpoint.visible = false;
             }
@@ -366,6 +390,7 @@ Item {
             {
                 root.currentDeletingIndex = -1;
                 confirm_delete_endpoint.visible = false;
+                //endpoints.checkableTrue();
             }
 
             style: ButtonStyle {

@@ -20,7 +20,7 @@ Item {
     property var verticalOffset: Math.min(list.height + list.y, maxVerticalOffset)
     property alias current: group.current
 
-    signal endpointChecked();
+    signal endpointChecked(var url);
 
     signal endpointPressAndHold(var url);
 
@@ -43,11 +43,11 @@ Item {
         bottomMargin: height - verticalOffset
 
         model: ListModel {
-//            ListElement {
-//                name: "OMEKA EVERYWHERE"
-//                urlText: "http://oe.develop.digitalmediauconn.org/"
-//                checked: true
-//            }
+            ListElement {
+                name: "MALL HISTORY COPY"
+                urlText: "http://dev.omeka.org/mallcopy/"
+                check: true
+            }
         }
     }
 
@@ -93,13 +93,15 @@ Item {
             }
             onCheckedChanged:
             {
+                //check = checked
                 if(checked)
                 {
 
                     if(Omeka.endpoint != urlText)
                     {
                         Omeka.endpoint = urlText;
-                        root.endpointChecked();
+                        root.endpointChecked(urlText);
+                        console.log("list.currentIndex", list.currentIndex)
                     }
                 }
             }
@@ -113,14 +115,9 @@ Item {
                    running: false
 
                    onTriggered: {
-                       checkable = false;
+
 
                        root.endpointPressAndHold(urlText);
-                       if(button.checked)
-                       {
-                           console.log("todo: switch to the first endpoint!!")
-                           //list.model.get(0).check = true;
-                       }
                    }
                }
 
@@ -133,6 +130,7 @@ Item {
                }
         }
     }
+
 
     /*
       Add item to list
@@ -147,6 +145,7 @@ Item {
     function removeEndpoint(index) {
         if(list.model.count > 1) {
             list.model.remove(index)
+
         }
     }
 
