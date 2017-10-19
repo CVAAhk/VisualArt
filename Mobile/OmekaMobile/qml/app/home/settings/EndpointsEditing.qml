@@ -4,6 +4,7 @@ import QtQuick.Controls.Styles 1.4
 import "../../base"
 import "../../../utils"
 import "../../clients"
+import "../../styles"
 
 Item {
     id: root
@@ -211,23 +212,36 @@ Item {
         anchors.top: add_endpoint.bottom
         anchors.topMargin: Resolution.applyScale(18)
         color: "white"
+
         TextInput
         {
             id: url_input
             font.capitalization: Font.MixedCase
             font.pixelSize: Resolution.applyScale(68)
-            color: "#666666"
+            //style: SearchBarStyle {}
             focus: true
             validator: RegExpValidator { regExp: /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/ }//TODO: better validator
-            x: Resolution.applyScale(60)
+            anchors.fill: parent
+            anchors.margins: Resolution.applyScale(15)
             anchors.verticalCenter: parent.verticalCenter
             verticalAlignment: Text.AlignVCenter
             width: 1122
-            //height: 26
+            color: "#666666"
             selectByMouse: true
             text: qsTr("http://www...")
-            z: 1
+            //z: 1
             selectionColor: Style.color1
+            onActiveFocusChanged:
+            {
+                console.log("focus is", activeFocus)
+                if(activeFocus)
+                {
+                    if(url_input.text === "http://www...")
+                        url_input.text = "http://"
+                    clear.visible = true
+                }
+            }
+
             onTextChanged:
             {
 
@@ -241,14 +255,31 @@ Item {
                 if(!domain.match(re))
                 {
                     color = "red"
+
                     add_endpoint_btn.visible = false;
                 }
                 else
                 {
                     color = "green"
 
-                    add_endpoint_btn.visible = true;
+                    add_endpoint_btn.visible = true
                 }
+            }
+        }
+        //clear field control
+        OmekaButton {
+            id: clear
+            enabled: visible
+            visible: false
+            anchors.right: url_input.right
+            icon: Style.clear
+            iconScale: .52
+            onClicked:
+            {
+                url_input.text = "http://www...";
+                url_input.focus = false;
+                clear.visible = false;
+                url_input.color = "#666666"
             }
         }
     }
@@ -261,6 +292,7 @@ Item {
         anchors.topMargin: Resolution.applyScale(38)
         onClicked: {Omeka.getSiteInfo(add_endpoint_btn, root.endpoint_url + "api/"); console.log("add endpoint btn clicked!", root.endpoint_url + "/api/")}
         visible: false
+        enabled: visible
 
         style: ButtonStyle {
             background: Rectangle {
