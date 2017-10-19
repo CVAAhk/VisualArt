@@ -1,4 +1,5 @@
 import QtQuick 2.5
+
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import "../../../utils"
@@ -49,6 +50,8 @@ Item {
                 check: true
             }
         }
+
+
     }
 
     //filter options
@@ -93,15 +96,14 @@ Item {
             }
             onCheckedChanged:
             {
-                //check = checked
                 if(checked)
                 {
 
-                    if(Omeka.endpoint != urlText)
+
+                    if(Omeka.endpoint != urlText && urlText !== null)
                     {
                         Omeka.endpoint = urlText;
                         root.endpointChecked(urlText);
-                        console.log("list.currentIndex", list.currentIndex)
                     }
                 }
             }
@@ -115,7 +117,7 @@ Item {
                    running: false
 
                    onTriggered: {
-
+                       button.checkable = false;
 
                        root.endpointPressAndHold(urlText);
                    }
@@ -124,10 +126,28 @@ Item {
                onPressedChanged: {
                    if ( pressed ) {
                        longPressTimer.running = true;
+
                    } else {
                        longPressTimer.running = false;
                    }
                }
+        }
+    }
+
+    function checkFirstEndpoint()
+    {
+
+//        for(var child in list.contentItem.children) {
+//            console.log("list.contentItem.children[", child,"].text = ", list.contentItem.children[child].text)
+//        }
+        root.current = null;
+        if(list.contentItem.children[0].text !== undefined)
+        {
+            root.current = list.contentItem.children[0]
+        }
+        else
+        {
+            root.current = list.contentItem.children[1]
         }
     }
 

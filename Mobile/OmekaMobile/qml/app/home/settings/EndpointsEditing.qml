@@ -11,9 +11,9 @@ Item {
     property string endpoint_url: url_input.text
 
     //default endpoint title and url
-    property var omekaIDs: ["omeka_mallcopy"]//["develop_digitalmediauconn"]
-    property var omekaTitles: ["MALL HISTORY COPY"]//["OMEKA EVERYWHERE"]
-    property var omekaUrls: ["http://dev.omeka.org/mallcopy/"]//["http://oe.develop.digitalmediauconn.org/"]
+    property var omekaIDs: ["omeka_mallcopy"]
+    property var omekaTitles: ["MALL HISTORY COPY"]
+    property var omekaUrls: ["http://dev.omeka.org/mallcopy/"]
 
     property int currentDeletingIndex: -1
 
@@ -34,7 +34,6 @@ Item {
             entry = _endpoints[i]
             omekaID = entry.setting
             url = entry.value
-            console.log("omekaID = ", omekaID, " url = ", url)
             Omeka.getSiteInfo(root, url + "api/");
         }
     }
@@ -155,13 +154,6 @@ Item {
             height: childrenRect.height
             spacing: Resolution.applyScale(5)
 
-            //restore initial state when invisible
-            onVisibleChanged: {
-                if(!visible) {
-                    console.log("endpoint visible is false!!")
-                    //endpointsGroup.current = default_endpoint.endpointCategory;
-                }
-            }
             Endpoints
             {
                 id: endpoints
@@ -174,9 +166,6 @@ Item {
                         if(url == omekaUrls[i])
                         {
                             root.currentCheckedIndex = i
-
-                            console.log("root.currentCheckedIndex = ", root.currentCheckedIndex)
-
                         }
                     }
                 }
@@ -191,9 +180,6 @@ Item {
                         if(url == omekaUrls[i])
                         {
                             root.currentDeletingIndex = i
-
-                            console.log("root.currentDeletingIndex = ", root.currentDeletingIndex)
-
                         }
                     }
                     confirm_delete_endpoint.visible = true;
@@ -232,7 +218,7 @@ Item {
             font.pixelSize: Resolution.applyScale(68)
             color: "#666666"
             focus: true
-            validator: RegExpValidator { regExp: /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/ }
+            validator: RegExpValidator { regExp: /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/ }//TODO: better validator
             x: Resolution.applyScale(60)
             anchors.verticalCenter: parent.verticalCenter
             verticalAlignment: Text.AlignVCenter
@@ -341,15 +327,16 @@ Item {
             height: Resolution.applyScale(122)
             x: Resolution.applyScale(100)
             anchors.top: parent.top
-            anchors.topMargin: Resolution.applyScale(300)
+            anchors.topMargin: Resolution.applyScale(600)
+            property bool endpointIsChecked : false
             onClicked:
             {
                 if(root.currentDeletingIndex == -1 || root.currentDeletingIndex >= omekaIDs.length)
                 {
                     return;
                 }
-                var endpointIsChecked = root.currentCheckedIndex === root.currentDeletingIndex;
-                console.log("endpointIsChecked = ", endpointIsChecked)
+                endpointIsChecked = root.currentCheckedIndex === root.currentDeletingIndex;
+
 
                 var endpoint = ({});
                 endpoint.omekaID = omekaIDs[root.currentDeletingIndex]
@@ -363,6 +350,7 @@ Item {
 
                 endpoints.removeEndpoint(root.currentDeletingIndex);
 
+                delayCheck.start();
 
                 confirm_delete_endpoint.visible = false;
             }
@@ -378,6 +366,18 @@ Item {
                     _font: Style.addEndpointBtnFont
                 }
             }
+            Timer
+            {
+                id: delayCheck
+                interval: 500
+                onTriggered:
+                {
+                    if(delete_btn.endpointIsChecked)
+                    {
+                        endpoints.checkFirstEndpoint();
+                    }
+                }
+            }
         }
 
         Button {
@@ -385,12 +385,11 @@ Item {
             height: Resolution.applyScale(122)
             x: Resolution.applyScale(900)
             anchors.top: parent.top
-            anchors.topMargin: Resolution.applyScale(300)
+            anchors.topMargin: Resolution.applyScale(600)
             onClicked:
             {
                 root.currentDeletingIndex = -1;
                 confirm_delete_endpoint.visible = false;
-                //endpoints.checkableTrue();
             }
 
             style: ButtonStyle {
