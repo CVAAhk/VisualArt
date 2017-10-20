@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Config>
+  <Pin>0000</Pin>
+  <KillExplorer>true</KillExplorer>
+  <Time>15</Time>
+  <StartupItems>
+    <Item focus="false" arg="">OmekaTable2.exe</Item>
+  </StartupItems>
+</Config>
