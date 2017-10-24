@@ -2,6 +2,7 @@ import QtQuick 2.5
 import QtQuick.Controls 1.4
 import QZXing 2.3
 import QtMultimedia 5.5
+import Maker 1.0
 
 Item {
 
@@ -19,6 +20,7 @@ Item {
             camera.start()
         } else {
             camera.stop()
+            text.text = ""
         }
     }
 
@@ -28,6 +30,7 @@ Item {
             focusMode: CameraFocus.FocusContinuous
             focusPointMode: CameraFocus.FocusPointAuto
         }
+
     }
 
     VideoOutput {
@@ -47,13 +50,41 @@ Item {
             anchors.centerIn: parent
         }
     }
+    //Connect with C++ class
+    QuickMaker
+    {
+        id: quick_maker
+        objectName: "quick_maker"
+        onOrientationChanged:
+        {
+            if(orientation == 1)
+            {
+                console.log(videoOutput.width, videoOutput.height)
+                videoOutput.orientation = 90;
+            }
+            else
+            {
+                videoOutput.orientation = 0;
+            }
+        }
+    }
 
     QZXingFilter {
         id: zxingFilter
 
         decoder {
             enabledDecoders: QZXing.DecoderFormat_QR_CODE
+            tryHarder: true
             onTagFound: result = tag
+        }
+        captureRect: {
+                // setup bindings
+                videoOutput.contentRect;
+                videoOutput.sourceRect;
+                // only scan the central quarter of the area for a barcode
+                return videoOutput.mapRectToSource(videoOutput.mapNormalizedRectToItem(Qt.rect(
+                0.25, 0.25, 0.5, 0.5
+            )));
         }
     }
 

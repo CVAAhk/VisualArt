@@ -13,13 +13,17 @@ SOURCES += main.cpp \
     shareutils.cpp \
     applicationloader.cpp \
     sequentialguid.cpp \
-    qutils.cpp
+    qutils.cpp \
+    quickmaker.cpp \
+    mainwindow.cpp
 
 HEADERS += \
     shareutils.h \
     applicationloader.h \
     sequentialguid.h \
-    qutils.h
+    qutils.h \
+    quickmaker.h \
+    mainwindow.h
 
 RESOURCES += qml.qrc
 
