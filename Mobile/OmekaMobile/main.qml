@@ -15,7 +15,7 @@ ApplicationWindow {
         Foreground.floatMessage = message
     }
 
-    PageNavigation { }
+    PageNavigation { id: page_navigation }
 
     //orientation testing
     Item {
@@ -37,5 +37,20 @@ ApplicationWindow {
     //unobtrusive floating message to display errors and other notifications
     FloatMessage {
         id: message
+    }
+
+    onClosing:
+    {
+        if(!page_navigation.onHome())
+        {
+            close.accepted = false;
+            page_navigation.navigateToHome();
+        }
+        else
+        {
+            close.accepted = true;
+        }
+
+
     }
 }
