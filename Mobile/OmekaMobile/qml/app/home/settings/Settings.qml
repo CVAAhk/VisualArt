@@ -86,7 +86,7 @@ Item {
                     text: User.aboutCollection
                 }
                 AboutSetting {
-                    title: "About Omeka and Open Exhibits"
+                    title: "About Omeka Everywhere Mobile"
                     text: User.aboutOOE
                 }
             }

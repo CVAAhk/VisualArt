@@ -233,7 +233,6 @@ Item {
             selectionColor: Style.color1
             onActiveFocusChanged:
             {
-                console.log("focus is", activeFocus)
                 if(activeFocus)
                 {
                     if(url_input.text === "http://www...")
@@ -286,6 +285,7 @@ Item {
 
     Button {
         id: add_endpoint_btn
+        width: parent.width/3
         height: Resolution.applyScale(122)
         anchors.horizontalCenter: root.horizontalCenter
         anchors.top: edit_url_area.bottom
@@ -347,7 +347,7 @@ Item {
         {
             width: root.width
             anchors.top: parent.top
-            anchors.topMargin: Resolution.applyScale(200)
+            anchors.topMargin: Resolution.applyScale(400)
             anchors.horizontalCenter: parent.horizontalCenter
             center: true
             text: "ARE YOU SURE TO DELETE THE ENDPOINT?"
@@ -356,10 +356,11 @@ Item {
 
         Button {
             id: delete_btn
+            width: parent.width/4
             height: Resolution.applyScale(122)
-            x: Resolution.applyScale(100)
+            x: parent.width/6
             anchors.top: parent.top
-            anchors.topMargin: Resolution.applyScale(600)
+            anchors.topMargin: Resolution.applyScale(800)
             property bool endpointIsChecked : false
             onClicked:
             {
@@ -414,10 +415,11 @@ Item {
 
         Button {
             id: cancel_btn
+            width: parent.width/4
             height: Resolution.applyScale(122)
-            x: Resolution.applyScale(900)
+            x: parent.width * 3/5
             anchors.top: parent.top
-            anchors.topMargin: Resolution.applyScale(600)
+            anchors.topMargin: Resolution.applyScale(800)
             onClicked:
             {
                 root.currentDeletingIndex = -1;

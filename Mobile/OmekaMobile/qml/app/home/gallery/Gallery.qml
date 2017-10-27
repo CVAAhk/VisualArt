@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.4
+import Maker 1.0
 import "../settings"
 import "../../../utils"
 import "../../clients"
@@ -71,6 +72,38 @@ Item {
         minHeight: maxY
         maxHeight: bar.height
         source: Style.omekaLogo
+    }
+
+    //Connect with C++ class
+    QuickMaker
+    {
+        id: quick_maker
+        objectName: "quick_maker"
+        onOrientationChanged:
+        {
+            overlay.opacity = 0.8;
+            overlay_timer.restart()
+        }
+    }
+    Rectangle
+    {
+        id: overlay
+        anchors.fill: parent
+        opacity: 0.0
+        color: "white"
+        Behavior on opacity {
+
+            NumberAnimation {
+                duration: 200
+                easing.type: Easing.InOutQuad
+            }
+        }
+    }
+    Timer
+    {
+        id: overlay_timer
+        interval: 500
+        onTriggered: overlay.opacity = 0.0;
     }
 
 }

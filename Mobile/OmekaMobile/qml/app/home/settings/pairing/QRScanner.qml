@@ -59,7 +59,6 @@ Item {
         {
             if(orientation == 1)
             {
-                console.log(videoOutput.width, videoOutput.height)
                 videoOutput.orientation = 90;
             }
             else
