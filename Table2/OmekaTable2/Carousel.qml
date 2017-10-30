@@ -417,6 +417,10 @@ Item
                 pairing.startSession();
                 pairing_timeout.start();
             }
+            else {
+                pairing_timeout.stop();
+                pairing.endSession();
+            }
 
         }
     }

@@ -213,7 +213,6 @@ Item
    function timeoutPairing()
    {
        deviceId = null;
-       resetItems();
        items.length = 0;
        pair_code.visible = false;
        pair_successful.visible = false;
