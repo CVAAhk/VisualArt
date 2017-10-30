@@ -243,6 +243,7 @@ Item
 
         //unpair on empty device id
         if(paired && deviceId.length === 0) {
+            endSession();
             paired = false;
         }
         //pair on non-empty device id
