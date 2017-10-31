@@ -30,7 +30,6 @@ Item {
             focusMode: CameraFocus.FocusContinuous
             focusPointMode: CameraFocus.FocusPointAuto
         }
-
     }
 
     VideoOutput {
