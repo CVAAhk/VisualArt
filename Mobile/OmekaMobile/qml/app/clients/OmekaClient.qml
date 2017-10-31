@@ -8,21 +8,17 @@ Item {
     /*! \qmlproperty
         Target omeka endpoint url
     */
-    //property url endpoint: "http://oe.develop.digitalmediauconn.org/"
-    property url endpoint: "http://dev.omeka.org/mallcopy/"
-    //property url endpoint: "http://www.huapala.net/"  //no heist support test
-    //property url endpoint: "http://marb.kennesaw.edu/identities/"  //no enabled api test
-    //property url endpoint
+    property url endpoint
 
     /*! \qmlproperty
         Target omeka rest api
     */
-    property url rest: endpoint+"api/"
+    property url rest
 
     /*! \qmlproperty
         Url root path for sharing items
     */
-    property url link: endpoint+"items/show/"
+    property url link
 
     /*! \qmlproperty
         Current page number
@@ -53,6 +49,11 @@ Item {
         The site title
     */
     property var title: ""
+
+    /*! \qmlproperty
+        This site description
+    */
+    property var description: ""
 
     /*!
       \internal
@@ -100,6 +101,8 @@ Item {
     //Check api on complete
     onEndpointChanged: {
         loaded = false
+        rest = endpoint+"api/"
+        link = endpoint+"items/show/"
         omekaID = prettyName(endpoint)
         getSiteInfo(omeka_client)
         pingAPI()
@@ -144,8 +147,10 @@ Item {
             if(request.readyState === XMLHttpRequest.DONE) {
                 try {
                     var result = JSON.parse(request.responseText)
+                    console.log("RESULT: "+result.description)
                     if(context === omeka_client) {
                         title = result.title || omekaID
+                        description = result.description
                     } else {
                         result.context = context
                         result.omekaID = prettyName(url.substring(0, url.lastIndexOf("api")))
@@ -153,7 +158,9 @@ Item {
                         result.url = url
                         siteInfo(result)
                     }
-                } catch(e) {disabledAPI()}
+                } catch(e) {
+                    disabledAPI()
+                }
             }
         }
         var api = url || rest

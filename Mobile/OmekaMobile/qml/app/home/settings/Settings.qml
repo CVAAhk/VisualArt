@@ -3,6 +3,7 @@ import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import "../../home"
 import "../../base"
+import "../../clients"
 import "../../../utils"
 import "pairing"
 
@@ -83,7 +84,7 @@ Item {
                 ClearLikesSetting { title: "Clear All Likes" }
                 AboutSetting {
                     title: "About The Collections"
-                    text: User.aboutCollection
+                    text: User.aboutCollection || Omeka.description
                 }
                 AboutSetting {
                     title: "About Omeka Everywhere Mobile"
