@@ -41,7 +41,10 @@ Item {
 
     Connections {
         target: Omeka
-        onLoadComplete: {console.log("ENDPOINT LOADED: "+Omeka.endpoint);indicator.running = false;disable_all_buttons.visible = false;}
+        onLoadComplete: {
+            indicator.running = false;
+            disable_all_buttons.visible = false;
+        }
         onSiteInfo: {
             if(result.context === root) {
                 for(var i = 0; i < omekaIDs.length; i++)

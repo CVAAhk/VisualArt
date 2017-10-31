@@ -147,7 +147,6 @@ Item {
             if(request.readyState === XMLHttpRequest.DONE) {
                 try {
                     var result = JSON.parse(request.responseText)
-                    console.log("RESULT: "+result.description)
                     if(context === omeka_client) {
                         title = result.title || omekaID
                         description = result.description

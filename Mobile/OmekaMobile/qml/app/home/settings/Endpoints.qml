@@ -98,8 +98,6 @@ Item {
             {
                 if(checked)
                 {
-
-
                     if(Omeka.endpoint != urlText && urlText !== null)
                     {
                         Omeka.endpoint = urlText;
