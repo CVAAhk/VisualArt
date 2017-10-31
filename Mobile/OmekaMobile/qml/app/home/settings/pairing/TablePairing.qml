@@ -161,6 +161,7 @@ Item {
     function pair() {
         if(state === "unpaired") {            
             scanner.start = false
+            Foreground.hideMessage();
             Heist.setPairing(scanner.code, deviceId);
             state = "paired";
         }

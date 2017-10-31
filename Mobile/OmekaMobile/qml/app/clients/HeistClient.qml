@@ -247,7 +247,7 @@ Item {
       \a context - calling object instance
     */
     function submitRequest(url, type, body, context) {
-        console.log("REQUEST: "+url+" "+body);
+        //console.log("REQUEST: "+body);
         var request = new XMLHttpRequest();
         request.type = type;
         request.context = context;
@@ -368,7 +368,7 @@ Item {
         if(!(code in items)) {
             items[code] = [];
         }
-        items[code].push(item);
+        items[code].push(Number(item));
         updateData(heistURL+sessions[code], {item_ids: items[code]}, context);
     }
 
@@ -456,7 +456,7 @@ Item {
         if(!(code in items)) {
             items[code] = [];
         }
-        items[code].push(item_id);
+        items[code].push(Number(item_id));
         Omeka.getItemById(item_id, heist_manager, endpoint+"api/");
     }
 
@@ -476,11 +476,11 @@ Item {
       /a context - calling object
     */
     function removeItem(code, item, context) {
-        if(!(code in sessions)) return;
-        if(code in items && items[code].indexOf(item) > -1) {
-            var index = items[code].indexOf(item);
+        if(!(code in sessions) || !(code in items)) return;
+        var index = items[code].indexOf(item);
+        if(index > -1) {
             items[code].splice(index, 1);
-            updateData(heistURL+sessions[code], {item_ids: items[code]}, context);
+            //updateData(heistURL+sessions[code], {item_ids: items[code]}, context);
         }
     }
 
