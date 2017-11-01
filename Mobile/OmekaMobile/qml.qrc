@@ -152,5 +152,6 @@
         <file>ui/back_key.png</file>
         <file>ui/check.png</file>
         <file>ui/add endpoint_btn.png</file>
+		<file>ui/QR-frame.png</file>
     </qresource>
 </RCC>
