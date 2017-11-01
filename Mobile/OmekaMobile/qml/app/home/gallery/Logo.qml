@@ -33,18 +33,15 @@ Rectangle {
 
     onTitleChanged: site_title.text = title
 
+    //main logo image
     Image{
         id: logo
         anchors.centerIn: parent
         anchors.fill: parent
         anchors.margins: Resolution.applyScale(30)
         fillMode: Image.PreserveAspectFit
-        onWidthChanged: {
-            rect.width = paintedWidth * 0.5
-        }
-        onHeightChanged: {
-            rect.height = paintedHeight * 0.5
-        }
+        onWidthChanged: rect.width = paintedWidth * 0.5
+        onHeightChanged: rect.height = paintedHeight * 0.5
     }
 
     //static image of title text to prevent dynamic text resizing
@@ -56,6 +53,7 @@ Rectangle {
         anchors.leftMargin: Resolution.applyScale(-15)
         width: rect.width
         height: rect.height
+        opacity: NumberUtils.map(contentY, minY, maxY, 1, 0)
 
         onSourceChanged: rect.enabled = false
     }
