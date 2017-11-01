@@ -20,10 +20,10 @@ MainWindow::MainWindow(QWidget *parent)
 }
 void MainWindow::orientationChanged(Qt::ScreenOrientation orientation)
 {
-    qDebug() << "Orientation:" << orientation;
+    //qDebug() << "Orientation:" << orientation;
     if(QuickMaker *quick_maker = QuickMaker::Instance)
     {
-        //qDebug() << "editor_info is loaded";
+        qDebug() << "Orientation:" << orientation;
         quick_maker->orientationChanged(orientation);
 
 
@@ -32,4 +32,10 @@ void MainWindow::orientationChanged(Qt::ScreenOrientation orientation)
     {
         qDebug() << "QuickMaker is failed";
     }
+}
+
+Qt::ScreenOrientation MainWindow::getInitialOrientation()
+{
+    QScreen *screen = QGuiApplication::primaryScreen();
+    return screen->orientation();
 }
