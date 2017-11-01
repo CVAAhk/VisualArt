@@ -1,6 +1,5 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.4
-import Maker 1.0
 import "../settings"
 import "../../../utils"
 import "../../clients"
@@ -75,16 +74,16 @@ Item {
     }
 
     //Connect with C++ class
-    QuickMaker
-    {
-        id: quick_maker
-        objectName: "quick_maker"
-        onOrientationChanged:
-        {
-            overlay.opacity = 0.8;
-            overlay_timer.restart()
-        }
-    }
+//    QuickMaker
+//    {
+//        id: quick_maker
+//        objectName: "quick_maker"
+//        onOrientationChanged:
+//        {
+//            overlay.opacity = 0.8;
+//            overlay_timer.restart()
+//        }
+//    }
     Rectangle
     {
         id: overlay

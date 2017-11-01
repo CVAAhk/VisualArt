@@ -17,6 +17,8 @@ signals:
 
     void orientationChanged(Qt::ScreenOrientation orientation);
 
+    void initialOrientation(Qt::ScreenOrientation orientation);
+
 };
 
 #endif // QUICKMAKER_H

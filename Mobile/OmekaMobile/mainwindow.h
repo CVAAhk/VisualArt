@@ -17,8 +17,12 @@ public:
 
     static MainWindow *Instance;
 
+    Q_INVOKABLE Qt::ScreenOrientation getInitialOrientation();
+
+
 public slots:
     void orientationChanged(Qt::ScreenOrientation orientation);
+
 
 
 
