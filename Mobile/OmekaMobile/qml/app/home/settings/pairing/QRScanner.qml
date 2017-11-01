@@ -61,7 +61,7 @@ Item {
         objectName: "quick_maker"
         onOrientationChanged:
         {
-            console.log("orientation changes: ", orientation)
+            //console.log("orientation changes: ", orientation)
             setOrientation(orientation)
         }
     }
@@ -115,17 +115,43 @@ Item {
 
     function setOrientation(orientation)
     {
-        if(orientation == 1)
+
+        console.log("orientation: "+orientation)
+        /***SET 1***/
+//        if(orientation === 1)
+//        {
+//            videoOutput.orientation = 270;
+//        }
+//        if(orientation === 2)
+//        {
+//            videoOutput.orientation = 0;
+//        }
+//        else if(orientation === 8)
+//        {
+//            videoOutput.orientation = 180;
+//        }
+//        else if(orientation === 4)
+//        {
+//            videoOutput.orientation = 90;
+//        }
+
+
+        /***SET 2***/
+        if(orientation === 1)
         {
             videoOutput.orientation = 90;
         }
-        else if(orientation == 8)
+        if(orientation === 2)
+        {
+            videoOutput.orientation = 180;
+        }
+        else if(orientation === 8)
         {
             videoOutput.orientation = 0;
         }
-        else if(orientation == 2)
+        else if(orientation === 4)
         {
-            videoOutput.orientation = 180;
+            videoOutput.orientation = 270;
         }
     }
 
