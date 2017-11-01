@@ -14,9 +14,6 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
     app.processEvents();
     app.setQuitOnLastWindowClosed(true);
-    app.setOrganizationName("Ideum");
-    app.setOrganizationDomain("ideum.com");
-    app.setApplicationName("OmekaMobile");
 
     qmlRegisterType<QuickMaker>("Maker", 1, 0, "QuickMaker");
 
