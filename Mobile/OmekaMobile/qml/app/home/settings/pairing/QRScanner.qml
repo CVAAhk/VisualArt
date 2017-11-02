@@ -43,7 +43,6 @@ Item {
         anchors.fill: parent
         fillMode: VideoOutput.PreserveAspectCrop
         filters: [zxingFilter]
-        orientation: 90
 
         Rectangle {
             id: captureZone
