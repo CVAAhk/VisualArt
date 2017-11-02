@@ -212,7 +212,7 @@ Item {
         anchors.bottom: edit_url_area.top
         anchors.bottomMargin: Resolution.applyScale(30)
         anchors.left: parent.left
-        anchors.leftMargin: Resolution.applyScale(60)
+        anchors.leftMargin: Resolution.applyScale(30)
         text: "Add new site"
         _font: Style.addEndpointFont
     }
