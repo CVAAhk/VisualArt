@@ -12,7 +12,11 @@ Item {
     property var result
     property bool start
 
-    Component.onCompleted: start = false
+    Component.onCompleted:
+    {
+        setOrientation(MainWindow.getInitialOrientation())
+        start = false;
+    }
     onVisibleChanged: start = visible
 
     onStartChanged: {
@@ -30,6 +34,7 @@ Item {
             focusMode: CameraFocus.FocusContinuous
             focusPointMode: CameraFocus.FocusPointAuto
         }
+
     }
 
     VideoOutput {
@@ -56,14 +61,8 @@ Item {
         objectName: "quick_maker"
         onOrientationChanged:
         {
-            if(orientation == 1)
-            {
-                videoOutput.orientation = 90;
-            }
-            else
-            {
-                videoOutput.orientation = 0;
-            }
+            //console.log("orientation changes: ", orientation)
+            setOrientation(orientation)
         }
     }
 
@@ -113,4 +112,47 @@ Item {
         text.text = "INVALID QR CODE FORMAT: "+result
         console.error("INVALID QR CODE FORMAT: "+result)
     }
+
+    function setOrientation(orientation)
+    {
+
+        console.log("orientation: "+orientation)
+        /***SET 1***/
+//        if(orientation === 1)
+//        {
+//            videoOutput.orientation = 270;
+//        }
+//        if(orientation === 2)
+//        {
+//            videoOutput.orientation = 0;
+//        }
+//        else if(orientation === 8)
+//        {
+//            videoOutput.orientation = 180;
+//        }
+//        else if(orientation === 4)
+//        {
+//            videoOutput.orientation = 90;
+//        }
+
+
+        /***SET 2***/
+        if(orientation === 1)
+        {
+            videoOutput.orientation = 90;
+        }
+        if(orientation === 2)
+        {
+            videoOutput.orientation = 180;
+        }
+        else if(orientation === 8)
+        {
+            videoOutput.orientation = 0;
+        }
+        else if(orientation === 4)
+        {
+            videoOutput.orientation = 270;
+        }
+    }
+
 }
