@@ -92,7 +92,7 @@ Item {
     signal siteInfo(var result)
     /*! \qmlsignal
         Invoked on site info results*/
-    signal disabledAPI()
+    signal disabledAPI(var context)
 
     /*! \qmlsignal
         Invoked initial page load*/
@@ -158,7 +158,7 @@ Item {
                         siteInfo(result)
                     }
                 } catch(e) {
-                    disabledAPI()
+                    disabledAPI(context)
                 }
             }
         }

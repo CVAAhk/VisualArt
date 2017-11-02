@@ -18,7 +18,7 @@ Item {
 
     property int currentDeletingIndex: -1
 
-    property int currentCheckedIndex: 0
+    property int currentCheckedIndex: 0        
 
     ///////////////////////////////////////////////////////////
     //          UI
@@ -121,8 +121,27 @@ Item {
                 ItemManager.registerEndpoint(endpoint);
                 resetAddNewEndpointArea();
             }
-        }
+            //text input changes
+            if(result.context === url_input){
+                url_input.color = "green"
 
+                add_endpoint_btn.visible = true
+
+                Foreground.hideMessage();
+            }
+
+        }
+        onDisabledAPI: {
+
+            if(context === url_input)
+            {
+                url_input.color = "red"
+
+                add_endpoint_btn.visible = false;
+
+                root.endpointError("INVALID URL. MAKE SURE API IS ENABLED.");
+            }
+        }
     }
 
     /*!Pairing header and back button*/
@@ -133,7 +152,7 @@ Item {
 
         OmekaText {
             anchors.centerIn: parent
-            text: "select an endpoint"
+            text: "select a site to load"
             _font: Style.titleFont
         }
 
@@ -145,13 +164,25 @@ Item {
         }
     }
 
+    OmekaText {
+        id: description
+        anchors.top: bar.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+        width: parent.width * 0.95
+        height: contentHeight
+        _font: Style.siteListFont
+        text: User.omekaSiteList
+    }
+
     /*!List of endpoints*/
     OmekaScrollView {
         id: scroll
         width: parent.width
-        height: parent.height - bar.height * 2
-        anchors.top: bar.bottom
-        anchors.topMargin: Resolution.applyScale(95)
+        anchors.top: description.bottom
+        anchors.topMargin: Resolution.applyScale(30)
+        anchors.bottom: add_endpoint.top
+        anchors.bottomMargin: Resolution.applyScale(30)
+
         Column {
             ExclusiveGroup { id: endpointsGroup }
             width: scroll.width
@@ -198,13 +229,12 @@ Item {
     OmekaText
     {
         id: add_endpoint
-        anchors.top: bar.bottom
-        anchors.topMargin: Resolution.applyScale(714)
+        anchors.bottom: edit_url_area.top
+        anchors.bottomMargin: Resolution.applyScale(30)
         anchors.left: parent.left
-        anchors.leftMargin: Resolution.applyScale(60)
-        text: "Add new endpoint"
+        anchors.leftMargin: Resolution.applyScale(30)
+        text: "Add new site"
         _font: Style.addEndpointFont
-
     }
 
     Rectangle
@@ -212,8 +242,8 @@ Item {
         id: edit_url_area
         width: parent.width
         height: Resolution.applyScale(150)
-        anchors.top: add_endpoint.bottom
-        anchors.topMargin: Resolution.applyScale(18)
+        anchors.bottom: add_endpoint_btn.top
+        anchors.bottomMargin: Resolution.applyScale(100)
         color: "white"
 
         TextInput
@@ -247,26 +277,17 @@ Item {
             onTextChanged:
             {
 
-                var re = new RegExp('^(https?:\\/\\/)?'+ // protocol
-                                    '[A-Z0-9._%+-]+\.(?:[A-Z0-9-]+\.)+[A-Z]{2,4}$', 'i');
+
+//                var re = new RegExp('^(https?:\\/\\/)?'+ // protocol
+
 //                                    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|'+ // domain name
 //                                    '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
 //                                    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
 //                                    '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
 //                                    '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
-                var domain = text
-                if(!domain.match(re))
-                {
-                    color = "red"
 
-                    add_endpoint_btn.visible = false;
-                }
-                else
-                {
-                    color = "green"
-
-                    add_endpoint_btn.visible = true
-                }
+                if(text !== "http://www..." && text !== "http://")
+                    Omeka.getSiteInfo(url_input, text + "api/");
             }
         }
         //clear field control
@@ -283,6 +304,8 @@ Item {
                 url_input.focus = false;
                 clear.visible = false;
                 url_input.color = "#666666"
+                Foreground.hideMessage();
+                add_endpoint_btn.visible = false;
             }
         }
     }
@@ -292,8 +315,8 @@ Item {
         width: parent.width/3
         height: Resolution.applyScale(122)
         anchors.horizontalCenter: root.horizontalCenter
-        anchors.top: edit_url_area.bottom
-        anchors.topMargin: Resolution.applyScale(38)
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: Resolution.applyScale(300)
         onClicked: {Omeka.getSiteInfo(add_endpoint_btn, root.endpoint_url + "api/"); console.log("add endpoint btn clicked!", root.endpoint_url + "/api/")}
         visible: false
         enabled: visible
@@ -305,7 +328,7 @@ Item {
             }
             label: OmekaText {
                 center: true
-                text: "ADD ENDPOINT"
+                text: "ADD SITE"
                 _font: Style.addEndpointBtnFont
             }
         }
@@ -354,7 +377,7 @@ Item {
             anchors.topMargin: Resolution.applyScale(400)
             anchors.horizontalCenter: parent.horizontalCenter
             center: true
-            text: "ARE YOU SURE TO DELETE THE ENDPOINT?"
+            text: "ARE YOU SURE YOU WANT TO DELETE THE URL?"
             _font: Style.deleteFont
         }
 
@@ -449,6 +472,14 @@ Item {
         url_input.text = qsTr("http://www...");
         url_input.color = "#666666"
         add_endpoint_btn.visible = false;
+    }
+    /*
+      Handles errors during text changes
+    */
+    function endpointError(error) {
+        if(error) {
+            Foreground.showError(error, 3000, Resolution.applyScale(300));
+        }
     }
 
 }
