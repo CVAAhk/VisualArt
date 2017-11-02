@@ -1,5 +1,6 @@
 pragma Singleton
 import QtQuick 2.5
+import Maker 1.0
 
 Item {
     /*! App window */
@@ -9,7 +10,7 @@ Item {
     /*! Total height of app window */
     property int appHeight: appWindow ? appWindow.height : 0
     /*! True when window has a portrait orientation and false when landscape */
-    property bool portrait: appWidth < appHeight
+    property bool portrait
     /*! Width of target widow */
     property int targetWidth: 1440
     /*! Height of target window */
@@ -24,5 +25,14 @@ Item {
     /*! Apply scale ratio to provided value*/
     function applyScale(value){
         return value * scaleRatio
+    }
+
+    Component.onCompleted: {
+        var o = MainWindow.getInitialOrientation()
+        portrait = o !== 2 && o !== 8
+    }
+
+    QuickMaker {
+        onOrientationChanged: portrait = orientation !== 2 && o !== 8
     }
 }
