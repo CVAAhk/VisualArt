@@ -44,11 +44,11 @@ Item {
         bottomMargin: height - verticalOffset
 
         model: ListModel {
-            ListElement {
-                name: "MALL HISTORY COPY"
-                urlText: "http://dev.omeka.org/mallcopy/"
-                check: true
-            }
+//            ListElement {
+//                name: "MALL HISTORY COPY"
+//                urlText: "http://dev.omeka.org/mallcopy/"
+//                check: true
+//            }
         }
 
 
@@ -102,6 +102,7 @@ Item {
                     {
                         Omeka.endpoint = urlText;
                         root.endpointChecked(urlText);
+                        User.setLastSelectedEndpoint(urlText);
                     }
                 }
             }
