@@ -18,7 +18,7 @@ Item {
 
     property int currentDeletingIndex: -1
 
-    property int currentCheckedIndex: 0
+    property int currentCheckedIndex: 0        
 
     ///////////////////////////////////////////////////////////
     //          UI
@@ -122,7 +122,6 @@ Item {
                 resetAddNewEndpointArea();
             }
         }
-
     }
 
     /*!Pairing header and back button*/
@@ -133,7 +132,7 @@ Item {
 
         OmekaText {
             anchors.centerIn: parent
-            text: "select an endpoint"
+            text: "select a site to load"
             _font: Style.titleFont
         }
 
@@ -145,13 +144,25 @@ Item {
         }
     }
 
+    OmekaText {
+        id: description
+        anchors.top: bar.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+        width: parent.width * 0.95
+        height: contentHeight
+        _font: Style.siteListFont
+        text: User.omekaSiteList
+    }
+
     /*!List of endpoints*/
     OmekaScrollView {
         id: scroll
         width: parent.width
-        height: parent.height - bar.height * 2
-        anchors.top: bar.bottom
-        anchors.topMargin: Resolution.applyScale(95)
+        anchors.top: description.bottom
+        anchors.topMargin: Resolution.applyScale(30)
+        anchors.bottom: add_endpoint.top
+        anchors.bottomMargin: Resolution.applyScale(30)
+
         Column {
             ExclusiveGroup { id: endpointsGroup }
             width: scroll.width
@@ -198,13 +209,12 @@ Item {
     OmekaText
     {
         id: add_endpoint
-        anchors.top: bar.bottom
-        anchors.topMargin: Resolution.applyScale(714)
+        anchors.bottom: edit_url_area.top
+        anchors.bottomMargin: Resolution.applyScale(30)
         anchors.left: parent.left
         anchors.leftMargin: Resolution.applyScale(60)
-        text: "Add new endpoint"
+        text: "Add new site"
         _font: Style.addEndpointFont
-
     }
 
     Rectangle
@@ -212,8 +222,8 @@ Item {
         id: edit_url_area
         width: parent.width
         height: Resolution.applyScale(150)
-        anchors.top: add_endpoint.bottom
-        anchors.topMargin: Resolution.applyScale(18)
+        anchors.bottom: add_endpoint_btn.top
+        anchors.bottomMargin: Resolution.applyScale(100)
         color: "white"
 
         TextInput
@@ -291,8 +301,8 @@ Item {
         width: parent.width/3
         height: Resolution.applyScale(122)
         anchors.horizontalCenter: root.horizontalCenter
-        anchors.top: edit_url_area.bottom
-        anchors.topMargin: Resolution.applyScale(38)
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: Resolution.applyScale(300)
         onClicked: {Omeka.getSiteInfo(add_endpoint_btn, root.endpoint_url + "api/"); console.log("add endpoint btn clicked!", root.endpoint_url + "/api/")}
         visible: false
         enabled: visible
@@ -304,7 +314,7 @@ Item {
             }
             label: OmekaText {
                 center: true
-                text: "ADD ENDPOINT"
+                text: "ADD SITE"
                 _font: Style.addEndpointBtnFont
             }
         }
@@ -353,7 +363,7 @@ Item {
             anchors.topMargin: Resolution.applyScale(400)
             anchors.horizontalCenter: parent.horizontalCenter
             center: true
-            text: "ARE YOU SURE TO DELETE THE ENDPOINT?"
+            text: "ARE YOU SURE YOU WANT TO DELETE THE URL?"
             _font: Style.deleteFont
         }
 

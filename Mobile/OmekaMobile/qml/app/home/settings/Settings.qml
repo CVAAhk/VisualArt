@@ -63,7 +63,7 @@ Item {
                 LayoutSetting { title: "Layout" }
                 EndpointsSetting
                 {
-                    title: "Endpoints"
+                    title: "Omeka Sites"
                     onActivate: {
                         if(homeStack) {
                             homeStack.push(endpointsEditing);
