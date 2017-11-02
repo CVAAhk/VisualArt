@@ -121,6 +121,26 @@ Item {
                 ItemManager.registerEndpoint(endpoint);
                 resetAddNewEndpointArea();
             }
+            //text input changes
+            if(result.context === url_input){
+                url_input.color = "green"
+
+                add_endpoint_btn.visible = true
+
+                Foreground.hideMessage();
+            }
+
+        }
+        onDisabledAPI: {
+
+            if(context === url_input)
+            {
+                url_input.color = "red"
+
+                add_endpoint_btn.visible = false;
+
+                root.endpointError("INVALID URL. MAKE SURE API IS ENABLED.");
+            }
         }
     }
 
@@ -257,25 +277,15 @@ Item {
             onTextChanged:
             {
 
-                var re = new RegExp('^(https?:\\/\\/)?'+ // protocol
-                                    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|'+ // domain name
-                                    '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
-                                    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
-                                    '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
-                                    '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
-                var domain = text
-                if(!domain.match(re))
-                {
-                    color = "red"
+//                var re = new RegExp('^(https?:\\/\\/)?'+ // protocol
+//                                    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|'+ // domain name
+//                                    '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+//                                    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
+//                                    '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+//                                    '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
 
-                    add_endpoint_btn.visible = false;
-                }
-                else
-                {
-                    color = "green"
-
-                    add_endpoint_btn.visible = true
-                }
+                if(text !== "http://www..." && text !== "http://")
+                    Omeka.getSiteInfo(url_input, text + "api/");
             }
         }
         //clear field control
@@ -292,6 +302,8 @@ Item {
                 url_input.focus = false;
                 clear.visible = false;
                 url_input.color = "#666666"
+                Foreground.hideMessage();
+                add_endpoint_btn.visible = false;
             }
         }
     }
@@ -458,6 +470,14 @@ Item {
         url_input.text = qsTr("http://www...");
         url_input.color = "#666666"
         add_endpoint_btn.visible = false;
+    }
+    /*
+      Handles errors during text changes
+    */
+    function endpointError(error) {
+        if(error) {
+            Foreground.showError(error, 3000, Resolution.applyScale(300));
+        }
     }
 
 }
