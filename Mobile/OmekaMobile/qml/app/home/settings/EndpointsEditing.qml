@@ -123,11 +123,26 @@ Item {
             }
             //text input changes
             if(result.context === url_input){
+                for(var i = 0; i < omekaIDs.length; i++)
+                {
+                    if(result.omekaID === omekaIDs[i])
+                    {
+                        url_input.color = "red"
+
+                        add_endpoint_btn.visible = false;
+
+                        endpointError("INVALID URL. SITE ALREADY EXISTS.");
+
+                        return;
+                    }
+                }
                 url_input.color = "green"
 
                 add_endpoint_btn.visible = true
 
                 Foreground.hideMessage();
+
+
             }
 
         }
