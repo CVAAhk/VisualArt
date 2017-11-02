@@ -43,4 +43,12 @@ Item {
     function likesExist() {
         return Settings.getLikes().length > 0
     }
+
+    function setLastSelectedEndpoint(urlText) {
+        Settings.setLastSelectedEndpoint(urlText)
+    }
+
+    function getLastSelectedEndpoint() {
+        return Settings.getLastSelectedEndpoint()
+    }
 }

@@ -12,9 +12,9 @@ Item {
     property string endpoint_url: url_input.text
 
     //default endpoint title and url
-    property var omekaIDs: ["omeka_mallcopy"]
-    property var omekaTitles: ["MALL HISTORY COPY"]
-    property var omekaUrls: ["http://dev.omeka.org/mallcopy/"]
+    property var omekaIDs: []//["omeka_mallcopy"]
+    property var omekaTitles: []//["MALL HISTORY COPY"]
+    property var omekaUrls: []//["http://dev.omeka.org/mallcopy/"]
 
     property int currentDeletingIndex: -1
 
@@ -30,6 +30,7 @@ Item {
         var url
         var omekaID
 
+        Omeka.getSiteInfo(add_endpoint_btn, "http://dev.omeka.org/mallcopy/api/");
         var _endpoints = ItemManager.getEndpoints()
         for(var i=0; i<_endpoints.length; i++) {
             entry = _endpoints[i]
@@ -46,6 +47,7 @@ Item {
             disable_all_buttons.visible = false;
         }
         onSiteInfo: {
+            //when app starts, load the stored endpoints
             if(result.context === root) {
                 for(var i = 0; i < omekaIDs.length; i++)
                 {
@@ -73,8 +75,9 @@ Item {
 
                 var url_length = result.url.length
 
-                if(omekaTitles.length == 1)
+                if(revised_url === User.getLastSelectedEndpoint())
                 {
+
                     endpoints.addEndpoint(revised_title, revised_url, true)
                     Omeka.endpoint = revised_url;
                 }
@@ -95,10 +98,11 @@ Item {
                         return;
                     }
                 }
+                var revised_url = result.url.slice(0, (result.url.length - 4));
 
                 omekaIDs.push(result.omekaID)
                 omekaTitles.push(result.title)
-                omekaUrls.push(root.endpoint_url)
+                omekaUrls.push(revised_url)
 
                 var revised_title
                 if(result.title.length > 40)
@@ -111,11 +115,12 @@ Item {
                     revised_title = result.title;
                 }
 
-                endpoints.addEndpoint(revised_title, root.endpoint_url, false)
+                endpoints.addEndpoint(revised_title, revised_url, false)
+
 
                 var endpoint = ({});
                 endpoint.omekaID = result.omekaID;
-                endpoint.url = root.endpoint_url;
+                endpoint.url = revised_url;
                 endpoint.title = result.title;
 
                 ItemManager.registerEndpoint(endpoint);

@@ -164,6 +164,14 @@ function getGUID() {
     return get(USER, "guid");
 }
 
+function setLastSelectedEndpoint(urlText) {
+    set(USER, "index", urlText);
+}
+
+function getLastSelectedEndpoint() {
+    return get(USER, "index");
+}
+
 /*--------ENDPOINTS table operations--------*/
 
 /*
