@@ -44,16 +44,6 @@ Item {
         fillMode: VideoOutput.PreserveAspectCrop
         filters: [zxingFilter]
         orientation: 90
-
-        Rectangle {
-            id: captureZone
-            color: "red"
-            opacity: 0.2
-            width: parent.width/4
-            height: parent.width/4
-            anchors.centerIn: parent
-            visible: false
-        }
     }
     //Connect with C++ class
     QuickMaker
