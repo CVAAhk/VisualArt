@@ -51,6 +51,7 @@ Item {
             width: parent.width/4
             height: parent.width/4
             anchors.centerIn: parent
+            visible: false
         }
     }
     //Connect with C++ class
@@ -117,41 +118,41 @@ Item {
 
         console.log("orientation: "+orientation)
         /***SET 1***/
-//        if(orientation === 1)
-//        {
-//            videoOutput.orientation = 270;
-//        }
-//        if(orientation === 2)
-//        {
-//            videoOutput.orientation = 0;
-//        }
-//        else if(orientation === 8)
-//        {
-//            videoOutput.orientation = 180;
-//        }
-//        else if(orientation === 4)
-//        {
-//            videoOutput.orientation = 90;
-//        }
-
-
-        /***SET 2***/
         if(orientation === 1)
-        {
-            videoOutput.orientation = 90;
-        }
-        if(orientation === 2)
-        {
-            videoOutput.orientation = 180;
-        }
-        else if(orientation === 8)
-        {
-            videoOutput.orientation = 0;
-        }
-        else if(orientation === 4)
         {
             videoOutput.orientation = 270;
         }
+        if(orientation === 2)
+        {
+            videoOutput.orientation = 0;
+        }
+        else if(orientation === 8)
+        {
+            videoOutput.orientation = 180;
+        }
+        else if(orientation === 4)
+        {
+            videoOutput.orientation = 90;
+        }
+
+
+        /***SET 2***/
+//        if(orientation === 1)
+//        {
+//            videoOutput.orientation = 90;
+//        }
+//        if(orientation === 2)
+//        {
+//            videoOutput.orientation = 180;
+//        }
+//        else if(orientation === 8)
+//        {
+//            videoOutput.orientation = 0;
+//        }
+//        else if(orientation === 4)
+//        {
+//            videoOutput.orientation = 270;
+//        }
     }
 
 }

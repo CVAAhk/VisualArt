@@ -78,6 +78,7 @@ Item {
     /*! \qmlproperty inactive state of likes navigation button */
     property url likesButtonOff: rootPath+"likes-off.png"
     property url checkMark: rootPath+"check.png"
+    property url scannerFrame: rootPath+"QR-frame.png"
 
     /*! \qmlproperty default thumbnail icons to display when an item does not provide one */
     property var thumbs: ({"image": imageIcon, "audio": audioIcon, "video": videoIcon, "document": documentIcon})

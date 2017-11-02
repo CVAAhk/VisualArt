@@ -58,9 +58,17 @@ Item {
             width: parent.width
             height: parent.height * 0.6
 
-            Rectangle {
-                color: "red"
-                opacity: 0.2
+//            Rectangle {
+//                color: "red"
+//                opacity: 0.2
+//                width: parent.width/4
+//                height: parent.width/4
+//                anchors.centerIn: parent
+//            }
+            Image {
+                id: scanner_frame
+                source: Style.scannerFrame
+                fillMode: Image.PreserveAspectFit
                 width: parent.width/4
                 height: parent.width/4
                 anchors.centerIn: parent
