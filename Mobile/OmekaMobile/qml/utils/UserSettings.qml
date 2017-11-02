@@ -13,8 +13,8 @@ Item {
     property string restAPIDisabled: "<p><b>API ERROR:</b>"+
                                      "<br/>The REST API is either not supported or not enabled for the Omeka instance. "+
                                      "Please see the <a href=\"https://omeka.org/codex/Managing_API_Settings\">documentation</a> for instructions.</p>"
-    property string omekaSiteList: "<p><i>Create of list of Omeka sites. When selected, the app will be loaded with content from that site's repository."+
-                                   "To add a new site, enter the address into the text field and select the 'ADD SITE' button when the url is validated."+
+    property string omekaSiteList: "<p><i>Collect of list of Omeka sites. When a site item is selected, the app will be loaded with content from that site's repository. "+
+                                   "To add a new site, enter the address into the text field. Once the url is validated (determined to be a new omeka site with an enabled API), select the 'ADD SITE' button. "+
                                    "To remove an existing site, press and hold the site you wish to remove from the list. At least one site must remain in the list.</i></p>"
 
     property var layouts: ["list", "grid", "grid"];
