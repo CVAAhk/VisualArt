@@ -45,6 +45,7 @@ ApplicationWindow {
         {
             close.accepted = false;
             page_navigation.navigateToHome();
+            ItemManager.fullScreen = false;
         }
         else
         {
