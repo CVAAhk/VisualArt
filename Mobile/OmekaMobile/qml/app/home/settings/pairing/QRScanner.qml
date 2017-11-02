@@ -2,7 +2,6 @@ import QtQuick 2.5
 import QtQuick.Controls 1.4
 import QZXing 2.3
 import QtMultimedia 5.5
-import Maker 1.0
 
 Item {
 
@@ -14,7 +13,6 @@ Item {
 
     Component.onCompleted:
     {
-        setOrientation(MainWindow.getInitialOrientation())
         start = false;
     }
     onVisibleChanged: start = visible
@@ -41,20 +39,9 @@ Item {
         id: videoOutput
         source: camera
         anchors.fill: parent
+        autoOrientation: true
         fillMode: VideoOutput.PreserveAspectCrop
         filters: [zxingFilter]
-        orientation: 90
-    }
-    //Connect with C++ class
-    QuickMaker
-    {
-        id: quick_maker
-        objectName: "quick_maker"
-        onOrientationChanged:
-        {
-            //console.log("orientation changes: ", orientation)
-            setOrientation(orientation)
-        }
     }
 
     QZXingFilter {
@@ -102,48 +89,6 @@ Item {
     function qrError() {
         text.text = "INVALID QR CODE FORMAT: "+result
         console.error("INVALID QR CODE FORMAT: "+result)
-    }
-
-    function setOrientation(orientation)
-    {
-
-        console.log("orientation: "+orientation)
-        /***SET 1***/
-        if(orientation === 1)
-        {
-            videoOutput.orientation = 270;
-        }
-        if(orientation === 2)
-        {
-            videoOutput.orientation = 0;
-        }
-        else if(orientation === 8)
-        {
-            videoOutput.orientation = 180;
-        }
-        else if(orientation === 4)
-        {
-            videoOutput.orientation = 90;
-        }
-
-
-        /***SET 2***/
-//        if(orientation === 1)
-//        {
-//            videoOutput.orientation = 90;
-//        }
-//        if(orientation === 2)
-//        {
-//            videoOutput.orientation = 180;
-//        }
-//        else if(orientation === 8)
-//        {
-//            videoOutput.orientation = 0;
-//        }
-//        else if(orientation === 4)
-//        {
-//            videoOutput.orientation = 270;
-//        }
     }
 
 }
