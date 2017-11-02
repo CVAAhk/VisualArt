@@ -472,6 +472,8 @@ Item {
         url_input.text = qsTr("http://www...");
         url_input.color = "#666666"
         add_endpoint_btn.visible = false;
+        url_input.focus = false;
+        clear.visible = false;
     }
     /*
       Handles errors during text changes
