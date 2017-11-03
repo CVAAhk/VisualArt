@@ -148,7 +148,7 @@ Item {
       Add item to list
     */
     function addEndpoint(title, url, check) {
-        list.model.insert(0, {name: title, urlText: url, check: check})
+        list.model.append({name: title, urlText: url, check: check})
     }
 
     /*
