@@ -30,13 +30,32 @@ Item {
         var url
         var omekaID
 
-        Omeka.getSiteInfo(add_endpoint_btn, "http://dev.omeka.org/mallcopy/api/");
+        //ItemManager.clearEnpoints();
         var _endpoints = ItemManager.getEndpoints()
+        if(_endpoints.length === 0)
+        {
+            User.clearUser();
+            Omeka.getSiteInfo(add_endpoint_btn, "http://dev.omeka.org/mallcopy/api/");
+            return;
+        }
+
         for(var i=0; i<_endpoints.length; i++) {
             entry = _endpoints[i]
             omekaID = entry.setting
             url = entry.value
             Omeka.getSiteInfo(root, url + "api/");
+        }
+
+        delayCheckLastSelected.start()
+    }
+
+    Timer
+    {
+        id: delayCheckLastSelected
+        interval: 1500
+        onTriggered:
+        {
+            endpoints.checkLastSelected();
         }
     }
 
@@ -75,16 +94,16 @@ Item {
 
                 var url_length = result.url.length
 
-                if(revised_url === User.getLastSelectedEndpoint())
-                {
+//                if(revised_url === User.getLastSelectedEndpoint())
+//                {
 
-                    endpoints.addEndpoint(revised_title, revised_url, true)
-                    Omeka.endpoint = revised_url;
-                }
-                else
-                {
+//                    endpoints.addEndpoint(revised_title, revised_url, true)
+//                    Omeka.endpoint = revised_url;
+//                }
+//                else
+//                {
                     endpoints.addEndpoint(revised_title, revised_url, false)
-                }
+//                }
 
 
             }
@@ -115,7 +134,17 @@ Item {
                     revised_title = result.title;
                 }
 
-                endpoints.addEndpoint(revised_title, revised_url, false)
+                if(omekaIDs.length === 1)
+                {
+                    endpoints.addEndpoint(revised_title, revised_url, true)
+                    User.setLastSelectedEndpoint(0);
+                }
+                else
+                {
+                    endpoints.addEndpoint(revised_title, revised_url, false)
+                }
+
+
 
 
                 var endpoint = ({});
@@ -223,6 +252,7 @@ Item {
                             root.currentCheckedIndex = i
                         }
                     }
+                    User.setLastSelectedEndpoint(root.currentCheckedIndex);
                 }
                 onEndpointPressAndHold:
                 {

@@ -164,12 +164,19 @@ function getGUID() {
     return get(USER, "guid");
 }
 
-function setLastSelectedEndpoint(urlText) {
-    set(USER, "index", urlText);
+function setLastSelectedEndpoint(index) {
+    set(USER, "index", index);
 }
 
 function getLastSelectedEndpoint() {
     return get(USER, "index");
+}
+
+/*
+  Clears all tables
+*/
+function clearUser() {
+    return clear(USER);
 }
 
 /*--------ENDPOINTS table operations--------*/
@@ -200,6 +207,12 @@ function getEndpoints() {
         endpoints.push(entries[i])
     }
     return endpoints;
+}
+/*
+  Clears all tables
+*/
+function clearEndpoints() {
+    return clear(ENDPOINTS);
 }
 
 

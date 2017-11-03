@@ -102,7 +102,6 @@ Item {
                     {
                         Omeka.endpoint = urlText;
                         root.endpointChecked(urlText);
-                        User.setLastSelectedEndpoint(urlText);
                     }
                 }
             }
@@ -136,9 +135,9 @@ Item {
     function checkFirstEndpoint()
     {
 
-//        for(var child in list.contentItem.children) {
-//            console.log("list.contentItem.children[", child,"].text = ", list.contentItem.children[child].text)
-//        }
+        for(var child in list.contentItem.children) {
+            console.log("list.contentItem.children[", child,"].text = ", list.contentItem.children[child].text)
+        }
         root.current = null;
         if(list.contentItem.children[0].text !== undefined)
         {
@@ -147,6 +146,23 @@ Item {
         else
         {
             root.current = list.contentItem.children[1]
+        }
+    }
+    function checkLastSelected()
+    {
+        console.log("checkLastSelected!!!!User.getLastSelectedEndpoint() = ", User.getLastSelectedEndpoint(), list.count)
+        console.log("list.contentItem.children[0].text = ", list.contentItem.children[0].text)
+        //root.current = null;
+        for(var child in list.contentItem.children) {
+            console.log("list.contentItem.children[", child,"].text = ", list.contentItem.children[child].text)
+            if(child === User.getLastSelectedEndpoint() && list.contentItem.children[child].text !== undefined)
+            {
+                root.current = list.contentItem.children[child]
+            }
+            else if(child === User.getLastSelectedEndpoint() && list.contentItem.children[child].text === undefined)
+            {
+               root.current = list.contentItem.children[child + 1]
+            }
         }
     }
 

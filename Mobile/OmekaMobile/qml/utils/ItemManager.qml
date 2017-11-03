@@ -189,7 +189,7 @@ Item {
     //ui notifications
     signal endpointAdded(var endpoint)
     signal endpointRemoved(var endpoint)
-    signal clearEnpoints()//always by default having mallcopy endpoint
+    //signal clearEnpoints()//always by default having mallcopy endpoint
 
     //endpoints added since the last view
     property var recentlyEndpoints: []
@@ -246,6 +246,9 @@ Item {
     */
     function getEndpoints() {
         return Settings.getEndpoints()
+    }
+    function clearEnpoints() {
+        Settings.clearEndpoints()
     }
 
     /*!

@@ -44,11 +44,15 @@ Item {
         return Settings.getLikes().length > 0
     }
 
-    function setLastSelectedEndpoint(urlText) {
-        Settings.setLastSelectedEndpoint(urlText)
+    function setLastSelectedEndpoint(index) {
+        Settings.setLastSelectedEndpoint(index)
     }
 
     function getLastSelectedEndpoint() {
         return Settings.getLastSelectedEndpoint()
+    }
+
+    function clearUser() {
+        Settings.clearUser();
     }
 }
