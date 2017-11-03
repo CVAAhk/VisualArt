@@ -15,14 +15,16 @@ Item {
 
     //refresh tags
     onEndpointChanged: {
-        connection.target = Omeka
         list.model.clear()
+        tagData = ({})
+        tagCount = 0
         Omeka.getTags(tags)
     }
 
     //update list on completion of tag query
     Connections {
         id: connection
+        target: Omeka
         onRequestComplete: {
             if(result.context === tags) {
                 tagCount++

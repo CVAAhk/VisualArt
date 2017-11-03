@@ -20,9 +20,9 @@ Item {
 
     property int currentCheckedIndex: 0        
 
-    ///////////////////////////////////////////////////////////
-    //          UI
-    ///////////////////////////////////////////////////////////
+    property var defaultEndpoint: "http://dev.omeka.org/mallcopy/"
+
+    property var lastSelectedEndpoint
 
     //initialize loading endpoints from local storage
     Component.onCompleted: {
@@ -30,8 +30,13 @@ Item {
         var url
         var omekaID
 
-        Omeka.getSiteInfo(add_endpoint_btn, "http://dev.omeka.org/mallcopy/api/");
         var _endpoints = ItemManager.getEndpoints()
+        lastSelectedEndpoint = User.getLastSelectedEndpoint() || defaultEndpoint
+
+        if(_endpoints.length < 1) {
+            Omeka.getSiteInfo(root, defaultEndpoint+"/api")
+        }
+
         for(var i=0; i<_endpoints.length; i++) {
             entry = _endpoints[i]
             omekaID = entry.setting
@@ -72,12 +77,8 @@ Item {
                     revised_title = result.title;
                 }
 
-
-                var url_length = result.url.length
-
-                if(revised_url === User.getLastSelectedEndpoint())
+                if(revised_url === lastSelectedEndpoint)
                 {
-
                     endpoints.addEndpoint(revised_title, revised_url, true)
                     Omeka.endpoint = revised_url;
                 }

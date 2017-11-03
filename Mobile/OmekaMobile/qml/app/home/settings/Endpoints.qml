@@ -28,7 +28,6 @@ Item {
     //prevent multiple selections
     ExclusiveGroup {
         id: group
-        //current: list.contentItem.children[0]
     }
 
     //endpoints list
@@ -43,13 +42,7 @@ Item {
         boundsBehavior: Flickable.StopAtBounds
         bottomMargin: height - verticalOffset
 
-        model: ListModel {
-//            ListElement {
-//                name: "MALL HISTORY COPY"
-//                urlText: "http://dev.omeka.org/mallcopy/"
-//                check: true
-//            }
-        }
+        model: ListModel {}
 
 
     }
@@ -155,7 +148,7 @@ Item {
       Add item to list
     */
     function addEndpoint(title, url, check) {
-        list.model.append({name: title, urlText: url, check: check})
+        list.model.insert(0, {name: title, urlText: url, check: check})
     }
 
     /*
