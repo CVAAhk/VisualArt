@@ -12,9 +12,9 @@ Item {
     property string endpoint_url: url_input.text
 
     //default endpoint title and url
-    property var omekaIDs: []//["omeka_mallcopy"]
-    property var omekaTitles: []//["MALL HISTORY COPY"]
-    property var omekaUrls: []//["http://dev.omeka.org/mallcopy/"]
+    property var omekaIDs: []
+    property var omekaTitles: []
+    property var omekaUrls: []
 
     property int currentDeletingIndex: -1
 
@@ -136,7 +136,8 @@ Item {
 
                         add_endpoint_btn.visible = false;
 
-                        endpointError("INVALID URL. SITE ALREADY EXISTS.");
+                        add_endpoint.state = "duplicate"
+                        clearAndAddButton.state = "clear"
 
                         return;
                     }
@@ -144,6 +145,9 @@ Item {
                 url_input.color = "green"
 
                 add_endpoint_btn.visible = true
+
+                add_endpoint.state = "valid"
+                clearAndAddButton.state = "add"
 
                 Foreground.hideMessage();
 
@@ -159,7 +163,8 @@ Item {
 
                 add_endpoint_btn.visible = false;
 
-                root.endpointError("INVALID URL. MAKE SURE API IS ENABLED.");
+                add_endpoint.state = "invalid"
+                clearAndAddButton.state = "clear"
             }
         }
     }
@@ -253,8 +258,28 @@ Item {
         anchors.bottomMargin: Resolution.applyScale(30)
         anchors.left: parent.left
         anchors.leftMargin: Resolution.applyScale(30)
-        text: "Add new site"
         _font: Style.addEndpointFont
+        state: "default"
+
+        states: [
+            State {
+                name: "default"
+                PropertyChanges { target: add_endpoint; text: "Add new site" }
+            },
+            State {
+                name: "invalid"
+                PropertyChanges { target: add_endpoint; text: "Invalid or incomplete url" }
+            },
+            State {
+                name: "duplicate"
+                PropertyChanges { target: add_endpoint; text: "Site already exists" }
+            },
+            State {
+                name: "valid"
+                PropertyChanges { target: add_endpoint; text: "Add site to list" }
+            }
+
+        ]
     }
 
     Rectangle
@@ -290,42 +315,35 @@ Item {
                 {
                     if(url_input.text === "http://www...")
                         url_input.text = "http://"
-                    clear.visible = true
+                    clearAndAddButton.visible = true
                 }
             }
 
             onTextChanged:
             {
-
-
-//                var re = new RegExp('^(https?:\\/\\/)?'+ // protocol
-
-//                                    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|'+ // domain name
-//                                    '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
-//                                    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
-//                                    '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
-//                                    '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
-
                 if(text !== "http://www..." && text !== "http://")
                     Omeka.getSiteInfo(url_input, text + "api/");
             }
         }
         //clear field control
         OmekaButton {
-            id: clear
+            id: clearAndAddButton
             enabled: visible
             visible: false
             anchors.right: url_input.right
             icon: Style.clear
             iconScale: .52
+
             onClicked:
             {
                 url_input.text = "http://www...";
                 url_input.focus = false;
-                clear.visible = false;
+                clearAndAddButton.visible = false;
                 url_input.color = "#666666"
                 Foreground.hideMessage();
                 add_endpoint_btn.visible = false;
+                add_endpoint.state = "default"
+                clearAndAddButton.state = "clear"
             }
         }
     }
@@ -337,7 +355,7 @@ Item {
         anchors.horizontalCenter: root.horizontalCenter
         anchors.bottom: parent.bottom
         anchors.bottomMargin: Resolution.applyScale(300)
-        onClicked: {Omeka.getSiteInfo(add_endpoint_btn, root.endpoint_url + "api/"); console.log("add endpoint btn clicked!", root.endpoint_url + "/api/")}
+        onClicked: Omeka.getSiteInfo(add_endpoint_btn, root.endpoint_url + "api/");
         visible: false
         enabled: visible
 
@@ -493,15 +511,9 @@ Item {
         url_input.color = "#666666"
         add_endpoint_btn.visible = false;
         url_input.focus = false;
-        clear.visible = false;
-    }
-    /*
-      Handles errors during text changes
-    */
-    function endpointError(error) {
-        if(error) {
-            Foreground.showError(error, 3000, Resolution.applyScale(300));
-        }
+        clearAndAddButton.visible = false;
+        add_endpoint.state = "default"
+        clearAndAddButton.state = "clear"
     }
 
 }
