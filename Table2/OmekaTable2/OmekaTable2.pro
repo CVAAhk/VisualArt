@@ -1,4 +1,4 @@
-QT += qml quick widgets network
+QT += qml quick widgets network multimedia
 
 CONFIG += c++11 \
     qzxing_qml \

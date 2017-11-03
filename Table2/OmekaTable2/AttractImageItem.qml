@@ -24,6 +24,7 @@ Item
 
     signal createImage(string source, int imageX, int imageY, int imageRotation, int imageWidth, int imageHeight, bool tapOpen);
 
+    signal loadComplete();
     Behavior on opacity {
         NumberAnimation
         {
@@ -77,6 +78,8 @@ Item
                     img.source = itemData.thumb
                     //img_id.text = itemData.id //test
                     console.log("random id:", itemData.id)
+                root.loadComplete();
+
 //                    target = null
 //                }
             }

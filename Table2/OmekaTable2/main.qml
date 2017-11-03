@@ -17,6 +17,7 @@ Item
         id: root
         focus: true
         Keys.onEscapePressed: Qt.quit()
+        enabled: false
 
         property double screenScaleX: Screen.width / Settings.SCREEN_WIDTH
         property double screenScaleY: Screen.height / Settings.SCREEN_HEIGHT
@@ -48,6 +49,7 @@ Item
             onImageDragged: gallery.attractImageIsInPairingBox(image);
             onImageFinishedDragging: gallery.attractImageReleased(image);
             onMaxResultsChanged: gallery.maxResults = attract_pool.maxResults;
+            onLoadComplete: {root.enabled = true;console.log("loading complete!");}
         }
 
         Component.onCompleted:

@@ -17,6 +17,8 @@ Item
 
     signal imageFinishedDragging(var image);
 
+    signal loadComplete();
+
     Component.onCompleted: {
         Omeka.getAllPages(3, root)
         //Omeka.getPage(1, root)
@@ -134,6 +136,7 @@ Item
             var random_id4 = Math.floor(randomizeId());
             imageItem4.itemResult = allResults[random_id4]
         }
+        onLoadComplete: root.loadComplete();
     }
 
     CollectionImageHolder
