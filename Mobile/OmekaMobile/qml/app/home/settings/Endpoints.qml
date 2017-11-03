@@ -2,6 +2,8 @@ import QtQuick 2.5
 
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
+
+import QtQml.Models 2.2
 import "../../../utils"
 import "../../base"
 import "../../clients"
@@ -93,6 +95,7 @@ Item {
                 {
                     if(Omeka.endpoint != urlText && urlText !== null)
                     {
+                        console.log("checked url = ", urlText)
                         Omeka.endpoint = urlText;
                         root.endpointChecked(urlText);
                         User.setLastSelectedEndpoint(urlText);
@@ -148,7 +151,19 @@ Item {
       Add item to list
     */
     function addEndpoint(title, url, check) {
+        list.model.append({name: title, urlText: url, check: check})
+    }
+
+    /*
+      Add item to top of list
+    */
+    function addEndpointToTop(title, url, check) {
         list.model.insert(0, {name: title, urlText: url, check: check})
+    }
+
+    function insertEndpoint(index, title, url, check)
+    {
+        list.model.insert(index, {name: title, urlText: url, check: check})
     }
 
     /*
@@ -159,6 +174,11 @@ Item {
             list.model.remove(index)
 
         }
+    }
+
+    function getListCount()
+    {
+        return list.count;
     }
 
     /*

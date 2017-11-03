@@ -29,6 +29,7 @@ Item {
         var entry
         var url
         var omekaID
+        var title
 
         var _endpoints = ItemManager.getEndpoints()
         lastSelectedEndpoint = User.getLastSelectedEndpoint() || defaultEndpoint
@@ -41,6 +42,9 @@ Item {
             entry = _endpoints[i]
             omekaID = entry.setting
             url = entry.value
+            title = entry.title
+            console.log("load url = ", url)
+
             Omeka.getSiteInfo(root, url + "api/");
         }
     }
@@ -54,19 +58,25 @@ Item {
         onSiteInfo: {
             //when app starts, load the stored endpoints
             if(result.context === root) {
+                var index;
                 for(var i = 0; i < omekaIDs.length; i++)
                 {
                     if(result.omekaID === omekaIDs[i])
                     {
-                        return;
+                        index = i;
+                        console.log("load index = ", index)
                     }
                 }
+
+
                 var revised_url = result.url.slice(0, (result.url.length - 4));
+
                 omekaIDs.push(result.omekaID)
                 omekaTitles.push(result.title)
                 omekaUrls.push(revised_url)
 
                 var revised_title
+
                 if(result.title.length > 40)
                 {
                     revised_title = result.title.slice(0, 40);
@@ -77,14 +87,16 @@ Item {
                     revised_title = result.title;
                 }
 
+
                 if(revised_url === lastSelectedEndpoint)
                 {
-                    endpoints.addEndpoint(revised_title, revised_url, true)
+                    endpoints.addEndpointToTop(revised_title, revised_url, true)
+
                     Omeka.endpoint = revised_url;
                 }
                 else
                 {
-                    endpoints.addEndpoint(revised_title, revised_url, false)
+                    endpoints.addEndpointToTop(revised_title, revised_url, false)
                 }
 
 
@@ -101,10 +113,15 @@ Item {
                 }
                 var revised_url = result.url.slice(0, (result.url.length - 4));
 
-                omekaIDs.push(result.omekaID)
-                omekaTitles.push(result.title)
-                omekaUrls.push(revised_url)
+                omekaIDs.unshift(result.omekaID)
+                omekaTitles.unshift(result.title)
+                omekaUrls.unshift(revised_url)
 
+                for(var i = 0; i < omekaUrls.length; i++)
+                {
+                    console.log("omekaUrls[",i,"]", omekaUrls[i])
+
+                }
                 var revised_title
                 if(result.title.length > 40)
                 {
@@ -116,7 +133,7 @@ Item {
                     revised_title = result.title;
                 }
 
-                endpoints.addEndpoint(revised_title, revised_url, false)
+                endpoints.addEndpointToTop(revised_title, revised_url, false)
 
 
                 var endpoint = ({});
@@ -126,6 +143,7 @@ Item {
 
                 ItemManager.registerEndpoint(endpoint);
                 resetAddNewEndpointArea();
+                root.currentCheckedIndex++;
             }
             //text input changes
             if(result.context === url_input){
@@ -224,7 +242,8 @@ Item {
                     indicator.running = true;
                     for(var i = 0; i < omekaUrls.length; i++)
                     {
-                        if(url == omekaUrls[i])
+                        console.log("omekaUrls[",i,"]", omekaUrls[i])
+                        if(url === omekaUrls[i])
                         {
                             root.currentCheckedIndex = i
                         }
@@ -238,7 +257,7 @@ Item {
                     }
                     for(var i = 0; i < omekaUrls.length; i++)
                     {
-                        if(url == omekaUrls[i])
+                        if(url === omekaUrls[i])
                         {
                             root.currentDeletingIndex = i
                         }
@@ -436,7 +455,7 @@ Item {
                 }
                 endpointIsChecked = root.currentCheckedIndex === root.currentDeletingIndex;
 
-
+                console.log("root.currentCheckedIndex = ", root.currentCheckedIndex, " root.currentDeletingIndex = ", root.currentDeletingIndex)
                 var endpoint = ({});
                 endpoint.omekaID = omekaIDs[root.currentDeletingIndex]
                 endpoint.url = omekaUrls[root.currentDeletingIndex];
@@ -452,6 +471,9 @@ Item {
                 delayCheck.start();
 
                 confirm_delete_endpoint.visible = false;
+
+                if(!endpointIsChecked && root.currentCheckedIndex > root.currentDeletingIndex)
+                    root.currentCheckedIndex--;
             }
 
             style: ButtonStyle {
