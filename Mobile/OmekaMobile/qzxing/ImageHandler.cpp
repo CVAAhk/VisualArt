@@ -1,7 +1,6 @@
 #include "ImageHandler.h"
 #include <QImage>
 #include <QPainter>
-#include <QDebug>
 #include <QThread>
 #include <QTime>
 
@@ -29,7 +28,6 @@ QImage ImageHandler::extractQImage(QObject *imageObj, int offsetX, int offsetY, 
     QQuickItem *item = qobject_cast<QQuickItem *>(imageObj);
 
     if (!item || !item->window()->isVisible()) {
-        qDebug() << "Item is NULL";
         return QImage();
     }
 
@@ -56,7 +54,6 @@ QImage ImageHandler::extractQImage(QObject *imageObj, int offsetX, int offsetY, 
     QGraphicsObject *item = qobject_cast<QGraphicsObject*>(imageObj);
 
     if (!item) {
-        qDebug() << "Item is NULL";
         return QImage();
     }
 

@@ -128,10 +128,6 @@ Item {
 
     function checkFirstEndpoint()
     {
-
-//        for(var child in list.contentItem.children) {
-//            console.log("list.contentItem.children[", child,"].text = ", list.contentItem.children[child].text)
-//        }
         root.current = null;
         if(list.contentItem.children[0].text !== undefined)
         {

@@ -449,7 +449,7 @@ QString QZXing::decodeSubImageQML(const QUrl &imageUrl,
     } else {
         QFileInfo fileInfo(imagePath);
         if (!fileInfo.exists()) {
-            qDebug() << "[decodeSubImageQML()] The file" << imagePath << "does not exist.";
+            //qDebug() << "[decodeSubImageQML()] The file" << imagePath << "does not exist.";
             emit decodingFinished(false);
             return "";
         }
