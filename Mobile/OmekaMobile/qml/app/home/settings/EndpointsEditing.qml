@@ -91,7 +91,7 @@ Item {
             }
 
             //add site title as endpoint
-            if(result.context === add_endpoint_btn) {
+            if(result.context === clearAndAddButton) {
                 for(var i = 0; i < omekaIDs.length; i++)
                 {
                     if(result.omekaID === omekaIDs[i])
@@ -134,9 +134,6 @@ Item {
                     if(result.omekaID === omekaIDs[i])
                     {
                         url_input.color = "red"
-
-                        add_endpoint_btn.visible = false;
-
                         add_endpoint.state = "duplicate"
                         clearAndAddButton.state = "clear"
 
@@ -144,15 +141,8 @@ Item {
                     }
                 }
                 url_input.color = "green"
-
-                add_endpoint_btn.visible = true
-
                 add_endpoint.state = "valid"
                 clearAndAddButton.state = "add"
-
-                Foreground.hideMessage();
-
-
             }
 
         }
@@ -161,9 +151,6 @@ Item {
             if(context === url_input)
             {
                 url_input.color = "red"
-
-                add_endpoint_btn.visible = false;
-
                 add_endpoint.state = "invalid"
                 clearAndAddButton.state = "clear"
             }
@@ -288,8 +275,8 @@ Item {
         id: edit_url_area
         width: parent.width
         height: Resolution.applyScale(150)
-        anchors.bottom: add_endpoint_btn.top
-        anchors.bottomMargin: Resolution.applyScale(100)
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: Resolution.applyScale(230)
         color: "white"
 
         TextInput
@@ -334,44 +321,39 @@ Item {
             anchors.right: url_input.right
             icon: Style.clear
             iconScale: .52
+            state: "clear"
+
+            property var clearRot: Rotation { origin.x: Resolution.applyScale(75); origin.y: Resolution.applyScale(75); angle: 0 }
+            property var addRot: Rotation { origin.x: Resolution.applyScale(75); origin.y: Resolution.applyScale(75); angle: 45 }
 
             onClicked:
             {
-                url_input.text = "http://www...";
-                url_input.focus = false;
-                clearAndAddButton.visible = false;
-                url_input.color = "#666666"
-                Foreground.hideMessage();
-                add_endpoint_btn.visible = false;
-                add_endpoint.state = "default"
-                clearAndAddButton.state = "clear"
+                if(state === "clear") {
+                    url_input.text = "http://www...";
+                    url_input.focus = false;
+                    clearAndAddButton.visible = false;
+                    url_input.color = "#666666"
+                    Foreground.hideMessage();
+                    add_endpoint.state = "default"
+                    clearAndAddButton.state = "clear"
+                }
+                else if(state === "add") {
+                    Omeka.getSiteInfo(clearAndAddButton, root.endpoint_url + "api/");
+                }
             }
-        }
-    }
 
-    Button {
-        id: add_endpoint_btn
-        width: parent.width/3
-        height: Resolution.applyScale(122)
-        anchors.horizontalCenter: root.horizontalCenter
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: Resolution.applyScale(300)
-        onClicked: Omeka.getSiteInfo(add_endpoint_btn, root.endpoint_url + "api/");
-        visible: false
-        enabled: visible
-
-        style: ButtonStyle {
-            background: Rectangle {
-                color: Style.color1
-                radius: Resolution.applyScale(30)
-            }
-            label: OmekaText {
-                center: true
-                text: "ADD SITE"
-                _font: Style.addEndpointBtnFont
-            }
+            states: [
+                State {
+                    name: "clear"
+                    PropertyChanges { target: clearAndAddButton; transform: clearRot }
+                },
+                State {
+                    name: "add"
+                    PropertyChanges { target: clearAndAddButton; transform: addRot }
+                }
+            ]
         }
-    }
+    }   
 
     Rectangle
     {
@@ -510,7 +492,6 @@ Item {
     {
         url_input.text = qsTr("http://www...");
         url_input.color = "#666666"
-        add_endpoint_btn.visible = false;
         url_input.focus = false;
         clearAndAddButton.visible = false;
         add_endpoint.state = "default"
