@@ -43,7 +43,6 @@ Item {
             omekaID = entry.setting
             url = entry.value
             title = entry.title
-            console.log("load url = ", url)
 
             Omeka.getSiteInfo(root, url + "api/");
         }
@@ -58,16 +57,13 @@ Item {
         onSiteInfo: {
             //when app starts, load the stored endpoints
             if(result.context === root) {
-                var index;
                 for(var i = 0; i < omekaIDs.length; i++)
                 {
                     if(result.omekaID === omekaIDs[i])
                     {
-                        index = i;
-                        console.log("load index = ", index)
+                        return;
                     }
                 }
-
 
                 var revised_url = result.url.slice(0, (result.url.length - 4));
 
@@ -117,11 +113,6 @@ Item {
                 omekaTitles.unshift(result.title)
                 omekaUrls.unshift(revised_url)
 
-                for(var i = 0; i < omekaUrls.length; i++)
-                {
-                    console.log("omekaUrls[",i,"]", omekaUrls[i])
-
-                }
                 var revised_title
                 if(result.title.length > 40)
                 {
@@ -229,7 +220,6 @@ Item {
                     indicator.running = true;
                     for(var i = 0; i < omekaUrls.length; i++)
                     {
-                        console.log("omekaUrls[",i,"]", omekaUrls[i])
                         if(url === omekaUrls[i])
                         {
                             root.currentCheckedIndex = i
@@ -437,7 +427,6 @@ Item {
                 }
                 endpointIsChecked = root.currentCheckedIndex === root.currentDeletingIndex;
 
-                console.log("root.currentCheckedIndex = ", root.currentCheckedIndex, " root.currentDeletingIndex = ", root.currentDeletingIndex)
                 var endpoint = ({});
                 endpoint.omekaID = omekaIDs[root.currentDeletingIndex]
                 endpoint.url = omekaUrls[root.currentDeletingIndex];

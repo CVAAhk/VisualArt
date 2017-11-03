@@ -95,7 +95,6 @@ Item {
                 {
                     if(Omeka.endpoint != urlText && urlText !== null)
                     {
-                        console.log("checked url = ", urlText)
                         Omeka.endpoint = urlText;
                         root.endpointChecked(urlText);
                         User.setLastSelectedEndpoint(urlText);
@@ -131,10 +130,6 @@ Item {
 
     function checkFirstEndpoint()
     {
-
-//        for(var child in list.contentItem.children) {
-//            console.log("list.contentItem.children[", child,"].text = ", list.contentItem.children[child].text)
-//        }
         root.current = null;
         if(list.contentItem.children[0].text !== undefined)
         {
