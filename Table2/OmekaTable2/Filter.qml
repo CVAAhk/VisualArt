@@ -63,9 +63,13 @@ Item
         listScreenTag: tag_header.screenTag
         whichScreen: root.whichScreen
 
-        onLetterSelected:
+//        onLetterSelected:
+//        {
+//            //alpha.selectLetterChar(letter);
+//            interactive();
+//        }
+        onFilterScrolled:
         {
-            alpha.selectLetterChar(letter);
             interactive();
         }
     }
@@ -91,23 +95,23 @@ Item
         maskSource: filter_footer
     }
 
-    FilterAlpha
-    {
-        id: alpha
+//    FilterAlpha
+//    {
+//        id: alpha
 
-        onLetterSelected:
-        {
-            tags_view.selectNewLetter(letter);
-            interactive();
-        }
-    }
+//        onLetterSelected:
+//        {
+//            tags_view.selectNewLetter(letter);
+//            interactive();
+//        }
+//    }
 
 
     function resetFilters()
     {
         tag_header.setTagEmpty();
         tags_view.resetFilters();
-        alpha.selectLetter(-1, false);
+        //alpha.selectLetter(-1, false);
     }
 
 }

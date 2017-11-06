@@ -15,27 +15,26 @@ ApplicationWindow {
         Foreground.floatMessage = message
     }
 
-    PageNavigation { }
-
-    //orientation testing
-    Item {
-        focus: true
-        Keys.onUpPressed: {
-            root.width = 804
-            root.height = 470
-            Resolution.targetWidth = 2464
-            Resolution.targetHeight = 1440
-        }
-        Keys.onDownPressed: {
-            root.width = 470
-            root.height = 804
-            Resolution.targetWidth = 1440
-            Resolution.targetHeight = 2464
-        }
-    }
+    PageNavigation { id: page_navigation }
 
     //unobtrusive floating message to display errors and other notifications
     FloatMessage {
         id: message
+    }
+
+    onClosing:
+    {
+        if(!page_navigation.onHome())
+        {
+            close.accepted = false;
+            page_navigation.navigateToHome();
+            ItemManager.fullScreen = false;
+        }
+        else
+        {
+            close.accepted = true;
+        }
+
+
     }
 }

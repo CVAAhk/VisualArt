@@ -2,15 +2,20 @@ import QtQuick 2.0
 import QtQuick.Controls 1.4
 import "../settings"
 import "../../../utils"
+import "../../clients"
+import "../../base"
 
 /*!Media viewer*/
 Item {
     id: gallery
 
     property Settings settings: Settings {}
+    property url endpoint: Omeka.endpoint
 
-    /*!Load first page*/
-    Component.onCompleted: {
+    /*!Load first page of omeka instance*/
+    onEndpointChanged: {
+        browser.clear()
+        browser.nextCount = 1
         Omeka.getPage(1, gallery)
     }
 
@@ -27,7 +32,10 @@ Item {
     /*!Display logo and settings entry*/
     BrandBar {
         id: bar
-        onActivated: if(homeStack) homeStack.push(settings);
+        onActivated: if(homeStack) {
+                         settings.enabled = true;
+                         homeStack.push(settings);
+                     }
     }
 
     /*!Scroll through items*/
@@ -36,13 +44,24 @@ Item {
         anchors.top: bar.bottom
         height: parent.height - bar.height
         headerHeight: height/4
-        busy: true
+        busy: Omeka.apiIsEnabled
         onCanPaginate: {
            Omeka.getNextPage(gallery)
         }
     }
 
-    //endpoint logo
+    /*!API disabled notification*/
+    OmekaText {
+        id: api_disabled
+        visible: !Omeka.apiIsEnabled
+        anchors.centerIn: parent
+        width: parent.width * 0.8
+        text: User.restAPIDisabled
+        _font: Style.apiInstructionFont
+        onLinkActivated: Qt.openUrlExternally(link)
+    }
+
+    /*!Omeka Logo*/
     Logo {
         contentY: browser.contentY
         minY: 0
@@ -53,4 +72,37 @@ Item {
         maxHeight: bar.height
         source: Style.omekaLogo
     }
+
+    //Connect with C++ class
+//    QuickMaker
+//    {
+//        id: quick_maker
+//        objectName: "quick_maker"
+//        onOrientationChanged:
+//        {
+//            overlay.opacity = 0.8;
+//            overlay_timer.restart()
+//        }
+//    }
+    Rectangle
+    {
+        id: overlay
+        anchors.fill: parent
+        opacity: 0.0
+        color: "white"
+        Behavior on opacity {
+
+            NumberAnimation {
+                duration: 200
+                easing.type: Easing.InOutQuad
+            }
+        }
+    }
+    Timer
+    {
+        id: overlay_timer
+        interval: 500
+        onTriggered: overlay.opacity = 0.0;
+    }
+
 }

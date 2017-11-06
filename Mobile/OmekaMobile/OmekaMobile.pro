@@ -5,17 +5,25 @@ QT += qml quick\
 
 QTPLUGIN += qsqlite
 
-CONFIG += c++11
+CONFIG += c++11 \
+    qzxing_qml \
+    qzxing_multimedia
 
 SOURCES += main.cpp \
     shareutils.cpp \
     applicationloader.cpp \
-    sequentialguid.cpp
+    sequentialguid.cpp \
+    qutils.cpp \
+    quickmaker.cpp \
+    mainwindow.cpp
 
 HEADERS += \
     shareutils.h \
     applicationloader.h \
-    sequentialguid.h
+    sequentialguid.h \
+    qutils.h \
+    quickmaker.h \
+    mainwindow.h
 
 RESOURCES += qml.qrc
 
@@ -29,13 +37,13 @@ OTHER_FILES += \
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH += \
     qml/test/styling/Style 1.0 \
+    qml/utils/Omeka 1.0 \
+    qml/utils/Heist 1.0 \
     qml/utils/Resolution 1.0 \
     qml/utils/Style 1.0 \
-    qml/utils/Omeka 1.0 \
     qml/utils/ItemManager 1.0 \
     qml/utils/User 1.0 \
     qml/utils/NumberUtils 1.0 \
-    qml/utils/HeistManager 1.0 \
     qml/utils/Foreground 1.0 \
 
 ios {
@@ -57,6 +65,7 @@ android {
 
 # Default rules for deployment.
 include(deployment.pri)
+include(qzxing/QZXing.pri)
 
 DISTFILES += \
     qml/test/scalability/HomePage.qml \
@@ -70,6 +79,7 @@ DISTFILES += \
     qml/test/client/TestClient.qml \
     qml/test/settings/LikesTest.qml \
     qml/js/storage.js \
+    qml/js/qqr.js \
     qml/test/navigation/Carousel.qml \
     qml/test/navigation/Ellipse.qml \
     qml/test/mvc/ListViewTest.qml \
@@ -86,7 +96,7 @@ DISTFILES += \
     qml/app/detail/Detail.qml \
     qml/app/home/gallery/Gallery.qml \
     qml/app/home/settings/BrandBar.qml \
-    qml/utils/OmekaClient.qml \
+    qml/app/clients/OmekaClient.qml \
     qml/app/home/gallery/OmekaItem.qml \
     qml/app/home/settings/Settings.qml \
     qml/app/likes/Likes.qml \
@@ -151,16 +161,23 @@ DISTFILES += \
     qml/app/likes/Filters.qml \
     qml/app/home/settings/pairing/PairSetting.qml \
     qml/app/home/settings/pairing/TablePairing.qml \
-    qml/app/home/settings/pairing/Keypad.qml \
-    qml/app/home/settings/pairing/CodeEntry.qml \
     qml/app/home/settings/pairing/Unpair.qml \
-    qml/utils/HeistManager.qml \
+    qml/app/clients/HeistClient.qml \
     qml/test/heist/TestHeist.qml \
     qml/test/heist/RequestUI.qml \
     qml/app/home/settings/pairing/HeistReceiver.qml \
-    qml/utils/Pairings.qml \
+    qml/app/clients/Pairings.qml \
     qml/test/heist/StateLabel.qml \
     qml/test/heist/ItemDelegate.qml \
     qml/app/FloatMessage.qml \
     qml/utils/Foreground.qml \
-    qml/test/providers/ImageSizeTest.qml
+    qml/test/providers/ImageSizeTest.qml \
+    qml/app/likes/NumberTag.qml \
+    qml/test/qr/QRTest.qml \
+    qml/test/navigation/PageNavTest.qml \
+    qml/test/navigation/FirstPage.qml \
+    qml/test/navigation/SecondPage.qml \
+    qml/app/home/settings/pairing/QRScanner.qml \
+    qml/app/home/settings/EndpointsSetting.qml \
+    qml/app/home/settings/EndpointsEditing.qml \
+    qml/app/home/settings/Endpoints.qml

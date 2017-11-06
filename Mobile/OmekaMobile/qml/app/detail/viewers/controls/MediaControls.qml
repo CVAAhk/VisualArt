@@ -46,12 +46,11 @@ Item {
         height: width
     }
 
-    //full screen mode toggle control
+    //toggles fullscreen state for playback viewers
     OmekaToggle {
        id: toggle
        anchors.top: parent.top
        anchors.right: parent.right
-       anchors.margins: 10
        defaultSource: Style.maximize
        checkedSource: Style.minimize
        iconScale: Resolution.scaleRatio

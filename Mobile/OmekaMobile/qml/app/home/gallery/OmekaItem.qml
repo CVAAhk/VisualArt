@@ -4,6 +4,7 @@ import QtQuick.Controls.Styles 1.4
 import QtGraphicalEffects 1.0
 import "../gallery"
 import "../../../utils"
+import "../../clients"
 import "../../base"
 
 /*! Omeka media item preview */
@@ -22,17 +23,20 @@ Component {
         property bool visibleLikesMember: context ? (context.objectName === "LikesList" && context.enabled) : false
 
         //store result and query files
-        Component.onCompleted: {
+        Component.onCompleted: {           
 
-            itemData.id = String(item)
-            itemData.fileCount = parseInt(file_count)
-            itemData.metadata = metadata
-            itemData.media = []
-            itemData.mediaTypes = []
+            itemData.id = item                              //item identifier unique to hosting omeka instance
+            itemData.fileCount = parseInt(file_count)       //number of files linked to item
+            itemData.metadata = metadata                    //item metadata
+            itemData.media = []                             //item's media files
+            itemData.mediaTypes = []                        //list of media file types
+            itemData.uid = uid                              //id with appended omekaID to distinguish items with the same id's from different omeka instances
+            itemData.omekaID = omekaID                      //a formatted id of the hosting omeka instance
+            itemData.endpoint = endpoint                    //the omeka endpoint
 
             setInfo();
 
-            Omeka.getFiles(itemData.id, object)
+            Omeka.getFiles(itemData.id, object, itemData.endpoint+"api/")
             like.refresh(itemData)
         }
 

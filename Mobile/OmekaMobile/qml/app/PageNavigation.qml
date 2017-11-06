@@ -20,7 +20,7 @@ StackView {
       \internal
       Home page instance
     */
-    property Home home: Home {}
+    property Home home: Home {id: home_instance}
 
     /*!
       \internal
@@ -90,6 +90,31 @@ StackView {
         }
         else{
            push(page)
+        }
+    }
+
+    function navigateToHome()
+    {
+        if(onStack(pages[0]))
+        {
+            pop(pages[0])
+        }
+        else
+        {
+            push(pages[0])
+        }
+        bar.state = "home"
+    }
+
+    function onHome()
+    {
+        if(navigator.currentItem === home && home_instance.onHomeStack())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 

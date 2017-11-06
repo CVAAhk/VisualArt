@@ -21,4 +21,17 @@ Item {
         initialItem: Qt.resolvedUrl("gallery/Gallery.qml")
     }
 
+    function onHomeStack()
+    {
+        if(homeStack.depth === 1)
+        {
+            return true;
+        }
+        else
+        {
+            homeStack.pop()
+            return false;
+        }
+    }
+
 }

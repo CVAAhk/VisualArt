@@ -11,7 +11,6 @@ Item {
     clip: true
     state: "close"
 
-    property var model: ["all", "collection 1", "collection 2", "c3", "c4"]
     property var maxVerticalOffset: Resolution.applyScale(438)
     property var verticalOffset: Math.min(list.height + list.y, maxVerticalOffset)
     property alias current: group.current
@@ -28,12 +27,17 @@ Item {
         width: parent.width
         height: childrenRect.height
         spacing: Resolution.applyScale(-6)
-        model: root.model
         delegate: delegate
         maximumFlickVelocity: 8000
         flickDeceleration: 3000
         boundsBehavior: Flickable.StopAtBounds
         bottomMargin: height - verticalOffset
+
+        model: ListModel {
+            ListElement {
+                name: "all"
+            }
+        }
     }
 
     //filter options
@@ -42,7 +46,7 @@ Item {
         Button {
             width: parent.width
             height: Resolution.applyScale(150)
-            text: list.model[index]
+            text: name
             checkable: true
             exclusiveGroup: group
 
@@ -56,7 +60,8 @@ Item {
                     text: control.text
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
-                    _font: Style.headerFont
+                    _font: Style.headerFont                    
+                    font.pixelSize: Resolution.applyScale(40)
                 }
             }
         }
@@ -80,5 +85,37 @@ Item {
     transitions: Transition {
         AnchorAnimation { duration: 250; easing.type: Easing.OutQuad }
         PropertyAnimation { target: root; property: "opacity"; duration:500; easing.type: Easing.OutQuad }
+    }
+
+    /*
+      Add item to list
+    */
+    function addFilter(title) {
+        list.model.append({name: title})
+    }
+
+    /*
+      Remove item by index
+    */
+    function removeFilter(index) {
+        if(list.model.count > 1) {
+            list.model.remove(index+1)
+        }
+    }
+
+    /*
+      Remove all but default list item
+    */
+    function clear() {
+        while(list.model.count > 1) {
+            list.model.remove(1)
+        }
+    }
+
+    /*
+      Reset selection to default
+    */
+    function reset() {
+        current = list.contentItem.children[0]
     }
 }

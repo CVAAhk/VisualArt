@@ -10,6 +10,8 @@ Item
     signal greenPressed(var active)
     signal yellowPressed(var active)
 
+    signal touchToBeginPressed(var active)
+
     Image
     {
         visible: color === "blue"
@@ -18,14 +20,14 @@ Item
         {
             anchors.fill: parent
             property bool active: false
-            onPressed: {active = !active; root.enabled = false; root.opacity = active ? 0.0 : 1.0;root.bluePressed(active)}
+            onPressed: {active = !active; root.opacity = active ? 0.0 : 1.0;root.touchToBeginPressed(active)}
         }
     }
 
     Image
     {
         visible: color === "red"
-        source: "content/POI/touch-to-begin-red.png"
+        source: "content/POI/touch-to-begin.png"
         MultiPointTouchArea
         {
             anchors.fill: parent
@@ -36,7 +38,7 @@ Item
     Image
     {
         visible: color === "green"
-        source: "content/POI/touch-to-begin-green.png"
+        source: "content/POI/touch-to-begin.png"
         MultiPointTouchArea
         {
             anchors.fill: parent
@@ -47,7 +49,7 @@ Item
     Image
     {
         visible: color === "yellow"
-        source: "content/POI/touch-to-begin-yellow.png"
+        source: "content/POI/touch-to-begin.png"
         MultiPointTouchArea
         {
             anchors.fill: parent

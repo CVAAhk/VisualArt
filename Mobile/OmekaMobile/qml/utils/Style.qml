@@ -29,8 +29,10 @@ Item {
     property url detailLikeFill: rootPath+"detail-like-fill.png"
     /*! \qmlproperty graphic indicating return to previous page */
     property url back: rootPath+"back.png"
+    /*! \qmlproperty add a new endpoint button */
+    property url addEndpointBtn: rootPath+"add endpoint_btn.png"
     /*! \qmlproperty graphic for menu options */
-    property url more: rootPath+"more.png"
+    property url share: rootPath+"share.png"
     /*! \qmlproperty thumbnail placeholder for image media */
     property url imageIcon: rootPath+"image.png"
     /*! \qmlproperty thumbnail placeholder for audio media */
@@ -63,6 +65,20 @@ Item {
     property url linked: rootPath+"linked_icon.png"
     /*! \qmlproperty pairing icon */
     property url backKey: rootPath+"back_key.png"
+    /*! \qmlproperty active state of home navigation button */
+    property url homeButtonOn: rootPath+"home-on.png"
+    /*! \qmlproperty inactive state of home navigation button */
+    property url homeButtonOff: rootPath+"home-off.png"
+    /*! \qmlproperty active state of search navigation button */
+    property url searchButtonOn: rootPath+"search-on.png"
+    /*! \qmlproperty inactive state of search navigation button */
+    property url searchButtonOff: rootPath+"search-off.png"
+    /*! \qmlproperty active state of likes navigation button */
+    property url likesButtonOn: rootPath+"likes-on.png"
+    /*! \qmlproperty inactive state of likes navigation button */
+    property url likesButtonOff: rootPath+"likes-off.png"
+    property url checkMark: rootPath+"check.png"
+    property url scannerFrame: rootPath+"QR-frame.png"
 
     /*! \qmlproperty default thumbnail icons to display when an item does not provide one */
     property var thumbs: ({"image": imageIcon, "audio": audioIcon, "video": videoIcon, "document": documentIcon})
@@ -73,14 +89,21 @@ Item {
     property var titleFont: ({ color:color1, size:74, weight:Font.Bold, capitalization:Font.AllUppercase, wrapMode: Text.NoWrap, textFormat: Text.AutoText })
     property var headerFont: ({ color:color1, size:55, weight:Font.Normal, capitalization:Font.AllUppercase, wrapMode: Text.NoWrap, textFormat: Text.AutoText })
     property var settingFont: ({ color:color1, size:74, weight:Font.Normal, capitalization:Font.Capitalize, wrapMode: Text.NoWrap, textFormat: Text.AutoText })
+    property var endpointsTitleFont: ({ color:"black", size:60, weight:Font.Normal, capitalization:Font.Capitalize, wrapMode: Text.NoWrap, textFormat: Text.AutoText })
+    property var endpointsUrlFont: ({ color:color1, size:34, weight:Font.Normal, capitalization:Font.MixedCase, wrapMode: Text.NoWrap, textFormat: Text.AutoText })
+    property var addEndpointFont: ({ color:"black", size:34, weight:Font.Normal, capitalization:Font.AllUppercase, wrapMode: Text.NoWrap, textFormat: Text.AutoText })
     property var tagFont: ({ color:color1, size:74, weight:Font.ExtraBold, capitalization:Font.Capitalize, wrapMode: Text.NoWrap, textFormat: Text.AutoText })
     property var metadataFont: ({ color:"black", size:50, weight:Font.Normal, capitalization:Font.MixedCase, wrapMode: Text.Wrap, textFormat: Text.RichText })
     property var infoTitleFont: ({ color:"black", size:46, weight:Font.Bold, capitalization:Font.AllUppercase, wrapMode: Text.NoWrap, textFormat: Text.AutoText })
     property var infoSourceFont: ({ color:"black", size:40, weight:Font.Normal, capitalization:Font.MixedCase, wrapMode: Text.NoWrap, textFormat: Text.AutoText })
     property var playbackTimeFont: ({ color:"white", size:40, weight:Font.Normal, capitalization:Font.MixedCase, wrapMode: Text.NoWrap, textFormat: Text.AutoText })
-    property var keypadFont: ({ color:"black", size:68, weight:Font.Bold, capitalization:Font.AllUppercase, wrapMode: Text.NoWrap, textFormat: Text.AutoText })
     property var pairingInstructions: ({ color:color5, size:42, weight:Font.Normal, capitalization:Font.AllUppercase, wrapMode: Text.Wrap, textFormat: Text.AutoText })
     property var unpairText: ({ color:color5, size:80, weight:Font.Normal, capitalization:Font.AllUppercase, wrapMode: Text.NoWrap, textFormat: Text.AutoText })
     property var floatMessageFont: ({ color:"white", size:42, weight:Font.Normal, capitalization:Font.MixedCase, wrapMode: Text.Wrap, textFormat: Text.AutoText })
+    property var deleteFont: ({ color:color5, size:74, weight:Font.Normal, capitalization:Font.AllUppercase, wrapMode: Text.Wrap, textFormat: Text.AutoText })
+    property var addEndpointBtnFont: ({ color:"white", size:48, weight:Font.Normal, capitalization:Font.AllUppercase, wrapMode: Text.Wrap, textFormat: Text.AutoText })
+    property var apiInstructionFont: ({ color:"black", size:40, weight:Font.Normal, capitalization:Font.MixedCase, wrapMode: Text.Wrap, textFormat: Text.RichText })
+    property var siteTitleFont: ({ color:"white", size:50, weight:Font.Normal, capitalization:Font.MixedCase, wrapMode: Text.Wrap, textFormat: Text.AutoText })
+    property var siteListFont: ({ color:color1, size:40, weight:Font.Normal, capitalization:Font.MixedCase, wrapMode: Text.Wrap, textFormat: Text.RichText })
 
 }

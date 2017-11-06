@@ -1,5 +1,6 @@
 import QtQuick 2.5
 import "../../utils"
+import "../clients"
 import "../home/gallery"
 
 Item {
@@ -25,6 +26,11 @@ Item {
         onRequestComplete: {
             if(result.context === results) {
                 browser.append(result)
+            }
+        }
+        onEmptyResult: {
+            if(result.context === results) {
+                Foreground.showMessage("NO RESULTS", 3000, Resolution.applyScale(300))
             }
         }
     }

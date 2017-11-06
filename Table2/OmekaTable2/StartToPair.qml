@@ -17,11 +17,6 @@ Item
 
     signal whatIsThis();
 
-    Component.onCompleted: HeistManager.clearHeist(); //temporary hack; see api doc for this call
-
-    //remove sessions from heist on app exit
-    Component.onDestruction: clean();
-
     Rectangle
     {
         id: start_to_pair_icon_bkg
@@ -54,71 +49,29 @@ Item
 
     }
 
-    OmekaText
+    //    OmekaText
+    //    {
+    //        id: pairing_text
+    //        text: "Thank you for exploring the beta version of our software. The mobile app is not yet available for download."
+    //        /*"To send to your device download and launch the " + Settings.APP_NAME +
+    //              ", go to Settings, and enter the code:"*/
+    //        _font: Style.settingFont
+    //        width: 143
+    //        anchors.horizontalCenter: root.horizontalCenter
+    //        horizontalAlignment: Text.AlignHCenter
+    //        y: 65
+    //    }
+
+    QRCode
     {
-        id: pairing_text
-        text: "To send to your device download and launch the " + Settings.APP_NAME +
-              ", go to Settings, and enter the code:"
-        _font: Style.settingFont
-        width: 123
+        id: qr_code
+        scale: 0.35
+        width: 320
+        height: 320
         anchors.horizontalCenter: root.horizontalCenter
-        horizontalAlignment: Text.AlignHCenter
-        y: 65
+        y: -40
     }
 
-    Rectangle
-    {
-        id: code_container_bkg
-        anchors.fill: code_container
-        color: root.color
-        visible: false
-    }
-    Image
-    {
-        id: code_container
-        source: "content/POI/code-containers.png"
-        anchors.horizontalCenter: root.horizontalCenter
-        y: 125
-        visible: false
-    }
-    OpacityMask
-    {
-        anchors.fill: code_container_bkg
-        source: code_container_bkg
-        maskSource: code_container
-    }
-    Text
-    {
-        id: code_first_digit
-        color: root.color
-        font.pixelSize: 25
-        anchors.verticalCenter: code_container.verticalCenter
-        x: 35
-    }
-    Text
-    {
-        id: code_second_digit
-        color: root.color
-        font.pixelSize: 25
-        anchors.verticalCenter: code_container.verticalCenter
-        x: 66
-    }
-    Text
-    {
-        id: code_third_digit
-        color: root.color
-        font.pixelSize: 25
-        anchors.verticalCenter: code_container.verticalCenter
-        x: 96
-    }
-    Text
-    {
-        id: code_fourth_digit
-        color: root.color
-        font.pixelSize: 25
-        anchors.verticalCenter: code_container.verticalCenter
-        x: 128
-    }
     Image
     {
         id: what_is_this
@@ -132,17 +85,14 @@ Item
         }
     }
 
-
-
     function randomInt(min, max) {
-
         return Math.floor(Math.random()*(max-min)+min);
-
     }
+
     /*! Create new heist pairing sessions */
     function startSession() {
         generateCode();
-        HeistManager.startPairingSession(currentCode);
+        HeistClient.startPairingSession(currentCode, HeistClient.uid);
     }
 
     /*! Generate unique pairing code. This needs to be tracked
@@ -152,18 +102,13 @@ Item
         do {
             code = randomInt(1111,9999);
         }
-        while (HeistManager.codes.indexOf(code) !== -1);
+        while (HeistClient.codes.indexOf(code) !== -1);
         currentCode = code;
-        HeistManager.codes.push(code);
-        var first_digit = Math.floor(code / 1000);
-        var second_digit = Math.floor(code % 1000 /100);
-        var third_digit = Math.floor(code % 100 /10);
-        var fourth_digit = Math.floor(code % 10);
+        HeistClient.codes.push(code);
 
-        code_first_digit.text = first_digit;
-        code_second_digit.text = second_digit;
-        code_third_digit.text = third_digit;
-        code_fourth_digit.text = fourth_digit;
+        qr_code.value = "endpoint,"+Omeka.endpoint
+                        +";table,"+HeistClient.uid
+                        +";code,"+currentCode
     }
 
 

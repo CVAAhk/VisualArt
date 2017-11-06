@@ -5,6 +5,8 @@
 #include <QQmlApplicationEngine>
 #include <QQuickWindow>
 #include <QQuickView>
+#include "sequentialguid.h"
+#include "qutils.h"
 
 //class Settings;
 class ApplicationLoader : public QObject
@@ -33,4 +35,7 @@ private:
     QObject *m_main_window_object;
 
     QString m_install_path;
+    SequentialGUID m_guid;
+    QUtils m_utils;
+
 };

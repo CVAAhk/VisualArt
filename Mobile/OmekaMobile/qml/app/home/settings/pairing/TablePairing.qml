@@ -1,6 +1,7 @@
 import QtQuick 2.5
 import "../../../base"
 import "../../../../utils"
+import "../../../clients"
 
 Item {
 
@@ -8,19 +9,16 @@ Item {
     state: "unpaired"
 
     /*
-     Unique device id for pairing with heist table user
+      Universally unique identifier to tag the device.
     */
-    property var deviceId: HeistManager.uid;
-
+    property var deviceId: User.getGUID()
 
     //clear float message when invisible
     onVisibleChanged: {
         if(!visible) {
             Foreground.hideMessage()
-            Foreground.pulseLikesButton(false)
         }
     }
-
 
     ///////////////////////////////////////////////////////////
     //          UI
@@ -46,29 +44,49 @@ Item {
         }
     }
 
-    /*!Code display*/
-    CodeEntry {
-        id: entry
-        width: Resolution.applyScale(546)
-        anchors.top: parent.top
-        anchors.topMargin: Resolution.applyScale(438)
-        anchors.horizontalCenter: parent.horizontalCenter
-        onCodeStringChanged: receiver.code = codeString
-    }
+    /*!QR Scanning View*/
+    Column {
+        id: scan_view
 
-    /*!Keypad for code entry*/
-    Keypad {
-        id: keypad
-        anchors.bottom: parent.bottom
-        onKeyPressed: {
-            //clear message if displayed
-            if(key === "back")   {
-                Foreground.hideMessage();
+        anchors.right: parent.right
+        anchors.top: bar.bottom
+        width: parent.width
+        height: parent.height - bar.height
+
+        QRScanner {
+            id: scanner
+            width: parent.width
+            height: parent.height * 0.6
+
+            Image {
+                id: scanner_frame
+                source: Style.scannerFrame
+                fillMode: Image.PreserveAspectFit
+                width: parent.width/4
+                height: parent.width/4
+                anchors.centerIn: parent
             }
 
-            //submit entry
-            entry.submitEntry(key)
+            onEndpointChanged: Heist.endpoint = endpoint
+            onTableChanged: Heist.tableID = table
+            onCodeChanged: receiver.code = code
+
         }
+
+        Item {
+            id: scan_instructions
+            width: parent.width
+            height: parent.height * 0.4
+
+            OmekaText {
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.top: parent.top
+                anchors.topMargin: parent.height * 0.2
+                _font: Style.pairingInstructions
+                text: "scan the qr code to pair with the table"
+            }
+        }
+
     }
 
     /*!Control to terminate pairing session*/
@@ -85,19 +103,15 @@ Item {
     states: [
         State {
             name: "unpaired"
-            AnchorChanges { target: keypad; anchors.bottom: parent.bottom; anchors.top: undefined }
-            PropertyChanges { target: keypad; opacity: 1 }
-            AnchorChanges { target: entry; anchors.top: parent.top; anchors.bottom: undefined }
-            PropertyChanges { target: entry; opacity: 1 }
+            AnchorChanges { target: scan_view; anchors.right: parent.right }
+            PropertyChanges { target: scan_view; opacity: 1 }
             AnchorChanges { target: unpair_view; anchors.left: parent.right }
             PropertyChanges { target: unpair_view; opacity: 0 }
         },
         State {
             name: "paired"
-            AnchorChanges { target: keypad; anchors.bottom: undefined; anchors.top: parent.bottom }
-            PropertyChanges { target: keypad; opacity: 0 }
-            AnchorChanges { target: entry; anchors.top: undefined; anchors.bottom: parent.top }
-            PropertyChanges { target: entry; opacity: 0 }
+            AnchorChanges { target: scan_view; anchors.right: parent.left }
+            PropertyChanges { target: scan_view; opacity: 0 }
             AnchorChanges { target: unpair_view; anchors.left: parent.left }
             PropertyChanges { target: unpair_view; opacity: 1 }
         }
@@ -106,7 +120,7 @@ Item {
     //state animations
     transitions: Transition {
         AnchorAnimation { duration: 400; easing.type: Easing.OutQuad }
-        PropertyAnimation { targets: [keypad, entry, unpair_view]; duration: 200; property: "opacity"; easing.type: Easing.OutQuad }
+        PropertyAnimation { target: unpair_view; duration: 200; property: "opacity"; easing.type: Easing.OutQuad }
     }
 
     ///////////////////////////////////////////////////////////
@@ -117,14 +131,14 @@ Item {
     HeistReceiver {
         id: receiver
         onSessionChanged: validateSession();
-        onAddItem: HeistManager.registerItem(item, entry.codeString);
+        onAddItem: Heist.registerItem(item, scanner.code);
         onErrorChanged: pairingError(error);
     }
 
     /*
       Once a valid session is determined, established pairing. Once a session
       becomes invalid, terminate the pairing. A valid session is one that has
-      an heist entry corresponding with the pairing code and does not have an
+      a heist entry corresponding with the pairing code and does not have an
       assigned device.
     */
     function validateSession() {
@@ -146,10 +160,11 @@ Item {
       Create the pairing in the manager and update the ui state
     */
     function pair() {
-        if(state === "unpaired") {
-            HeistManager.setPairing(entry.codeString, deviceId);
+        if(state === "unpaired") {            
+            scanner.start = false
+            Foreground.hideMessage();
+            Heist.setPairing(scanner.code, deviceId);
             state = "paired";
-            Foreground.pulseLikesButton(true);
         }
     }
 
@@ -158,11 +173,10 @@ Item {
     */
     function unpair() {
         if(state === "paired") {
+            scanner.start = true
             receiver.register = false;
             Foreground.showMessage("Pairing session has been terminated.", 3000, Resolution.applyScale(300));
-            Foreground.pulseLikesButton(false);
-            HeistManager.releasePairing(entry.codeString, deviceId);
-            entry.resetCode();
+            Heist.releasePairing(scanner.code, deviceId);
             state = "unpaired";            
         }
     }

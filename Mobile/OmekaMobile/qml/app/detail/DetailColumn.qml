@@ -3,6 +3,7 @@ import "viewers"
 import "viewers/controls"
 import "../base"
 import "../../utils"
+import "../clients"
 
 /*!
     \qmltype DetailColumn
@@ -19,6 +20,7 @@ ScaleColumn {
     //assign column to detail for delayed loading
     Component.onCompleted: {
         detail.column = column
+        info.text = metadata()
     }
 
     /*! \qmlproperty
@@ -38,12 +40,11 @@ ScaleColumn {
         liked: item ? ItemManager.isLiked(item) : false
         itemId: item ? item.id : -1
         onLikedChanged: {
-            if(liked) {
+            if(liked) {                
                 ItemManager.registerLike(item)
             }
             else {
                 ItemManager.unregisterLike(item)
-                HeistManager.unregisterItem(item.id)
             }
         }
     }
@@ -66,7 +67,6 @@ ScaleColumn {
         width: parent.width - Resolution.applyScale(60)
         height: contentHeight
         _font: Style.metadataFont
-        text: metadata()
         onLinkActivated: Qt.openUrlExternally(link)
     }
 

@@ -2,7 +2,7 @@ import QtQuick 2.5
 import QtQuick.Controls 1.4
 import "../base"
 import "../styles"
-import "../../utils"
+import "../clients"
 
 Item {
     id: tags
@@ -11,31 +11,22 @@ Item {
 
     property var tagData: ({})
     property int tagCount: 0
+    property url endpoint: Omeka.endpoint
 
     //refresh tags
-    Component.onCompleted: Omeka.getTags(tags)
+    onEndpointChanged: {
+        connection.target = Omeka
+        list.model.clear()
+        tagData = ({})
+        tagCount = 0
+        Omeka.getTags(tags)
+    }
 
     //update list on completion of tag query
     Connections {
-        target: Omeka
-        onRequestComplete: {
-            if(result.context === tags) {
-                tagCount++
-                tagData[result.tag] = result
-                Omeka.getTaggedItemCount(result.tag, result.tag)
-            }
-            else if(tagData.hasOwnProperty(result.context)) {
-                var tagItem = tagData[result.context];
-                tagItem.count = result.count;
-                list.model.append(tagItem)
-                delete tagData[result.context]
-                tagCount--
-
-                if(tagCount === 0) {
-                    target = null
-                }
-            }
-        }
+        id: connection
+        ignoreUnknownSignals: true
+        onRequestComplete: loadTags(result)
     }
 
     //tag scroll view
@@ -54,6 +45,25 @@ Item {
             header: TagHeader {}
             spacing: 2
             onHeightChanged: contentY = -headerItem.height
+        }
+    }
+
+    function loadTags(result) {
+        if(result.context === tags) {
+            tagCount++
+            tagData[result.tag] = result
+            Omeka.getTaggedItemCount(result.tag, result.tag)
+        }
+        else if(tagData.hasOwnProperty(result.context)) {
+            var tagItem = tagData[result.context];
+            tagItem.count = result.count;
+            list.model.append(tagItem)
+            delete tagData[result.context]
+            tagCount--
+
+            if(tagCount === 0) {
+                connection.target = null
+            }
         }
     }
 }

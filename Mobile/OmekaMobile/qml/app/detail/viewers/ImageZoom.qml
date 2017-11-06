@@ -14,6 +14,8 @@ Flickable {
     property real initScale: 1
     property real minScale: 1
     property real maxScale: 10
+    property real resetWidth
+    property real resetHeight
 
     Binding on contentWidth { when: imgWidth; value: imgWidth }
     Binding on contentHeight { when: imgHeight; value: imgHeight }
@@ -27,7 +29,7 @@ Flickable {
         onPinchStarted: {
             initWidth = flick.contentWidth
             initHeight = flick.contentHeight
-            initScale = initWidth/imgWidth
+            initScale = initWidth/imgWidth            
         }
 
         onPinchUpdated: {
@@ -41,7 +43,17 @@ Flickable {
 
         onPinchFinished: {
            flick.returnToBounds()
-        }        
+        }
+
+        onEnabledChanged: {
+            if(enabled) {
+                resetWidth = width
+                resetHeight = height
+            }
+            else {
+                flick.resizeContent(resetWidth, resetHeight, Qt.point(0,0))
+            }
+        }
 
         Rectangle {
             anchors.fill: parent

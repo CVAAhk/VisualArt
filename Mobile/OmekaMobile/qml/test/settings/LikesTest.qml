@@ -12,7 +12,7 @@ ApplicationWindow {
     Component.onCompleted: {
        var rows = Settings.rows(table)
        for(var i=0; i<rows.length; i++){
-          console.log(model.setProperty(rows[i].setting, "liked", true))
+          model.setProperty(rows[i].setting, "liked", true)
        }
     }
 

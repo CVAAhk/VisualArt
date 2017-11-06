@@ -13,6 +13,7 @@ Item {
     property var tempModel: ListModel {}
 
     signal letterSelected(string letter)
+    signal filterScrolled();
 
     //refresh tags
     Component.onCompleted: Omeka.getTags(tags)
@@ -101,6 +102,22 @@ Item {
 
                 tags.letterSelected(letter);
             }
+        }
+    }
+    ScrollBar
+    {
+        id: scroll_bar
+
+        x: 165
+        y: 5
+
+        scrollLength: parent.height - 45 - 10
+        //transform: Scale { xScale: 1.0 / root.scale; yScale: 1.0 / root.scale }
+
+        onScrollChanged:
+        {
+            filterScrolled();
+            scroll.flickableItem.contentY = percent * (scroll.flickableItem.contentHeight - scroll.flickableItem.height);
         }
     }
 

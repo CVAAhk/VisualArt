@@ -13,7 +13,7 @@ OmekaToggle{
 
     //add or remove data entry based on checked state
     onClicked: {
-        if(checked){
+        if(checked){            
             ItemManager.registerLike(itemData)
         }
         else {

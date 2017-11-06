@@ -1,5 +1,6 @@
 var LIKES = "likes"
 var USER = "user"
+var ENDPOINTS = "endpoints"
 
 function getDatabase() {
      return LocalStorage.openDatabaseSync("omekamobile", "0.1", "settings", 1000000);
@@ -85,6 +86,7 @@ function clear(table) {
 }
 
 function drop(table) {
+    gc() //workaround for locked table bug
     var db = getDatabase();
     var res = ""
     db.transaction(function(tx) {
@@ -101,26 +103,49 @@ function drop(table) {
 
 /*--------LIKES table operations--------*/
 
-function addLike(id, value) {
-    set(LIKES, id, value);
+/*
+  Register the item with the LIKES table
+  \a item The liked item
+*/
+function addLike(item) {
+    set(LIKES, item.uid, item.endpoint);
 }
 
-function removeLike(id) {
-    remove(LIKES, id);
+/*
+  Unregister the item from the LIKES table
+  \a item  The item to remove
+*/
+function removeLike(item) {
+    remove(LIKES, item.uid);
 }
 
-function isLiked(id) {
-    return get(LIKES, id) !== 0;
+/*
+  Returns true if item is registered with the specified table, false otherwise
+  \a id   The table name
+  \a item The item to search for
+ */
+function isLiked(item) {
+    return get(LIKES, item.uid) !== 0;
 }
 
+/*
+  Returns all registered likes
+*/
 function getLikes() {
-    return rows(LIKES);
+    var likes = []
+    var entries = rows(LIKES)
+    for(var i=0; i<entries.length; i++) {
+        likes.push(entries[i])
+    }
+    return likes;
 }
 
+/*
+  Clears all tables
+*/
 function clearAllLikes() {
     return clear(LIKES);
 }
-
 
 /*--------USER table operations--------*/
 function setLayout(layout) {
@@ -130,3 +155,51 @@ function setLayout(layout) {
 function getLayout() {
     return get(USER, "layout");
 }
+
+function setGUID(guid) {
+    set(USER, "guid", guid);
+}
+
+function getGUID() {
+    return get(USER, "guid");
+}
+
+function setLastSelectedEndpoint(urlText) {
+    set(USER, "index", urlText);
+}
+
+function getLastSelectedEndpoint() {
+    return get(USER, "index");
+}
+
+/*--------ENDPOINTS table operations--------*/
+
+/*
+  Register the endpoint with the ENDPOINTS table
+*/
+function addEndpoint(endpoint) {
+    set(ENDPOINTS, endpoint.omekaID, endpoint.url);
+}
+
+/*
+  Unregister the endpoint from the ENDPOINTS table
+*/
+function removeEndpoint(endpoint) {
+    remove(ENDPOINTS, endpoint.omekaID);
+}
+function isRegistered(endpoint) {
+    return get(ENDPOINTS, endpoint.omekaID) !== 0;
+}
+/*
+  Returns all registered endpoints
+*/
+function getEndpoints() {
+    var endpoints = []
+    var entries = rows(ENDPOINTS)
+    for(var i=0; i<entries.length; i++) {
+        endpoints.push(entries[i])
+    }
+    return endpoints;
+}
+
+

@@ -2,8 +2,11 @@ pragma Singleton
 import QtQuick 2.5
 import QtQuick.LocalStorage 2.0
 import "../js/storage.js" as Settings
+import "../js/qqr.js" as QRCodeBackend
+import "../app/clients"
 
 Item {
+    id: item_manager
 
     /*-------------DETAIL-------------*/
     /*!
@@ -40,28 +43,52 @@ Item {
     signal itemRemoved(var item)
     signal clearItems()
 
-    /*!
-      \qmlmethod
-      Add like to local database
-    */
-    function registerLike(item) {
-        if(!isLiked(item)) {
-            Settings.addLike(String(item.id), itemToEntry(item))
-            itemAdded(item)
+    //items liked since the last view
+    property var recentlyLiked: []
+
+    //tracks number of likes since last view
+    property int newLikes: 0
+
+    //likes view is current
+    property bool onLikesView: false
+
+    //upgrade schema for previous installations
+    Component.onCompleted: upgradeLikes()
+
+    //listen to likes registered through heist
+    Connections {
+        target: Heist
+        onHeistLike: {
+            registerLike(item)
         }
     }
 
     /*!
       \qmlmethod
-      Remove like from local database
+      Add like to local database
       \a item The item to register
+    */
+    function registerLike(item) {
+        if(!isLiked(item)) {
+            Settings.addLike(item)
+        }
+        itemAdded(item)
+        addRecentLike(item)
+    }
+
+    /*!
+      \qmlmethod
+      Remove like from local database
+      \a item The item to unregister
       \a bypass Skip data removal and invokes signal with the assumption removal will
                 be finalized at a later time
     */
     function unregisterLike(item, bypass) {
         itemRemoved(item)
+        removeRecentLiked(item)
         if(bypass) return;
-        Settings.removeLike(String(item.id))
+        Settings.removeLike(item)
+        Heist.unregisterItem(item)
     }
 
     /*!
@@ -71,40 +98,7 @@ Item {
     function unregisterAllLikes() {
         Settings.clearAllLikes()
         clearItems()
-    }
-
-    /*!
-      \qmlmethod
-      Format data object to semi-colon delimited entry
-    */
-    function itemToEntry(item) {
-        var entry = item.fileCount;
-        var element;
-        for(var i=0; i<item.metadata.count; i++) {
-            element = item.metadata.get(i);
-            entry += "^"+element.element.name+"|"+element.text;
-        }
-        return entry;
-    }
-
-    /*!
-      \qmlmethod
-      Convert data entry to object
-    */
-    function entryToItem(setting, value) {
-        var item = {item: setting}
-        var values = value.split("^")
-        item.file_count = values[0]
-
-        item.metadata = []
-        var mdmap
-
-        for(var i=1; i<values.length; i++) {
-            mdmap = values[i].split("|")
-            item.metadata.push({ element: {name: mdmap[0]} ,text:mdmap[1]})
-        }
-
-        return item
+        clearRecentLiked()
     }
 
     /*!
@@ -112,23 +106,22 @@ Item {
       Converts item to omeka result data format
     */
     function itemToData(item) {
-        return {item: String(item.id), metadata: item.metadata, file_count: String(item.fileCount)};
-    }
-
-    /*!
-      \qmlmethod
-      Converts omeka result to item data format
-    */
-    function dataToItem(data) {
-        return {id: data.item, metadata: data.metadata, fileCount: data.file_count};
+        return {
+            item: item.id,
+            metadata: item.metadata,
+            file_count: item.fileCount,
+            uid: item.uid,
+            omekaID: item.omekaID,
+            endpoint: item.endpoint
+        };
     }
 
     /*!
       \qmlmethod
       Returns true if the item has an entry in the database
     */
-    function isLiked(item) {
-        return Settings.isLiked(String(item.id))
+    function isLiked(item) {        
+        return Settings.isLiked(item)
     }
 
     /*!
@@ -136,11 +129,146 @@ Item {
       Returns all registered likes
     */
     function getLikes() {
-        var entries = Settings.getLikes()
-        var likes = []
-        for(var i=0; i<entries.length; i++) {
-             likes.push(entryToItem(entries[i].setting, entries[i].value))
-        }
-        return likes
+        return Settings.getLikes()
     }
+
+    /*!
+      \qmlmethod
+      Add item to list of recently liked items. This is used to assign a count
+      to the likes number tag notification.
+    */
+    function addRecentLike(item) {
+        if(onLikesView) return
+        if(recentlyLiked.indexOf(item.uid) === -1) {
+            recentlyLiked.push(item.uid)
+            newLikes = recentlyLiked.length
+        }
+    }
+
+    /*!
+      \qmlmethod
+      Remove item from list of recently liked items
+    */
+    function removeRecentLiked(item) {
+        if(recentlyLiked.indexOf(item.uid) !== -1) {
+            recentlyLiked.splice(recentlyLiked.indexOf(item.uid), 1)
+            newLikes = recentlyLiked.length
+        }
+    }
+
+    /*!
+      \qmlmethod
+      Clear all recently liked items
+    */
+    function clearRecentLiked() {
+        recentlyLiked.length = 0
+        newLikes = 0
+    }
+
+    /*!
+      \qmlmethod
+      The LIKES table is being repurposed for storage of items from multiple omeka instances.
+      This call removes all records of the previous schema. Since the previous schema is pre-deployment,
+      this will be irrelevant in most cases but test cases need to be handled to not conflict with previous
+      installations.
+    */
+    function upgradeLikes() {
+
+        var entries = Settings.getLikes()
+
+        //if old schema, drop likes table
+        for(var i=0; i<entries.length; i++) {
+            var data = entries[i].value
+            if(data && data.indexOf("^Title|") !== -1) {
+                Settings.drop(Settings.LIKES);
+                return;
+            }
+        }
+    }
+    /*-------------ENDPOINTS-------------*/
+    //ui notifications
+    signal endpointAdded(var endpoint)
+    signal endpointRemoved(var endpoint)
+    signal clearEnpoints()//always by default having mallcopy endpoint
+
+    //endpoints added since the last view
+    property var recentlyEndpoints: []
+
+    //tracks number of endpoints since last view
+    property int newEndpoints: 0
+
+    /*!
+      \qmlmethod
+      Add endpoint to local database
+    */
+    function registerEndpoint(endpoint) {
+        if(!isRegistered(endpoint)) {
+            Settings.addEndpoint(endpoint)
+        }
+        endpointAdded(endpoint)
+        addRecentEndpoint(endpoint)
+    }
+    /*!
+      \qmlmethod
+      Remove endpoint from local database
+    */
+    function unregisterEndpoint(endpoint) {
+        endpointRemoved(endpoint)
+        removeRecentEndpoints(endpoint)
+        Settings.removeEndpoint(endpoint)
+    }
+//    /*!
+//      \qmlmethod
+//      Converts item to omeka result data format
+//    */
+//    function itemToData(item) {
+//        return {
+//            item: item.id,
+//            metadata: item.metadata,
+//            file_count: item.fileCount,
+//            uid: item.uid,
+//            omekaID: item.omekaID,
+//            endpoint: item.endpoint
+//        };
+//    }
+
+    /*!
+      \qmlmethod
+      Returns true if the item has an entry in the database
+    */
+    function isRegistered(endpoint) {
+        return Settings.isRegistered(endpoint)
+    }
+
+    /*!
+      \qmlmethod
+      Returns all registered Endpoints
+    */
+    function getEndpoints() {
+        return Settings.getEndpoints()
+    }
+
+    /*!
+      \qmlmethod
+      Add endpoint to list of recently added endpoints.
+    */
+    function addRecentEndpoint(endpoint) {
+        if(recentlyEndpoints.indexOf(endpoint.omekaID) === -1) {
+            recentlyEndpoints.push(endpoint.OmekaID)
+            newEndpoints = recentlyEndpoints.length
+        }
+    }
+
+    /*!
+      \qmlmethod
+      Remove item from list of recently added endpoints.
+    */
+    function removeRecentEndpoints(endpoint) {
+        if(recentlyEndpoints.indexOf(endpoint.omekaID) !== -1) {
+            recentlyEndpoints.splice(recentlyEndpoints.indexOf(endpoint.omekaID), 1)
+            newEndpoints = recentlyEndpoints.length
+        }
+    }
+
+
 }

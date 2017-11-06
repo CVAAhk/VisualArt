@@ -2,6 +2,7 @@ import QtQuick 2.5
 import com.lasconic 1.0
 import "../base"
 import "../../utils"
+import "../clients"
 
 /*
   \qmltype DetailToolbar
@@ -32,7 +33,8 @@ OmekaToolBar {
         id: share
         anchors.right: like.left
         anchors.margins: Resolution.applyScale(30)
-        icon: Style.more
+        icon: Style.share
+        iconScale: .75
         onClicked: shareUtils.share("Ignore Test", Omeka.link+itemId)
     }
 

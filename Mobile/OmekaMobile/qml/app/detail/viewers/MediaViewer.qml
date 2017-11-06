@@ -1,6 +1,6 @@
 import QtQuick 2.5
 import "../../base"
-import "../../../utils"
+import "../../clients"
 
 /*!
   \qmltype MediaViewer

@@ -31,10 +31,17 @@ Item {
     */
     property bool uncheck: false
 
+    property real transitionTime: 0
+
     /*! \qml property bool Setting::checked
       Checked state
     */
     property alias checked: category.checked
+
+    /*! \qml property bool Setting::enableArrow
+      Enables/disables rendering of arrow
+    */
+    property alias enableArrow: arrow.visible    
 
     //change state on check
     onCheckedChanged: {
@@ -45,6 +52,7 @@ Item {
     onWidthChanged: {
         if(width) {
             state = "collapse"
+            transitionTime = 250
         }
     }
 
@@ -87,10 +95,8 @@ Item {
         onPressedChanged: {
             if(pressed) {
                 uncheck = exclusiveGroup.current === category
-                //setting.state = "expand"
             } else if(uncheck) {
                 exclusiveGroup.current = null
-                //setting.state = "collapse"
             }
         }
     }
@@ -111,8 +117,8 @@ Item {
 
     //state transitions
     transitions: Transition {
-        AnchorAnimation { duration: 250; easing.type: Easing.OutQuad }
-        PropertyAnimation { target: arrow; property: "opacity"; duration: 250; easing.type: Easing.OutQuad }
-        PropertyAnimation { target: setting; property: "height"; duration: 250; easing.type: Easing.OutQuad }
+        AnchorAnimation { duration: transitionTime; easing.type: Easing.OutQuad }
+        PropertyAnimation { target: arrow; property: "opacity"; duration: transitionTime; easing.type: Easing.OutQuad }
+        PropertyAnimation { target: setting; property: "height"; duration: transitionTime; easing.type: Easing.OutQuad }
     }
 }

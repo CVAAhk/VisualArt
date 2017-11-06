@@ -3,13 +3,16 @@ import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import "../../home"
 import "../../base"
+import "../../clients"
 import "../../../utils"
 import "pairing"
 
 /*!User settings*/
 Item {
-
+    id: root
+    enabled: false
     property TablePairing tablePairing: TablePairing {}
+    property EndpointsEditing endpointsEditing: EndpointsEditing {}
 
     Column {
         anchors.fill: parent
@@ -31,7 +34,10 @@ Item {
                 id: back
                 icon: Style.back
                 iconScale: .7
-                onClicked: if(homeStack) homeStack.pop()
+                onClicked: if(homeStack) {
+                    root.enabled = false
+                    homeStack.pop()
+                }
             }
         }
 
@@ -55,21 +61,33 @@ Item {
 
                 //settings
                 LayoutSetting { title: "Layout" }
+                EndpointsSetting
+                {
+                    title: "Omeka Sites"
+                    onActivate: {
+                        if(homeStack) {
+                            homeStack.push(endpointsEditing);
+                        }
+                    }
+                    text: User.heistUnsupported
+                }
+
                 PairSetting {
                     title: "Pair with Collection Viewer Table"
-                    onSelect: {
+                    onActivate: {
                         if(homeStack) {
                             homeStack.push(tablePairing);
                         }
                     }
+                    text: User.heistUnsupported
                 }
                 ClearLikesSetting { title: "Clear All Likes" }
                 AboutSetting {
                     title: "About The Collections"
-                    text: User.aboutCollection
+                    text: User.aboutCollection || Omeka.description
                 }
                 AboutSetting {
-                    title: "About Omeka and Open Exhibits"
+                    title: "About Omeka Everywhere Mobile"
                     text: User.aboutOOE
                 }
             }
