@@ -82,11 +82,7 @@ Item {
                 {
                     revised_title = result.title;
                 }
-<<<<<<< HEAD
 
-
-=======
->>>>>>> b0a7634f3137e26c4ac1ff4d3c517c3dbabbbba3
                 if(revised_url === lastSelectedEndpoint)
                 {
                     endpoints.addEndpointToTop(revised_title, revised_url, true)
