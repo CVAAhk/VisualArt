@@ -35,7 +35,7 @@ OmekaToolBar {
         anchors.margins: Resolution.applyScale(30)
         icon: Style.share
         iconScale: .75
-        onClicked: shareUtils.share("Ignore Test", Omeka.link+itemId)
+        onClicked: shareUtils.share("", Omeka.link+itemId)
     }
 
     //locally stores item in database

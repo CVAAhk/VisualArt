@@ -212,6 +212,7 @@ package display.browser.tags.index
 		 * @param	letter
 		 */
 		public function snapToLetter(letter:String):void {
+			if (!letter) return; 
 			var index:int; 
 			if(letter.length == 1){
 				index = letter.charCodeAt(0) - 63;

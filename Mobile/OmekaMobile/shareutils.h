@@ -30,7 +30,7 @@ class PlatformShareUtils : public QQuickItem
 public:
     PlatformShareUtils(QQuickItem *parent = 0) : QQuickItem(parent){}
     virtual ~PlatformShareUtils() {}
-    virtual void share(const QString &text, const QUrl &url){ qDebug() << text << url; }
+    virtual void share(const QString &text, const QUrl &url){ }//qDebug() << text << url; }
 };
 
 class ShareUtils : public QQuickItem

@@ -191,7 +191,7 @@ Item {
                 try {
                     var result = JSON.parse(request.responseText);
                     if(result.errors !== undefined){
-                        print("Request Error: "+result.errors[0].message);
+                        //print("Request Error: "+result.errors[0].message);
                     }
                     else{
                         result.url = request.url;
@@ -200,7 +200,7 @@ Item {
                         processResult(result);
                     }
                 } catch(e) {
-                    print(e);
+                    //print(e);
                 }
             }
         }
