@@ -297,7 +297,7 @@ Item {
             anchors.margins: Resolution.applyScale(15)
             anchors.verticalCenter: parent.verticalCenter
             verticalAlignment: Text.AlignVCenter
-            width: 1122
+            width: parent.width - clearAndAddButton.width
             color: "#666666"
             selectByMouse: true
             text: qsTr("http://www...")
