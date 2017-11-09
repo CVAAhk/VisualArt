@@ -59,8 +59,8 @@ struct SimpleVideoFrame
         /// Any other task is performed in a QFuture task, as we want to leave the UI thread asap
         if(data.size() != frame.mappedBytes())
         {
-            qDebug() << "needed to resize";
-            qDebug() << "size: " << data.size() << ", new size: " << frame.mappedBytes();
+            //qDebug() << "needed to resize";
+            //qDebug() << "size: " << data.size() << ", new size: " << frame.mappedBytes();
             data.resize(frame.mappedBytes());
         }
         memcpy(data.data(), frame.bits(), frame.mappedBytes());

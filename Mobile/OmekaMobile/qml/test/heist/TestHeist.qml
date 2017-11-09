@@ -139,9 +139,9 @@ ApplicationWindow {
         Heist.clearAllSessions();
         while(cleanDelay) {
             cleanDelay--;
-            console.log("cleaning");
+            //console.log("cleaning");
         }
-        console.log("cleaned");
+        //console.log("cleaned");
     }
 
     //convenience function for removing by heist record id (TEST ONLY)

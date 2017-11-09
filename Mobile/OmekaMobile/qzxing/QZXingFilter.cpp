@@ -275,10 +275,10 @@ void QZXingFilterRunnable::processVideoFrameProbed(SimpleVideoFrame & videoFrame
 
     if(image.isNull())
     {
-        qDebug() << "QZXingFilterRunnable error: Cant create image file to process.";
-        qDebug() << "Maybe it was a format conversion problem? ";
-        qDebug() << "VideoFrame format: " << videoFrame.pixelFormat;
-        qDebug() << "Image corresponding format: " << QVideoFrame::imageFormatFromPixelFormat(videoFrame.pixelFormat);
+        //qDebug() << "QZXingFilterRunnable error: Cant create image file to process.";
+        //qDebug() << "Maybe it was a format conversion problem? ";
+        //qDebug() << "VideoFrame format: " << videoFrame.pixelFormat;
+        //qDebug() << "Image corresponding format: " << QVideoFrame::imageFormatFromPixelFormat(videoFrame.pixelFormat);
         filter->decoding = false;
         return;
     }

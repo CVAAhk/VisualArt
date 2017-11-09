@@ -3,7 +3,6 @@
 
 #include <QGuiApplication>
 #include <QScreen>
-#include <QDebug>
 
 
 /* Anthing needs to use Qt Widgets has to define in this class*/
@@ -20,17 +19,9 @@ MainWindow::MainWindow(QWidget *parent)
 }
 void MainWindow::orientationChanged(Qt::ScreenOrientation orientation)
 {
-    //qDebug() << "Orientation:" << orientation;
     if(QuickMaker *quick_maker = QuickMaker::Instance)
     {
-        qDebug() << "Orientation:" << orientation;
         quick_maker->orientationChanged(orientation);
-
-
-    }
-    else
-    {
-        qDebug() << "QuickMaker is failed";
     }
 }
 

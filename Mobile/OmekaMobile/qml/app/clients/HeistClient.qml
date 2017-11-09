@@ -273,14 +273,14 @@ Item {
                     case post:
                         var result = JSON.parse(request.responseText);                        
                         if(addSession(result) && request.status === 201) {
-                            console.log("record ADDED");
+                           // console.log("record ADDED");
                         }
                         break;
                     case put:
-                        console.log(request.status);
+                        //console.log(request.status);
                         break;
                     case del:
-                        console.log("record REMOVED");
+                        //console.log("record REMOVED");
                         break;
                 }
             }

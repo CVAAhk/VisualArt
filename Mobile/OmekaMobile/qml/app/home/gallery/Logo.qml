@@ -70,6 +70,9 @@ Rectangle {
             anchors.topMargin: Resolution.applyScale(80)
             maximumLineCount: 2
             _font: Style.siteTitleFont
+
+            //using a timer because there is no signal indicating when
+            //layout is complete on text change
             onTextChanged: update_timer.restart()
         }
     }
@@ -77,7 +80,7 @@ Rectangle {
     //grab text to image after a delay permitting text layout to complete
     Timer{
         id: update_timer
-        interval: 100
+        interval: 10
         onTriggered: {
             rect.grabToImage(function(result){
                 title_img.source = result.url

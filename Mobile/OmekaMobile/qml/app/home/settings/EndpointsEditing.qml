@@ -35,7 +35,7 @@ Item {
         lastSelectedEndpoint = User.getLastSelectedEndpoint() || defaultEndpoint
 
         if(_endpoints.length < 1) {
-            Omeka.getSiteInfo(root, defaultEndpoint+"/api")
+            Omeka.getSiteInfo(root, defaultEndpoint+"api/")
         }
 
         for(var i=0; i<_endpoints.length; i++) {
@@ -83,7 +83,6 @@ Item {
                     revised_title = result.title;
                 }
 
-
                 if(revised_url === lastSelectedEndpoint)
                 {
                     endpoints.addEndpointToTop(revised_title, revised_url, true)
@@ -94,8 +93,6 @@ Item {
                 {
                     endpoints.addEndpointToTop(revised_title, revised_url, false)
                 }
-
-
             }
 
             //add site title as endpoint
@@ -300,7 +297,7 @@ Item {
             anchors.margins: Resolution.applyScale(15)
             anchors.verticalCenter: parent.verticalCenter
             verticalAlignment: Text.AlignVCenter
-            width: 1122
+            width: parent.width - clearAndAddButton.width
             color: "#666666"
             selectByMouse: true
             text: qsTr("http://www...")

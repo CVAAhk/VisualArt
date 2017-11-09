@@ -53,7 +53,7 @@ ApplicationWindow {
             }
             MouseArea{
                 anchors.fill: parent
-                onClicked: { console.log(id); }
+                //onClicked: { console.log(id); }
             }
         }
     }
@@ -108,14 +108,14 @@ ApplicationWindow {
     }
 
     function getData(){
-        console.log("load page: "+page)
+        //console.log("load page: "+page)
         var request = new XMLHttpRequest();
         var url = "http://mallhistory.org/api/files?page="+page;
         request.onreadystatechange = function(){
             if(request.readyState === XMLHttpRequest.DONE){
                 var result = JSON.parse(request.responseText);
                 if(result.errors !== undefined){
-                    console.log("Request Error: "+result.errors[0].message);
+                    //console.log("Request Error: "+result.errors[0].message);
                 }
                 else{
                     updateView(result);
