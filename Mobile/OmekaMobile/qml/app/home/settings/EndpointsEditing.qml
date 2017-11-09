@@ -294,10 +294,15 @@ Item {
             focus: true
             validator: RegExpValidator { regExp: /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/ }//TODO: better validator
             anchors.fill: parent
-            anchors.margins: Resolution.applyScale(15)
-            anchors.verticalCenter: parent.verticalCenter
+            //anchors.margins: Resolution.applyScale(15)
+            anchors.rightMargin: Resolution.applyScale(200)
+            anchors.leftMargin: Resolution.applyScale(15)
+            anchors.topMargin: Resolution.applyScale(15)
+            anchors.bottom: Resolution.applyScale(15)
+
+            //anchors.verticalCenter: parent.verticalCenter
             verticalAlignment: Text.AlignVCenter
-            width: parent.width - clearAndAddButton.width
+            //width: Resolution.applyScale(parent.width - clearAndAddButton.width)
             color: "#666666"
             selectByMouse: true
             text: qsTr("http://www...")
@@ -318,13 +323,21 @@ Item {
                 if(text !== "http://www..." && text !== "http://")
                     Omeka.getSiteInfo(url_input, text + "api/");
             }
+//            Rectangle
+//            {
+//                color: "red"
+//                opacity: 0.5
+//                anchors.fill: parent
+//            }
+
         }
         //clear field control
         OmekaButton {
             id: clearAndAddButton
             enabled: visible
             visible: false
-            anchors.right: url_input.right
+            anchors.right: edit_url_area.right
+            anchors.rightMargin: Resolution.applyScale(15)
             icon: Style.clear
             iconScale: .52
             state: "clear"
