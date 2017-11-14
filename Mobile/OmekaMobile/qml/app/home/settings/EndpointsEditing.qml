@@ -447,6 +447,7 @@ Item {
                 }
                 endpointIsChecked = root.currentCheckedIndex === root.currentDeletingIndex;
 
+                console.log("root.currentCheckedIndex = ", root.currentCheckedIndex, " root.currentDeletingIndex = ", root.currentDeletingIndex)
                 var endpoint = ({});
                 endpoint.omekaID = omekaIDs[root.currentDeletingIndex]
                 endpoint.url = omekaUrls[root.currentDeletingIndex];
