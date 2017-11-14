@@ -83,7 +83,7 @@ Item {
                 }
                 ClearLikesSetting { title: "Clear All Likes" }
                 AboutSetting {
-                    title: "About The Collections"
+                    title: "About the Collections"
                     text: User.aboutCollection || Omeka.description
                 }
                 AboutSetting {

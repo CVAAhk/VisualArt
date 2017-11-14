@@ -93,6 +93,16 @@ Item {
                 {
                     endpoints.addEndpointToTop(revised_title, revised_url, false)
                 }
+
+                var endpoint = ({});
+                endpoint.omekaID = result.omekaID;
+                endpoint.url = revised_url;
+                endpoint.title = result.title;
+                if(!ItemManager.isRegistered(endpoint))
+                {
+                    ItemManager.registerEndpoint(endpoint);
+                }
+
             }
 
             //add site title as endpoint
