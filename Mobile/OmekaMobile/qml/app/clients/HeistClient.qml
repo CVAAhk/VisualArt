@@ -14,7 +14,7 @@ Item {
     /*
       Target omeka instance
     */
-    property url endpoint: "http://dev.omeka.org/mallcopy/"
+    property url endpoint: "http://dev.omeka.org/mallcopy"
 
     /*
       Omeka site identifier
@@ -24,7 +24,7 @@ Item {
     /*
      Url to heist plugin
     */
-    property var heistURL: endpoint+"api/heist/"
+    property var heistURL: endpoint+"/api/heist/"
 
     /*
      Map session codes to heist record id
@@ -457,7 +457,7 @@ Item {
             items[code] = [];
         }
         items[code].push(Number(item_id));
-        Omeka.getItemById(item_id, heist_manager, endpoint+"api/");
+        Omeka.getItemById(item_id, heist_manager, endpoint+"/api/");
     }
 
     /*

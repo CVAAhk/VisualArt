@@ -101,7 +101,7 @@ Item {
     //Check api on complete
     onEndpointChanged: {
         loaded = false
-        rest = endpoint+"api/"
+        rest = endpoint+"/api/"
         link = endpoint+"items/show/"
         omekaID = prettyName(endpoint)
         getSiteInfo(omeka_client)

@@ -18,9 +18,9 @@ Item {
 
     property int currentDeletingIndex: -1
 
-    property int currentCheckedIndex: 0        
+    property int currentCheckedIndex: 0
 
-    property var defaultEndpoint: "http://dev.omeka.org/mallcopy/"
+    property var defaultEndpoint: "http://dev.omeka.org/mallcopy"
 
     property var lastSelectedEndpoint
 
@@ -35,7 +35,7 @@ Item {
         lastSelectedEndpoint = User.getLastSelectedEndpoint() || defaultEndpoint
 
         if(_endpoints.length < 1) {
-            Omeka.getSiteInfo(root, defaultEndpoint+"api/")
+            Omeka.getSiteInfo(root, defaultEndpoint+"/api/")
         }
 
         for(var i=0; i<_endpoints.length; i++) {
@@ -44,7 +44,12 @@ Item {
             url = entry.value
             title = entry.title
 
-            Omeka.getSiteInfo(root, url + "api/");
+            if(url.slice(-1) === "/")
+            {
+                url = url.slice(0, (url.length - 1));
+            }
+
+            Omeka.getSiteInfo(root, url + "/api/");
         }
     }
 
@@ -65,11 +70,22 @@ Item {
                     }
                 }
 
-                var revised_url = result.url.slice(0, (result.url.length - 4));
+                var revised_url = result.url.slice(0, (result.url.length - 5));
 
-                omekaIDs.push(result.omekaID)
-                omekaTitles.push(result.title)
-                omekaUrls.push(revised_url)
+                omekaIDs.unshift(result.omekaID)
+                omekaTitles.unshift(result.title)
+                omekaUrls.unshift(revised_url)
+
+                if(ItemManager.getEndpoints().length === omekaIDs.length)
+                {
+                    for(var i = 0; i < omekaUrls.length; i++)
+                    {
+                        if(lastSelectedEndpoint === omekaUrls[i])
+                        {
+                            root.currentCheckedIndex = i
+                        }
+                    }
+                }
 
                 var revised_title
 
@@ -114,7 +130,7 @@ Item {
                         return;
                     }
                 }
-                var revised_url = result.url.slice(0, (result.url.length - 4));
+                var revised_url = result.url.slice(0, (result.url.length - 5));
 
                 omekaIDs.unshift(result.omekaID)
                 omekaTitles.unshift(result.title)
@@ -300,19 +316,15 @@ Item {
             id: url_input
             font.capitalization: Font.MixedCase
             font.pixelSize: Resolution.applyScale(68)
-            //style: SearchBarStyle {}
             focus: true
             validator: RegExpValidator { regExp: /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/ }//TODO: better validator
             anchors.fill: parent
-            //anchors.margins: Resolution.applyScale(15)
             anchors.rightMargin: Resolution.applyScale(200)
             anchors.leftMargin: Resolution.applyScale(15)
             anchors.topMargin: Resolution.applyScale(15)
-            anchors.bottom: Resolution.applyScale(15)
+            anchors.bottomMargin: Resolution.applyScale(15)
 
-            //anchors.verticalCenter: parent.verticalCenter
             verticalAlignment: Text.AlignVCenter
-            //width: Resolution.applyScale(parent.width - clearAndAddButton.width)
             color: "#666666"
             selectByMouse: true
             text: qsTr("http://www...")
@@ -331,14 +343,8 @@ Item {
             onTextChanged:
             {
                 if(text !== "http://www..." && text !== "http://")
-                    Omeka.getSiteInfo(url_input, text + "api/");
+                    Omeka.getSiteInfo(url_input, text + "/api/");
             }
-//            Rectangle
-//            {
-//                color: "red"
-//                opacity: 0.5
-//                anchors.fill: parent
-//            }
 
         }
         //clear field control
@@ -367,7 +373,7 @@ Item {
                     clearAndAddButton.state = "clear"
                 }
                 else if(state === "add") {
-                    Omeka.getSiteInfo(clearAndAddButton, root.endpoint_url + "api/");
+                    Omeka.getSiteInfo(clearAndAddButton, root.endpoint_url + "/api/");
                 }
             }
 
@@ -382,7 +388,7 @@ Item {
                 }
             ]
         }
-    }   
+    }
 
     Rectangle
     {

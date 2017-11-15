@@ -19,7 +19,7 @@ Setting {
     /*! \internal
       Determines if there is heist support for this omeka instance
     */
-    property bool hasHeist: Heist.heistIsSupported
+    property bool hasHeist: true//Heist.heistIsSupported
 
     /*! \internal
       Padding around text
