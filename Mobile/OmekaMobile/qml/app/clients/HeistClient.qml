@@ -14,7 +14,7 @@ Item {
     /*
       Target omeka instance
     */
-    property url endpoint: "http://dev.omeka.org/mallcopy"
+    property url endpoint: "http://dev.omeka.org/mallcopy/"
 
     /*
       Omeka site identifier
@@ -24,7 +24,7 @@ Item {
     /*
      Url to heist plugin
     */
-    property var heistURL: endpoint+"/api/heist/"
+    property var heistURL: endpoint+"api/heist/"
 
     /*
      Map session codes to heist record id
@@ -294,6 +294,7 @@ Item {
     */
     function addData(data, context) {
         var json = JSON.stringify(data);
+        console.log("heistURL ", heistURL)
         submitRequest(heistURL, post, json, context);
     }
 
@@ -304,6 +305,7 @@ Item {
     */
     function removeData(id, context) {
         var url = heistURL+id;
+        console.log("remove url ", url)
         submitRequest(url, del, null, context);
     }
 
@@ -315,6 +317,7 @@ Item {
     */
     function updateData(url, data, context) {
         var json = JSON.stringify(data);
+        console.log("update url ", url)
         submitRequest(url, put, json, context);
     }
 
@@ -324,6 +327,7 @@ Item {
      \a context - calling object
     */
     function getData(url, context) {
+        console.log("get url ", url)
         submitRequest(url, get, "", context);
     }
 
@@ -457,7 +461,7 @@ Item {
             items[code] = [];
         }
         items[code].push(Number(item_id));
-        Omeka.getItemById(item_id, heist_manager, endpoint+"/api/");
+        Omeka.getItemById(item_id, heist_manager, endpoint+"api/");
     }
 
     /*
