@@ -59,7 +59,7 @@ Item {
     //content bindings
     Binding { target: content; property: "parent"; value: setting }
     Binding { target: content; property: "width"; value: setting.width }
-    Binding { target: content.anchors; property: "topMargin"; value: 2 }
+    Binding { target: content.anchors; property: "topMargin"; value: Resolution.applyScale(2) }
 
     //toggles the expanded state of setting
     Button{
