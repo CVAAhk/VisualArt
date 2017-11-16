@@ -80,7 +80,7 @@ Rectangle {
     //grab text to image after a delay permitting text layout to complete
     Timer{
         id: update_timer
-        interval: 1000
+        interval: 10
         onTriggered: {
             rect.grabToImage(function(result){
                 title_img.source = result.url
