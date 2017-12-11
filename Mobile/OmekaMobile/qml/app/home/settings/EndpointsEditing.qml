@@ -34,6 +34,11 @@ Item {
         var _endpoints = ItemManager.getEndpoints()
         lastSelectedEndpoint = User.getLastSelectedEndpoint() || defaultEndpoint
 
+        var last = lastSelectedEndpoint.length-1
+        if(lastSelectedEndpoint.charAt(last) === '/') {
+            lastSelectedEndpoint = lastSelectedEndpoint.slice(0, last)
+        }
+
         if(_endpoints.length < 1) {
             Omeka.getSiteInfo(root, defaultEndpoint+"/api/")
         }
