@@ -20,7 +20,7 @@ Item {
 
     property int currentCheckedIndex: 0
 
-    property var defaultEndpoint: "http://dev.omeka.org/mallcopy"
+    property var defaultEndpoint: "http://omekaeverywheredemo.org"
 
     property var lastSelectedEndpoint
 
