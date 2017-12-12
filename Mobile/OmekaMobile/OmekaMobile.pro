@@ -180,4 +180,15 @@ DISTFILES += \
     qml/app/home/settings/pairing/QRScanner.qml \
     qml/app/home/settings/EndpointsSetting.qml \
     qml/app/home/settings/EndpointsEditing.qml \
-    qml/app/home/settings/Endpoints.qml
+    qml/app/home/settings/Endpoints.qml \
+    android_data/gradle/wrapper/gradle-wrapper.jar \
+    android_data/gradlew \
+    android_data/gradle/wrapper/gradle-wrapper.properties \
+    android_data/gradlew.bat \
+    android_data/AndroidManifest.xml \
+    android_data/gradle/wrapper/gradle-wrapper.jar \
+    android_data/gradlew \
+    android_data/res/values/libs.xml \
+    android_data/build.gradle \
+    android_data/gradle/wrapper/gradle-wrapper.properties \
+    android_data/gradlew.bat
