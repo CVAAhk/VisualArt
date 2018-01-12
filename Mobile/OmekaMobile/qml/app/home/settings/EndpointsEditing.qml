@@ -20,7 +20,7 @@ Item {
 
     property int currentCheckedIndex: 0
 
-    property var defaultEndpoint: "http://dev.omeka.org/mallcopy"
+    property var defaultEndpoint: "http://omekaeverywheredemo.org"
 
     property var lastSelectedEndpoint
 
@@ -33,6 +33,11 @@ Item {
 
         var _endpoints = ItemManager.getEndpoints()
         lastSelectedEndpoint = User.getLastSelectedEndpoint() || defaultEndpoint
+
+        var last = lastSelectedEndpoint.length-1
+        if(lastSelectedEndpoint.charAt(last) === '/') {
+            lastSelectedEndpoint = lastSelectedEndpoint.slice(0, last)
+        }
 
         if(_endpoints.length < 1) {
             Omeka.getSiteInfo(root, defaultEndpoint+"/api/")
@@ -316,7 +321,6 @@ Item {
             id: url_input
             font.capitalization: Font.MixedCase
             font.pixelSize: Resolution.applyScale(68)
-            focus: true
             validator: RegExpValidator { regExp: /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/ }//TODO: better validator
             anchors.fill: parent
             anchors.rightMargin: Resolution.applyScale(200)
@@ -326,7 +330,6 @@ Item {
 
             verticalAlignment: Text.AlignVCenter
             color: "#666666"
-            selectByMouse: true
             text: qsTr("http://www...")
             //z: 1
             selectionColor: Style.color1
@@ -344,6 +347,17 @@ Item {
             {
                 if(text !== "http://www..." && text !== "http://")
                     Omeka.getSiteInfo(url_input, text + "/api/");
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                onPressed: url_input.forceActiveFocus()
+                onPressAndHold: {
+                    if(url_input.canPaste) {
+                        url_input.text = ""
+                        url_input.paste()
+                    }
+                }
             }
 
         }
