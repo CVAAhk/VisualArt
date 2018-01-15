@@ -13,14 +13,13 @@ It's at Table2/Installer/OmekaTable2.nsi
 Step 2: Build the OmekaTable2 application in Qt Creator. 
 
 
--For QT Quick Applications: Make sure to name the folder your .exe is in Executable. There is a Macro setting for QT applications that looks for the Executable folder.
+-For QT Quick Applications: Make sure to name the folder as same as the .exe in Executable. There is a Macro setting for QT applications that looks for the Executable folder.
 
 -How to build the OmekaTable2.
 1. Pull the latest build from Github.
 2. Open build from Qt Creator
 3. Select Qt 5.9.2 MSVC2013 64bit build kit
-4. Run application in Release mode
- Make sure the build is set to release mode, select Build in the toolbar, then select Rebuild Project "OmekaTable2".
+4. Make sure the build is set to release mode, select Build in the toolbar, then select Rebuild Project "OmekaTable2".
 5. Qt Quick Deployment using windeployqt.exe
  a)Open the command prompt
  b)Navigate to the Qt install’s 'bin' folder (cf. “Application Location”)
