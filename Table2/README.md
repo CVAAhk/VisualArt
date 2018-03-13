@@ -27,8 +27,8 @@
 		var USERS = 4(# of users. By default, it's 4. It can only be changed to 2, 4, 6)
 		var OMEKA_ENDPOINT = "http://dev.omeka.org/mallcopy/" (Display endpoint)
 	2. User console browsing/filtering.
-		the table2 app allows user to browse the collection. Like following images:
-		OmekaTable2/content/readme/browse.PNG
+		the table2 app allows user to browse the collection. Like following image:
+		[](OmekaTable2/content/readme/browse.PNG)
 		the table2 app allows user to filter based on the keyword. Like following image:
 		OmekaTable2/content/readme/filter.PNG
 	3. Content viewers and metadata
