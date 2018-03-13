@@ -28,7 +28,7 @@ var APP_NAME　= "OMEKA";
 
 var CAROUSEL_COLOR = "#2b89d9"//blue hex color code
 
-var USERS = 6;
+var USERS = 4;
 
 //var OMEKA_ENDPOINT = "http://oe.develop.digitalmediauconn.org/"
 var OMEKA_ENDPOINT = "http://dev.omeka.org/mallcopy/"

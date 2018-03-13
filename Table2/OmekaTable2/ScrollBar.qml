@@ -30,7 +30,7 @@ Image
                 Rectangle
                 {
                     anchors.fill: parent
-                    visible: true // parent.enabled
+                    visible: false // parent.enabled
                     opacity: 0.7
                     color: 'red'
                 }
