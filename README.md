@@ -3,7 +3,9 @@
 ![Omeka screenshot](Table2/OmekaTable2/content/readme/Capture.PNG)
 
 
-The Omeka Everywhere app uses the Omeka API to connect to online collections. Institutions can modify the Omeka Everywhere source code and easily create mobile apps that connect to their online collections. 
+Omeka Everywhere&mdash;developed by [Open Exhibits](http://openexhibits.org)&mdash;is a tool which allows an institution to connect an Omeka Classic instance to a multitouch table or device. The Omeka Everywhere Collection Viewer uses the Omeka API to pull a chosen repository into an interactive experience without having to re-create any metadata. 
+
+The Omeka Everywhere mobile app uses the Omeka API to connect to online collections. Institutions can modify the Omeka Everywhere source code and easily create mobile apps that connect to their online collections. 
 
 App users can interact with collection items through sorting by keywords, zooming in on images, and from a learn more option that displays information on the flipside of each item. Users may also save favorites from the collection as they browse.
 
