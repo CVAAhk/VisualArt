@@ -33,6 +33,7 @@
 	Locate the release folder from your build directory ( e.g. Builds/release), which contains the compiled binary and it's dependencies.
 	
 3. User Guide
+
 	-Configuration - endpoint
 	
 	Locate at Mobile/OmekaMobile/qml/clients/HeistClient.qml
