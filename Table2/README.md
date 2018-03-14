@@ -41,7 +41,7 @@
 		
 		var OMEKA_ENDPOINT = "http://dev.omeka.org/mallcopy/" (Displaying endpoint. It can be changed to any supported endpoint.)
 		
-	2. User console browsing/filtering.
+	-User console browsing/filtering.
 	
 		the table2 app allows user to browse the collection. Like following image:
 		
@@ -51,11 +51,11 @@
 		
 		![](OmekaTable2/content/readme/filter.PNG)
 		
-	3. Content viewers and metadata.
+	-Content viewers and metadata.
 	
 		![](OmekaTable2/content/readme/detail.PNG)
 		
-	4. Generating a heist session.
+	-Generating a heist session.
 	
 		![](OmekaTable2/content/readme/pairing.PNG)
 
