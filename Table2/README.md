@@ -43,21 +43,21 @@
 		
 	-User console browsing/filtering.
 	
-		the table2 app allows user to browse the collection. Like following image:
-		
-		![browsing](OmekaTable2/content/readme/browse.PNG)
-		
-		the table2 app allows user to filter based on the keyword. Like following image:
-		
-		![](OmekaTable2/content/readme/filter.PNG)
+	the table2 app allows user to browse the collection. Like following image:
+
+	![browsing](OmekaTable2/content/readme/browse.PNG)
+
+	the table2 app allows user to filter based on the keyword. Like following image:
+
+	![](OmekaTable2/content/readme/filter.PNG)
 		
 	-Content viewers and metadata.
 	
-		![](OmekaTable2/content/readme/detail.PNG)
+	![](OmekaTable2/content/readme/detail.PNG)
 		
 	-Generating a heist session.
 	
-		![](OmekaTable2/content/readme/pairing.PNG)
+	![](OmekaTable2/content/readme/pairing.PNG)
 
 4. Customization
 
