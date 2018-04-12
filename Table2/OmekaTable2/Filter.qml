@@ -25,12 +25,21 @@ Item
             anchors.centerIn: parent
         }
 
+
     }
+//    Image
+//    {
+//        source: "content/POI/filter-text.png"
+//        anchors.centerIn: filter_header_bkg
+//        width: 30; height: 12
+
+//    }
     Image
     {
         id: filter_header
         source: "content/POI/filter-header.png"
         visible: false
+        width: 187; height: 25
 
     }
     OpacityMask

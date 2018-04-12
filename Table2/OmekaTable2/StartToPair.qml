@@ -78,6 +78,7 @@ Item
         source: "content/POI/pairing-what-is-this.png"
         anchors.horizontalCenter: root.horizontalCenter
         y: 190
+        width: 85; height: 25
         MultiPointTouchArea
         {
             anchors.fill: parent

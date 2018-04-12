@@ -15,6 +15,7 @@ Image {
 
     anchors.horizontalCenter: parent.horizontalCenter
     opacity: list.screenTag === tag ? 0.5 : 1.0
+    width: 150; height: 25
 
     //anchors.margins: 12 //TODO: A-Z area
 

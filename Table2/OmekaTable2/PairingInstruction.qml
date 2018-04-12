@@ -55,6 +55,7 @@ Item
         source: "content/POI/back-to-pairing.png"
         anchors.horizontalCenter: root.horizontalCenter
         y: 190
+        width: 105; height: 25
         MultiPointTouchArea
         {
             anchors.fill: parent

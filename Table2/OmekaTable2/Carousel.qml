@@ -206,10 +206,14 @@ Item
             selected_image.scale = 0.5;
         }
 
+
+
         function turnBack()
         {
             selected_image.scale = 1.0;
         }
+
+
         SequentialAnimation
         {
             id: recoveryAnimation
@@ -322,8 +326,8 @@ Item
         id: filter_btn
         source: "content/POI/filter-btn.png"
         x: 10; y: 10
-        width: filter_text.width + 10
-
+        height: 25
+        width: 50
 
     }
     Rectangle
@@ -379,6 +383,7 @@ Item
         anchors.top: carousel_header_bkg.top
         anchors.right: carousel_header_bkg.right
         anchors.margins: 10
+        width: 100; height: 25
     }
     Rectangle
     {
@@ -530,7 +535,7 @@ Item
         source: "content/POI/Asset 10.png"
         x: 0; y: 123
         visible: false
-
+        width: 56; height: 55
     }
     OpacityMask
     {
@@ -542,6 +547,7 @@ Item
         {
             source: "content/POI/left-arrow.png"
             anchors.centerIn: parent
+            width: 20; height: 20
         }
 
         MultiPointTouchArea
@@ -565,7 +571,7 @@ Item
         anchors.right: bkg.right
         y: 123
         visible: false
-
+        width: 56; height: 55
     }
     OpacityMask
     {
@@ -577,6 +583,7 @@ Item
         {
             source: "content/POI/right-arrow.png"
             anchors.centerIn: parent
+            width: 20; height: 20
         }
         MultiPointTouchArea
         {

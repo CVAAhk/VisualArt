@@ -47,5 +47,6 @@ Item
         source: "content/POI/pairing-successful.png"
         anchors.horizontalCenter: root.horizontalCenter
         y:86
+        width: 67; height: 24
     }
 }

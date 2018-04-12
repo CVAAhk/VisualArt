@@ -56,6 +56,7 @@ Item
         source: "content/POI/cancel.png"
         anchors.horizontalCenter: root.horizontalCenter
         y: 150
+        width: 85; height: 25
         MultiPointTouchArea
         {
             anchors.fill: parent
@@ -68,6 +69,7 @@ Item
         source: "content/POI/unpair-device.png"
         anchors.horizontalCenter: root.horizontalCenter
         y: 190
+        width: 125; height: 25
         MultiPointTouchArea
         {
             anchors.fill: parent

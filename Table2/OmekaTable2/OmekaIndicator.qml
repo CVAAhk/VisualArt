@@ -6,6 +6,7 @@ Image {
     source: Style.indicator
     asynchronous: true
     visible: running
+    width: 68; height: 68
 
     property alias running: indicator.running
 

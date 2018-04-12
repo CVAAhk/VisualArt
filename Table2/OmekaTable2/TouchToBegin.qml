@@ -16,6 +16,7 @@ Item
     {
         visible: color === "blue"
         source: "content/POI/touch-to-begin.png"
+        width: 280; height: 100
         MultiPointTouchArea
         {
             anchors.fill: parent

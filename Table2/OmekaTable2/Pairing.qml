@@ -47,7 +47,7 @@ Item
         id: pairing_header
         source: "content/POI/pairing-header.png"
         visible: false
-
+        width: 187; height: 25
     }
     OpacityMask
     {
