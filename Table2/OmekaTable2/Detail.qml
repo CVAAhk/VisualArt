@@ -205,7 +205,7 @@ Item
         Image
         {
             id: close
-            source: "content/POI/close-off.png"
+            source: "content/POI/close@4x.png"
 
             x: 10 / root.scale
             y: 10 / root.scale
@@ -213,6 +213,7 @@ Item
             transformOrigin: Item.TopLeft
 
             scale: 1.0 / root.scale
+            width: 24; height: 24
 
             MultiPointTouchArea
             {
@@ -228,9 +229,10 @@ Item
         Image
         {
             id: info_btn
-            source: root.active ? "content/POI/info-icon-on.png" : "content/POI/info-icon-off.png"
+            source: root.active ? "content/POI/info-on@4x.png" : "content/POI/info-off@4x.png"
             //anchors.left: controls.left
             //anchors.margins: 10
+            width: 24; height: 24
 
             x: controls.width + -24 - 10 / root.scale;
             y: 10 / root.scale
@@ -381,8 +383,8 @@ Item
         PropertyAction { target: root; property: "transformOrigin"; value: Item.Center }
         ParallelAnimation
         {
-            PropertyAnimation { target: root; property: 'scale'; to: 0.1; duration: 250 }
-            PropertyAnimation { target: root; property: 'opacity'; to: 0.0; duration: 250 }
+            PropertyAnimation { target: root; property: 'scale'; to: 0.1; duration: 250; easing.type: Easing.InOutQuad }
+            PropertyAnimation { target: root; property: 'opacity'; to: 0.0; duration: 250; easing.type: Easing.InOutQuad }
         }
         //PropertyAction { target: root; property: "visible"; value: false }
         onRunningChanged:
@@ -403,20 +405,40 @@ Item
 
     function turnSmall()
     {
-        root.scale = 0.5;
+        //root.scale = 0.5;
         root.active = false;
         inPairingBox = true;
+        selected_image_small.start()
     }
 
     function turnBack()
     {
         if(inPairingBox)
         {
-            root.scale = 1.0;
+            //root.scale = 1.0;
+            selected_image_original.start()
             inPairingBox = false;
         }
 
 
+    }
+
+    NumberAnimation {
+        id: selected_image_small
+        target: root
+        property: "scale"
+        to: 0.5
+        duration: 200
+        easing.type: Easing.InOutQuad
+    }
+
+    NumberAnimation {
+        id: selected_image_original
+        target: root
+        property: "scale"
+        to: 1.0
+        duration: 200
+        easing.type: Easing.InOutQuad
     }
 
 }
