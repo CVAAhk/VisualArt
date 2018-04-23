@@ -22,13 +22,15 @@ var ATTRACT_RANDOM_TIMER = 90000;
 
 var IMAGE_TIMER_DURATION = 90000;
 
-var PAIR_TIMER_DURATION = 30000;
+var PAIR_TIMER_DURATION = 300000;
 
 var APP_NAME　= "OMEKA";
 
 var CAROUSEL_COLOR = "#2b89d9"//blue hex color code
 
 var USERS = 4;
+
+var MAXNUMBER = 490;
 
 //var OMEKA_ENDPOINT = "http://oe.develop.digitalmediauconn.org/"
 var OMEKA_ENDPOINT = "http://dev.omeka.org/mallcopy/"

@@ -173,7 +173,7 @@ Item
     /*! Listens to iterative heist data updates */
     HeistReceiver {
         id: receiver
-        onDeviceChanged: {deviceId = device;/*console.log("devide id = ", deviceId);*/}
+        onDeviceChanged: {deviceId = device;console.log("devide id = ", deviceId);}
         onRemoveItem: root.removeItem(item)
         code: currentCode
     }
@@ -245,6 +245,7 @@ Item
         if(paired && deviceId.length === 0) {
             endSession();
             paired = false;
+            deviceId === null
         }
         //pair on non-empty device id
         else if(!paired && deviceId.length > 0) {
@@ -286,7 +287,8 @@ Item
     }
     function startAddSuccess()
     {
-        switch_between_add_and_drag.start();
+        if(paired)
+            switch_between_add_and_drag.start();
     }
 
 

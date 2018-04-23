@@ -28,9 +28,9 @@ Item
 
     signal imageAdded(var image);
 
-    signal imageDragged(var image);
+    signal imageDragged(var image, var touchPoint, var imageX, var imageY);
 
-    signal imageFinishedDragging(var image);
+    signal imageFinishedDragging(var image, var touchPoint, var imageX, var imageY);
 
     signal imageFinishedRecycle();
 

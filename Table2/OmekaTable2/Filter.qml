@@ -16,43 +16,48 @@ Item
         anchors.fill: filter_header
         color: root.color
         visible: false
-        OmekaText
-        {
-            id: filter_text
+//        OmekaText
+//        {
+//            id: filter_text
 
-            _font: Style.filterFont
-            text: "FILTER"
-            anchors.centerIn: parent
-        }
+//            _font: Style.filterFont
+//            text: "FILTER"
+//            anchors.centerIn: parent
+//        }
 
-
-    }
-//    Image
-//    {
-//        source: "content/POI/filter-text.png"
-//        anchors.centerIn: filter_header_bkg
-//        width: 30; height: 12
-
-//    }
-    Image
-    {
-        id: filter_header
-        source: "content/POI/filter-header.png"
-        visible: false
-        width: 187; height: 25
 
     }
+
+
     OpacityMask
     {
         anchors.fill: filter_header_bkg
         source: filter_header_bkg
         maskSource: filter_header
     }
+
+    Image
+    {
+        id: filter_header
+        source: "content/POI/filter-header.png"
+        visible: true
+        width: 187; height: 25
+
+    }
     Image
     {
         id: filter_bkg
         source: "content/POI/filter-bkg.png"
         anchors.top: filter_header.bottom
+    }
+    Image
+    {
+        source: "content/POI/filter-text.png"
+        //anchors.centerIn: filter_header_bkg
+        anchors.verticalCenter: filter_header_bkg.verticalCenter
+        anchors.horizontalCenter: filter_footer.horizontalCenter
+        width: 30; height: 12
+
     }
     TagHeader
     {

@@ -11,10 +11,12 @@ Item
 {
     id: root
 
+    //interactive: false
     height: active ? root.imageHeight + scroll_bkg.height + controls.height : root.imageHeight + controls.height
     width: root.imageWidth
     objectName: "detail"
     visible: false
+
 
     property int imageWidth
 
@@ -44,9 +46,9 @@ Item
     property int recoveryX//x after detail item is added to mobile favorites
     property int recoveryY
 
-    signal imageDragged(var image);
+    signal imageDragged(var image, var touchPoint, var imageX, var imageY);
 
-    signal finishedDragging(var image);
+    signal finishedDragging(var image, var touchPoint, var imageX, var imageY);
 
     signal deleteImage(var image);
 
@@ -60,6 +62,14 @@ Item
         Currently selected item
     */
     property var item: null //getSelectedItem();//: ItemManager.current
+
+    property real initWidth
+    property real initHeight
+    property real initScale: 1
+    property real minScale: 1
+    property real maxScale: 2
+    property real resetWidth
+    property real resetHeight
 
 
     onHeightChanged:
@@ -78,259 +88,552 @@ Item
     {
         id: bkg
         source: "content/POI/_Image_.png"
-        anchors.fill: root
+        anchors.fill: content_screen
         anchors.margins: -10
         visible: false // media.progress == 1
     }
 
-    MultiPointPinchArea
+    Rectangle
     {
-        anchors.fill: root
+        id: content_screen
+        width: root.width
+        height: root.height
 
-        dragOnPinch: true
-        listenForRotation: true
-        listenForScale: true
+        property bool topScreen: root.topScreen
+        property var item: root.item
 
-        maximumScale: 2
-        minimumScale: 1
 
-        mouseEnabled: true
+        //anchor to touch point when scaling test
+        transform: Scale { origin.x: content_screen.center.x; origin.y: content_screen.center.y; xScale: (content_screen.scaling < 0.5 ? 0.5 : content_screen.scaling);
+            yScale: (content_screen.scaling < 0.5 ? 0.5 : content_screen.scaling)
 
-        //minimumX: 0 - root.imageWidth
-        //maximumX: 1920 - root.imageWidth
+        }
 
-        //minimumY: 0 - root.imageHeight
-        //maximumY: 1080 - root.imageHeight
+        property real scaling: 1.0
 
-        onDraggingChanged:
+        property vector2d center: Qt.vector2d(root.imageWidth/2, root.imageHeight/2)
+
+        Behavior on scaling { NumberAnimation { duration: 200 } }
+        Behavior on x { NumberAnimation { duration: 200 } }
+        Behavior on y { NumberAnimation { duration: 200 } }
+
+        smooth: true
+        antialiasing: true
+
+        MediaViewer
         {
-            if(!dragging)
+            id: media
+            anchors.top: controls.bottom
+            sources: root.item ? root.item.media : null
+            type: root.item ? root.item.mediaTypes[0] : ""
+            //visible: root.visible ? true : false
+            opacity: root.visible ? 1.0 : 0.0
+
+            onHeightChanged:
             {
-                image_timer.restart();
-                root.finishedDragging(root);
-            }
-        }
-
-        onPositionUpdated:
-        {
-            image_timer.restart();
-            if(whichScreen == "middle right")
-            {
-                root.y += delta_x;
-                root.x += -delta_y;
-            }
-            else if(whichScreen == "middle left")
-            {
-                root.y += -delta_x;
-                root.x += delta_y;
-            }
-            else
-            {
-
-            root.x += delta_x* (root.topScreen ? -1.0 : 1.0);//delta_x* (root.topScreen ? -1.0 : 1.0)//// * detail.scale;
-            root.y += delta_y* (root.topScreen ? -1.0 : 1.0);// * detail.scale;
-            }
-
-            root.imageDragged(root);
-        }
-        onRotationUpdated:
-        {
-            image_timer.restart();
-            root.rotation += delta_rotation;
-        }
-        onScaleUpdated:
-        {
-            image_timer.restart();
-            root.scale += delta_scale * root.scaleFactor;
-        }
-
-        onItemPressed:
-        {
-            root.imagePressed(root);
-            image_timer.restart();
-        }
-
-        debugView: Settings.DEBUG_VIEW
-
-    }
-    MediaViewer
-    {
-        id: media
-        anchors.top: controls.bottom
-        sources: item ? item.media : null
-        type: item ? item.mediaTypes[0] : ""
-        //visible: root.visible ? true : false
-        opacity: root.visible ? 1.0 : 0.0
-
-        onHeightChanged:
-        {
-            if(scale > 1)
-            {
-                anchors.topMargin = (scale * height - height) * 0.5;
-            }
-            else
-            {
-                anchors.topMargin = 0;
-            }
-        }
-    }
-    MediaControls
-    {
-        media: media
-        onInterative: image_timer.restart();
-    }
-    Image
-    {
-        id: controls
-        width: scroll_bkg.width
-        source: "content/POI/info-panel-controls-bkg.png"
-
-        height: 40 / root.scale
-
-        Image
-        {
-            source: "content/POI/info-panel-controls-bkg-left.png"
-            width: 32 / root.scale
-            height: controls.height
-        }
-
-        Image
-        {
-            source: "content/POI/info-panel-controls-bkg-right.png"
-            width: 32 / root.scale
-            height: controls.height
-            x: controls.width - width
-        }
-
-        Image
-        {
-            id: close
-            source: "content/POI/close@4x.png"
-
-            x: 10 / root.scale
-            y: 10 / root.scale
-
-            transformOrigin: Item.TopLeft
-
-            scale: 1.0 / root.scale
-            width: 24; height: 24
-
-            MultiPointTouchArea
-            {
-                anchors.fill: parent
-                anchors.margins: -10
-                onPressed:
+                if(scale > 1)
                 {
-                    root.deleteImage(root);
-                    image_timer.stop();
+                    anchors.topMargin = (scale * height - height) * 0.5;
+                }
+                else
+                {
+                    anchors.topMargin = 0;
                 }
             }
         }
+
         Image
         {
-            id: info_btn
-            source: root.active ? "content/POI/info-on@4x.png" : "content/POI/info-off@4x.png"
-            //anchors.left: controls.left
-            //anchors.margins: 10
-            width: 24; height: 24
+            id: controls
+            width: scroll_bkg.width
+            source: "content/POI/info-panel-controls-bkg.png"
 
-            x: controls.width + -24 - 10 / root.scale;
-            y: 10 / root.scale
+            height: 40 / root.scale
 
-            transformOrigin: Item.TopRight
-
-            scale: 1.0 / root.scale
-
-            MultiPointTouchArea
+            Image
             {
+                source: "content/POI/info-panel-controls-bkg-left.png"
+                width: 32 / root.scale
+                height: controls.height
+            }
+
+            Image
+            {
+                source: "content/POI/info-panel-controls-bkg-right.png"
+                width: 32 / root.scale
+                height: controls.height
+                x: controls.width - width
+            }
+
+            Image
+            {
+                id: close
+                source: "content/POI/close@4x.png"
+
+                x: 10 / root.scale
+                y: 10 / root.scale
+
+                transformOrigin: Item.TopLeft
+
+                scale: 1.0 / root.scale
+                width: 24; height: 24
+
+                MultiPointTouchArea
+                {
+                    anchors.fill: parent
+                    anchors.margins: -10
+                    onPressed:
+                    {
+                        root.deleteImage(root);
+                        image_timer.stop();
+                    }
+                }
+            }
+            Image
+            {
+                id: info_btn
+                source: root.active ? "content/POI/info-on@4x.png" : "content/POI/info-off@4x.png"
+                //anchors.left: controls.left
+                //anchors.margins: 10
+                width: 24; height: 24
+
+                x: controls.width + -24 - 10 / root.scale;
+                y: 10 / root.scale
+
+                transformOrigin: Item.TopRight
+
+                scale: 1.0 / root.scale
+
+                MultiPointTouchArea
+                {
+                    anchors.fill: parent
+                    anchors.margins: -10
+                    onPressed:
+                    {
+                        image_timer.restart();
+                        root.active = !root.active
+                        if(!openedAttract) openedAttract=true; //todo: reset
+                    }
+                }
+            }
+        }
+
+
+        //primary display
+        property DetailColumn column
+        /*! scroll container */
+
+
+        Image
+        {
+            id: scroll_bkg
+            source: "content/POI/description_bkg.png"
+            height: 200 / root.scale
+            anchors.top: media.bottom
+            anchors.left: media.left
+            opacity: root.active ? 1.0 : 0.0
+
+            Image
+            {
+                source: "content/POI/description_bkg-left.png"
+                width: 64 / root.scale
+                height: scroll_bkg.height
+            }
+
+            Image
+            {
+                source: "content/POI/description_bkg-right.png"
+                width: 64 / root.scale
+                height: scroll_bkg.height
+                x: scroll_bkg.width - width
+            }
+
+            /*! scroll container */
+            OmekaScrollView
+            {
+                id: scroll
+                width: root.imageWidth
+                height: 180 / root.scale
+                enabled: parent.opacity == 1.0
+                verticalScrollBarPolicy: Qt.ScrollBarAlwaysOff
+
+                //media display
+                DetailContent
+                {
+                    id: detail_content;
+                    width: root.width
+                    rootScale: root.scale
+                }
+
+                flickableItem.onContentYChanged:
+                {
+                    image_timer.restart();
+                    scroll_bar.updateBar(flickableItem.contentY / (flickableItem.contentHeight - flickableItem.height));
+                }
+            }
+            ScrollBar
+            {
+                id: scroll_bar
+
+                x: (scroll_bkg.width * root.scale - 15) / root.scale
+                y: 40 / root.scale
+
+                transform: Scale { xScale: 1.0 / root.scale; yScale: 1.0 / root.scale }
+
+                onScrollChanged:
+                {
+                    image_timer.restart();
+                    scroll.flickableItem.contentY = percent * (scroll.flickableItem.contentHeight - scroll.flickableItem.height);
+                }
+            }
+
+        }
+
+        LoadScreen
+        {
+            width: root.width
+            height: controls.height
+            progress: media ? media.progress : 0
+        }
+
+        PinchArea
+        {
+            //change scale of the content_screen
+            id: pinch_area
+            anchors.fill: parent
+
+//            pinch.target: content_screen
+//            pinch.minimumRotation: -360
+//            pinch.maximumRotation: 360
+//            pinch.minimumScale: 1
+//            pinch.maximumScale: 2
+//            pinch.dragAxis: Pinch.XAndYAxis
+
+
+
+
+            property int minmumScale: 1
+            property int maximumScale: 2
+
+            onPinchStarted: {
+                image_timer.restart();
+            }
+
+            onPinchUpdated: {
+
+                content_screen.center = Qt.vector2d(pinch_area.width/2, pinch_area.height/2)
+                var delta_zoom = checkBoundry(pinch.scale, pinch.center.x, pinch.center.y)
+
+                image_timer.restart();
+
+            }
+
+
+            function checkBoundry(zoom, centerX, centerY)
+            {
+                var delta_zoom
+                if(content_screen.scaling * zoom  < pinch_area.minmumScale)
+                {
+
+                    delta_zoom = 1 + (pinch_area.minmumScale - content_screen.scaling)/content_screen.scaling;
+                    content_screen.scaling = pinch_area.minmumScale
+                }
+                else if(content_screen.scaling * zoom > pinch_area.maximumScale)
+                {
+                    delta_zoom = 1.0 + (pinch_area.maximumScale - content_screen.scaling)/content_screen.scaling;
+                    content_screen.scaling = pinch_area.maximumScale
+                }
+                else
+                {
+
+                    delta_zoom = zoom
+                    content_screen.scaling *= delta_zoom
+                }
+                return delta_zoom
+            }
+            MouseArea
+            {
+                id: touch_area
+
+//                property real lastX: 0
+//                property real lastY: 0
+
+                //hoverEnabled: true
                 anchors.fill: parent
-                anchors.margins: -10
+                drag.target: content_screen
+                scrollGestureEnabled: false
+
+
+                Rectangle
+                {
+                    color: "red"
+                    opacity: 0.5
+                    anchors.fill: parent
+                }
+
                 onPressed:
                 {
                     image_timer.restart();
-                    root.active = !root.active
-                    if(!openedAttract) openedAttract=true; //todo: reset
+                    root.imagePressed(content_screen);
+//                    lastX = mouseX
+//                    lastY = mouseY
+                }
+
+                onReleased:
+                {
+                    image_timer.restart();
+                    root.finishedDragging(content_screen,
+                                          Qt.vector2d(mouseX, mouseY),
+                                          content_screen.x + root.x,
+                                          content_screen.y + root.y);
+                }
+
+                onPositionChanged:
+                {
+//                    var delta_x = mouseX - lastX
+//                    var delta_y = mouseY - lastY
+                    image_timer.restart();
+//                    if(whichScreen == "middle right")
+//                    {
+//                        root.y += delta_x;
+//                        root.x += -delta_y;
+//                    }
+//                    else if(whichScreen == "middle left")
+//                    {
+//                        root.y += -delta_x;
+//                        root.x += delta_y;
+//                    }
+//                    else
+//                    {
+
+//                    root.x += delta_x* (root.topScreen ? -1.0 : 1.0);//delta_x* (root.topScreen ? -1.0 : 1.0)//// * detail.scale;
+//                    root.y += delta_y* (root.topScreen ? -1.0 : 1.0);// * detail.scale;
+//                    }
+
+                    root.imageDragged(content_screen,
+                                      Qt.vector2d(mouseX,
+                                                  mouseY),
+                                      content_screen.x + root.x,
+                                      content_screen.y + root.y);
+                }
+
+            }
+
+        }
+
+        MediaControls
+        {
+            media: media
+            onInterative: image_timer.restart();
+        }
+
+        SequentialAnimation
+        {
+            id: recoveryAnimation
+
+
+            PauseAnimation {
+                duration: 5000
+            }
+
+            PropertyAction { target: content_screen; property: "scaling"; value: 1 }
+
+            ParallelAnimation
+            {
+                //PropertyAnimation { target: root; property: 'opacity'; to: 1.0; duration: 250 }
+                PropertyAnimation { target: root; property: 'x'; to: recoveryX; duration: 250 }
+                PropertyAnimation { target: root; property: 'y'; to: recoveryY; duration: 250 }
+            }
+            PropertyAction { target: root; property: "visible"; value: true }
+            PropertyAction { target: root; property: "opacity"; value: 1.0 }
+
+            onRunningChanged:
+            {
+                if(!running)
+                {
+                    image_timer.restart();
+                    //finishedRecycle();
                 }
             }
         }
-    }
 
-
-    //primary display
-    property DetailColumn column
-    /*! scroll container */
-
-
-    Image
-    {
-        id: scroll_bkg
-        source: "content/POI/description_bkg.png"
-        height: 200 / root.scale
-        anchors.top: media.bottom
-        anchors.left: root.left
-        opacity: root.active ? 1.0 : 0.0
-
-        Image
+        SequentialAnimation
         {
-            source: "content/POI/description_bkg-left.png"
-            width: 64 / root.scale
-            height: scroll_bkg.height
-        }
+            id: recycleAnimation
 
-        Image
-        {
-            source: "content/POI/description_bkg-right.png"
-            width: 64 / root.scale
-            height: scroll_bkg.height
-            x: scroll_bkg.width - width
-        }
-
-        /*! scroll container */
-        OmekaScrollView
-        {
-            id: scroll
-            width: root.imageWidth
-            height: 180 / root.scale
-            enabled: parent.opacity == 1.0
-            verticalScrollBarPolicy: Qt.ScrollBarAlwaysOff
-
-            //media display
-            DetailContent
+            PropertyAction { target: root; property: "transformOrigin"; value: Item.Center }
+            ParallelAnimation
             {
-                id: detail_content;
-                width: root.width
-                rootScale: root.scale
+                PropertyAnimation { target: content_screen; property: 'scaling'; to: 0.1; duration: 250; easing.type: Easing.InOutQuad }
+                PropertyAnimation { target: root; property: 'opacity'; to: 0.0; duration: 250; easing.type: Easing.InOutQuad }
             }
-
-            flickableItem.onContentYChanged:
+            //PropertyAction { target: root; property: "visible"; value: false }
+            onRunningChanged:
             {
-                image_timer.restart();
-                scroll_bar.updateBar(flickableItem.contentY / (flickableItem.contentHeight - flickableItem.height));
-            }
-        }
-        ScrollBar
-        {
-            id: scroll_bar
-
-            x: (scroll_bkg.width * root.scale - 15) / root.scale
-            y: 40 / root.scale
-
-            transform: Scale { xScale: 1.0 / root.scale; yScale: 1.0 / root.scale }
-
-            onScrollChanged:
-            {
-                image_timer.restart();
-                scroll.flickableItem.contentY = percent * (scroll.flickableItem.contentHeight - scroll.flickableItem.height);
+                if(!running)
+                {
+                    finishedRecycle();
+                    content_screen.x = 0
+                    content_screen.y = 0
+                    recoveryAnimation.start();
+                }
             }
         }
 
-    }
+        function recycle(recoveryX, recoveryY)
+        {
+            root.recoveryX = recoveryX;
+            root.recoveryY = recoveryY;
 
-    LoadScreen
-    {
-        width: root.width
-        height: controls.height
-        progress: media ? media.progress : 0
+            content_screen.center = Qt.vector2d(pinch_area.width/2, pinch_area.height/2)
+
+            recycleAnimation.start();
+        }
+
+        function turnSmall(mouseX, mouseY)
+        {
+
+            root.active = false;
+            root.inPairingBox = true;
+            content_screen.center =  Qt.vector2d(mouseX,
+                                                 mouseY)
+            content_screen.scaling = 0.5;
+            //selected_image_small.start()
+        }
+
+        function turnBack(mouseX, mouseY)
+        {
+            if(root.inPairingBox)
+            {
+                //root.scale = 1.0;
+                //selected_image_original.start()
+                content_screen.center =  Qt.vector2d(mouseX,
+                                                     mouseY)
+                root.inPairingBox = false;
+                content_screen.scaling = 1.0;
+            }
+
+
+        }
+
+        NumberAnimation {
+            id: selected_image_small
+            target: content_screen
+            property: "scaling"
+            to: 0.5
+            duration: 200
+            easing.type: Easing.InOutQuad
+        }
+
+        NumberAnimation {
+            id: selected_image_original
+            target: content_screen
+            property: "scaling"
+            to: 1.0
+            duration: 200
+            easing.type: Easing.InOutQuad
+        }
+
+
+//        MultiPointPinchArea
+//        {
+//            id: touch_area
+//            anchors.fill:parent
+
+//            dragOnPinch: true
+//            listenForRotation: true
+//            listenForScale: false
+
+//            mouseEnabled: true
+//            touchPoints: [TouchPoint{id: touch_1}, TouchPoint{id: touch_2}]
+
+//            property int touchState: touch_1.pressed + 2*(touch_2.pressed) // 0 for no touching, 1 for point 1, 2 for point 2, 3 for pinch
+
+//            //minimumX: 0 - root.imageWidth
+//            //maximumX: 1920 - root.imageWidth
+
+//            //minimumY: 0 - root.imageHeight
+//            //maximumY: 1080 - root.imageHeight
+
+//            onDraggingChanged:
+//            {
+//                if(!dragging)
+//                {
+//                    image_timer.restart();
+//                    root.finishedDragging(root, touchPoints[0]);
+//                }
+//            }
+
+//            onPositionUpdated:
+//            {
+//                image_timer.restart();
+//                if(whichScreen == "middle right")
+//                {
+//                    root.y += delta_x;
+//                    root.x += -delta_y;
+//                }
+//                else if(whichScreen == "middle left")
+//                {
+//                    root.y += -delta_x;
+//                    root.x += delta_y;
+//                }
+//                else
+//                {
+
+//                root.x += delta_x* (root.topScreen ? -1.0 : 1.0);//delta_x* (root.topScreen ? -1.0 : 1.0)//// * detail.scale;
+//                root.y += delta_y* (root.topScreen ? -1.0 : 1.0);// * detail.scale;
+//                }
+
+//                root.imageDragged(root, touchPoints[1]);
+//            }
+//            onRotationUpdated:
+//            {
+//                image_timer.restart();
+//                root.rotation += delta_rotation;
+//            }
+////            onScaleUpdated:
+////            {
+////                image_timer.restart();
+////                content_screen.scaling += delta_scale * root.scaleFactor;
+
+////                content_screen.checkScaling()
+
+////                console.log("scaling = ", content_screen.scaling, " delta_scale = ", delta_scale)
+////                //root.x += -zoomX * delta_scale + zoomX//zoomX - ((zoomX - root.x) * delta_scale );
+////                //root.y += -zoomY * delta_scale + zoomY//zoomY - ((zoomY - root.y) * delta_scale );
+////            }
+
+//            onItemPressed:
+//            {
+//                root.imagePressed(root);
+//                image_timer.restart();
+//            }
+
+//            debugView: false
+
+//            function calculatePinchCenter()
+//            {
+//                if (touchState === 3)
+//                {
+//                    return Qt.vector2d((touch_1.x+touch_2.x)*0.5,(touch_1.y+touch_2.y)*0.5);
+//                }
+//                else if (touchState === 2)
+//                {
+//                    return Qt.vector2d(touch_2.x,touch_2.y);
+//                }
+//                else if (touchState === 1)
+//                {
+//                    return Qt.vector2d(touch_1.x,touch_1.y);
+//                }
+//                else
+//                {
+//                    return undefined;
+//                }
+//            }
+
+//        }
+
+
     }
 
     Timer
@@ -346,99 +649,6 @@ Item
         }
     }
 
-    SequentialAnimation
-    {
-        id: recoveryAnimation
 
-
-        PauseAnimation {
-            duration: 5000
-        }
-
-        PropertyAction { target: root; property: "scale"; value: 1 }
-
-        ParallelAnimation
-        {
-            //PropertyAnimation { target: root; property: 'opacity'; to: 1.0; duration: 250 }
-            PropertyAnimation { target: root; property: 'x'; to: recoveryX; duration: 250 }
-            PropertyAnimation { target: root; property: 'y'; to: recoveryY; duration: 250 }
-        }
-        PropertyAction { target: root; property: "visible"; value: true }
-        PropertyAction { target: root; property: "opacity"; value: 1.0 }
-
-        onRunningChanged:
-        {
-            if(!running)
-            {
-                image_timer.restart();
-                //finishedRecycle();
-            }
-        }
-    }
-
-    SequentialAnimation
-    {
-        id: recycleAnimation
-
-        PropertyAction { target: root; property: "transformOrigin"; value: Item.Center }
-        ParallelAnimation
-        {
-            PropertyAnimation { target: root; property: 'scale'; to: 0.1; duration: 250; easing.type: Easing.InOutQuad }
-            PropertyAnimation { target: root; property: 'opacity'; to: 0.0; duration: 250; easing.type: Easing.InOutQuad }
-        }
-        //PropertyAction { target: root; property: "visible"; value: false }
-        onRunningChanged:
-        {
-            if(!running)
-            {
-                finishedRecycle();
-                recoveryAnimation.start();
-            }
-        }
-    }
-    function recycle(recoveryX, recoveryY)
-    {
-        root.recoveryX = recoveryX;
-        root.recoveryY = recoveryY;
-        recycleAnimation.start();
-    }
-
-    function turnSmall()
-    {
-        //root.scale = 0.5;
-        root.active = false;
-        inPairingBox = true;
-        selected_image_small.start()
-    }
-
-    function turnBack()
-    {
-        if(inPairingBox)
-        {
-            //root.scale = 1.0;
-            selected_image_original.start()
-            inPairingBox = false;
-        }
-
-
-    }
-
-    NumberAnimation {
-        id: selected_image_small
-        target: root
-        property: "scale"
-        to: 0.5
-        duration: 200
-        easing.type: Easing.InOutQuad
-    }
-
-    NumberAnimation {
-        id: selected_image_original
-        target: root
-        property: "scale"
-        to: 1.0
-        duration: 200
-        easing.type: Easing.InOutQuad
-    }
 
 }

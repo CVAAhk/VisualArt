@@ -98,8 +98,8 @@ Item
 
     signal canPaginate()
     signal createImage(string source, int imageX, int imageY, int imageRotation, int imageWidth, int imageHeight, bool tapOpen);
-    signal imageDragged(var image);
-    signal imageFinishedDragging(var image);
+    signal imageDragged(var image, var touchPoint, var imageX, var imageY);
+    signal imageFinishedDragging(var image, var touchPoint, var imageX, var imageY);
 
     enabled: opacity == 1.0
     Behavior on opacity {
@@ -458,7 +458,7 @@ Item
             onInteractive: if(filter_timeout.running) filter_timeout.restart();
             onCreateImage:
             {
-                if(root.isImageInPairingBox(root,selected_image))
+                if(root.isImageInPairingBox(root,touchPoint))
                 {
                     return;
                 }
@@ -469,7 +469,7 @@ Item
             }
             onImageDragged:
             {
-                if(root.isImageInPairingBox(root,selected_image))
+                if(root.isImageInPairingBox(root,touchPoint))
                 {
                     selected_image.turnSmall();
                 }
@@ -480,7 +480,8 @@ Item
             }
             onImageFinishedDragging:
             {
-                root.releaseSelected(root, selected_image);
+                //console.log("finish dragging!!")
+                root.releaseSelected(root, selected_image, touchPoint);
             }
 
             property real contentX: layout.contentX
@@ -501,7 +502,6 @@ Item
                     busy = (layout.currentIndex === layout.count -4)//layout.atXEnd
                     if(busy){
                         nextCount++;
-                        console.log("can paginate!!")
                         root.canPaginate();
                     }
                 }else if(layout.model && layout.model.count)
@@ -604,17 +604,15 @@ Item
 
         onImageDeleted:
         {
-            //console.log("delete filepath = ",filepath, "whichScreen = ", whichScreen)
-
             root.imageRemovedFromScene(filepath);
         }
         onImageDragged:
         {
-            root.imageDragged(image);
+            root.imageDragged(image, touchPoint, imageX, imageY);
         }
         onImageFinishedDragging:
         {
-            root.imageFinishedDragging(image);
+            root.imageFinishedDragging(image, touchPoint, imageX, imageY);
         }
         onImageFinishedRecycle:
         {
@@ -642,7 +640,6 @@ Item
             filter.tagHeaderSearchByTag = false;
             filter.resetFilters();
             filter_text.text = "FILTER";
-            console.log("filter times out");
         }
     }
     Timer
@@ -708,10 +705,11 @@ Item
         return pairing_box_coordinates;
     }
 
-    function isImageInPairingBox(carousel,image)
+    function isImageInPairingBox(carousel, touchPoint)
     {
-        var middleX = image.x + image.width * 1/2 - holderX();
-        var middleY = image.y + image.height * 1/2 - holderY();
+        console.log("touch x = ", touchPoint.x, " touch y = ", touchPoint.y)
+        var middleX = touchPoint.x - holderX()//image.x + image.width * 1/2 - holderX();
+        var middleY = touchPoint.y - holderY()//image.y + image.height * 1/2 - holderY();
         if(root.topScreen)
         {
             middleX = Settings.SCREEN_WIDTH - middleX;
@@ -753,32 +751,33 @@ Item
         }
         return false;
     }
-    function releaseSelected(carousel,image)
+    function releaseSelected(carousel,image,touchPoint)
     {
+        //console.log("releaseSelected!!! touch x = ", touchPoint.x, " touch y = ", touchPoint.y)
         var pairing_box_coordinates;
         var target_x;
         var target_y;
-        if(root.isImageInPairingBox(carousel,image) && whichScreen.includes("top"))
+        if(root.isImageInPairingBox(carousel,touchPoint) && whichScreen.includes("top"))
         {
             pairing_box_coordinates = pairingBoxCoordinates(carousel);
             target_x = Settings.SCREEN_WIDTH - pairing_box_coordinates.x - image.width;
             target_y = Settings.SCREEN_HEIGHT - pairing_box_coordinates.y- image.height*2 - carousel.pairingHeight;
         }
-        else if(root.isImageInPairingBox(carousel,image) && whichScreen == "middle right")
+        else if(root.isImageInPairingBox(carousel,touchPoint) && whichScreen == "middle right")
         {
             pairing_box_coordinates = pairingBoxCoordinates(carousel);
             target_x = Settings.SCREEN_HEIGHT - pairing_box_coordinates.y - image.width;
             target_y = pairing_box_coordinates.x - image.height - 100;
-            console.log("target x = ", target_x, " target_y = ", target_y)
+            //console.log("target x = ", target_x, " target_y = ", target_y)
         }
-        else if(root.isImageInPairingBox(carousel,image) && whichScreen == "middle left")
+        else if(root.isImageInPairingBox(carousel,touchPoint) && whichScreen == "middle left")
         {
             pairing_box_coordinates = pairingBoxCoordinates(carousel);
             target_x = pairing_box_coordinates.y;
             target_y = Settings.SCREEN_WIDTH - pairing_box_coordinates.x -image.height - 100;
-            console.log("target x = ", target_x, " target_y = ", target_y)
+            //console.log("target x = ", target_x, " target_y = ", target_y)
         }
-        else if(root.isImageInPairingBox(carousel,image))
+        else if(root.isImageInPairingBox(carousel,touchPoint))
         {
             pairing_box_coordinates = pairingBoxCoordinates(carousel);
             target_x = pairing_box_coordinates.x;
@@ -789,15 +788,15 @@ Item
             return;
         }
 
-        addImageToFavorites(image);
-        console.log("target_x = ", target_x)
+        addImageToFavorites(image,touchPoint);
+        //console.log("target_x = ", target_x)
         image.recycle(target_x,target_y);
     }
-    function addImageToFavorites(image)
+    function addImageToFavorites(image,touchPoint)
     {
-        if(root.isImageInPairingBox(root,image) && root.currentCode && root.checkItemsOfPairing(image.item.id))
+        if(root.isImageInPairingBox(root,image,touchPoint) && root.currentCode && root.checkItemsOfPairing(image.item.id))
         {
-            console.log("add item = ", image.item.id)
+            //console.log("add item = ", image.item.id)
             HeistClient.addItem(root.currentCode, image.item.id, root);
         }
     }

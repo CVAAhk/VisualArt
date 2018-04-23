@@ -70,7 +70,7 @@ Item {
         enabled: visible
         rotation: 180
         //onYellowPressed: {top_left_carousel.opacity = active ? 1.0 : 0.0; gallery.carouselActivate()}
-        onTouchToBeginPressed: {top_left_carousel.opacity = active ? 1.0 : 0.0; gallery.carouselActivate()}
+        onTouchToBeginPressed: {if(active) {top_left_carousel.opacity = active ? 1.0 : 0.0; gallery.carouselActivate()}}
 
     }
     TouchToBegin
@@ -80,7 +80,7 @@ Item {
         color: "blue"
         rotation: 180
         //onGreenPressed: {top_right_carousel.opacity = active ? 1.0 : 0.0; gallery.carouselActivate()}
-        onTouchToBeginPressed: {top_right_carousel.opacity = active ? 1.0 : 0.0; gallery.carouselActivate()}
+        onTouchToBeginPressed: {if(active) {top_right_carousel.opacity = active ? 1.0 : 0.0; gallery.carouselActivate()}}
     }
     TouchToBegin
     {
@@ -90,7 +90,7 @@ Item {
         visible: Settings.USERS != 2
         enabled: visible
         //onBluePressed: {lower_left_carousel.opacity = active ? 1.0 : 0.0; gallery.carouselActivate()}
-        onTouchToBeginPressed: {lower_left_carousel.opacity = active ? 1.0 : 0.0; gallery.carouselActivate()}
+        onTouchToBeginPressed: {if(active) {lower_left_carousel.opacity = active ? 1.0 : 0.0; gallery.carouselActivate()}}
     }
     TouchToBegin
     {
@@ -98,7 +98,7 @@ Item {
         x: Settings.USERS == 2 ? 780 : 1306; y: 960
         color: "blue"
         //onRedPressed: {lower_right_carousel.opacity = active ? 1.0 : 0.0; gallery.carouselActivate()}
-        onTouchToBeginPressed: {lower_right_carousel.opacity = active ? 1.0 : 0.0; gallery.carouselActivate()}
+        onTouchToBeginPressed: {if(active) {lower_right_carousel.opacity = active ? 1.0 : 0.0; gallery.carouselActivate()}}
     }
     TouchToBegin
     {
@@ -110,7 +110,7 @@ Item {
         enabled: visible
         rotation: 90
         //onYellowPressed: {top_left_carousel.opacity = active ? 1.0 : 0.0; gallery.carouselActivate()}
-        onTouchToBeginPressed: {middle_left_carousel.opacity = active ? 1.0 : 0.0; gallery.carouselActivate()}
+        onTouchToBeginPressed: {if(active) {middle_left_carousel.opacity = active ? 1.0 : 0.0; gallery.carouselActivate()}}
 
     }
     TouchToBegin
@@ -122,7 +122,7 @@ Item {
         visible: Settings.USERS == 6
         enabled: visible
         //onGreenPressed: {top_right_carousel.opacity = active ? 1.0 : 0.0; gallery.carouselActivate()}
-        onTouchToBeginPressed: {middle_right_carousel.opacity = active ? 1.0 : 0.0; gallery.carouselActivate()}
+        onTouchToBeginPressed: {if(active) {middle_right_carousel.opacity = active ? 1.0 : 0.0; gallery.carouselActivate()}}
     }
 
 
@@ -151,16 +151,16 @@ Item {
         }
         onImageDragged:
         {
-            if(gallery.isImageInPairingBox(lower_left_carousel,image)||
-            gallery.isImageInPairingBox(lower_right_carousel,image)||
-            gallery.isImageInPairingBox(top_left_carousel,image)||
-            gallery.isImageInPairingBox(top_right_carousel,image))
+            if(gallery.isImageInPairingBox(lower_left_carousel,image, touchPoint, imageX, imageY)||
+            gallery.isImageInPairingBox(lower_right_carousel,image, touchPoint, imageX, imageY)||
+            gallery.isImageInPairingBox(top_left_carousel,image, touchPoint, imageX, imageY)||
+            gallery.isImageInPairingBox(top_right_carousel,image, touchPoint, imageX, imageY))
             {
-                image.turnSmall();
+                image.turnSmall(touchPoint.x, touchPoint.y);
             }
             else
             {
-                image.turnBack();
+                image.turnBack(touchPoint.x, touchPoint.y);
             }
         }
         onImageFinishedDragging:
@@ -168,35 +168,35 @@ Item {
             var pairing_box_coordinates;
             var target_x;
             var target_y;
-            if(gallery.isImageInPairingBox(lower_left_carousel,image))
+            if(gallery.isImageInPairingBox(lower_left_carousel,image, touchPoint, imageX, imageY))
             {
                 pairing_box_coordinates = pairingBoxCoordinates(lower_left_carousel);
-                target_x = Settings.SCREEN_WIDTH - pairing_box_coordinates.x - image.width;
-                target_y = Settings.SCREEN_HEIGHT - pairing_box_coordinates.y + 50;
+                target_x = pairing_box_coordinates.x;
+                target_y = pairing_box_coordinates.y - image.height;
             }
-            else if(gallery.isImageInPairingBox(lower_right_carousel,image))
+            else if(gallery.isImageInPairingBox(lower_right_carousel,image, touchPoint, imageX, imageY))
             {
                 pairing_box_coordinates = pairingBoxCoordinates(lower_right_carousel);
-                target_x = Settings.SCREEN_WIDTH - pairing_box_coordinates.x - image.width;
-                target_y = Settings.SCREEN_HEIGHT - pairing_box_coordinates.y + 50;
+                target_x = pairing_box_coordinates.x;
+                target_y = pairing_box_coordinates.y - image.height;
             }
-            else if(gallery.isImageInPairingBox(top_left_carousel,image))
+            else if(gallery.isImageInPairingBox(top_left_carousel,image, touchPoint, imageX, imageY))
             {
                 pairing_box_coordinates = pairingBoxCoordinates(top_left_carousel);
-                target_x = Settings.SCREEN_WIDTH - pairing_box_coordinates.x - image.width;
-                target_y = Settings.SCREEN_HEIGHT - pairing_box_coordinates.y- image.height - top_left_carousel.pairingHeight;
+                target_x = pairing_box_coordinates.x;
+                target_y = pairing_box_coordinates.y + top_left_carousel.pairingHeight + 50;
             }
-            else if(gallery.isImageInPairingBox(top_right_carousel,image))
+            else if(gallery.isImageInPairingBox(top_right_carousel,image, touchPoint, imageX, imageY))
             {
                 pairing_box_coordinates = pairingBoxCoordinates(top_right_carousel);
-                target_x = Settings.SCREEN_WIDTH - pairing_box_coordinates.x - image.width;
-                target_y = Settings.SCREEN_HEIGHT - pairing_box_coordinates.y- image.height - top_right_carousel.pairingHeight;
+                target_x = pairing_box_coordinates.x;
+                target_y = pairing_box_coordinates.y + top_right_carousel.pairingHeight + 50;
             }
             else
             {
                 return;
             }
-            gallery.addImageToFavorites(image);
+            gallery.addImageToFavorites(image, touchPoint, imageX, imageY);
 
             image.recycle(target_x,target_y);
         }
@@ -222,16 +222,16 @@ Item {
         }
         onImageDragged:
         {
-            if(gallery.isImageInPairingBox(lower_left_carousel,image)||
-            gallery.isImageInPairingBox(lower_right_carousel,image)||
-            gallery.isImageInPairingBox(top_left_carousel,image)||
-            gallery.isImageInPairingBox(top_right_carousel,image))
+            if(gallery.isImageInPairingBox(lower_left_carousel,image, touchPoint, imageX, imageY)||
+            gallery.isImageInPairingBox(lower_right_carousel,image, touchPoint, imageX, imageY)||
+            gallery.isImageInPairingBox(top_left_carousel,image, touchPoint, imageX, imageY)||
+            gallery.isImageInPairingBox(top_right_carousel,image, touchPoint, imageX, imageY))
             {
-                image.turnSmall();
+                image.turnSmall(touchPoint.x, touchPoint.y);
             }
             else
             {
-                image.turnBack();
+                image.turnBack(touchPoint.x, touchPoint.y);
             }
         }
         onImageFinishedDragging:
@@ -239,35 +239,35 @@ Item {
             var pairing_box_coordinates;
             var target_x;
             var target_y;
-            if(gallery.isImageInPairingBox(lower_left_carousel,image))
+            if(gallery.isImageInPairingBox(lower_left_carousel,image, touchPoint, imageX, imageY))
             {
                 pairing_box_coordinates = pairingBoxCoordinates(lower_left_carousel);
-                target_x = Settings.SCREEN_WIDTH - pairing_box_coordinates.x - image.width;
-                target_y = Settings.SCREEN_HEIGHT - pairing_box_coordinates.y + 50;
+                target_x = pairing_box_coordinates.x;
+                target_y = pairing_box_coordinates.y - image.height;
             }
-            else if(gallery.isImageInPairingBox(lower_right_carousel,image))
+            else if(gallery.isImageInPairingBox(lower_right_carousel,image, touchPoint, imageX, imageY))
             {
                 pairing_box_coordinates = pairingBoxCoordinates(lower_right_carousel);
-                target_x = Settings.SCREEN_WIDTH - pairing_box_coordinates.x - image.width;
-                target_y = Settings.SCREEN_HEIGHT - pairing_box_coordinates.y + 50;
+                target_x = pairing_box_coordinates.x;
+                target_y = pairing_box_coordinates.y - image.height;
             }
-            else if(gallery.isImageInPairingBox(top_left_carousel,image))
+            else if(gallery.isImageInPairingBox(top_left_carousel,image, touchPoint, imageX, imageY))
             {
                 pairing_box_coordinates = pairingBoxCoordinates(top_left_carousel);
-                target_x = Settings.SCREEN_WIDTH - pairing_box_coordinates.x - image.width;
-                target_y = Settings.SCREEN_HEIGHT - pairing_box_coordinates.y- image.height - top_left_carousel.pairingHeight;
+                target_x = pairing_box_coordinates.x;
+                target_y = pairing_box_coordinates.y + top_left_carousel.pairingHeight + 50;
             }
-            else if(gallery.isImageInPairingBox(top_right_carousel,image))
+            else if(gallery.isImageInPairingBox(top_right_carousel,image, touchPoint, imageX, imageY))
             {
                 pairing_box_coordinates = pairingBoxCoordinates(top_right_carousel);
-                target_x = Settings.SCREEN_WIDTH - pairing_box_coordinates.x - image.width;
-                target_y = Settings.SCREEN_HEIGHT - pairing_box_coordinates.y- image.height - top_right_carousel.pairingHeight;
+                target_x = pairing_box_coordinates.x;
+                target_y = pairing_box_coordinates.y + top_right_carousel.pairingHeight + 50;
             }
             else
             {
                 return;
             }
-            gallery.addImageToFavorites(image);
+            gallery.addImageToFavorites(image, touchPoint, imageX, imageY);
 
             image.recycle(target_x,target_y);
         }
@@ -294,16 +294,16 @@ Item {
         }
         onImageDragged:
         {
-            if(gallery.isImageInPairingBox(lower_left_carousel,image)||
-            gallery.isImageInPairingBox(lower_right_carousel,image)||
-            gallery.isImageInPairingBox(top_left_carousel,image)||
-            gallery.isImageInPairingBox(top_right_carousel,image))
+            if(gallery.isImageInPairingBox(lower_left_carousel,image, touchPoint, imageX, imageY)||
+            gallery.isImageInPairingBox(lower_right_carousel,image, touchPoint, imageX, imageY)||
+            gallery.isImageInPairingBox(top_left_carousel,image, touchPoint, imageX, imageY)||
+            gallery.isImageInPairingBox(top_right_carousel,image, touchPoint, imageX, imageY))
             {
-                image.turnSmall();
+                image.turnSmall(touchPoint.x, touchPoint.y);
             }
             else
             {
-                image.turnBack();
+                image.turnBack(touchPoint.x, touchPoint.y);
             }
         }
         onImageFinishedDragging:
@@ -311,25 +311,25 @@ Item {
             var pairing_box_coordinates;
             var target_x;
             var target_y;
-            if(gallery.isImageInPairingBox(lower_left_carousel,image))
+            if(gallery.isImageInPairingBox(lower_left_carousel,image, touchPoint, imageX, imageY))
             {
                 pairing_box_coordinates = pairingBoxCoordinates(lower_left_carousel);
                 target_x = pairing_box_coordinates.x;
                 target_y = pairing_box_coordinates.y - image.height;
             }
-            else if(gallery.isImageInPairingBox(lower_right_carousel,image))
+            else if(gallery.isImageInPairingBox(lower_right_carousel,image, touchPoint, imageX, imageY))
             {
                 pairing_box_coordinates = pairingBoxCoordinates(lower_right_carousel);
                 target_x = pairing_box_coordinates.x;
                 target_y = pairing_box_coordinates.y - image.height;
             }
-            else if(gallery.isImageInPairingBox(top_left_carousel,image))
+            else if(gallery.isImageInPairingBox(top_left_carousel,image, touchPoint, imageX, imageY))
             {
                 pairing_box_coordinates = pairingBoxCoordinates(top_left_carousel);
                 target_x = pairing_box_coordinates.x;
                 target_y = pairing_box_coordinates.y + top_left_carousel.pairingHeight + 50;
             }
-            else if(gallery.isImageInPairingBox(top_right_carousel,image))
+            else if(gallery.isImageInPairingBox(top_right_carousel,image, touchPoint, imageX, imageY))
             {
                 pairing_box_coordinates = pairingBoxCoordinates(top_right_carousel);
                 target_x = pairing_box_coordinates.x;
@@ -339,7 +339,7 @@ Item {
             {
                 return;
             }
-            gallery.addImageToFavorites(image);
+            gallery.addImageToFavorites(image, touchPoint, imageX, imageY);
 
             image.recycle(target_x,target_y);
         }
@@ -363,16 +363,16 @@ Item {
         }
         onImageDragged:
         {
-            if(gallery.isImageInPairingBox(lower_left_carousel,image)||
-            gallery.isImageInPairingBox(lower_right_carousel,image)||
-            gallery.isImageInPairingBox(top_left_carousel,image)||
-            gallery.isImageInPairingBox(top_right_carousel,image))
+            if(gallery.isImageInPairingBox(lower_left_carousel,image, touchPoint, imageX, imageY)||
+            gallery.isImageInPairingBox(lower_right_carousel,image, touchPoint, imageX, imageY)||
+            gallery.isImageInPairingBox(top_left_carousel,image, touchPoint, imageX, imageY)||
+            gallery.isImageInPairingBox(top_right_carousel,image, touchPoint, imageX, imageY))
             {
-                image.turnSmall();
+                image.turnSmall(touchPoint.x, touchPoint.y);
             }
             else
             {
-                image.turnBack();
+                image.turnBack(touchPoint.x, touchPoint.y);
             }
         }
         onImageFinishedDragging:
@@ -380,25 +380,25 @@ Item {
             var pairing_box_coordinates;
             var target_x;
             var target_y;
-            if(gallery.isImageInPairingBox(lower_left_carousel,image))
+            if(gallery.isImageInPairingBox(lower_left_carousel,image, touchPoint, imageX, imageY))
             {
                 pairing_box_coordinates = pairingBoxCoordinates(lower_left_carousel);
                 target_x = pairing_box_coordinates.x;
                 target_y = pairing_box_coordinates.y - image.height;
             }
-            else if(gallery.isImageInPairingBox(lower_right_carousel,image))
+            else if(gallery.isImageInPairingBox(lower_right_carousel,image, touchPoint, imageX, imageY))
             {
                 pairing_box_coordinates = pairingBoxCoordinates(lower_right_carousel);
                 target_x = pairing_box_coordinates.x;
                 target_y = pairing_box_coordinates.y - image.height;
             }
-            else if(gallery.isImageInPairingBox(top_left_carousel,image))
+            else if(gallery.isImageInPairingBox(top_left_carousel,image, touchPoint, imageX, imageY))
             {
                 pairing_box_coordinates = pairingBoxCoordinates(top_left_carousel);
                 target_x = pairing_box_coordinates.x;
                 target_y = pairing_box_coordinates.y + top_left_carousel.pairingHeight + 50;
             }
-            else if(gallery.isImageInPairingBox(top_right_carousel,image))
+            else if(gallery.isImageInPairingBox(top_right_carousel,image, touchPoint, imageX, imageY))
             {
                 pairing_box_coordinates = pairingBoxCoordinates(top_right_carousel);
                 target_x = pairing_box_coordinates.x;
@@ -408,7 +408,7 @@ Item {
             {
                 return;
             }
-            gallery.addImageToFavorites(image);
+            gallery.addImageToFavorites(image, touchPoint, imageX, imageY);
 
             image.recycle(target_x,target_y);
         }
@@ -435,17 +435,17 @@ Item {
         }
         onImageDragged:
         {
-            if(gallery.isImageInPairingBox(lower_left_carousel,image)||
-            gallery.isImageInPairingBox(lower_right_carousel,image)||
-            gallery.isImageInPairingBox(top_left_carousel,image)||
-            gallery.isImageInPairingBox(top_right_carousel,image) ||
-                   gallery.isImageInPairingBox(middle_right_carousel,image)  )
+            if(gallery.isImageInPairingBox(lower_left_carousel,image, touchPoint, imageX, imageY)||
+            gallery.isImageInPairingBox(lower_right_carousel,image, touchPoint, imageX, imageY)||
+            gallery.isImageInPairingBox(top_left_carousel,image, touchPoint, imageX, imageY)||
+            gallery.isImageInPairingBox(top_right_carousel,image, touchPoint, imageX, imageY) ||
+                   gallery.isImageInPairingBox(middle_right_carousel,image, touchPoint, imageX, imageY)  )
             {
-                image.turnSmall();
+                image.turnSmall(touchPoint.x, touchPoint.y);
             }
             else
             {
-                image.turnBack();
+                image.turnBack(touchPoint.x, touchPoint.y);
             }
         }
         onImageFinishedDragging:
@@ -453,31 +453,31 @@ Item {
             var pairing_box_coordinates;
             var target_x;
             var target_y;
-            if(gallery.isImageInPairingBox(lower_left_carousel,image))
+            if(gallery.isImageInPairingBox(lower_left_carousel,image, touchPoint, imageX, imageY))
             {
                 pairing_box_coordinates = pairingBoxCoordinates(lower_left_carousel);
                 target_x = Settings.SCREEN_WIDTH - pairing_box_coordinates.x - image.width;
                 target_y = Settings.SCREEN_HEIGHT - pairing_box_coordinates.y + 50;
             }
-            else if(gallery.isImageInPairingBox(lower_right_carousel,image))
+            else if(gallery.isImageInPairingBox(lower_right_carousel,image, touchPoint, imageX, imageY))
             {
                 pairing_box_coordinates = pairingBoxCoordinates(lower_right_carousel);
                 target_x = Settings.SCREEN_WIDTH - pairing_box_coordinates.x - image.width;
                 target_y = Settings.SCREEN_HEIGHT - pairing_box_coordinates.y + 50;
             }
-            else if(gallery.isImageInPairingBox(top_left_carousel,image))
+            else if(gallery.isImageInPairingBox(top_left_carousel,image, touchPoint, imageX, imageY))
             {
                 pairing_box_coordinates = pairingBoxCoordinates(top_left_carousel);
                 target_x = Settings.SCREEN_WIDTH - pairing_box_coordinates.x - image.width;
                 target_y = Settings.SCREEN_HEIGHT - pairing_box_coordinates.y- image.height - top_left_carousel.pairingHeight;
             }
-            else if(gallery.isImageInPairingBox(top_right_carousel,image))
+            else if(gallery.isImageInPairingBox(top_right_carousel,image, touchPoint, imageX, imageY))
             {
                 pairing_box_coordinates = pairingBoxCoordinates(top_right_carousel);
                 target_x = Settings.SCREEN_WIDTH - pairing_box_coordinates.x - image.width;
                 target_y = Settings.SCREEN_HEIGHT - pairing_box_coordinates.y- image.height - top_right_carousel.pairingHeight;
             }
-            else if(gallery.isImageInPairingBox(middle_right_carousel,image))
+            else if(gallery.isImageInPairingBox(middle_right_carousel,image, touchPoint, imageX, imageY))
             {
                 pairing_box_coordinates = pairingBoxCoordinates(middle_right_carousel);
                 target_x = Settings.SCREEN_HEIGHT - pairing_box_coordinates.y - image.width;
@@ -487,7 +487,7 @@ Item {
             {
                 return;
             }
-            gallery.addImageToFavorites(image);
+            gallery.addImageToFavorites(image, touchPoint, imageX, imageY);
 
             image.recycle(target_x,target_y);
         }
@@ -512,18 +512,17 @@ Item {
         }
         onImageDragged:
         {
-            if(gallery.isImageInPairingBox(lower_left_carousel,image)||
-            gallery.isImageInPairingBox(lower_right_carousel,image)||
-            gallery.isImageInPairingBox(top_left_carousel,image)||
-            gallery.isImageInPairingBox(top_right_carousel,image) ||
-            gallery.isImageInPairingBox(middle_left_carousel,image) )
+            if(gallery.isImageInPairingBox(lower_left_carousel,image, touchPoint, imageX, imageY)||
+            gallery.isImageInPairingBox(lower_right_carousel,image, touchPoint, imageX, imageY)||
+            gallery.isImageInPairingBox(top_left_carousel,image, touchPoint, imageX, imageY)||
+            gallery.isImageInPairingBox(top_right_carousel,image, touchPoint, imageX, imageY) ||
+            gallery.isImageInPairingBox(middle_left_carousel,image, touchPoint, imageX, imageY) )
             {
-                console.log("turn small")
-                image.turnSmall();
+                image.turnSmall(touchPoint.x, touchPoint.y);
             }
             else
             {
-                image.turnBack();
+                image.turnBack(touchPoint.x, touchPoint.y);
             }
         }
         onImageFinishedDragging:
@@ -531,31 +530,31 @@ Item {
             var pairing_box_coordinates;
             var target_x;
             var target_y;
-            if(gallery.isImageInPairingBox(lower_left_carousel,image))
+            if(gallery.isImageInPairingBox(lower_left_carousel,image, touchPoint, imageX, imageY))
             {
                 pairing_box_coordinates = pairingBoxCoordinates(lower_left_carousel);
                 target_x = Settings.SCREEN_WIDTH - pairing_box_coordinates.x - image.width;
                 target_y = Settings.SCREEN_HEIGHT - pairing_box_coordinates.y + 50;
             }
-            else if(gallery.isImageInPairingBox(lower_right_carousel,image))
+            else if(gallery.isImageInPairingBox(lower_right_carousel,image, touchPoint, imageX, imageY))
             {
                 pairing_box_coordinates = pairingBoxCoordinates(lower_right_carousel);
                 target_x = Settings.SCREEN_WIDTH - pairing_box_coordinates.x - image.width;
                 target_y = Settings.SCREEN_HEIGHT - pairing_box_coordinates.y + 50;
             }
-            else if(gallery.isImageInPairingBox(top_left_carousel,image))
+            else if(gallery.isImageInPairingBox(top_left_carousel,image, touchPoint, imageX, imageY))
             {
                 pairing_box_coordinates = pairingBoxCoordinates(top_left_carousel);
                 target_x = Settings.SCREEN_WIDTH - pairing_box_coordinates.x - image.width;
                 target_y = Settings.SCREEN_HEIGHT - pairing_box_coordinates.y- image.height - top_left_carousel.pairingHeight;
             }
-            else if(gallery.isImageInPairingBox(top_right_carousel,image))
+            else if(gallery.isImageInPairingBox(top_right_carousel,image, touchPoint, imageX, imageY))
             {
                 pairing_box_coordinates = pairingBoxCoordinates(top_right_carousel);
                 target_x = Settings.SCREEN_WIDTH - pairing_box_coordinates.x - image.width;
                 target_y = Settings.SCREEN_HEIGHT - pairing_box_coordinates.y- image.height - top_right_carousel.pairingHeight;
             }
-            else if(gallery.isImageInPairingBox(middle_left_carousel,image))
+            else if(gallery.isImageInPairingBox(middle_left_carousel,image, touchPoint, imageX, imageY))
             {
                 pairing_box_coordinates = pairingBoxCoordinates(middle_right_carousel);
                 target_x = Settings.SCREEN_HEIGHT - pairing_box_coordinates.y - image.width;
@@ -565,7 +564,7 @@ Item {
             {
                 return;
             }
-            gallery.addImageToFavorites(image);
+            gallery.addImageToFavorites(image, touchPoint, imageX, imageY);
 
             image.recycle(target_x,target_y);
         }
@@ -597,10 +596,12 @@ Item {
         return pairing_box_coordinates;
     }
 
-    function isImageInPairingBox(carousel,image)
+    function isImageInPairingBox(carousel,image, touchPoint, imageX, imageY)
     {
-        var middleX = image.x + image.width * 1/2;
-        var middleY = image.y + image.height * 1/2;
+        console.log(carousel.whichScreen, " gallery!! touchPoint.x = ", touchPoint.x, " touchPoint.y = ", touchPoint.y,
+                    imageX, imageY)
+        var middleX = imageX + touchPoint.x//image.x + image.width * 1/2;
+        var middleY = imageY + touchPoint.y//image.y + image.height * 1/2;
 
         if(image.topScreen)
         {
@@ -627,7 +628,8 @@ Item {
         var pairing_width = carousel.whichScreen.includes("middle") ? carousel.pairingHeight :carousel.pairingWidth;
         var pairing_height = carousel.whichScreen.includes("middle") ? carousel.pairingWidth :carousel.pairingHeight;
 
-        //console.log(pairing_height,"middleX = ", middleX, " middleY = ", middleY, "pairing_x = ", pairing_x, "pairing_y = ", pairing_y)
+        console.log(carousel.whichScreen, "middleX = ", middleX, " middleY = ", middleY, "pairing_x = ", pairing_x, "pairing_y = ", pairing_y,
+                    "pairing_width = ", pairing_width, " pairing_height = ", pairing_height)
 
 
         if(middleX > pairing_x && middleX < pairing_x + pairing_width&&
@@ -635,7 +637,7 @@ Item {
         {
             if(carousel.paired && carousel.pairedEnabled)
             {
-                console.log("true")
+                console.log("in pairing box!!!")
                 return true;
 
             }
@@ -646,46 +648,46 @@ Item {
         }
         return false;
     }
-    function addImageToFavorites(image)
+    function addImageToFavorites(image, touchPoint, imageX, imageY)
     {
 
-        if(gallery.isImageInPairingBox(lower_left_carousel,image) && lower_left_carousel.currentCode && lower_left_carousel.checkItemsOfPairing(image.item.id))
+        if(gallery.isImageInPairingBox(lower_left_carousel,image, touchPoint, imageX, imageY) && lower_left_carousel.currentCode && lower_left_carousel.checkItemsOfPairing(image.item.id))
         {
-            console.log("add item = ", image.item.id)
+            //console.log("add item = ", image.item.id)
             HeistClient.addItem(lower_left_carousel.currentCode, image.item.id, lower_left_carousel);
         }
-        else if(gallery.isImageInPairingBox(lower_right_carousel,image) && lower_right_carousel.currentCode && lower_right_carousel.checkItemsOfPairing(image.item.id))
+        else if(gallery.isImageInPairingBox(lower_right_carousel,image, touchPoint, imageX, imageY) && lower_right_carousel.currentCode && lower_right_carousel.checkItemsOfPairing(image.item.id))
         {
-            console.log("add item = ", image.item.id)
+            //console.log("add item = ", image.item.id)
             HeistClient.addItem(lower_right_carousel.currentCode, image.item.id, lower_right_carousel);
         }
-        else if(gallery.isImageInPairingBox(top_right_carousel,image) && top_right_carousel.currentCode && top_right_carousel.checkItemsOfPairing(image.item.id))
+        else if(gallery.isImageInPairingBox(top_right_carousel,image, touchPoint, imageX, imageY) && top_right_carousel.currentCode && top_right_carousel.checkItemsOfPairing(image.item.id))
         {
-            console.log("add item = ", image.item.id)
+            //console.log("add item = ", image.item.id)
             HeistClient.addItem(top_right_carousel.currentCode, image.item.id, top_right_carousel);
         }
-        else if(gallery.isImageInPairingBox(top_left_carousel,image) && top_left_carousel.currentCode && top_left_carousel.checkItemsOfPairing(image.item.id))
+        else if(gallery.isImageInPairingBox(top_left_carousel,image, touchPoint, imageX, imageY) && top_left_carousel.currentCode && top_left_carousel.checkItemsOfPairing(image.item.id))
         {
-            console.log("add item = ", image.item.id)
+            //console.log("add item = ", image.item.id)
             HeistClient.addItem(top_left_carousel.currentCode, image.item.id, top_left_carousel);
         }
-        else if(gallery.isImageInPairingBox(middle_right_carousel,image) && middle_right_carousel.currentCode && middle_right_carousel.checkItemsOfPairing(image.item.id))
+        else if(gallery.isImageInPairingBox(middle_right_carousel,image, touchPoint, imageX, imageY) && middle_right_carousel.currentCode && middle_right_carousel.checkItemsOfPairing(image.item.id))
         {
-            console.log("add item = ", image.item.id)
+            //console.log("add item = ", image.item.id)
             HeistClient.addItem(middle_right_carousel.currentCode, image.item.id, middle_right_carousel);
         }
-        else if(gallery.isImageInPairingBox(middle_left_carousel,image) && middle_left_carousel.currentCode && middle_left_carousel.checkItemsOfPairing(image.item.id))
+        else if(gallery.isImageInPairingBox(middle_left_carousel,image, touchPoint, imageX, imageY) && middle_left_carousel.currentCode && middle_left_carousel.checkItemsOfPairing(image.item.id))
         {
-            console.log("add item = ", image.item.id)
+            //console.log("add item = ", image.item.id)
             HeistClient.addItem(middle_left_carousel.currentCode, image.item.id, middle_left_carousel);
         }
     }
-    function attractImageIsInPairingBox(image)
+    function attractImageIsInPairingBox(image, touchPoint)
     {
-        if(gallery.isImageInPairingBox(lower_left_carousel,image)||
-        gallery.isImageInPairingBox(lower_right_carousel,image)||
-        gallery.isImageInPairingBox(top_left_carousel,image)||
-        gallery.isImageInPairingBox(top_right_carousel,image))
+        if(gallery.isImageInPairingBox(lower_left_carousel,image, touchPoint)||
+        gallery.isImageInPairingBox(lower_right_carousel,image, touchPoint)||
+        gallery.isImageInPairingBox(top_left_carousel,image, touchPoint)||
+        gallery.isImageInPairingBox(top_right_carousel,image, touchPoint))
         {
             image.turnSmall();
         }
@@ -694,30 +696,30 @@ Item {
             image.turnBack();
         }
     }
-    function attractImageReleased(image)
+    function attractImageReleased(image, touchPoint)
     {
         var pairing_box_coordinates;
         var target_x;
         var target_y;
-        if(gallery.isImageInPairingBox(lower_left_carousel,image))
+        if(gallery.isImageInPairingBox(lower_left_carousel,image, touchPoint))
         {
             pairing_box_coordinates = pairingBoxCoordinates(lower_left_carousel);
             target_x = pairing_box_coordinates.x;
             target_y = pairing_box_coordinates.y - image.height;
         }
-        else if(gallery.isImageInPairingBox(lower_right_carousel,image))
+        else if(gallery.isImageInPairingBox(lower_right_carousel,image, touchPoint))
         {
             pairing_box_coordinates = pairingBoxCoordinates(lower_right_carousel);
             target_x = pairing_box_coordinates.x;
             target_y = pairing_box_coordinates.y - image.height;
         }
-        else if(gallery.isImageInPairingBox(top_left_carousel,image))
+        else if(gallery.isImageInPairingBox(top_left_carousel,image, touchPoint))
         {
             pairing_box_coordinates = pairingBoxCoordinates(top_left_carousel);
             target_x = pairing_box_coordinates.x;
             target_y = pairing_box_coordinates.y + top_left_carousel.pairingHeight + 50;
         }
-        else if(gallery.isImageInPairingBox(top_right_carousel,image))
+        else if(gallery.isImageInPairingBox(top_right_carousel,image, touchPoint))
         {
             pairing_box_coordinates = pairingBoxCoordinates(top_right_carousel);
             target_x = pairing_box_coordinates.x;

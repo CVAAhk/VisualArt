@@ -39,7 +39,7 @@ Item
         visible: false
         anchors.horizontalCenter: root.horizontalCenter
         y: 10
-
+        width: 40; height: 40
     }
     OpacityMask
     {

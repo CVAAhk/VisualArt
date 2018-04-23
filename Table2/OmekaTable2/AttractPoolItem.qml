@@ -13,14 +13,14 @@ Item
 
     signal createImage(string source, int imageX, int imageY, int imageRotation, int imageWidth, int imageHeight, bool tapOpen, string whichScreen);
 
-    signal imageDragged(var image);
+    signal imageDragged(var image, var touchPoint);
 
-    signal imageFinishedDragging(var image);
+    signal imageFinishedDragging(var image, var touchPoint);
 
     signal loadComplete();
 
     Component.onCompleted: {
-        Omeka.getAllPages(3, root)
+        Omeka.getAllPages(10, root)
         //Omeka.getPage(1, root)
     }
 
@@ -30,9 +30,9 @@ Item
         onRequestComplete:{
             if(result.context === root){
                 allResults.push(result)
-                if(allResults.length == 124)
+                if(allResults.length == Settings.MAXNUMBER)
                 {
-                    maxResults = 124//result.file_count;
+                    maxResults = Settings.MAXNUMBER//result.file_count;
                     var random_id1 = Math.floor(randomizeId());
                     var random_id2 = Math.floor(randomizeId());
                     var random_id3 = Math.floor(randomizeId());
@@ -156,11 +156,11 @@ Item
         }
         onImageDragged:
         {
-            root.imageDragged(image);
+            root.imageDragged(image, touchPoint);
         }
         onImageFinishedDragging:
         {
-            root.imageFinishedDragging(image);
+            root.imageFinishedDragging(image, touchPoint);
         }
     }
 
