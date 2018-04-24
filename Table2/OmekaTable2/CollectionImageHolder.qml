@@ -18,6 +18,8 @@ Item
     property double maxImageHeight: 0.0
     property var maxImage: null
 
+    //property var overlay
+
     //=========================================================================
     // ROOT ITEM SETTINGS
     //=========================================================================
@@ -99,7 +101,17 @@ Item
             //imageItem.item = null;
             imageItem.item = ItemManager.selectedItems[ItemManager.selectedItems.length - 1];
             imageItem.source = filepath;
-            console.log("selected itemdata = ", imageItem.item)
+
+            if(whichScreen.includes("attract"))
+            {
+                imageItem.topScreen = whichScreen.includes("top");
+                imageItem.rotation = imageRotation;
+            }
+            else
+            {
+                imageItem.rotation = 0;
+                imageItem.topScreen = imageRotation > 0;
+            }
             if(tapOpen)
             {
                 image_pop.target = imageItem;
@@ -110,6 +122,7 @@ Item
                     if(imageRotation > 0)
                     {
                         imageItem.y = startY - imageItem.oldImageHeight;
+                        console.log("imageItem.oldImageHeight = ", imageItem.oldImageHeight)
                         //imageItem.rotation = imageRotation;
                     }
                     else
@@ -174,20 +187,6 @@ Item
             imageItem.finishedRecycle.connect(imageFinishedRecycle);
             imageItem.whichScreen = whichScreen;
 
-
-            //imageItem.rotation = imageRotation;
-            if(whichScreen.includes("attract"))
-            {
-                imageItem.topScreen = false;
-                imageItem.rotation = imageRotation;
-            }
-            else
-            {
-                imageItem.rotation = 0;
-                imageItem.topScreen = imageRotation > 0;
-            }
-
-
             imageItem.scale = 1;
 
             if(imageItems.length == 0) maxImageHeight = 10;
@@ -206,6 +205,8 @@ Item
             }
 
             imageItem.visible = true;
+
+            //imageItem.parent = overlay
         }
 
         return imageItem;

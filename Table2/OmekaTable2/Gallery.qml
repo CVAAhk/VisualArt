@@ -79,6 +79,7 @@ Item {
         x: Settings.USERS == 2 ? 820+280 : 1306+280; y: 130
         color: "blue"
         rotation: 180
+        enabled: visible
         //onGreenPressed: {top_right_carousel.opacity = active ? 1.0 : 0.0; gallery.carouselActivate()}
         onTouchToBeginPressed: {if(active) {top_right_carousel.opacity = active ? 1.0 : 0.0; gallery.carouselActivate()}}
     }
@@ -139,8 +140,6 @@ Item {
         color: Settings.CAROUSEL_COLOR
         whichScreen: "top left"
         selectedParent: overlayImageTopLeftRoot
-        visible: Settings.USERS != 2
-        enabled: visible
         onCreateImage:
         {
             //imageHolder.createImage(source, imageX + x, imageY + y, imageRotation, imageWidth, imageHeight, tapOpen, "top left")
@@ -165,40 +164,7 @@ Item {
         }
         onImageFinishedDragging:
         {
-            var pairing_box_coordinates;
-            var target_x;
-            var target_y;
-            if(gallery.isImageInPairingBox(lower_left_carousel,image, touchPoint, imageX, imageY))
-            {
-                pairing_box_coordinates = pairingBoxCoordinates(lower_left_carousel);
-                target_x = pairing_box_coordinates.x;
-                target_y = pairing_box_coordinates.y - image.height;
-            }
-            else if(gallery.isImageInPairingBox(lower_right_carousel,image, touchPoint, imageX, imageY))
-            {
-                pairing_box_coordinates = pairingBoxCoordinates(lower_right_carousel);
-                target_x = pairing_box_coordinates.x;
-                target_y = pairing_box_coordinates.y - image.height;
-            }
-            else if(gallery.isImageInPairingBox(top_left_carousel,image, touchPoint, imageX, imageY))
-            {
-                pairing_box_coordinates = pairingBoxCoordinates(top_left_carousel);
-                target_x = pairing_box_coordinates.x;
-                target_y = pairing_box_coordinates.y + top_left_carousel.pairingHeight + 50;
-            }
-            else if(gallery.isImageInPairingBox(top_right_carousel,image, touchPoint, imageX, imageY))
-            {
-                pairing_box_coordinates = pairingBoxCoordinates(top_right_carousel);
-                target_x = pairing_box_coordinates.x;
-                target_y = pairing_box_coordinates.y + top_right_carousel.pairingHeight + 50;
-            }
-            else
-            {
-                return;
-            }
-            gallery.addImageToFavorites(image, touchPoint, imageX, imageY);
-
-            image.recycle(target_x,target_y);
+            carouselImageRelease(image, touchPoint, imageX, imageY)
         }
     }
     Carousel
@@ -236,40 +202,7 @@ Item {
         }
         onImageFinishedDragging:
         {
-            var pairing_box_coordinates;
-            var target_x;
-            var target_y;
-            if(gallery.isImageInPairingBox(lower_left_carousel,image, touchPoint, imageX, imageY))
-            {
-                pairing_box_coordinates = pairingBoxCoordinates(lower_left_carousel);
-                target_x = pairing_box_coordinates.x;
-                target_y = pairing_box_coordinates.y - image.height;
-            }
-            else if(gallery.isImageInPairingBox(lower_right_carousel,image, touchPoint, imageX, imageY))
-            {
-                pairing_box_coordinates = pairingBoxCoordinates(lower_right_carousel);
-                target_x = pairing_box_coordinates.x;
-                target_y = pairing_box_coordinates.y - image.height;
-            }
-            else if(gallery.isImageInPairingBox(top_left_carousel,image, touchPoint, imageX, imageY))
-            {
-                pairing_box_coordinates = pairingBoxCoordinates(top_left_carousel);
-                target_x = pairing_box_coordinates.x;
-                target_y = pairing_box_coordinates.y + top_left_carousel.pairingHeight + 50;
-            }
-            else if(gallery.isImageInPairingBox(top_right_carousel,image, touchPoint, imageX, imageY))
-            {
-                pairing_box_coordinates = pairingBoxCoordinates(top_right_carousel);
-                target_x = pairing_box_coordinates.x;
-                target_y = pairing_box_coordinates.y + top_right_carousel.pairingHeight + 50;
-            }
-            else
-            {
-                return;
-            }
-            gallery.addImageToFavorites(image, touchPoint, imageX, imageY);
-
-            image.recycle(target_x,target_y);
+            carouselImageRelease(image, touchPoint, imageX, imageY)
         }
     }
 
@@ -308,40 +241,7 @@ Item {
         }
         onImageFinishedDragging:
         {
-            var pairing_box_coordinates;
-            var target_x;
-            var target_y;
-            if(gallery.isImageInPairingBox(lower_left_carousel,image, touchPoint, imageX, imageY))
-            {
-                pairing_box_coordinates = pairingBoxCoordinates(lower_left_carousel);
-                target_x = pairing_box_coordinates.x;
-                target_y = pairing_box_coordinates.y - image.height;
-            }
-            else if(gallery.isImageInPairingBox(lower_right_carousel,image, touchPoint, imageX, imageY))
-            {
-                pairing_box_coordinates = pairingBoxCoordinates(lower_right_carousel);
-                target_x = pairing_box_coordinates.x;
-                target_y = pairing_box_coordinates.y - image.height;
-            }
-            else if(gallery.isImageInPairingBox(top_left_carousel,image, touchPoint, imageX, imageY))
-            {
-                pairing_box_coordinates = pairingBoxCoordinates(top_left_carousel);
-                target_x = pairing_box_coordinates.x;
-                target_y = pairing_box_coordinates.y + top_left_carousel.pairingHeight + 50;
-            }
-            else if(gallery.isImageInPairingBox(top_right_carousel,image, touchPoint, imageX, imageY))
-            {
-                pairing_box_coordinates = pairingBoxCoordinates(top_right_carousel);
-                target_x = pairing_box_coordinates.x;
-                target_y = pairing_box_coordinates.y + top_right_carousel.pairingHeight + 50;
-            }
-            else
-            {
-                return;
-            }
-            gallery.addImageToFavorites(image, touchPoint, imageX, imageY);
-
-            image.recycle(target_x,target_y);
+            carouselImageRelease(image, touchPoint, imageX, imageY)
         }
     }
     Carousel
@@ -377,40 +277,7 @@ Item {
         }
         onImageFinishedDragging:
         {
-            var pairing_box_coordinates;
-            var target_x;
-            var target_y;
-            if(gallery.isImageInPairingBox(lower_left_carousel,image, touchPoint, imageX, imageY))
-            {
-                pairing_box_coordinates = pairingBoxCoordinates(lower_left_carousel);
-                target_x = pairing_box_coordinates.x;
-                target_y = pairing_box_coordinates.y - image.height;
-            }
-            else if(gallery.isImageInPairingBox(lower_right_carousel,image, touchPoint, imageX, imageY))
-            {
-                pairing_box_coordinates = pairingBoxCoordinates(lower_right_carousel);
-                target_x = pairing_box_coordinates.x;
-                target_y = pairing_box_coordinates.y - image.height;
-            }
-            else if(gallery.isImageInPairingBox(top_left_carousel,image, touchPoint, imageX, imageY))
-            {
-                pairing_box_coordinates = pairingBoxCoordinates(top_left_carousel);
-                target_x = pairing_box_coordinates.x;
-                target_y = pairing_box_coordinates.y + top_left_carousel.pairingHeight + 50;
-            }
-            else if(gallery.isImageInPairingBox(top_right_carousel,image, touchPoint, imageX, imageY))
-            {
-                pairing_box_coordinates = pairingBoxCoordinates(top_right_carousel);
-                target_x = pairing_box_coordinates.x;
-                target_y = pairing_box_coordinates.y + top_right_carousel.pairingHeight + 50;
-            }
-            else
-            {
-                return;
-            }
-            gallery.addImageToFavorites(image, touchPoint, imageX, imageY);
-
-            image.recycle(target_x,target_y);
+            carouselImageRelease(image, touchPoint, imageX, imageY)
         }
     }
 
@@ -570,12 +437,12 @@ Item {
         }
     }
 
-    Item { id: overlayImageTopLeftRoot; x: top_left_carousel.x; y: top_left_carousel.y; rotation: top_left_carousel.rotation }
-    Item { id: overlayImageTopRightRoot; x: top_right_carousel.x; y: top_right_carousel.y; rotation: top_right_carousel.rotation }
-    Item { id: overlayImageLowerLeftRoot; x: lower_left_carousel.x; y: lower_left_carousel.y; rotation: lower_left_carousel.rotation }
-    Item { id: overlayImageLowerRightRoot; x: lower_right_carousel.x; y: lower_right_carousel.y; rotation: lower_right_carousel.rotation }
-    Item { id: overlayImageMiddleRightRoot; x: middle_right_carousel.x; y: middle_right_carousel.y; rotation: middle_right_carousel.rotation }
-    Item { id: overlayImageMiddleLeftRoot; x: middle_left_carousel.x; y: middle_left_carousel.y; rotation: middle_left_carousel.rotation }
+    Item { id: overlayImageTopLeftRoot; x: top_left_carousel.x; y: top_left_carousel.y; rotation: top_left_carousel.rotation;  }
+    Item { id: overlayImageTopRightRoot; x: top_right_carousel.x; y: top_right_carousel.y; rotation: top_right_carousel.rotation;  }
+    Item { id: overlayImageLowerLeftRoot; x: lower_left_carousel.x; y: lower_left_carousel.y; rotation: lower_left_carousel.rotation;  }
+    Item { id: overlayImageLowerRightRoot; x: lower_right_carousel.x; y: lower_right_carousel.y; rotation: lower_right_carousel.rotation;  }
+    Item { id: overlayImageMiddleRightRoot; x: middle_right_carousel.x; y: middle_right_carousel.y; rotation: middle_right_carousel.rotation;  }
+    Item { id: overlayImageMiddleLeftRoot; x: middle_left_carousel.x; y: middle_left_carousel.y; rotation: middle_left_carousel.rotation;  }
 
     function pairingBoxCoordinates(carousel)
     {
@@ -603,7 +470,7 @@ Item {
         var middleX = imageX + touchPoint.x//image.x + image.width * 1/2;
         var middleY = imageY + touchPoint.y//image.y + image.height * 1/2;
 
-        if(image.topScreen)
+        if(image.topScreen && !image.whichScreen.includes("attract"))
         {
             middleX = Settings.SCREEN_WIDTH - middleX;
             middleY = Settings.SCREEN_HEIGHT - middleY;
@@ -628,8 +495,8 @@ Item {
         var pairing_width = carousel.whichScreen.includes("middle") ? carousel.pairingHeight :carousel.pairingWidth;
         var pairing_height = carousel.whichScreen.includes("middle") ? carousel.pairingWidth :carousel.pairingHeight;
 
-        console.log(carousel.whichScreen, "middleX = ", middleX, " middleY = ", middleY, "pairing_x = ", pairing_x, "pairing_y = ", pairing_y,
-                    "pairing_width = ", pairing_width, " pairing_height = ", pairing_height)
+        //console.log(carousel.whichScreen, "middleX = ", middleX, " middleY = ", middleY, "pairing_x = ", pairing_x, "pairing_y = ", pairing_y,
+        //            "pairing_width = ", pairing_width, " pairing_height = ", pairing_height)
 
 
         if(middleX > pairing_x && middleX < pairing_x + pairing_width&&
@@ -682,44 +549,44 @@ Item {
             HeistClient.addItem(middle_left_carousel.currentCode, image.item.id, middle_left_carousel);
         }
     }
-    function attractImageIsInPairingBox(image, touchPoint)
+    function attractImageIsInPairingBox(image, touchPoint, imageX, imageY)
     {
-        if(gallery.isImageInPairingBox(lower_left_carousel,image, touchPoint)||
-        gallery.isImageInPairingBox(lower_right_carousel,image, touchPoint)||
-        gallery.isImageInPairingBox(top_left_carousel,image, touchPoint)||
-        gallery.isImageInPairingBox(top_right_carousel,image, touchPoint))
+        if(gallery.isImageInPairingBox(lower_left_carousel,image, touchPoint, imageX, imageY)||
+        gallery.isImageInPairingBox(lower_right_carousel,image, touchPoint, imageX, imageY)||
+        gallery.isImageInPairingBox(top_left_carousel,image, touchPoint, imageX, imageY)||
+        gallery.isImageInPairingBox(top_right_carousel,image, touchPoint, imageX, imageY))
         {
-            image.turnSmall();
+            image.turnSmall(touchPoint.x, touchPoint.y);
         }
         else
         {
-            image.turnBack();
+            image.turnBack(touchPoint.x, touchPoint.y);
         }
     }
-    function attractImageReleased(image, touchPoint)
+    function attractImageReleased(image, touchPoint, imageX, imageY)
     {
         var pairing_box_coordinates;
         var target_x;
         var target_y;
-        if(gallery.isImageInPairingBox(lower_left_carousel,image, touchPoint))
+        if(gallery.isImageInPairingBox(lower_left_carousel,image, touchPoint, imageX, imageY))
         {
             pairing_box_coordinates = pairingBoxCoordinates(lower_left_carousel);
             target_x = pairing_box_coordinates.x;
             target_y = pairing_box_coordinates.y - image.height;
         }
-        else if(gallery.isImageInPairingBox(lower_right_carousel,image, touchPoint))
+        else if(gallery.isImageInPairingBox(lower_right_carousel,image, touchPoint, imageX, imageY))
         {
             pairing_box_coordinates = pairingBoxCoordinates(lower_right_carousel);
             target_x = pairing_box_coordinates.x;
             target_y = pairing_box_coordinates.y - image.height;
         }
-        else if(gallery.isImageInPairingBox(top_left_carousel,image, touchPoint))
+        else if(gallery.isImageInPairingBox(top_left_carousel,image, touchPoint, imageX, imageY))
         {
             pairing_box_coordinates = pairingBoxCoordinates(top_left_carousel);
             target_x = pairing_box_coordinates.x;
             target_y = pairing_box_coordinates.y + top_left_carousel.pairingHeight + 50;
         }
-        else if(gallery.isImageInPairingBox(top_right_carousel,image, touchPoint))
+        else if(gallery.isImageInPairingBox(top_right_carousel,image, touchPoint, imageX, imageY))
         {
             pairing_box_coordinates = pairingBoxCoordinates(top_right_carousel);
             target_x = pairing_box_coordinates.x;
@@ -729,8 +596,53 @@ Item {
         {
             return;
         }
-        gallery.addImageToFavorites(image);
+        gallery.addImageToFavorites(image, touchPoint, imageX, imageY);
 
         image.recycle(target_x,target_y);
+    }
+
+    function carouselImageRelease(image, touchPoint, imageX, imageY)
+    {
+        var pairing_box_coordinates;
+        var target_x;
+        var target_y;
+        var add_success_carousel;
+        if(gallery.isImageInPairingBox(lower_left_carousel,image, touchPoint, imageX, imageY))
+        {
+            add_success_carousel = lower_left_carousel
+            pairing_box_coordinates = pairingBoxCoordinates(lower_left_carousel);
+            target_x = pairing_box_coordinates.x;
+            target_y = pairing_box_coordinates.y - image.height;
+        }
+        else if(gallery.isImageInPairingBox(lower_right_carousel,image, touchPoint, imageX, imageY))
+        {
+            add_success_carousel = lower_right_carousel
+            pairing_box_coordinates = pairingBoxCoordinates(lower_right_carousel);
+            target_x = pairing_box_coordinates.x;
+            target_y = pairing_box_coordinates.y - image.height;
+        }
+        else if(gallery.isImageInPairingBox(top_left_carousel,image, touchPoint, imageX, imageY))
+        {
+            add_success_carousel = top_left_carousel
+            pairing_box_coordinates = pairingBoxCoordinates(top_left_carousel);
+            target_x = pairing_box_coordinates.x;
+            target_y = pairing_box_coordinates.y + top_left_carousel.pairingHeight + 50;
+        }
+        else if(gallery.isImageInPairingBox(top_right_carousel,image, touchPoint, imageX, imageY))
+        {
+            add_success_carousel = top_right_carousel
+            pairing_box_coordinates = pairingBoxCoordinates(top_right_carousel);
+            target_x = pairing_box_coordinates.x;
+            target_y = pairing_box_coordinates.y + top_right_carousel.pairingHeight + 50;
+        }
+        else
+        {
+            return;
+        }
+        gallery.addImageToFavorites(image, touchPoint, imageX, imageY);
+
+        image.recycle(target_x,target_y);
+
+        add_success_carousel.startAddSuccess()
     }
 }

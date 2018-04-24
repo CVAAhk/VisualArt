@@ -173,7 +173,7 @@ Item
     /*! Listens to iterative heist data updates */
     HeistReceiver {
         id: receiver
-        onDeviceChanged: {deviceId = device;console.log("devide id = ", deviceId);}
+        onDeviceChanged: {deviceId = device;}
         onRemoveItem: root.removeItem(item)
         code: currentCode
     }
@@ -287,8 +287,7 @@ Item
     }
     function startAddSuccess()
     {
-        if(paired)
-            switch_between_add_and_drag.start();
+        switch_between_add_and_drag.start();
     }
 
 

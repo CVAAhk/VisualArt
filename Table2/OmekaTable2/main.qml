@@ -46,8 +46,8 @@ Item
             {
                 //gallery.imageHolderCreateImage(source,imageX,imageY,imageRotation,imageWidth,imageHeight, tapOpen, whichScreen);
             }
-            onImageDragged: gallery.attractImageIsInPairingBox(image, touchPoint);
-            onImageFinishedDragging: gallery.attractImageReleased(image, touchPoint);
+            onImageDragged: gallery.attractImageIsInPairingBox(image, touchPoint, imageX, imageY);
+            onImageFinishedDragging: gallery.attractImageReleased(image, touchPoint, imageX, imageY);
             onMaxResultsChanged: gallery.maxResults = attract_pool.maxResults;
             onLoadComplete: {root.enabled = true;console.log("loading complete!");}
         }

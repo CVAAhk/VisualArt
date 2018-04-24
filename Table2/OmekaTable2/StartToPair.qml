@@ -26,9 +26,9 @@ Item
         Image
         {
             source: "content/POI/code-icon.png"
-            x: 12;
+            x: 9;
             anchors.verticalCenter: parent.verticalCenter
-            width: 21; height:26
+            width: 23; height:29
         }
 
     }

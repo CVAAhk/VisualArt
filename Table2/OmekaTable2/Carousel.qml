@@ -28,6 +28,15 @@ Item
 
     property int maxResults: 490
 
+
+    signal canPaginate()
+    signal createImage(string source, int imageX, int imageY, int imageRotation, int imageWidth, int imageHeight, bool tapOpen);
+    signal imageDragged(var image, var touchPoint, var imageX, var imageY);
+    signal imageFinishedDragging(var image, var touchPoint, var imageX, var imageY);
+
+
+    enabled: opacity == 1.0
+
     function pairBoxX()
     {
         if(whichScreen == "middle right")
@@ -94,14 +103,6 @@ Item
         }
     }
 
-
-
-    signal canPaginate()
-    signal createImage(string source, int imageX, int imageY, int imageRotation, int imageWidth, int imageHeight, bool tapOpen);
-    signal imageDragged(var image, var touchPoint, var imageX, var imageY);
-    signal imageFinishedDragging(var image, var touchPoint, var imageX, var imageY);
-
-    enabled: opacity == 1.0
     Behavior on opacity {
         NumberAnimation
         {
@@ -601,6 +602,7 @@ Item
         height: whichScreen.includes("middle")? Settings.SCREEN_WIDTH : Settings.SCREEN_HEIGHT
 
         antialiasing: true
+        //overlay: selectedParent
 
         onImageDeleted:
         {
@@ -617,7 +619,7 @@ Item
         onImageFinishedRecycle:
         {
             pairing_timeout.restart();
-            pairing.startAddSuccess();
+
         }
         onResetBrowser:
         {
@@ -707,7 +709,7 @@ Item
 
     function isImageInPairingBox(carousel, touchPoint)
     {
-        console.log("touch x = ", touchPoint.x, " touch y = ", touchPoint.y)
+        //console.log("touch x = ", touchPoint.x, " touch y = ", touchPoint.y)
         var middleX = touchPoint.x - holderX()//image.x + image.width * 1/2 - holderX();
         var middleY = touchPoint.y - holderY()//image.y + image.height * 1/2 - holderY();
         if(root.topScreen)
@@ -735,7 +737,7 @@ Item
         var pairing_width = carousel.whichScreen.includes("middle") ? carousel.pairingHeight :carousel.pairingWidth;
         var pairing_height = carousel.whichScreen.includes("middle") ? carousel.pairingWidth :carousel.pairingHeight;
 
-        console.log("middleX = ", middleX, " middleY = ", middleY, "pairing_x = ", pairing_x, "pairing_y = ", pairing_y)
+        //console.log("middleX = ", middleX, " middleY = ", middleY, "pairing_x = ", pairing_x, "pairing_y = ", pairing_y)
 
         if(middleX > pairing_x && middleX < pairing_x + pairing_width&&
                 middleY > pairing_y && middleY < pairing_y + pairing_height)
@@ -843,6 +845,11 @@ Item
                 return -root.y;
             }
         }
+    }
+
+    function startAddSuccess()
+    {
+        pairing.startAddSuccess();
     }
 
 }

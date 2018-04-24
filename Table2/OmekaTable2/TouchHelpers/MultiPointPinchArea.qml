@@ -81,6 +81,8 @@ MultiPointTouchArea
     property real previousPinchAngle: 0.0
     property real previousPinchDistance: 0.0
 
+    property vector2d lastTouchPosition: Qt.vector2d(0, 0)
+
     property bool pinching: false
     property bool dragging: false
 
@@ -94,6 +96,8 @@ MultiPointTouchArea
     touchPoints: [TouchPoint{id: touch_1}, TouchPoint{id: touch_2}]
     minimumTouchPoints: 1
     maximumTouchPoints: 2
+
+    property int touchState: touch_1.pressed + 2*(touch_2.pressed) // 0 for no touching, 1 for point 1, 2 for point 2, 3 for pinch
 
     //=========================================================================
     // SIGNALS
@@ -140,6 +144,7 @@ MultiPointTouchArea
         {
             if(root.dragging)
             {
+                //lastTouchPosition = touch_1.pressed ? Qt.vector2d(touch_1.x, touch_1.y) : Qt.vector2d(touch_2.x, touch_2.y);
                 root.pinching = true;
                 root.dragging = false;
                 if(root.listenForRotation)
@@ -173,6 +178,7 @@ MultiPointTouchArea
         {
             if(root.dragging)
             {
+                //lastTouchPosition = touch_1.pressed ? Qt.vector2d(touch_1.x, touch_1.y) : Qt.vector2d(touch_2.x, touch_2.y);
                 root.dragging = false;
                 root.pinching = true;
                 if(root.listenForRotation)
@@ -226,6 +232,8 @@ MultiPointTouchArea
     }
     onReleased:
     {
+        lastTouchPosition = Qt.vector2d(touch_1.x, touch_1.y);
+
         if(root.pinching)
         {
             root.pinching = false;
@@ -295,11 +303,32 @@ MultiPointTouchArea
         var ds = dist_diff/root.previousPinchDistance;
 
         // check boundaries and emit signal if within boundaries
-        var new_scale = parent.scale + ds;
-        ds = root.checkScaleBounds(ds, new_scale, curr_dist);
+        //var new_scale = parent.scale + ds;
+        //ds = root.checkScaleBounds(ds, new_scale, curr_dist);
         root.scaleUpdated(ds);
     }
     ///////////////////////////////////////////////////// CALCULATION FUNCTION
+
+    function calculatePinchCenter()
+    {
+        console.log("touch state is ", touchState)
+        if (touchState === 3)
+        {
+            return Qt.vector2d((touch_1.x+touch_2.x)*0.5,(touch_1.y+touch_2.y)*0.5);
+        }
+        else if (touchState === 2)
+        {
+            return Qt.vector2d(touch_2.x,touch_2.y);
+        }
+        else if (touchState === 1)
+        {
+            return Qt.vector2d(touch_1.x,touch_1.y);
+        }
+        else
+        {
+            return undefined;
+        }
+    }
     function getCurrentPosition(touch_point)
     {
         return Qt.vector2d(touch_point.sceneX, touch_point.sceneY);

@@ -19,9 +19,9 @@ Item
         Image
         {
             source: "content/POI/code-icon.png"
-            x: 12;
+            x: 9;
             anchors.verticalCenter: parent.verticalCenter
-            width: 21; height:26
+            width: 23; height:29
         }
 
     }
@@ -43,9 +43,11 @@ Item
     OmekaText
     {
         id: pairing_text
-        text: "Thank you for exploring the beta version of our software. The mobile app is not yet available for download."
+        text: "Take this gallery on the go!
+You can send content from this collection to your phone with the Omeka Everywhere Mobile app.
+Find Omeka Everywhere Mobile on the app store to get started."
         _font: Style.settingFont
-        width: 143
+        width: 160
         anchors.horizontalCenter: root.horizontalCenter
         horizontalAlignment: Text.AlignHCenter
         y: 65

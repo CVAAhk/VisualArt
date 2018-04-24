@@ -13,9 +13,9 @@ Item
 
     signal createImage(string source, int imageX, int imageY, int imageRotation, int imageWidth, int imageHeight, bool tapOpen, string whichScreen);
 
-    signal imageDragged(var image, var touchPoint);
+    signal imageDragged(var image, var touchPoint, var imageX, var imageY);
+    signal imageFinishedDragging(var image, var touchPoint, var imageX, var imageY);
 
-    signal imageFinishedDragging(var image, var touchPoint);
 
     signal loadComplete();
 
@@ -142,9 +142,16 @@ Item
     CollectionImageHolder
     {
         id: imageHolder
-        x: -root.x; y: -root.y
+        //x: -root.x; y: -root.y
         width: Settings.SCREEN_WIDTH
         height: Settings.SCREEN_HEIGHT
+
+        Rectangle
+        {
+            anchors.fill: parent
+            color: "red"
+            opacity: 0.3
+        }
 
         antialiasing: true
 
@@ -156,11 +163,13 @@ Item
         }
         onImageDragged:
         {
-            root.imageDragged(image, touchPoint);
+            root.imageDragged(image, touchPoint, imageX, imageY);
+
+            console.log("Attract!!! ", imageX, imageY)
         }
         onImageFinishedDragging:
         {
-            root.imageFinishedDragging(image, touchPoint);
+            root.imageFinishedDragging(image, touchPoint, imageX, imageY);
         }
     }
 

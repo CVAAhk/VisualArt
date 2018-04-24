@@ -71,7 +71,6 @@ Item
     property real resetWidth
     property real resetHeight
 
-
     onHeightChanged:
     {
         if(root.rotation === 180 && !active && whichScreen.includes("attract")&& !openedAttract )   {root.y -= root.height - controls.height;}
@@ -100,6 +99,9 @@ Item
         height: root.height
 
         property bool topScreen: root.topScreen
+
+        property string whichScreen: root.whichScreen
+
         property var item: root.item
 
 
@@ -114,12 +116,132 @@ Item
         property vector2d center: Qt.vector2d(root.imageWidth/2, root.imageHeight/2)
 
         Behavior on scaling { NumberAnimation { duration: 200 } }
-        Behavior on x { NumberAnimation { duration: 200 } }
-        Behavior on y { NumberAnimation { duration: 200 } }
+        //Behavior on x { NumberAnimation { duration: 200 } }
+        //Behavior on y { NumberAnimation { duration: 200 } }
 
         smooth: true
         antialiasing: true
 
+
+        MultiPointPinchArea
+        {
+            //change scale of the content_screen
+            id: pinch_area
+            anchors.fill: parent
+
+            maximumScale: 2                        // only set if bounded AND listenForScale = true
+            minimumScale: 1
+
+            maximumRotation: 180                   // only set if bounded AND listenForRotation = true
+            minimumRotation: -180
+
+            dragOnPinch: true
+            listenForRotation: true
+            listenForScale: true
+            listenForDrag: true
+
+            onItemPressed:
+            {
+                root.imagePressed(root);
+                image_timer.restart();
+            }
+
+            onScaleUpdated:
+            {
+                image_timer.restart();
+
+                content_screen.center = Qt.vector2d(pinch_area.width/2, pinch_area.height/2)
+
+                //content_screen.scaling += delta_scale;
+                checkBoundry(delta_scale)
+
+
+                //console.log("scaling = ", content_screen.scaling, " delta_scale = ", delta_scale)
+                //root.x += -zoomX * delta_scale + zoomX//zoomX - ((zoomX - root.x) * delta_scale );
+                //root.y += -zoomY * delta_scale + zoomY//zoomY - ((zoomY - root.y) * delta_scale );
+            }
+
+            onDraggingChanged:
+            {
+                if(!dragging)
+                {
+                    //var center = calculatePinchCenter()
+                    console.log("touchstate = ", touchState)
+                    image_timer.restart();
+                    var center = lastTouchPosition
+                    center.x = whichScreen.includes("attract top") ? content_screen.width - center.x : center.x
+                    center.y = whichScreen.includes("attract top") ? content_screen.height - center.y : center.y
+                    root.finishedDragging(content_screen,
+                                          Qt.vector2d(center.x,
+                                                      center.y),
+                                          root.x + content_screen.x * (whichScreen.includes("attract top") ? -1 : 1) ,
+                                          root.y + content_screen.y * (whichScreen.includes("attract top") ? -1 : 1));
+                }
+            }
+
+
+
+            onPositionUpdated:
+            {
+                image_timer.restart();
+                if(whichScreen == "middle right")
+                {
+                    content_screen.y += delta_x;
+                    content_screen.x += -delta_y;
+                }
+                else if(whichScreen == "middle left")
+                {
+                    content_screen.y += -delta_x;
+                    content_screen.x += delta_y;
+                }
+                else
+                {
+                    content_screen.x += delta_x* (root.topScreen ? -1.0 : 1.0);//delta_x* (root.topScreen ? -1.0 : 1.0)//// * detail.scale;
+                    content_screen.y += delta_y* (root.topScreen ? -1.0 : 1.0);// * detail.scale;
+                }
+
+                var center = pinch_area.calculatePinchCenter()
+
+                center.x = whichScreen.includes("attract top") ? content_screen.width - center.x : center.x
+                center.y = whichScreen.includes("attract top") ? content_screen.height - center.y : center.y
+                console.log("dragging!!", root.x, root.y)
+                root.imageDragged(content_screen,
+                                  Qt.vector2d(center.x,
+                                              center.y),
+                                  root.x + content_screen.x * (whichScreen.includes("attract top") ? -1 : 1) ,
+                                  root.y + content_screen.y * (whichScreen.includes("attract top") ? -1 : 1));
+
+            }
+            onRotationUpdated:
+            {
+                image_timer.restart();
+                content_screen.rotation += delta_rotation;
+            }
+
+
+
+            function checkBoundry(zoom)
+            {
+                var delta_zoom
+                if(content_screen.scaling + zoom  < pinch_area.minimumScale)
+                {
+
+                    delta_zoom = 1 + (pinch_area.minimumScale - content_screen.scaling)/content_screen.scaling;
+                    content_screen.scaling = pinch_area.minimumScale
+                }
+                else if(content_screen.scaling + zoom > pinch_area.maximumScale)
+                {
+                    delta_zoom = 1.0 + (pinch_area.maximumScale - content_screen.scaling)/content_screen.scaling;
+                    content_screen.scaling = pinch_area.maximumScale
+                }
+                else
+                {
+                    content_screen.scaling += zoom
+                }
+                return delta_zoom
+            }
+
+        }
         MediaViewer
         {
             id: media
@@ -296,130 +418,6 @@ Item
             progress: media ? media.progress : 0
         }
 
-        PinchArea
-        {
-            //change scale of the content_screen
-            id: pinch_area
-            anchors.fill: parent
-
-//            pinch.target: content_screen
-//            pinch.minimumRotation: -360
-//            pinch.maximumRotation: 360
-//            pinch.minimumScale: 1
-//            pinch.maximumScale: 2
-//            pinch.dragAxis: Pinch.XAndYAxis
-
-
-
-
-            property int minmumScale: 1
-            property int maximumScale: 2
-
-            onPinchStarted: {
-                image_timer.restart();
-            }
-
-            onPinchUpdated: {
-
-                content_screen.center = Qt.vector2d(pinch_area.width/2, pinch_area.height/2)
-                var delta_zoom = checkBoundry(pinch.scale, pinch.center.x, pinch.center.y)
-
-                image_timer.restart();
-
-            }
-
-
-            function checkBoundry(zoom, centerX, centerY)
-            {
-                var delta_zoom
-                if(content_screen.scaling * zoom  < pinch_area.minmumScale)
-                {
-
-                    delta_zoom = 1 + (pinch_area.minmumScale - content_screen.scaling)/content_screen.scaling;
-                    content_screen.scaling = pinch_area.minmumScale
-                }
-                else if(content_screen.scaling * zoom > pinch_area.maximumScale)
-                {
-                    delta_zoom = 1.0 + (pinch_area.maximumScale - content_screen.scaling)/content_screen.scaling;
-                    content_screen.scaling = pinch_area.maximumScale
-                }
-                else
-                {
-
-                    delta_zoom = zoom
-                    content_screen.scaling *= delta_zoom
-                }
-                return delta_zoom
-            }
-            MouseArea
-            {
-                id: touch_area
-
-//                property real lastX: 0
-//                property real lastY: 0
-
-                //hoverEnabled: true
-                anchors.fill: parent
-                drag.target: content_screen
-                scrollGestureEnabled: false
-
-
-                Rectangle
-                {
-                    color: "red"
-                    opacity: 0.5
-                    anchors.fill: parent
-                }
-
-                onPressed:
-                {
-                    image_timer.restart();
-                    root.imagePressed(content_screen);
-//                    lastX = mouseX
-//                    lastY = mouseY
-                }
-
-                onReleased:
-                {
-                    image_timer.restart();
-                    root.finishedDragging(content_screen,
-                                          Qt.vector2d(mouseX, mouseY),
-                                          content_screen.x + root.x,
-                                          content_screen.y + root.y);
-                }
-
-                onPositionChanged:
-                {
-//                    var delta_x = mouseX - lastX
-//                    var delta_y = mouseY - lastY
-                    image_timer.restart();
-//                    if(whichScreen == "middle right")
-//                    {
-//                        root.y += delta_x;
-//                        root.x += -delta_y;
-//                    }
-//                    else if(whichScreen == "middle left")
-//                    {
-//                        root.y += -delta_x;
-//                        root.x += delta_y;
-//                    }
-//                    else
-//                    {
-
-//                    root.x += delta_x* (root.topScreen ? -1.0 : 1.0);//delta_x* (root.topScreen ? -1.0 : 1.0)//// * detail.scale;
-//                    root.y += delta_y* (root.topScreen ? -1.0 : 1.0);// * detail.scale;
-//                    }
-
-                    root.imageDragged(content_screen,
-                                      Qt.vector2d(mouseX,
-                                                  mouseY),
-                                      content_screen.x + root.x,
-                                      content_screen.y + root.y);
-                }
-
-            }
-
-        }
 
         MediaControls
         {
@@ -495,6 +493,9 @@ Item
 
             root.active = false;
             root.inPairingBox = true;
+            mouseX = whichScreen.includes("attract top") ? content_screen.width - mouseX : mouseX
+            mouseY = whichScreen.includes("attract top") ? content_screen.height - mouseY : mouseY
+
             content_screen.center =  Qt.vector2d(mouseX,
                                                  mouseY)
             content_screen.scaling = 0.5;
