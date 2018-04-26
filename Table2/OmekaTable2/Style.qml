@@ -74,6 +74,7 @@ Item {
     property var infoTitleFont: ({ color:"black", size:16, weight:Font.Bold, capitalization:Font.AllUppercase, wrapMode: Text.NoWrap, textFormat: Text.AutoText, family: roboto.name })
     property var infoSourceFont: ({ color:"black", size:10, weight:Font.Normal, capitalization:Font.MixedCase, wrapMode: Text.NoWrap, textFormat: Text.AutoText, family: roboto.name })
     property var playbackTimeFont: ({ color:"white", size:11, weight:Font.Normal, capitalization:Font.MixedCase, wrapMode: Text.NoWrap, textFormat: Text.AutoText, family: roboto.name })
+    property var instructionsFont: ({ color:color1, size:10, weight:Font.Normal, capitalization:Font.MixedCase, wrapMode: Text.Wrap, textFormat: Text.AutoText, family: roboto.name })
 
     FontLoader
     {

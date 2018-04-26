@@ -146,13 +146,6 @@ Item
         width: Settings.SCREEN_WIDTH
         height: Settings.SCREEN_HEIGHT
 
-        Rectangle
-        {
-            anchors.fill: parent
-            color: "red"
-            opacity: 0.3
-        }
-
         antialiasing: true
 
         onImageDeleted:

@@ -45,8 +45,9 @@ Item
         id: pairing_text
         text: "Take this gallery on the go!
 You can send content from this collection to your phone with the Omeka Everywhere Mobile app.
+
 Find Omeka Everywhere Mobile on the app store to get started."
-        _font: Style.settingFont
+        _font: Style.instructionsFont
         width: 160
         anchors.horizontalCenter: root.horizontalCenter
         horizontalAlignment: Text.AlignHCenter

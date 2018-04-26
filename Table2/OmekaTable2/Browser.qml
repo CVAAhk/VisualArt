@@ -63,6 +63,11 @@ Item {
 
     function assignItemPosition(x)
     {
+        if(itemsPositions.length === 1)
+        {
+            resetItemsPositions()
+        }
+
         assignedPosition = itemsPositions.pop();
 
         assignedPosition.x = x;
@@ -81,6 +86,16 @@ Item {
     function clearPositions()
     {
         usedPositions = [];
+    }
+
+    function resetItemsPositions()
+    {
+        itemsPositions = [Qt.vector2d(-300,-300),
+                          Qt.vector2d(-300,-300),
+                          Qt.vector2d(-300,-300),
+                          Qt.vector2d(-300,-300),
+                          Qt.vector2d(-300,-300),
+                          Qt.vector2d(-300,-300)]
     }
 
 
