@@ -9,6 +9,8 @@ import "."
 /*! \qmltype Displays detailed view of media items and corresponding metadata */
 Item
 {
+    property bool touching: pinch_area.inUse
+
     id: root
 
     //interactive: false
@@ -16,7 +18,6 @@ Item
     width: root.imageWidth
     objectName: "detail"
     visible: false
-
 
     property int imageWidth
 
@@ -125,6 +126,8 @@ Item
 
         MultiPointPinchArea
         {
+            property bool inUse: dragging || pinching
+
             //change scale of the content_screen
             id: pinch_area
             anchors.fill: parent

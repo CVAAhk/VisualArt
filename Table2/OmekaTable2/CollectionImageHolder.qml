@@ -11,6 +11,8 @@ Item
 
     property var imageItems: []
 
+    property Item referenceOverlayArea
+
     //property alias itemsLength: imageItems.length
 
     property int maxImages: 5
@@ -63,7 +65,30 @@ Item
     {
         model: root.maxImages + 1
 
-        Detail { }
+        Detail {
+            id: detail
+
+            state: "CREATED"
+
+            states: [
+                State {
+                    name: "LIVE"
+                    ParentChange { target: detail; parent: root.referenceOverlayArea }
+                },
+                State {
+                    name: "CREATED"
+                    ParentChange { target: detail; parent: root }
+                }
+            ]
+
+            onTouchingChanged:
+            {
+                if (touching) {
+                    state = "CREATED"
+                    state = "LIVE"
+                }
+            }
+        }
 
         onItemAdded:
         {

@@ -7,13 +7,13 @@ Item
 {
     id: root
 
+    property Item referenceOverlayArea
+
     property bool topScreen: false
     property string color: "#2b89d9"//blue
     property string whichScreen: "lower left"//default
     property var screenTag: whichTag()
     property bool searchByTag: false
-
-    property var selectedParent: null
 
     property int pairingAbsoluteX: whichScreen.includes("middle") ? pairing.y + root.x : (pairing.x + (root.topScreen?(Settings.SCREEN_WIDTH - root.x):root.x))
     property int pairingAbsoluteY: pairBoxY()//whichScreen.includes("middle") ? Settings.SCREEN_HEIGHT - (pairing.x + Settings.SCREEN_HEIGHT - root.y + pairing.width) :(pairing.y + (root.topScreen?(Settings.SCREEN_HEIGHT - root.y):root.y))
@@ -82,11 +82,11 @@ Item
         }
     }
 
-    Component.onCompleted:
-    {
-        selected_image.parent = selectedParent;
-        imageHolder.parent = selectedParent;
-    }
+//    Component.onCompleted:
+//    {
+//        selected_image.parent = selectedParent;
+//        imageHolder.parent = selectedParent;
+//    }
 
     //submit tag search
     onScreenTagChanged:
@@ -602,7 +602,7 @@ Item
         height: whichScreen.includes("middle")? Settings.SCREEN_WIDTH : Settings.SCREEN_HEIGHT
 
         antialiasing: true
-        //overlay: selectedParent
+        referenceOverlayArea: root.referenceOverlayArea
 
         onImageDeleted:
         {

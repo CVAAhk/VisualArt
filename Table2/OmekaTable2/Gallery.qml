@@ -131,6 +131,7 @@ Item {
     //top screen
     Carousel
     {
+
         id: top_left_carousel
         x: 241 + 480
         y: 315
@@ -139,7 +140,7 @@ Item {
         opacity: 0.0
         color: Settings.CAROUSEL_COLOR
         whichScreen: "top left"
-        selectedParent: overlayImageTopLeftRoot
+        referenceOverlayArea: activeDetailHolder
         onCreateImage:
         {
             //imageHolder.createImage(source, imageX + x, imageY + y, imageRotation, imageWidth, imageHeight, tapOpen, "top left")
@@ -177,7 +178,7 @@ Item {
         opacity: 0.0
         color: Settings.CAROUSEL_COLOR
         whichScreen: "top right"
-        selectedParent: overlayImageTopRightRoot
+        referenceOverlayArea: activeDetailHolder
         onCreateImage:
         {
             //imageHolder.createImage(source, imageX + x, imageY + y, imageRotation, imageWidth, imageHeight, tapOpen, "top right")
@@ -215,7 +216,7 @@ Item {
         opacity: 0.0
         color: Settings.CAROUSEL_COLOR
         whichScreen: "lower left"
-        selectedParent: overlayImageLowerLeftRoot
+        referenceOverlayArea: activeDetailHolder
         //property var code
         onCreateImage:
         {
@@ -252,7 +253,7 @@ Item {
         opacity: 0.0
         color: Settings.CAROUSEL_COLOR
         whichScreen: "lower right"
-        selectedParent: overlayImageLowerRightRoot
+        referenceOverlayArea: activeDetailHolder
         onCreateImage:
         {
             //imageHolder.createImage(source, imageX + x, imageY + y, imageRotation, imageWidth, imageHeight, tapOpen, "lower right")
@@ -291,7 +292,7 @@ Item {
         opacity: 0.0
         color: Settings.CAROUSEL_COLOR
         whichScreen: "middle right"
-        selectedParent: overlayImageMiddleRightRoot
+        referenceOverlayArea: activeDetailHolder
         onCreateImage:
         {
             //imageHolder.createImage(source, imageX + x, imageY + y, imageRotation, imageWidth, imageHeight, tapOpen, "top right")
@@ -368,7 +369,7 @@ Item {
         opacity: 0.0
         color: Settings.CAROUSEL_COLOR
         whichScreen: "middle left"
-        selectedParent: overlayImageMiddleLeftRoot
+        referenceOverlayArea: activeDetailHolder
         onCreateImage:
         {
             //imageHolder.createImage(source, imageX + x, imageY + y, imageRotation, imageWidth, imageHeight, tapOpen, "top right")
@@ -437,12 +438,11 @@ Item {
         }
     }
 
-    Item { id: overlayImageTopLeftRoot; x: top_left_carousel.x; y: top_left_carousel.y; rotation: top_left_carousel.rotation;  }
-    Item { id: overlayImageTopRightRoot; x: top_right_carousel.x; y: top_right_carousel.y; rotation: top_right_carousel.rotation;  }
-    Item { id: overlayImageLowerLeftRoot; x: lower_left_carousel.x; y: lower_left_carousel.y; rotation: lower_left_carousel.rotation;  }
-    Item { id: overlayImageLowerRightRoot; x: lower_right_carousel.x; y: lower_right_carousel.y; rotation: lower_right_carousel.rotation;  }
-    Item { id: overlayImageMiddleRightRoot; x: middle_right_carousel.x; y: middle_right_carousel.y; rotation: middle_right_carousel.rotation;  }
-    Item { id: overlayImageMiddleLeftRoot; x: middle_left_carousel.x; y: middle_left_carousel.y; rotation: middle_left_carousel.rotation;  }
+    Item
+    {
+        id: activeDetailHolder
+        anchors.fill: parent
+    }
 
     function pairingBoxCoordinates(carousel)
     {
