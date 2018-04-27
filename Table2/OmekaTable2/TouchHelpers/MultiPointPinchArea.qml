@@ -326,7 +326,7 @@ MultiPointTouchArea
         }
         else
         {
-            return undefined;
+            return lastTouchPosition;
         }
     }
     function getCurrentPosition(touch_point)

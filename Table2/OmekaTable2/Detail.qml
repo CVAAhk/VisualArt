@@ -64,13 +64,7 @@ Item
     */
     property var item: null //getSelectedItem();//: ItemManager.current
 
-    property real initWidth
-    property real initHeight
-    property real initScale: 1
-    property real minScale: 1
-    property real maxScale: 2
-    property real resetWidth
-    property real resetHeight
+    property var contentScreen: content_screen
 
     onHeightChanged:
     {
@@ -117,7 +111,6 @@ Item
 
         onScalingChanged:
         {
-            console.log("scaling is ", scaling)
             var c = pinch_area.calculatePinchCenter()
             root.x -= (scaling-realScaling)*c.minus(center).x
             root.y -= (scaling-realScaling)*c.minus(center).y
@@ -667,6 +660,13 @@ Item
             //image back to the viewer
             root.deleteImage(root);
         }
+    }
+
+    function reset()
+    {
+        content_screen.scaling = 1.0
+        content_screen.realScaling = 1.0
+        content_screen.rotation = 0
     }
 
 

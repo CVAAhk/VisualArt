@@ -122,7 +122,7 @@ Item
             imageItem.inUse = true;
             imageItem.active = false;
             imageItem.openedAttract = false;
-
+            imageItem.reset()
             //imageItem.item = null;
             imageItem.item = ItemManager.selectedItems[ItemManager.selectedItems.length - 1];
             imageItem.source = filepath;
@@ -133,9 +133,10 @@ Item
                 imageItem.rotation = imageRotation;
             }
             else
-            {
+            {               
                 imageItem.rotation = 0;
                 imageItem.topScreen = imageRotation > 0;
+                console.log("set rotation!!!", imageItem.rotation)
             }
             if(tapOpen)
             {
