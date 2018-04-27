@@ -14,7 +14,7 @@ Item
     id: root
 
     //interactive: false
-    height: active ? root.imageHeight + scroll_bkg.height + controls.height : root.imageHeight + controls.height
+    height: false ? root.imageHeight + scroll_bkg.height + controls.height : root.imageHeight + controls.height
     width: root.imageWidth
     objectName: "detail"
     visible: false
@@ -664,9 +664,8 @@ Item
 
     function reset()
     {
-        content_screen.scaling = 1.0
-        content_screen.realScaling = 1.0
-        content_screen.rotation = 0
+//        content_screen.scaling = 1.0
+//        content_screen.rotation = 0
     }
 
 
