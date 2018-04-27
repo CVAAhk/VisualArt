@@ -84,10 +84,15 @@ Item
             onTouchingChanged:
             {
                 if (touching) {
-                    state = "CREATED"
                     state = "LIVE"
+                    var maxZ = detail.z
+                    for (var i = 0; i < root.referenceOverlayArea.children.length; i++) {
+                        maxZ = Math.max(maxZ, root.referenceOverlayArea.children[i].z)
+                    }
+                    detail.z = maxZ + 1
                 }
             }
+
         }
 
         onItemAdded:
