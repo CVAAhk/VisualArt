@@ -107,12 +107,22 @@ Item
 
 
         //anchor to touch point when scaling test
-        transform: Scale { origin.x: content_screen.center.x; origin.y: content_screen.center.y; xScale: (content_screen.scaling < 0.5 ? 0.5 : content_screen.scaling);
-            yScale: (content_screen.scaling < 0.5 ? 0.5 : content_screen.scaling)
+        transform: Scale { origin.x: content_screen.center.x; origin.y: content_screen.center.y; xScale: (content_screen.realScaling < 0.5 ? 0.5 : content_screen.realScaling);
+            yScale: (content_screen.realScaling < 0.5 ? 0.5 : content_screen.realScaling)
 
         }
 
         property real scaling: 1.0
+        property real realScaling: 1.0
+
+        onScalingChanged:
+        {
+            console.log("scaling is ", scaling)
+            var c = pinch_area.calculatePinchCenter()
+            root.x -= (scaling-realScaling)*c.minus(center).x
+            root.y -= (scaling-realScaling)*c.minus(center).y
+            realScaling = scaling
+        }
 
         property vector2d center: Qt.vector2d(root.imageWidth/2, root.imageHeight/2)
 
@@ -153,9 +163,13 @@ Item
             {
                 image_timer.restart();
 
-                content_screen.center = Qt.vector2d(pinch_area.width/2, pinch_area.height/2)
 
-                //content_screen.scaling += delta_scale;
+                var center = lastTouchPosition
+                //center.x = whichScreen.includes("attract top") ? content_screen.width - center.x : center.x
+                //center.y = whichScreen.includes("attract top") ? content_screen.height - center.y : center.y
+//                content_screen.center = Qt.vector2d(center.x,
+//                                                    center.y)//Qt.vector2d(pinch_area.width/2, pinch_area.height/2)
+
                 checkBoundry(delta_scale)
 
 
@@ -187,26 +201,28 @@ Item
             onPositionUpdated:
             {
                 image_timer.restart();
+
                 if(whichScreen == "middle right")
                 {
-                    content_screen.y += delta_x;
-                    content_screen.x += -delta_y;
+                    root.y += delta_x;
+                    root.x += -delta_y;
                 }
                 else if(whichScreen == "middle left")
                 {
-                    content_screen.y += -delta_x;
-                    content_screen.x += delta_y;
+                    root.y += -delta_x;
+                    root.x += delta_y;
                 }
                 else
                 {
-                    content_screen.x += delta_x* (root.topScreen ? -1.0 : 1.0);//delta_x* (root.topScreen ? -1.0 : 1.0)//// * detail.scale;
-                    content_screen.y += delta_y* (root.topScreen ? -1.0 : 1.0);// * detail.scale;
+                    root.x += delta_x//* (root.topScreen ? -1.0 : 1.0);//delta_x* (root.topScreen ? -1.0 : 1.0)//// * detail.scale;
+                    root.y += delta_y//* (root.topScreen ? -1.0 : 1.0);// * detail.scale;
                 }
 
                 var center = pinch_area.calculatePinchCenter()
 
                 center.x = whichScreen.includes("attract top") ? content_screen.width - center.x : center.x
                 center.y = whichScreen.includes("attract top") ? content_screen.height - center.y : center.y
+
                 console.log("dragging!!", root.x, root.y)
                 root.imageDragged(content_screen,
                                   Qt.vector2d(center.x,
@@ -486,7 +502,7 @@ Item
             root.recoveryX = recoveryX;
             root.recoveryY = recoveryY;
 
-            content_screen.center = Qt.vector2d(pinch_area.width/2, pinch_area.height/2)
+//            content_screen.center = Qt.vector2d(pinch_area.width/2, pinch_area.height/2)
 
             recycleAnimation.start();
         }
@@ -499,8 +515,8 @@ Item
             mouseX = whichScreen.includes("attract top") ? content_screen.width - mouseX : mouseX
             mouseY = whichScreen.includes("attract top") ? content_screen.height - mouseY : mouseY
 
-            content_screen.center =  Qt.vector2d(mouseX,
-                                                 mouseY)
+//            content_screen.center =  Qt.vector2d(mouseX,
+//                                                 mouseY)
             content_screen.scaling = 0.5;
             //selected_image_small.start()
         }
@@ -511,8 +527,8 @@ Item
             {
                 //root.scale = 1.0;
                 //selected_image_original.start()
-                content_screen.center =  Qt.vector2d(mouseX,
-                                                     mouseY)
+//                content_screen.center =  Qt.vector2d(mouseX,
+//                                                     mouseY)
                 root.inPairingBox = false;
                 content_screen.scaling = 1.0;
             }

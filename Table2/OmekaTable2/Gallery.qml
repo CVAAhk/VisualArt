@@ -465,8 +465,9 @@ Item {
 
     function isImageInPairingBox(carousel,image, touchPoint, imageX, imageY)
     {
-        console.log(carousel.whichScreen, " gallery!! touchPoint.x = ", touchPoint.x, " touchPoint.y = ", touchPoint.y,
-                    imageX, imageY)
+//        console.log(carousel.whichScreen, " gallery!! touchPoint.x = ", touchPoint.x, " touchPoint.y = ", touchPoint.y,
+//                    imageX, imageY)
+        return carousel.pairingBox.contains(image.mapToItem(carousel.pairingBox, touchPoint.x, touchPoint.y)) && carousel.paired && carousel.pairedEnabled
         var middleX = imageX + touchPoint.x//image.x + image.width * 1/2;
         var middleY = imageY + touchPoint.y//image.y + image.height * 1/2;
 

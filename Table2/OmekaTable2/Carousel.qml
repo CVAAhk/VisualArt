@@ -15,6 +15,7 @@ Item
     property var screenTag: whichTag()
     property bool searchByTag: false
 
+    property Item pairingBox: pairing
     property int pairingAbsoluteX: whichScreen.includes("middle") ? pairing.y + root.x : (pairing.x + (root.topScreen?(Settings.SCREEN_WIDTH - root.x):root.x))
     property int pairingAbsoluteY: pairBoxY()//whichScreen.includes("middle") ? Settings.SCREEN_HEIGHT - (pairing.x + Settings.SCREEN_HEIGHT - root.y + pairing.width) :(pairing.y + (root.topScreen?(Settings.SCREEN_HEIGHT - root.y):root.y))
     property int pairingWidth: pairing.width

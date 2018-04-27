@@ -339,7 +339,7 @@ Item {
                     rotation = 0;
                 }
                 imageFinishedDragging(lastTouchPoint);
-                console.log("touchPoint.x = ", lastTouchPoint.x, " touchPoint.y = ", lastTouchPoint.y)
+                //console.log("touchPoint.x = ", lastTouchPoint.x, " touchPoint.y = ", lastTouchPoint.y)
 
                 root.createImage(selected_image.source, imageCenterX, imageCenterY, rotation,
                                  selected_image.width, selected_image.height, false, lastTouchPoint);
