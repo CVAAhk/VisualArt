@@ -9,7 +9,9 @@ import "."
 /*! \qmltype Displays detailed view of media items and corresponding metadata */
 Item
 {
-    property bool touching: pinch_area.inUse
+    property bool touching: (pinch_area.dragging || pinch_area.pinching) && readyToReparent
+
+    property bool readyToReparent: false
 
     id: root
 
@@ -66,12 +68,12 @@ Item
 
     property var contentScreen: content_screen
 
-    onHeightChanged:
-    {
-        if(root.rotation === 180 && !active && whichScreen.includes("attract")&& !openedAttract )   {root.y -= root.height - controls.height;}
-        else if(root.rotation === 180 && active && whichScreen.includes("attract") )   {root.y -= scroll_bkg.height;}
-        else if(root.rotation === 180 && !active && whichScreen.includes("attract") ) {root.y += scroll_bkg.height;}
-    }
+//    onHeightChanged:
+//    {
+//        if(root.rotation === 180 && !active && whichScreen.includes("attract")&& !openedAttract )   {root.y -= root.height - controls.height;}
+//        else if(root.rotation === 180 && active && whichScreen.includes("attract") )   {root.y -= scroll_bkg.height;}
+//        else if(root.rotation === 180 && !active && whichScreen.includes("attract") ) {root.y += scroll_bkg.height;}
+//    }
     onInUseChanged:
     {
         if(inUse)
@@ -129,7 +131,6 @@ Item
 
         MultiPointPinchArea
         {
-            property bool inUse: dragging || pinching
 
             //change scale of the content_screen
             id: pinch_area

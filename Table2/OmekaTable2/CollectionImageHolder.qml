@@ -57,6 +57,14 @@ Item
         id: image_pop
         duration: 200
         easing.type: Easing.InOutQuad
+
+        onRunningChanged:
+        {
+            if (!running && target != null) {
+                target.readyToReparent = true;
+                target.state = "LIVE"
+            }
+        }
     }
 
     property var allImageItems: []
@@ -85,6 +93,14 @@ Item
             {
                 if (touching) {
                     state = "LIVE"
+                    pushToTop()
+                }
+            }
+
+            onStateChanged: pushToTop()
+
+            function pushToTop() {
+                if (state == "LIVE") {
                     var maxZ = detail.z
                     for (var i = 0; i < root.referenceOverlayArea.children.length; i++) {
                         maxZ = Math.max(maxZ, root.referenceOverlayArea.children[i].z)
@@ -145,6 +161,8 @@ Item
             }
             if(tapOpen)
             {
+                imageItem.state = "CREATED"
+                imageItem.readyToReparent = false;
                 image_pop.target = imageItem;
                 if(whichScreen.includes("attract") &&whichScreen.includes("right"))
                 {
@@ -268,17 +286,17 @@ Item
 
     function imagePressed(selectedItem)
     {
-        if(selectedItem == maxImage)
-            return;
-        maxImageHeight += 0.01;
-        selectedItem.z = maxImageHeight;
-        maxImage = selectedItem;
+//        if(selectedItem == maxImage)
+//            return;
+//        maxImageHeight += 0.01;
+//        selectedItem.z = maxImageHeight;
+//        maxImage = selectedItem;
 
-        var deleteIndex = imageItems.indexOf(selectedItem);
+//        var deleteIndex = imageItems.indexOf(selectedItem);
 
-        imageItems.splice(deleteIndex, 1);
-        imageItems.push(selectedItem);
-        deleteIndex = imageItems.indexOf(selectedItem);
+//        imageItems.splice(deleteIndex, 1);
+//        imageItems.push(selectedItem);
+//        deleteIndex = imageItems.indexOf(selectedItem);
     }   
 
 
