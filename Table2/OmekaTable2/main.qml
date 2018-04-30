@@ -42,6 +42,7 @@ Item
         AttractPoolItem
         {
             id: attract_pool
+            referenceOverlayArea: gallery.referenceOverlayArea
             onCreateImage: {
                 //gallery.imageHolderCreateImage(source,imageX,imageY,imageRotation,imageWidth,imageHeight, tapOpen, whichScreen);
             }

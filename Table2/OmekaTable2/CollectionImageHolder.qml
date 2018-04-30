@@ -62,7 +62,6 @@ Item
         {
             if (!running && target != null) {
                 target.readyToReparent = true;
-                target.state = "LIVE"
             }
         }
     }
@@ -88,6 +87,8 @@ Item
                     ParentChange { target: detail; parent: root }
                 }
             ]
+
+            onOpenedChanged: if (opened) { state = "LIVE" }
 
             onTouchingChanged:
             {
@@ -126,7 +127,6 @@ Item
                 return allImageItems[i];
             }
         }
-
 
         allImageItems[0].inUse = false;
         return allImageItems[0];
@@ -254,8 +254,6 @@ Item
             }
 
             imageItem.visible = true;
-
-            //imageItem.parent = overlay
         }
 
         return imageItem;

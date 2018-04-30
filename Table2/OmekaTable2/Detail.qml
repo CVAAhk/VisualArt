@@ -11,6 +11,8 @@ Item
 {
     property bool touching: (pinch_area.dragging || pinch_area.pinching) && readyToReparent
 
+    property bool opened: readyToReparent && imageHeight > 0
+
     property bool readyToReparent: false
 
     id: root
@@ -665,8 +667,9 @@ Item
 
     function reset()
     {
-//        content_screen.scaling = 1.0
-//        content_screen.rotation = 0
+        content_screen.scaling = 1.0
+        content_screen.rotation = 0
+        root.state = "CREATED"
     }
 
 

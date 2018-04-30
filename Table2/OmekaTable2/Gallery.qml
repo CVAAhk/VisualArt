@@ -11,6 +11,8 @@ Item {
     property var current
     property int maxResults
 
+    property Item referenceOverlayArea: activeDetailHolder
+
     onMaxResultsChanged:
     {
         top_left_carousel.maxResults = gallery.maxResults;

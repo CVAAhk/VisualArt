@@ -10,6 +10,7 @@ Item
     property int maxResults
     property bool carouselActivate: false
 
+    property Item referenceOverlayArea
 
     signal createImage(string source, int imageX, int imageY, int imageRotation, int imageWidth, int imageHeight, bool tapOpen, string whichScreen);
 
@@ -143,6 +144,7 @@ Item
     {
         id: imageHolder
         //x: -root.x; y: -root.y
+        referenceOverlayArea: root.referenceOverlayArea
         width: Settings.SCREEN_WIDTH
         height: Settings.SCREEN_HEIGHT
 
