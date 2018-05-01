@@ -173,7 +173,8 @@ Item
     /*! Listens to iterative heist data updates */
     HeistReceiver {
         id: receiver
-        onDeviceChanged: {deviceId = device;}
+        onDeviceChanged: {deviceId = device;
+        console.log("device changed", device)}
         onRemoveItem: root.removeItem(item)
         code: currentCode
     }
@@ -227,6 +228,7 @@ Item
         }
         else
         {
+            console.log("paired!!!!")
             pair_successful.visible = true;
             pair_code.visible = false;
             root.enabled = false;
@@ -263,6 +265,7 @@ Item
             pair_successful.visible = false;
             drag_files.visible = true;
             root.enabled = true;
+            root.interactive();
         }
     }
     SequentialAnimation
@@ -287,6 +290,7 @@ Item
     }
     function startAddSuccess()
     {
+        interactive();
         switch_between_add_and_drag.start();
     }
 

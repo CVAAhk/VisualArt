@@ -164,6 +164,8 @@ Item
                 imageItem.state = "CREATED"
                 imageItem.readyToReparent = false;
                 image_pop.target = imageItem;
+
+                imageItem.rotation = 0;
                 if(whichScreen.includes("attract") &&whichScreen.includes("right"))
                 {
                     //imageItem.y = startY - root.y;

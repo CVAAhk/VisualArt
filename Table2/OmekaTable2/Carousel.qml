@@ -170,8 +170,7 @@ Item
         }
         onInteractive:
         {
-            if(pairing_timeout.running)
-                pairing_timeout.restart();
+            pairing_timeout.restart();
         }
         onUnpairDone:
         {

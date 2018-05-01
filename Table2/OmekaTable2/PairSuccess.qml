@@ -18,9 +18,7 @@ Item
         Image
         {
             source: "content/POI/check.png"
-            //x: 12;
-//                anchors.verticalCenter: parent.verticalCenter
-                width: 21; height:17
+            width: 21; height:17
             anchors.centerIn: parent
         }
 
