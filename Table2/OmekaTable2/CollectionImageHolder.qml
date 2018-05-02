@@ -279,8 +279,6 @@ Item
 
             selectedItem.active = false;
             selectedItem.openedAttract = false;
-
-            //if(imagesCount() === 0) reset_timer.start();
         }
     }
 
@@ -312,10 +310,5 @@ Item
             deleteImage(imageItems[0]);
         }
     }
-    Timer
-    {
-        id: reset_timer
-        interval: Settings.ATTRACT_RANDOM_TIMER
-        onTriggered: root.resetBrowser();
-    }
+
 }

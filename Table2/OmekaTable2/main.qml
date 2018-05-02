@@ -37,6 +37,11 @@ Item
             width: Settings.SCREEN_WIDTH
             height: Settings.SCREEN_HEIGHT
             onCarouselActivate: {/*attract_pool.opacity = 0.0;*/ attract_pool.stopAttractTimer(); attract_pool.carouselActivate = true;}
+            onTurnOnAtrract:
+            {
+                attract_pool.carouselActivate = false
+                attract_pool.startAttractTimer()
+            }
         }
 
         AttractPoolItem

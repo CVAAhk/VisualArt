@@ -409,5 +409,10 @@ Item {
         }
     }
 
+    function reset()
+    {
+        resetItemsPositions()
+        list.positionViewAtIndex(0, ListView.Center)
+    }
 
 }

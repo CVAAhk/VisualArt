@@ -199,6 +199,10 @@ Item
     {
         random_timer.stop();
     }
+    function startAttractTimer()
+    {
+        random_timer.start();
+    }
 
 
 }

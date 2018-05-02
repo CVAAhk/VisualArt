@@ -13,6 +13,8 @@ Item {
 
     property Item referenceOverlayArea: activeDetailHolder
 
+    signal turnOnAtrract()
+
     onMaxResultsChanged:
     {
         top_left_carousel.maxResults = gallery.maxResults;
@@ -169,6 +171,7 @@ Item {
         {
             carouselImageRelease(image, touchPoint, imageX, imageY)
         }
+        onTimeOut: {if(Settings.USERS !== 2) {top_left_begin.visible = true;isAllTouchToBeginOn()}}
     }
     Carousel
     {
@@ -207,6 +210,7 @@ Item {
         {
             carouselImageRelease(image, touchPoint, imageX, imageY)
         }
+        onTimeOut: {top_right_begin.visible = true;isAllTouchToBeginOn()}
     }
 
     //lower screen
@@ -246,6 +250,7 @@ Item {
         {
             carouselImageRelease(image, touchPoint, imageX, imageY)
         }
+        onTimeOut: {if(Settings.USERS !== 2) {lower_left_begin.visible = true;isAllTouchToBeginOn()}}
     }
     Carousel
     {
@@ -282,6 +287,7 @@ Item {
         {
             carouselImageRelease(image, touchPoint, imageX, imageY)
         }
+        onTimeOut: {lower_right_begin.visible = true;isAllTouchToBeginOn()}
     }
 
     //Middle
@@ -361,6 +367,7 @@ Item {
 
             image.recycle(target_x,target_y);
         }
+        onTimeOut: {if(Settings.USERS === 2) {middle_left_begin.visible = true;isAllTouchToBeginOn()}}
     }
     Carousel
     {
@@ -438,6 +445,7 @@ Item {
 
             image.recycle(target_x,target_y);
         }
+        onTimeOut: {if(Settings.USERS === 2) {middle_right_begin.visible = true;isAllTouchToBeginOn()}}
     }
 
     Item
@@ -647,5 +655,48 @@ Item {
         image.recycle(target_x,target_y);
 
         add_success_carousel.startAddSuccess()
+    }
+
+    function isAllTouchToBeginOn()
+    {
+        if(Settings.USERS === 2)
+        {
+            if(top_right_begin.visible && lower_right_begin.visible)
+            {
+                turnOnAtrract()
+                return true
+            }
+            else
+            {
+                return false
+            }
+        }
+        else if(Settings.USERS === 4)
+        {
+            if(top_left_begin.visible && top_right_begin.visible &&
+                    lower_left_begin.visible && lower_right_begin.visible)
+            {
+                turnOnAtrract()
+                return true
+            }
+            else
+            {
+                return false
+            }
+        }
+        else if(Settings.USERS === 6)
+        {
+            if(top_left_begin.visible && top_right_begin.visible &&
+                    lower_left_begin.visible && lower_right_begin.visible &&
+                    middle_left_begin.visible && middle_right_begin.visible)
+            {
+                turnOnAtrract()
+                return true
+            }
+            else
+            {
+                return false
+            }
+        }
     }
 }

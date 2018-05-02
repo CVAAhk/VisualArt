@@ -9,7 +9,10 @@ Item
     property string whichScreen: "lower left"//default
     property alias tagHeaderSearchByTag: tag_header.searchByTag
 
+    enabled: opacity === 1.0 ? true: false
+
     signal interactive();
+
     Rectangle
     {
         id: filter_header_bkg

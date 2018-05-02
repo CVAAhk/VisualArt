@@ -173,8 +173,7 @@ Item
     /*! Listens to iterative heist data updates */
     HeistReceiver {
         id: receiver
-        onDeviceChanged: {deviceId = device;
-        console.log("device changed", device)}
+        onDeviceChanged: {deviceId = device;}
         onRemoveItem: root.removeItem(item)
         code: currentCode
     }

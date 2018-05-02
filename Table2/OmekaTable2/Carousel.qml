@@ -34,9 +34,20 @@ Item
     signal createImage(string source, int imageX, int imageY, int imageRotation, int imageWidth, int imageHeight, bool tapOpen);
     signal imageDragged(var image, var touchPoint, var imageX, var imageY);
     signal imageFinishedDragging(var image, var touchPoint, var imageX, var imageY);
+    signal timeOut()
 
 
     enabled: opacity == 1.0
+
+    Behavior on opacity {NumberAnimation{duration: 200}}
+
+    onEnabledChanged:
+    {
+        if(enabled)
+        {
+            reset_timer.restart()
+        }
+    }
 
     function pairBoxX()
     {
@@ -83,12 +94,6 @@ Item
         }
     }
 
-//    Component.onCompleted:
-//    {
-//        selected_image.parent = selectedParent;
-//        imageHolder.parent = selectedParent;
-//    }
-
     //submit tag search
     onScreenTagChanged:
     {
@@ -104,12 +109,7 @@ Item
         }
     }
 
-    Behavior on opacity {
-        NumberAnimation
-        {
-            duration: 200
-        }
-    }
+
 
     //populate browser with results
     Connections {
@@ -139,7 +139,7 @@ Item
                 searchByTag = tagHeaderSearchByTag;
             }
         }
-        onInteractive: if(filter_timeout.running) filter_timeout.restart();
+        onInteractive: {filter_timeout.restart();reset_timer.restart();}
     }
     Pairing
     {
@@ -171,10 +171,12 @@ Item
         onInteractive:
         {
             pairing_timeout.restart();
+            reset_timer.restart()
         }
         onUnpairDone:
         {
             pairing_timeout.stop();
+            reset_timer.restart()
         }
     }
 
@@ -205,6 +207,8 @@ Item
         function turnSmall()
         {
             selected_image.scale = 0.5;
+            reset_timer.restart()
+            pairing_timeout.restart()
         }
 
 
@@ -212,6 +216,8 @@ Item
         function turnBack()
         {
             selected_image.scale = 1.0;
+            reset_timer.restart()
+            pairing_timeout.restart()
         }
 
 
@@ -245,6 +251,7 @@ Item
                                             (root.topScreen? 180: 0), selected_image.width, selected_image.height, false, root.whichScreen)
 
                     pairing_timeout.restart();
+                    reset_timer.restart()
                 }
             }
         }
@@ -267,6 +274,8 @@ Item
                     //finishedRecycle();
                     recoveryAnimation.start();
                     pairing.startAddSuccess();
+                    reset_timer.restart()
+                    pairing_timeout.restart()
                 }
             }
         }
@@ -276,6 +285,7 @@ Item
             selected_image.recoveryY = recoveryY;
             recycleAnimation.start();
             pairing_timeout.restart();
+            reset_timer.restart()
         }
     }
 
@@ -371,6 +381,7 @@ Item
             }
             else
             {
+                reset_timer.restart()
                 filter_timeout.start();
             }
 
@@ -422,6 +433,7 @@ Item
                 pairing.resetPairing();
                 pairing.startSession();
                 pairing_timeout.start();
+                reset_timer.restart()
             }
             else {
                 pairing_timeout.stop();
@@ -438,6 +450,7 @@ Item
         //property bool active: false
         onPressed:
         {
+            reset_timer.restart()
             pairing.startUnpair();
         }
     }
@@ -456,14 +469,14 @@ Item
             width: 960
             headerHeight: height/3
             topScreen: root.topScreen
-            onInteractive: if(filter_timeout.running) filter_timeout.restart();
+            onInteractive: {filter_timeout.restart(); pairing_timeout.restart(); reset_timer.restart()}
             onCreateImage:
             {
                 if(root.isImageInPairingBox(root,touchPoint))
                 {
                     return;
                 }
-
+                reset_timer.restart()
                 imageHolder.createImage(source, imageX + -root.holderX(),
                                         imageY + -root.holderY(),
                                         imageRotation, imageWidth, imageHeight, tapOpen, root.whichScreen)
@@ -482,6 +495,7 @@ Item
             onImageFinishedDragging:
             {
                 //console.log("finish dragging!!")
+                reset_timer.restart()
                 root.releaseSelected(root, selected_image, touchPoint);
             }
 
@@ -607,6 +621,7 @@ Item
         onImageDeleted:
         {
             root.imageRemovedFromScene(filepath);
+            reset_timer.restart()
         }
         onImageDragged:
         {
@@ -620,10 +635,6 @@ Item
         {
             pairing_timeout.restart();
 
-        }
-        onResetBrowser:
-        {
-            pairing.endSession();
         }
     }
 
@@ -656,6 +667,29 @@ Item
             pairing.visible = false;
             pairing_btn.visible = false;
             send_to_mobile_btn.visible = true;
+            pairing_btn_touch_area.enabled = true;
+            pairing_btn_touch_area.active = false;
+        }
+    }
+
+    Timer
+    {
+        id: reset_timer
+        interval: Settings.ATTRACT_RANDOM_TIMER
+        onRunningChanged:
+        {
+            if(running) console.log("reset timer is running")
+        }
+
+        onTriggered:
+        {
+            if(!filter_timeout.running && !pairing_timeout.running && (imageHolder.imagesCount() === 0) && (root.opacity === 1.0))
+            {
+                //browser reset
+                browser.reset()
+                root.opacity = 0.0
+                root.timeOut()
+            }
         }
     }
 
