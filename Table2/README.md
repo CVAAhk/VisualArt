@@ -71,7 +71,6 @@
 
 		
 SUPPORTED OPERATING SYSTEMS
-
-Windows 7
-Windows 8
-Windows 10
+- Windows 7
+- Windows 8
+- Windows 10
