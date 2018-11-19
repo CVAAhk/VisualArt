@@ -35,16 +35,16 @@ OTHER_FILES += \
     qml/js/+ios/UI.js \
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
-QML_IMPORT_PATH += \
-    qml/test/styling/Style 1.0 \
-    qml/utils/Omeka 1.0 \
-    qml/utils/Heist 1.0 \
-    qml/utils/Resolution 1.0 \
-    qml/utils/Style 1.0 \
-    qml/utils/ItemManager 1.0 \
-    qml/utils/User 1.0 \
-    qml/utils/NumberUtils 1.0 \
-    qml/utils/Foreground 1.0 \
+#QML_IMPORT_PATH += \
+#    qml/test/styling/Style 1.0 \
+#    qml/utils/Omeka 1.0 \
+#    qml/utils/Heist 1.0 \
+#    qml/utils/Resolution 1.0 \
+#    qml/utils/Style 1.0 \
+#    qml/utils/ItemManager 1.0 \
+#    qml/utils/User 1.0 \
+#    qml/utils/NumberUtils 1.0 \
+#    qml/utils/Foreground 1.0 \
 
 ios {
     OBJECTIVE_SOURCES += ios/iosshareutils.mm
@@ -181,10 +181,6 @@ DISTFILES += \
     qml/app/home/settings/EndpointsSetting.qml \
     qml/app/home/settings/EndpointsEditing.qml \
     qml/app/home/settings/Endpoints.qml \
-    android_data/gradle/wrapper/gradle-wrapper.jar \
-    android_data/gradlew \
-    android_data/gradle/wrapper/gradle-wrapper.properties \
-    android_data/gradlew.bat \
     android_data/AndroidManifest.xml \
     android_data/gradle/wrapper/gradle-wrapper.jar \
     android_data/gradlew \
@@ -193,11 +189,14 @@ DISTFILES += \
     android_data/gradle/wrapper/gradle-wrapper.properties \
     android_data/gradlew.bat
 
+
 contains(ANDROID_TARGET_ARCH,armeabi-v7a) {
     ANDROID_EXTRA_LIBS = \
-        $$PWD/../thirdparty/armeabi-v7a/lib/libcrypto.so \
-        $$PWD/../thirdparty/armeabi-v7a/lib/libssl.so
+        $$PWD/../openssl/armeabi-v7a/lib/libcrypto.so \
+        $$PWD/../openssl/armeabi-v7a/lib/libssl.so
 }
+
+
 
 
 
