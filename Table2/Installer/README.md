@@ -26,7 +26,7 @@ Step 2: Build the OmekaTable2 application in Qt Creator.
  c)Run the following command:
 		> windeployqt.exe    --qmldir    APP_QML_DIR    APP_BINARY_DIR
 
-Step 3: Locate the release folder from your build directory ( e.g. Builds/release), which contains the compiled binary and it's dependencies. Then copy the OmekaTable2( at Table2) and release folder to the installer foler at Table2/Installer/OmekaTable2. Rename the release foler to Executable.( current build is already copied to installer folder.)
+Step 3: Locate the release folder from your build directory ( e.g. Builds/release), which contains the compiled binary and it's dependencies. Make sure to copy openSSL prebuilt library dll files(ssleay32.dll and libeay32.dll located at thirdparty/lib folder) to release folder. Then copy the OmekaTable2( at Table2) and release folder to the installer foler at Table2/Installer/OmekaTable2. Rename the release foler to Executable.( current build is already copied to installer folder.)
 The Installer script will use the files within the OmekaTable2 folder to compile your application into an installation executable. 
 
 Step 3: Compile

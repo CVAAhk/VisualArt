@@ -32,7 +32,7 @@ REQUIRED ENVIRONMENTS
 - Adobe Flash Player 11+ (for the first version of Table app)
 - Qt 5.9.2 MSVC2013 64bit kit(for Table2 app)
 - Qt 5.5.1 MSVC2013 64bit kit(for Mobile app)
-- Android for armeabi-v7a (GCC 4.9, Qt 5.5.1 for Android armv73) (for Android deployment)
+- Android for armeabi-v7a (GCC 4.9, Qt 5.10.1 for Android armv73) (for Android deployment)
 - Latest iOS and XCode(for iOS deployment)
 
 DOCUMENTATION
