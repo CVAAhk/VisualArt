@@ -18,9 +18,7 @@ Item
         Image
         {
             source: "content/POI/check.png"
-            //x: 12;
-//                anchors.verticalCenter: parent.verticalCenter
-                width: 21; height:17
+            width: 21; height:17
             anchors.centerIn: parent
         }
 
@@ -32,6 +30,7 @@ Item
         visible: false
         anchors.horizontalCenter: root.horizontalCenter
         y: 36
+        width: 40; height: 40
 
     }
     OpacityMask
@@ -47,5 +46,6 @@ Item
         source: "content/POI/pairing-successful.png"
         anchors.horizontalCenter: root.horizontalCenter
         y:86
+        width: 67; height: 24
     }
 }

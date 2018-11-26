@@ -53,16 +53,21 @@ Item {
 
     property vector2d assignedPosition: Qt.vector2d(0,0)
 
-    signal imageDragged();
+    signal imageDragged(var touchPoint);
 
-    signal imageFinishedDragging();
+    signal imageFinishedDragging(var touchPoint);
 
-    signal createImage(string source, int imageX, int imageY, int imageRotation, int imageWidth, int imageHeight, bool tapOpen);
+    signal createImage(string source, int imageX, int imageY, int imageRotation, int imageWidth, int imageHeight, bool tapOpen, var touchPoint);
 
     signal interactive();
 
     function assignItemPosition(x)
     {
+        if(itemsPositions.length === 1)
+        {
+            resetItemsPositions()
+        }
+
         assignedPosition = itemsPositions.pop();
 
         assignedPosition.x = x;
@@ -81,6 +86,16 @@ Item {
     function clearPositions()
     {
         usedPositions = [];
+    }
+
+    function resetItemsPositions()
+    {
+        itemsPositions = [Qt.vector2d(-300,-300),
+                          Qt.vector2d(-300,-300),
+                          Qt.vector2d(-300,-300),
+                          Qt.vector2d(-300,-300),
+                          Qt.vector2d(-300,-300),
+                          Qt.vector2d(-300,-300)]
     }
 
 
@@ -145,6 +160,8 @@ Item {
         property var dragAmounts: ({})
         property var dragImages: ({})
 
+        property var lastTouchPoint
+
         onReleased:
         {
             for(var i = 0; i < touchPoints.length; i++)
@@ -194,7 +211,7 @@ Item {
                         }
                         item.imageInScene();
                         imageItems.push(item);
-                        root.createImage(imageSource, tap_x, tap_y, rotation, newImageWidth, newImageWidth, true);
+                        root.createImage(imageSource, tap_x, tap_y, rotation, newImageWidth, newImageWidth, true, touchPoint);
                         //console.log("assign possition x: ", assignedPosition.x , " assign position y: ", assignedPosition.y);
 
                         console.log("TAP!! createImage()");
@@ -209,8 +226,10 @@ Item {
         {
 
             var updatedCreatedImage = false;
+
             for(var i = 0; i < touchPoints.length; i++)
             {
+                lastTouchPoint = touchPoints[i];
                 var touchPoint = touchPoints[i];
 
                 var deltaX = touchPoint.x - touchPoint.previousX;
@@ -278,7 +297,7 @@ Item {
                                 //console.log("touchPoint.x = ", touchPoint.x, " touchPoint.y = ", touchPoint.y)
                                 updatedCreatedImage = true;
 
-                                root.imageDragged();
+                                root.imageDragged(touchPoint);
 
                                 break;
                             }
@@ -293,7 +312,7 @@ Item {
                         selected_image.screenY = touchPoint.y + touch_area.y - root.y// + selected_image.height / 2;
                         selected_image.width = 247;
                         updatedCreatedImage = true;
-                        root.imageDragged();
+                        root.imageDragged(touchPoint);
                     }
                 }
             }
@@ -319,11 +338,11 @@ Item {
                     imageCenterY = selected_image.y// - selected_image.height / 2; // selected_image.height / 2 + root.y + touch_area.y;
                     rotation = 0;
                 }
-                imageFinishedDragging();
-                //console.log("selected_image.x = ", selected_image.x, " selected_image.y = ", selected_image.y)
+                imageFinishedDragging(lastTouchPoint);
+                //console.log("touchPoint.x = ", lastTouchPoint.x, " touchPoint.y = ", lastTouchPoint.y)
 
                 root.createImage(selected_image.source, imageCenterX, imageCenterY, rotation,
-                                 selected_image.width, selected_image.height, false);
+                                 selected_image.width, selected_image.height, false, lastTouchPoint);
                 interactive();
             }
 
@@ -390,5 +409,10 @@ Item {
         }
     }
 
+    function reset()
+    {
+        resetItemsPositions()
+        list.positionViewAtIndex(0, ListView.Center)
+    }
 
 }

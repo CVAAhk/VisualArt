@@ -26,9 +26,9 @@ Item
         Image
         {
             source: "content/POI/code-icon.png"
-            x: 12;
+            x: 9;
             anchors.verticalCenter: parent.verticalCenter
-            width: 21; height:26
+            width: 23; height:29
         }
 
     }
@@ -39,7 +39,7 @@ Item
         visible: false
         anchors.horizontalCenter: root.horizontalCenter
         y: 10
-
+        width: 40; height: 40
     }
     OpacityMask
     {
@@ -78,6 +78,7 @@ Item
         source: "content/POI/pairing-what-is-this.png"
         anchors.horizontalCenter: root.horizontalCenter
         y: 190
+        width: 85; height: 25
         MultiPointTouchArea
         {
             anchors.fill: parent

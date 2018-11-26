@@ -10,6 +10,8 @@ Item
     Row
     {
         anchors.centerIn: parent
+        spacing: -30
+        anchors.verticalCenterOffset: 2
         ExclusiveGroup { id: indices }
         Repeater
         {

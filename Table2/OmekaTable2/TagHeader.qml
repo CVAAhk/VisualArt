@@ -60,6 +60,7 @@ Item
         {
             id: filter_bkg
             source: "content/POI/filter-selected.png"
+            width: 165; height: 25
             visible: false
         }
         OpacityMask
@@ -89,6 +90,7 @@ Item
         id: no_filter
         source: "content/POI/no-filter.png"
         visible: screenTag === ""
+        width: 165; height: 25
     }
 
 

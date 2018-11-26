@@ -30,6 +30,7 @@ Item
         visible: false
         anchors.horizontalCenter: root.horizontalCenter
         y: 36
+        width: 40; height: 40
 
     }
     OpacityMask
@@ -45,5 +46,6 @@ Item
         source: "content/POI/send-success.png"
         anchors.horizontalCenter: root.horizontalCenter
         y:86
+        width: 141; height: 24
     }
 }

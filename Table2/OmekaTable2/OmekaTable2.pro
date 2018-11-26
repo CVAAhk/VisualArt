@@ -117,3 +117,14 @@ RESOURCES += \
 
 
 
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../thirdparty/lib/ -llibeay32
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../thirdparty/lib/ -llibeay32d
+
+INCLUDEPATH += $$PWD/../thirdparty
+DEPENDPATH += $$PWD/../thirdparty
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../thirdparty/lib/ -lssleay32
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../thirdparty/lib/ -lssleay32d
+
+

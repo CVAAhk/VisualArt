@@ -237,7 +237,6 @@ Item {
         while(currentPage < maxPage)
         {
             currentPage++
-            console.log("current page is ", currentPage)
             getPage(currentPage, context)
         }
     }

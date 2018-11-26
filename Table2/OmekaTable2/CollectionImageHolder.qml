@@ -11,12 +11,16 @@ Item
 
     property var imageItems: []
 
+    property Item referenceOverlayArea
+
     //property alias itemsLength: imageItems.length
 
     property int maxImages: 5
 
     property double maxImageHeight: 0.0
     property var maxImage: null
+
+    //property var overlay
 
     //=========================================================================
     // ROOT ITEM SETTINGS
@@ -28,9 +32,9 @@ Item
 
     signal imageAdded(var image);
 
-    signal imageDragged(var image);
+    signal imageDragged(var image, var touchPoint, var imageX, var imageY);
 
-    signal imageFinishedDragging(var image);
+    signal imageFinishedDragging(var image, var touchPoint, var imageX, var imageY);
 
     signal imageFinishedRecycle();
 
@@ -53,6 +57,13 @@ Item
         id: image_pop
         duration: 200
         easing.type: Easing.InOutQuad
+
+        onRunningChanged:
+        {
+            if (!running && target != null) {
+                target.readyToReparent = true;
+            }
+        }
     }
 
     property var allImageItems: []
@@ -61,7 +72,45 @@ Item
     {
         model: root.maxImages + 1
 
-        Detail { }
+        Detail {
+            id: detail
+
+            state: "CREATED"
+
+            states: [
+                State {
+                    name: "LIVE"
+                    ParentChange { target: detail; parent: root.referenceOverlayArea }
+                },
+                State {
+                    name: "CREATED"
+                    ParentChange { target: detail; parent: root }
+                }
+            ]
+
+            onOpenedChanged: if (opened) { state = "LIVE" }
+
+            onTouchingChanged:
+            {
+                if (touching) {
+                    state = "LIVE"
+                    pushToTop()
+                }
+            }
+
+            onStateChanged: pushToTop()
+
+            function pushToTop() {
+                if (state == "LIVE") {
+                    var maxZ = detail.z
+                    for (var i = 0; i < root.referenceOverlayArea.children.length; i++) {
+                        maxZ = Math.max(maxZ, root.referenceOverlayArea.children[i].z)
+                    }
+                    detail.z = maxZ + 1
+                }
+            }
+
+        }
 
         onItemAdded:
         {
@@ -79,7 +128,6 @@ Item
             }
         }
 
-
         allImageItems[0].inUse = false;
         return allImageItems[0];
     }
@@ -95,14 +143,29 @@ Item
             imageItem.inUse = true;
             imageItem.active = false;
             imageItem.openedAttract = false;
-
+            imageItem.reset()
             //imageItem.item = null;
             imageItem.item = ItemManager.selectedItems[ItemManager.selectedItems.length - 1];
             imageItem.source = filepath;
-            console.log("selected itemdata = ", imageItem.item)
+
+            if(whichScreen.includes("attract"))
+            {
+                imageItem.topScreen = whichScreen.includes("top");
+                imageItem.rotation = imageRotation;
+            }
+            else
+            {               
+                imageItem.rotation = 0;
+                imageItem.topScreen = imageRotation > 0;
+                console.log("set rotation!!!", imageItem.rotation)
+            }
             if(tapOpen)
             {
+                imageItem.state = "CREATED"
+                imageItem.readyToReparent = false;
                 image_pop.target = imageItem;
+
+                imageItem.rotation = 0;
                 if(whichScreen.includes("attract") &&whichScreen.includes("right"))
                 {
                     //imageItem.y = startY - root.y;
@@ -110,6 +173,7 @@ Item
                     if(imageRotation > 0)
                     {
                         imageItem.y = startY - imageItem.oldImageHeight;
+                        console.log("imageItem.oldImageHeight = ", imageItem.oldImageHeight)
                         //imageItem.rotation = imageRotation;
                     }
                     else
@@ -174,20 +238,6 @@ Item
             imageItem.finishedRecycle.connect(imageFinishedRecycle);
             imageItem.whichScreen = whichScreen;
 
-
-            //imageItem.rotation = imageRotation;
-            if(whichScreen.includes("attract"))
-            {
-                imageItem.topScreen = false;
-                imageItem.rotation = imageRotation;
-            }
-            else
-            {
-                imageItem.rotation = 0;
-                imageItem.topScreen = imageRotation > 0;
-            }
-
-
             imageItem.scale = 1;
 
             if(imageItems.length == 0) maxImageHeight = 10;
@@ -229,24 +279,22 @@ Item
 
             selectedItem.active = false;
             selectedItem.openedAttract = false;
-
-            //if(imagesCount() === 0) reset_timer.start();
         }
     }
 
     function imagePressed(selectedItem)
     {
-        if(selectedItem == maxImage)
-            return;
-        maxImageHeight += 0.01;
-        selectedItem.z = maxImageHeight;
-        maxImage = selectedItem;
+//        if(selectedItem == maxImage)
+//            return;
+//        maxImageHeight += 0.01;
+//        selectedItem.z = maxImageHeight;
+//        maxImage = selectedItem;
 
-        var deleteIndex = imageItems.indexOf(selectedItem);
+//        var deleteIndex = imageItems.indexOf(selectedItem);
 
-        imageItems.splice(deleteIndex, 1);
-        imageItems.push(selectedItem);
-        deleteIndex = imageItems.indexOf(selectedItem);
+//        imageItems.splice(deleteIndex, 1);
+//        imageItems.push(selectedItem);
+//        deleteIndex = imageItems.indexOf(selectedItem);
     }   
 
 
@@ -262,10 +310,5 @@ Item
             deleteImage(imageItems[0]);
         }
     }
-    Timer
-    {
-        id: reset_timer
-        interval: Settings.ATTRACT_RANDOM_TIMER
-        onTriggered: root.resetBrowser();
-    }
+
 }

@@ -7,14 +7,15 @@ Item
 {
     id: root
 
+    property Item referenceOverlayArea
+
     property bool topScreen: false
     property string color: "#2b89d9"//blue
     property string whichScreen: "lower left"//default
     property var screenTag: whichTag()
     property bool searchByTag: false
 
-    property var selectedParent: null
-
+    property Item pairingBox: pairing
     property int pairingAbsoluteX: whichScreen.includes("middle") ? pairing.y + root.x : (pairing.x + (root.topScreen?(Settings.SCREEN_WIDTH - root.x):root.x))
     property int pairingAbsoluteY: pairBoxY()//whichScreen.includes("middle") ? Settings.SCREEN_HEIGHT - (pairing.x + Settings.SCREEN_HEIGHT - root.y + pairing.width) :(pairing.y + (root.topScreen?(Settings.SCREEN_HEIGHT - root.y):root.y))
     property int pairingWidth: pairing.width
@@ -27,6 +28,26 @@ Item
     property var currentCode: pairing.currentCode
 
     property int maxResults: 490
+
+
+    signal canPaginate()
+    signal createImage(string source, int imageX, int imageY, int imageRotation, int imageWidth, int imageHeight, bool tapOpen);
+    signal imageDragged(var image, var touchPoint, var imageX, var imageY);
+    signal imageFinishedDragging(var image, var touchPoint, var imageX, var imageY);
+    signal timeOut()
+
+
+    enabled: opacity == 1.0
+
+    Behavior on opacity {NumberAnimation{duration: 200}}
+
+    onEnabledChanged:
+    {
+        if(enabled)
+        {
+            reset_timer.restart()
+        }
+    }
 
     function pairBoxX()
     {
@@ -73,12 +94,6 @@ Item
         }
     }
 
-    Component.onCompleted:
-    {
-        selected_image.parent = selectedParent;
-        imageHolder.parent = selectedParent;
-    }
-
     //submit tag search
     onScreenTagChanged:
     {
@@ -95,19 +110,6 @@ Item
     }
 
 
-
-    signal canPaginate()
-    signal createImage(string source, int imageX, int imageY, int imageRotation, int imageWidth, int imageHeight, bool tapOpen);
-    signal imageDragged(var image);
-    signal imageFinishedDragging(var image);
-
-    enabled: opacity == 1.0
-    Behavior on opacity {
-        NumberAnimation
-        {
-            duration: 200
-        }
-    }
 
     //populate browser with results
     Connections {
@@ -137,7 +139,7 @@ Item
                 searchByTag = tagHeaderSearchByTag;
             }
         }
-        onInteractive: if(filter_timeout.running) filter_timeout.restart();
+        onInteractive: {filter_timeout.restart();reset_timer.restart();}
     }
     Pairing
     {
@@ -168,12 +170,13 @@ Item
         }
         onInteractive:
         {
-            if(pairing_timeout.running)
-                pairing_timeout.restart();
+            pairing_timeout.restart();
+            reset_timer.restart()
         }
         onUnpairDone:
         {
             pairing_timeout.stop();
+            reset_timer.restart()
         }
     }
 
@@ -204,12 +207,20 @@ Item
         function turnSmall()
         {
             selected_image.scale = 0.5;
+            reset_timer.restart()
+            pairing_timeout.restart()
         }
+
+
 
         function turnBack()
         {
             selected_image.scale = 1.0;
+            reset_timer.restart()
+            pairing_timeout.restart()
         }
+
+
         SequentialAnimation
         {
             id: recoveryAnimation
@@ -240,6 +251,7 @@ Item
                                             (root.topScreen? 180: 0), selected_image.width, selected_image.height, false, root.whichScreen)
 
                     pairing_timeout.restart();
+                    reset_timer.restart()
                 }
             }
         }
@@ -262,6 +274,8 @@ Item
                     //finishedRecycle();
                     recoveryAnimation.start();
                     pairing.startAddSuccess();
+                    reset_timer.restart()
+                    pairing_timeout.restart()
                 }
             }
         }
@@ -271,6 +285,7 @@ Item
             selected_image.recoveryY = recoveryY;
             recycleAnimation.start();
             pairing_timeout.restart();
+            reset_timer.restart()
         }
     }
 
@@ -322,8 +337,8 @@ Item
         id: filter_btn
         source: "content/POI/filter-btn.png"
         x: 10; y: 10
-        width: filter_text.width + 10
-
+        height: 25
+        width: 50
 
     }
     Rectangle
@@ -366,6 +381,7 @@ Item
             }
             else
             {
+                reset_timer.restart()
                 filter_timeout.start();
             }
 
@@ -379,6 +395,7 @@ Item
         anchors.top: carousel_header_bkg.top
         anchors.right: carousel_header_bkg.right
         anchors.margins: 10
+        width: 100; height: 25
     }
     Rectangle
     {
@@ -416,6 +433,7 @@ Item
                 pairing.resetPairing();
                 pairing.startSession();
                 pairing_timeout.start();
+                reset_timer.restart()
             }
             else {
                 pairing_timeout.stop();
@@ -432,6 +450,7 @@ Item
         //property bool active: false
         onPressed:
         {
+            reset_timer.restart()
             pairing.startUnpair();
         }
     }
@@ -450,21 +469,21 @@ Item
             width: 960
             headerHeight: height/3
             topScreen: root.topScreen
-            onInteractive: if(filter_timeout.running) filter_timeout.restart();
+            onInteractive: {filter_timeout.restart(); pairing_timeout.restart(); reset_timer.restart()}
             onCreateImage:
             {
-                if(root.isImageInPairingBox(root,selected_image))
+                if(root.isImageInPairingBox(root,touchPoint))
                 {
                     return;
                 }
-
+                reset_timer.restart()
                 imageHolder.createImage(source, imageX + -root.holderX(),
                                         imageY + -root.holderY(),
                                         imageRotation, imageWidth, imageHeight, tapOpen, root.whichScreen)
             }
             onImageDragged:
             {
-                if(root.isImageInPairingBox(root,selected_image))
+                if(root.isImageInPairingBox(root,touchPoint))
                 {
                     selected_image.turnSmall();
                 }
@@ -475,7 +494,9 @@ Item
             }
             onImageFinishedDragging:
             {
-                root.releaseSelected(root, selected_image);
+                //console.log("finish dragging!!")
+                reset_timer.restart()
+                root.releaseSelected(root, selected_image, touchPoint);
             }
 
             property real contentX: layout.contentX
@@ -496,7 +517,6 @@ Item
                     busy = (layout.currentIndex === layout.count -4)//layout.atXEnd
                     if(busy){
                         nextCount++;
-                        console.log("can paginate!!")
                         root.canPaginate();
                     }
                 }else if(layout.model && layout.model.count)
@@ -530,7 +550,7 @@ Item
         source: "content/POI/Asset 10.png"
         x: 0; y: 123
         visible: false
-
+        width: 56; height: 55
     }
     OpacityMask
     {
@@ -542,6 +562,7 @@ Item
         {
             source: "content/POI/left-arrow.png"
             anchors.centerIn: parent
+            width: 20; height: 20
         }
 
         MultiPointTouchArea
@@ -565,7 +586,7 @@ Item
         anchors.right: bkg.right
         y: 123
         visible: false
-
+        width: 56; height: 55
     }
     OpacityMask
     {
@@ -577,6 +598,7 @@ Item
         {
             source: "content/POI/right-arrow.png"
             anchors.centerIn: parent
+            width: 20; height: 20
         }
         MultiPointTouchArea
         {
@@ -594,29 +616,25 @@ Item
         height: whichScreen.includes("middle")? Settings.SCREEN_WIDTH : Settings.SCREEN_HEIGHT
 
         antialiasing: true
+        referenceOverlayArea: root.referenceOverlayArea
 
         onImageDeleted:
         {
-            //console.log("delete filepath = ",filepath, "whichScreen = ", whichScreen)
-
             root.imageRemovedFromScene(filepath);
+            reset_timer.restart()
         }
         onImageDragged:
         {
-            root.imageDragged(image);
+            root.imageDragged(image, touchPoint, imageX, imageY);
         }
         onImageFinishedDragging:
         {
-            root.imageFinishedDragging(image);
+            root.imageFinishedDragging(image, touchPoint, imageX, imageY);
         }
         onImageFinishedRecycle:
         {
             pairing_timeout.restart();
-            pairing.startAddSuccess();
-        }
-        onResetBrowser:
-        {
-            pairing.endSession();
+
         }
     }
 
@@ -635,7 +653,6 @@ Item
             filter.tagHeaderSearchByTag = false;
             filter.resetFilters();
             filter_text.text = "FILTER";
-            console.log("filter times out");
         }
     }
     Timer
@@ -650,6 +667,29 @@ Item
             pairing.visible = false;
             pairing_btn.visible = false;
             send_to_mobile_btn.visible = true;
+            pairing_btn_touch_area.enabled = true;
+            pairing_btn_touch_area.active = false;
+        }
+    }
+
+    Timer
+    {
+        id: reset_timer
+        interval: Settings.ATTRACT_RANDOM_TIMER
+        onRunningChanged:
+        {
+            if(running) console.log("reset timer is running")
+        }
+
+        onTriggered:
+        {
+            if(!filter_timeout.running && !pairing_timeout.running && (imageHolder.imagesCount() === 0) && (root.opacity === 1.0))
+            {
+                //browser reset
+                browser.reset()
+                root.opacity = 0.0
+                root.timeOut()
+            }
         }
     }
 
@@ -701,10 +741,11 @@ Item
         return pairing_box_coordinates;
     }
 
-    function isImageInPairingBox(carousel,image)
+    function isImageInPairingBox(carousel, touchPoint)
     {
-        var middleX = image.x + image.width * 1/2 - holderX();
-        var middleY = image.y + image.height * 1/2 - holderY();
+        //console.log("touch x = ", touchPoint.x, " touch y = ", touchPoint.y)
+        var middleX = touchPoint.x - holderX()//image.x + image.width * 1/2 - holderX();
+        var middleY = touchPoint.y - holderY()//image.y + image.height * 1/2 - holderY();
         if(root.topScreen)
         {
             middleX = Settings.SCREEN_WIDTH - middleX;
@@ -730,7 +771,7 @@ Item
         var pairing_width = carousel.whichScreen.includes("middle") ? carousel.pairingHeight :carousel.pairingWidth;
         var pairing_height = carousel.whichScreen.includes("middle") ? carousel.pairingWidth :carousel.pairingHeight;
 
-        console.log("middleX = ", middleX, " middleY = ", middleY, "pairing_x = ", pairing_x, "pairing_y = ", pairing_y)
+        //console.log("middleX = ", middleX, " middleY = ", middleY, "pairing_x = ", pairing_x, "pairing_y = ", pairing_y)
 
         if(middleX > pairing_x && middleX < pairing_x + pairing_width&&
                 middleY > pairing_y && middleY < pairing_y + pairing_height)
@@ -746,32 +787,33 @@ Item
         }
         return false;
     }
-    function releaseSelected(carousel,image)
+    function releaseSelected(carousel,image,touchPoint)
     {
+        //console.log("releaseSelected!!! touch x = ", touchPoint.x, " touch y = ", touchPoint.y)
         var pairing_box_coordinates;
         var target_x;
         var target_y;
-        if(root.isImageInPairingBox(carousel,image) && whichScreen.includes("top"))
+        if(root.isImageInPairingBox(carousel,touchPoint) && whichScreen.includes("top"))
         {
             pairing_box_coordinates = pairingBoxCoordinates(carousel);
             target_x = Settings.SCREEN_WIDTH - pairing_box_coordinates.x - image.width;
             target_y = Settings.SCREEN_HEIGHT - pairing_box_coordinates.y- image.height*2 - carousel.pairingHeight;
         }
-        else if(root.isImageInPairingBox(carousel,image) && whichScreen == "middle right")
+        else if(root.isImageInPairingBox(carousel,touchPoint) && whichScreen == "middle right")
         {
             pairing_box_coordinates = pairingBoxCoordinates(carousel);
             target_x = Settings.SCREEN_HEIGHT - pairing_box_coordinates.y - image.width;
             target_y = pairing_box_coordinates.x - image.height - 100;
-            console.log("target x = ", target_x, " target_y = ", target_y)
+            //console.log("target x = ", target_x, " target_y = ", target_y)
         }
-        else if(root.isImageInPairingBox(carousel,image) && whichScreen == "middle left")
+        else if(root.isImageInPairingBox(carousel,touchPoint) && whichScreen == "middle left")
         {
             pairing_box_coordinates = pairingBoxCoordinates(carousel);
             target_x = pairing_box_coordinates.y;
             target_y = Settings.SCREEN_WIDTH - pairing_box_coordinates.x -image.height - 100;
-            console.log("target x = ", target_x, " target_y = ", target_y)
+            //console.log("target x = ", target_x, " target_y = ", target_y)
         }
-        else if(root.isImageInPairingBox(carousel,image))
+        else if(root.isImageInPairingBox(carousel,touchPoint))
         {
             pairing_box_coordinates = pairingBoxCoordinates(carousel);
             target_x = pairing_box_coordinates.x;
@@ -782,15 +824,15 @@ Item
             return;
         }
 
-        addImageToFavorites(image);
-        console.log("target_x = ", target_x)
+        addImageToFavorites(image,touchPoint);
+        //console.log("target_x = ", target_x)
         image.recycle(target_x,target_y);
     }
-    function addImageToFavorites(image)
+    function addImageToFavorites(image,touchPoint)
     {
-        if(root.isImageInPairingBox(root,image) && root.currentCode && root.checkItemsOfPairing(image.item.id))
+        if(root.isImageInPairingBox(root,image,touchPoint) && root.currentCode && root.checkItemsOfPairing(image.item.id))
         {
-            console.log("add item = ", image.item.id)
+            //console.log("add item = ", image.item.id)
             HeistClient.addItem(root.currentCode, image.item.id, root);
         }
     }
@@ -837,6 +879,11 @@ Item
                 return -root.y;
             }
         }
+    }
+
+    function startAddSuccess()
+    {
+        pairing.startAddSuccess();
     }
 
 }

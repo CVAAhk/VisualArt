@@ -16,11 +16,11 @@ Item
     {
         visible: color === "blue"
         source: "content/POI/touch-to-begin.png"
+        width: 280; height: 100
         MultiPointTouchArea
         {
             anchors.fill: parent
-            property bool active: false
-            onPressed: {active = !active; root.opacity = active ? 0.0 : 1.0;root.touchToBeginPressed(active)}
+            onPressed: {root.visible = false;root.touchToBeginPressed(true)}
         }
     }
 
@@ -31,8 +31,7 @@ Item
         MultiPointTouchArea
         {
             anchors.fill: parent
-            property bool active: false
-            onPressed: {active = !active; root.opacity = active ? 0.0 : 1.0;root.redPressed(active)}
+            onPressed: {root.visible = false;root.touchToBeginPressed(true)}
         }
     }
     Image
@@ -42,8 +41,7 @@ Item
         MultiPointTouchArea
         {
             anchors.fill: parent
-            property bool active: false
-            onPressed: {active = !active; root.opacity = active ? 0.0 : 1.0;root.greenPressed(active)}
+            onPressed: {root.visible = false;root.touchToBeginPressed(true)}
         }
     }
     Image
@@ -53,8 +51,12 @@ Item
         MultiPointTouchArea
         {
             anchors.fill: parent
-            property bool active: false
-            onPressed: {active = !active; root.opacity = active ? 0.0 : 1.0;root.yellowPressed(active)}
+            onPressed: {root.visible = false;root.touchToBeginPressed(true)}
         }
+    }
+
+    function resetTouchButton()
+    {
+        root.visible = true
     }
 }

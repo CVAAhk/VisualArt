@@ -37,19 +37,24 @@ Item
             width: Settings.SCREEN_WIDTH
             height: Settings.SCREEN_HEIGHT
             onCarouselActivate: {/*attract_pool.opacity = 0.0;*/ attract_pool.stopAttractTimer(); attract_pool.carouselActivate = true;}
+            onTurnOnAtrract:
+            {
+                attract_pool.carouselActivate = false
+                attract_pool.startAttractTimer()
+            }
         }
 
         AttractPoolItem
         {
             id: attract_pool
-            onCreateImage:
-            {
+            referenceOverlayArea: gallery.referenceOverlayArea
+            onCreateImage: {
                 //gallery.imageHolderCreateImage(source,imageX,imageY,imageRotation,imageWidth,imageHeight, tapOpen, whichScreen);
             }
-            onImageDragged: gallery.attractImageIsInPairingBox(image);
-            onImageFinishedDragging: gallery.attractImageReleased(image);
+            onImageDragged: gallery.attractImageIsInPairingBox(image, touchPoint, imageX, imageY);
+            onImageFinishedDragging: gallery.attractImageReleased(image, touchPoint, imageX, imageY);
             onMaxResultsChanged: gallery.maxResults = attract_pool.maxResults;
-            onLoadComplete: {root.enabled = true;console.log("loading complete!");}
+            onLoadComplete: { root.enabled = true;console.log("loading complete!"); }
         }
 
         Component.onCompleted:

@@ -29,6 +29,8 @@
 	-Omeka REST API(http://omeka.readthedocs.io/en/latest/Reference/api/). API must be set to public on targeted site.
 	
 	-heist plugins(https://omeka.org/classic/docs/Plugins/Heist/).
+	
+	-OpenSSL prebuilt library( located at openssl folder)
 
 3. Build Instructions
 
@@ -46,6 +48,8 @@
 		-OmekaTable2(project folder contains main.qml, all other QML files and ui)
 
 		-release(build folder contains the compiled binary and it's dependencies.)
+		
+		-make sure to copy openSSL prebuilt library dll files(ssleay32.dll and libeay32.dll located at openssl/lib folder) to release folder
 	
 	6. Run OmekaTable2.exe to open the application.
 

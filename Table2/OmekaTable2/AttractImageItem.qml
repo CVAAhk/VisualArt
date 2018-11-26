@@ -52,7 +52,6 @@ Item
         itemData.id = String(itemResult.item)
         //console.log("itemData.id = ", itemData.id)
         itemData.fileCount = parseInt(itemResult.file_count)
-        console.log("fileCount = ", itemData.fileCount);
         itemData.metadata = itemResult.metadata
 
         itemData.media = []

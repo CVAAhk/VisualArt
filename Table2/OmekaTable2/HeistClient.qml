@@ -256,7 +256,7 @@ Item {
       \a context - calling object instance
     */
     function submitRequest(url, type, body, context) {
-        console.log("REQUEST: "+url+" "+body);
+        //console.log("REQUEST: "+url+" "+body);
         var request = new XMLHttpRequest();
         request.type = type;
         request.context = context;

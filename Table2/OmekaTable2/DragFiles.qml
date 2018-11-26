@@ -26,10 +26,11 @@ Item
     Image
     {
         id: start_to_pair_icon
-        source: "content/POI/pairing-code-icon.png"
+        source: "content/POI/pair-drag-icon.png"
         visible: false
         anchors.horizontalCenter: root.horizontalCenter
         y: 36
+        width: 40; height: 40
 
     }
     OpacityMask
@@ -45,5 +46,6 @@ Item
         source: "content/POI/drag-files.png"
         anchors.horizontalCenter: root.horizontalCenter
         y:86
+        width: 110; height: 24
     }
 }
