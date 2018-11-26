@@ -201,3 +201,14 @@ contains(ANDROID_TARGET_ARCH,armeabi-v7a) {
 
 
 
+
+macx: LIBS += -L$$PWD/../openssl-ios-dist/lib/ -lcrypto
+
+INCLUDEPATH += $$PWD/../openssl-ios-dist/include
+DEPENDPATH += $$PWD/../openssl-ios-dist/include
+
+macx: PRE_TARGETDEPS += $$PWD/../openssl-ios-dist/lib/libcrypto.a
+
+macx: LIBS += -L$$PWD/../openssl-ios-dist/lib/ -lssl
+
+macx: PRE_TARGETDEPS += $$PWD/../openssl-ios-dist/lib/libssl.a
