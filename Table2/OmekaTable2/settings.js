@@ -34,5 +34,6 @@ var MAXNUMBER = 490;
 
 //var OMEKA_ENDPOINT = "http://oe.develop.digitalmediauconn.org/"
 var OMEKA_ENDPOINT = "http://dev.omeka.org/mallcopy/"
+//var OMEKA_ENDPOINT = "https://bimp-exhibitions.org/livingobjects/"
 //var OMEKA_ENDPOINT = "http://www.huapala.net/"  //no heist support test
 //var OMEKA_ENDPOINT = "http://marb.kennesaw.edu/identities/"  //no enabled api test

@@ -190,25 +190,10 @@ DISTFILES += \
     android_data/gradlew.bat
 
 
-contains(ANDROID_TARGET_ARCH,armeabi-v7a) {
-    ANDROID_EXTRA_LIBS = \
-        $$PWD/../openssl/armeabi-v7a/lib/libcrypto.so \
-        $$PWD/../openssl/armeabi-v7a/lib/libssl.so
+
+
+
+contains(ANDROID_TARGET_ARCH, arm64-v8a) {
+    ANDROID_EXTRA_LIBS += $$PWD/../openssl/arm64-v8a/libcrypto.so
+    ANDROID_EXTRA_LIBS += $$PWD/../openssl/arm64-v8a/libssl.so
 }
-
-
-
-
-
-
-
-macx: LIBS += -L$$PWD/../openssl-ios-dist/lib/ -lcrypto
-
-INCLUDEPATH += $$PWD/../openssl-ios-dist/include
-DEPENDPATH += $$PWD/../openssl-ios-dist/include
-
-macx: PRE_TARGETDEPS += $$PWD/../openssl-ios-dist/lib/libcrypto.a
-
-macx: LIBS += -L$$PWD/../openssl-ios-dist/lib/ -lssl
-
-macx: PRE_TARGETDEPS += $$PWD/../openssl-ios-dist/lib/libssl.a

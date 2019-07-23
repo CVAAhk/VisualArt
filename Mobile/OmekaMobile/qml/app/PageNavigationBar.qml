@@ -87,8 +87,8 @@ Row {
         },
         State {
             name: "hide"
-            PropertyChanges { target:bar; explicit: true; enabled: false }
-            AnchorChanges { target: bar; anchors.bottom: undefined; anchors.top: parent.bottom }
+            PropertyChanges { target: bar; explicit: true; enabled: false; anchors.bottomMargin: -bar.height }
+            //AnchorChanges { target: bar; anchors.bottom: undefined; anchors.top: parent.bottom }
         }
     ]
 
@@ -97,7 +97,14 @@ Row {
 
     //hide animations
     transitions: Transition {
-        AnchorAnimation { duration: 250; easing.type: Easing.InOutQuad }
+
+        NumberAnimation {
+            target: bar
+            property: "anchors.bottomMargin"
+            duration: 200
+            easing.type: Easing.InOutQuad
+        }
+        //AnchorAnimation { duration: 250; easing.type: Easing.InOutQuad }
     }
 }
 
